@@ -1,16 +1,35 @@
 PODS:
   - Alamofire (5.8.1)
+  - OHHTTPStubs (9.1.0):
+    - OHHTTPStubs/Default (= 9.1.0)
+  - OHHTTPStubs/Core (9.1.0)
+  - OHHTTPStubs/Default (9.1.0):
+    - OHHTTPStubs/Core
+    - OHHTTPStubs/JSON
+    - OHHTTPStubs/NSURLSession
+    - OHHTTPStubs/OHPathHelpers
+  - OHHTTPStubs/JSON (9.1.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/NSURLSession (9.1.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/OHPathHelpers (9.1.0)
+  - OHHTTPStubs/Swift (9.1.0):
+    - OHHTTPStubs/Default
 
 DEPENDENCIES:
   - Alamofire
+  - OHHTTPStubs
+  - OHHTTPStubs/Swift
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - OHHTTPStubs
 
 SPEC CHECKSUMS:
   Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
+  OHHTTPStubs: 90eac6d8f2c18317baeca36698523dc67c513831
 
-PODFILE CHECKSUM: a4139feb9e0b2044919436667a9c43fc65d9ca0f
+PODFILE CHECKSUM: 3e118efeff6ad0645bc7153ade9ed07a5c73bd39
 
 COCOAPODS: 1.16.2

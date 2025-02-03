@@ -6,7 +6,9 @@ target 'BibleAtlas' do
   use_frameworks!
 
   # Pods for BibleAtlas
-    pod "Alamofire"   	
+    pod "Alamofire"
+    pod "OHHTTPStubs"
+    pod "OHHTTPStubs/Swift"  	
 
   target 'BibleAtlasTests' do
     inherit! :search_paths
