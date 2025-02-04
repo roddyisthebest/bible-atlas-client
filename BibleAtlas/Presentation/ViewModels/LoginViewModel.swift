@@ -30,7 +30,7 @@ final class LoginViewModel: LoginViewModelProtocol{
     func transform(input: Input) -> Output {
         input.buttonTapped$.withLatestFrom(Observable.combineLatest(input.userId$, input.password$)).subscribe(onNext: {
             [weak self] (userId, password) in
-            self?.loginUser(userId: userId, password: <#T##String#>)
+            self?.loginUser(userId: userId, password: password)
             
         }).disposed(by: disposeBag)
         

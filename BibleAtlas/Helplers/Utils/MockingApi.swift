@@ -39,10 +39,12 @@ func setupMockAPI() {
         }
         
         // 예제: 특정 계정만 로그인 성공 처리
-        if userId == "testUser" && password == "securePassword" {
+        if userId == "one" && password == "one" {
             let responseJSON = [
-                "accessToken": "mock_access_token_123",
-                "refreshToken": "mock_refresh_token_456",
+                "authData": [
+                    "accessToken": "mock_access_token_123",
+                    "refreshToken": "mock_refresh_token_456",
+                ],
                 "user": [
                     "id": 1,
                     "name": "John Doe",

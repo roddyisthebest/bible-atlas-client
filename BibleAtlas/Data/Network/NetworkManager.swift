@@ -10,11 +10,8 @@ import Alamofire
 
 protocol NetworkManagerProtocol{
     func getData<T: Decodable>(url:String, parameters:Parameters?) async -> Result<T,NetworkError>
-    
     func postData<T: Decodable>(url:String, parameters:Parameters?, body:Data?) async -> Result<T,NetworkError>
-    
     func updateData<T: Decodable>(url:String, method: HTTPMethod, parameters:Parameters?, body:Data?) async -> Result<T,NetworkError>
-    
     func deleteData<T: Decodable>(url:String, parameters:Parameters?) async -> Result<T,NetworkError>
 }
 
@@ -80,6 +77,8 @@ public final class NetworkManager:NetworkManagerProtocol{
            guard let response = result.response else {
                return .failure(.invalid)
            }
+           
+
            
            if (200..<400).contains(response.statusCode) {
                do {

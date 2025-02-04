@@ -18,6 +18,10 @@ public struct AuthUsecase:AuthUsecaseProtocol{
     
     private let repository:AuthRepositoryProtocol;
     
+    
+    init(repository: AuthRepositoryProtocol) {
+        self.repository = repository
+    }
     func loginUser(body: AuthPayload) async -> Result<UserResponse, NetworkError> {
         return await repository.loginUser(body: body)
     }
