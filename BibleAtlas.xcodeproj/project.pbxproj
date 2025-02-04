@@ -31,6 +31,8 @@
 		ECA94BE82D50AF41005B0428 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BE72D50AF41005B0428 /* AuthRepository.swift */; };
 		ECA94BEB2D50B0B9005B0428 /* AuthUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BEA2D50B0B9005B0428 /* AuthUsecase.swift */; };
 		ECA94BEF2D50B492005B0428 /* MockingApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BEE2D50B492005B0428 /* MockingApi.swift */; };
+		ECA94BF42D51ADAF005B0428 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BF32D51ADAF005B0428 /* LoginViewModel.swift */; };
+		ECA94BF82D51AE28005B0428 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BF72D51AE28005B0428 /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +87,8 @@
 		ECA94BE72D50AF41005B0428 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		ECA94BEA2D50B0B9005B0428 /* AuthUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUsecase.swift; sourceTree = "<group>"; };
 		ECA94BEE2D50B492005B0428 /* MockingApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockingApi.swift; sourceTree = "<group>"; };
+		ECA94BF32D51ADAF005B0428 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		ECA94BF72D51AE28005B0428 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +154,7 @@
 		ECA94B952D5082B9005B0428 /* BibleAtlas */ = {
 			isa = PBXGroup;
 			children = (
+				ECA94BF02D51AB3D005B0428 /* Presentation */,
 				ECA94BEC2D50B464005B0428 /* Helplers */,
 				ECA94BCD2D50931C005B0428 /* Domain */,
 				ECA94BC92D508BDF005B0428 /* Data */,
@@ -284,6 +289,31 @@
 				ECA94BEE2D50B492005B0428 /* MockingApi.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		ECA94BF02D51AB3D005B0428 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				ECA94BF22D51AD94005B0428 /* ViewModels */,
+				ECA94BF12D51AD7F005B0428 /* ViewControllers */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		ECA94BF12D51AD7F005B0428 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				ECA94BF72D51AE28005B0428 /* LoginViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		ECA94BF22D51AD94005B0428 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				ECA94BF32D51ADAF005B0428 /* LoginViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		FA9885F27C7E364B662974A9 /* Pods */ = {
@@ -542,6 +572,7 @@
 				ECA94BDA2D509AFF005B0428 /* AuthManager.swift in Sources */,
 				ECA94B9B2D5082B9005B0428 /* ViewController.swift in Sources */,
 				ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */,
+				ECA94BF42D51ADAF005B0428 /* LoginViewModel.swift in Sources */,
 				ECA94BE12D50A739005B0428 /* AuthData.swift in Sources */,
 				ECA94BCC2D508D1E005B0428 /* DefaultSession.swift in Sources */,
 				ECA94BD12D509377005B0428 /* NetworkError.swift in Sources */,
@@ -550,6 +581,7 @@
 				ECA94BEB2D50B0B9005B0428 /* AuthUsecase.swift in Sources */,
 				ECA94BE52D50AE92005B0428 /* AuthRepositoryProtocol.swift in Sources */,
 				ECA94BEF2D50B492005B0428 /* MockingApi.swift in Sources */,
+				ECA94BF82D51AE28005B0428 /* LoginViewController.swift in Sources */,
 				ECA94BA12D5082B9005B0428 /* BibleAtlas.xcdatamodeld in Sources */,
 				ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */,
 				ECA94BD52D5094F1005B0428 /* User.swift in Sources */,

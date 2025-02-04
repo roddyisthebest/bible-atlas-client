@@ -8,7 +8,9 @@ target 'BibleAtlas' do
   # Pods for BibleAtlas
     pod "Alamofire"
     pod "OHHTTPStubs"
-    pod "OHHTTPStubs/Swift"  	
+    pod "OHHTTPStubs/Swift" 
+    pod "RxSwift"
+    pod "RxCocoa"  	
 
   target 'BibleAtlasTests' do
     inherit! :search_paths
