@@ -1,6 +1,0 @@
-framework module Pods_BibleAtlasTests {
-  umbrella header "Pods-BibleAtlasTests-umbrella.h"
-
-  export *
-  module * { export * }
-}
