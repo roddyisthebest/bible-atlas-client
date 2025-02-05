@@ -12,6 +12,8 @@ import RxCocoa
 
 class LoginViewController: UIViewController {
 
+    weak var appCoordinator: AppCoordinatorProtocol?
+    
     let loginViewModel: LoginViewModelProtocol;
     
     let disposeBag = DisposeBag();
@@ -88,8 +90,9 @@ class LoginViewController: UIViewController {
         return st;
     }();
     
-    init(loginViewModel: LoginViewModelProtocol) {
-        self.loginViewModel = loginViewModel
+    init(loginViewModel: LoginViewModelProtocol, appCoordinator:AppCoordinatorProtocol) {
+        self.loginViewModel = loginViewModel;
+        self.appCoordinator = appCoordinator;
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -177,24 +180,10 @@ class LoginViewController: UIViewController {
 
     
     private func navigateToMainTab() {
-        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else {
-            return
-        }
-        
-        let mainTabBarController = MainTabBarController();
-        sceneDelegate.setRootViewController(mainTabBarController)
-
+        appCoordinator?.showMainTabFlow();
     }
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 

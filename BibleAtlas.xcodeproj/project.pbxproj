@@ -35,6 +35,7 @@
 		ECA94BFC2D520CE1005B0428 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BFB2D520CE1005B0428 /* SearchViewController.swift */; };
 		ECA94BFE2D520CEF005B0428 /* MyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BFD2D520CEF005B0428 /* MyInfoViewController.swift */; };
 		ECA94C002D520F8A005B0428 /* MainTabBarControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BFF2D520F8A005B0428 /* MainTabBarControllerViewController.swift */; };
+		ECA94C032D52F00C005B0428 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94C022D52F00C005B0428 /* AppCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +94,7 @@
 		ECA94BFB2D520CE1005B0428 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		ECA94BFD2D520CEF005B0428 /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
 		ECA94BFF2D520F8A005B0428 /* MainTabBarControllerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarControllerViewController.swift; sourceTree = "<group>"; };
+		ECA94C022D52F00C005B0428 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -296,6 +298,7 @@
 		ECA94BF02D51AB3D005B0428 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				ECA94C012D52EFC0005B0428 /* Coordinators */,
 				ECA94BF22D51AD94005B0428 /* ViewModels */,
 				ECA94BF12D51AD7F005B0428 /* ViewControllers */,
 			);
@@ -320,6 +323,14 @@
 				ECA94BF32D51ADAF005B0428 /* LoginViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		ECA94C012D52EFC0005B0428 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				ECA94C022D52F00C005B0428 /* AppCoordinator.swift */,
+			);
+			path = Coordinators;
 			sourceTree = "<group>";
 		};
 		FA9885F27C7E364B662974A9 /* Pods */ = {
@@ -572,6 +583,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECA94C032D52F00C005B0428 /* AppCoordinator.swift in Sources */,
 				ECA94BE82D50AF41005B0428 /* AuthRepository.swift in Sources */,
 				ECA94BDA2D509AFF005B0428 /* AuthManager.swift in Sources */,
 				ECA94BFE2D520CEF005B0428 /* MyInfoViewController.swift in Sources */,

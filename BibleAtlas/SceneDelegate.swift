@@ -10,7 +10,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    var appCoordinator: AppCoordinatorProtocol?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -19,27 +19,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
 
-        let session = DefaultSession(); 
-        let networkManager = NetworkManager(session: session, authManager: AuthManager.shared)
+        appCoordinator = AppCoordinator(window: window);
+        appCoordinator?.start();
         
-        let authNetworkManager = AuthNetworkManager(manager: networkManager, url: "https://api.bible-atlas.com/auth")
-        
-        let authRP = AuthRepository(networkManager: authNetworkManager);
-        
-        let authUC = AuthUsecase(repository:authRP);
-        let loginVM = LoginViewModel(authUsecase: authUC);
-        let loginVC = LoginViewController(loginViewModel: loginVM);
-        
-        
-        window?.rootViewController = loginVC;
-        window?.makeKeyAndVisible();
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
-        // Called as the scene is being released by the system.
-        // This occurs shortly after the scene enters the background, or when its session is discarded.
-        // Release any resources associated with this scene that can be re-created the next time the scene connects.
-        // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
+        appCoordinator = nil
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
@@ -65,13 +51,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Save changes in the application's managed object context when the application transitions to the background.
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
-
-
-    func setRootViewController(_ viewController: UIViewController) {
-          window?.rootViewController = viewController
-          window?.makeKeyAndVisible()
-      }
     
-    
+
 }
 
