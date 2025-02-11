@@ -38,6 +38,8 @@
 		ECA94C032D52F00C005B0428 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94C022D52F00C005B0428 /* AppCoordinator.swift */; };
 		ECA94C082D534684005B0428 /* ActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94C072D534684005B0428 /* ActivityCell.swift */; };
 		ECA94C0B2D53494A005B0428 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94C0A2D53494A005B0428 /* Constants.swift */; };
+		ECA94C0D2D5A3714005B0428 /* ActivitySmallCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94C0C2D5A3714005B0428 /* ActivitySmallCell.swift */; };
+		ECA94C0F2D5B08B1005B0428 /* AlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94C0E2D5B08B1005B0428 /* AlertCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +101,8 @@
 		ECA94C022D52F00C005B0428 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		ECA94C072D534684005B0428 /* ActivityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCell.swift; sourceTree = "<group>"; };
 		ECA94C0A2D53494A005B0428 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		ECA94C0C2D5A3714005B0428 /* ActivitySmallCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySmallCell.swift; sourceTree = "<group>"; };
+		ECA94C0E2D5B08B1005B0428 /* AlertCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -343,6 +347,8 @@
 			isa = PBXGroup;
 			children = (
 				ECA94C072D534684005B0428 /* ActivityCell.swift */,
+				ECA94C0C2D5A3714005B0428 /* ActivitySmallCell.swift */,
+				ECA94C0E2D5B08B1005B0428 /* AlertCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -605,11 +611,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECA94C0F2D5B08B1005B0428 /* AlertCell.swift in Sources */,
 				ECA94C032D52F00C005B0428 /* AppCoordinator.swift in Sources */,
 				ECA94BE82D50AF41005B0428 /* AuthRepository.swift in Sources */,
 				ECA94BDA2D509AFF005B0428 /* AuthManager.swift in Sources */,
 				ECA94BFE2D520CEF005B0428 /* MyInfoViewController.swift in Sources */,
 				ECA94B9B2D5082B9005B0428 /* ViewController.swift in Sources */,
+				ECA94C0D2D5A3714005B0428 /* ActivitySmallCell.swift in Sources */,
 				ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */,
 				ECA94BFC2D520CE1005B0428 /* SearchViewController.swift in Sources */,
 				ECA94BF42D51ADAF005B0428 /* LoginViewModel.swift in Sources */,
@@ -792,6 +800,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T76LKQ7QGR;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BibleAtlas/Info.plist;
@@ -821,6 +830,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T76LKQ7QGR;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BibleAtlas/Info.plist;

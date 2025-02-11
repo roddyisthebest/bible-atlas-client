@@ -213,5 +213,6 @@ extension UIColor {
     static let thirdGray = UIColor(hex:"#313131")
     
     static let lightGray = UIColor(hex:"#5D5D5D")
+    static let lightestGray = UIColor(hex:"#DBDBDB")
     static let tabbarGray = UIColor(hex:"#404040")
 }
