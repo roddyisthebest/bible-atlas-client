@@ -37,7 +37,7 @@ class MyInfoViewController: UIViewController {
         let st = UIStackView();
         st.axis = .vertical;
         st.alignment = .top;
-        st.spacing = 5;
+        st.spacing = 0;
         
         return st;
     }();
@@ -102,7 +102,8 @@ class MyInfoViewController: UIViewController {
         let button = UIButton()
         button.setTitle("계정 관리", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 12)
+        button.titleLabel?.font = .systemFont(ofSize: 15)
+        button.addTarget(self, action: #selector(tappedManagedButton), for: .touchUpInside)
         return button
     }()
     
@@ -232,6 +233,7 @@ class MyInfoViewController: UIViewController {
         setupUI();
         setupConstraint();
         setupStyle();
+        setupNavigation();
         // Do any additional setup after loading the view.
     }
     
@@ -242,6 +244,23 @@ class MyInfoViewController: UIViewController {
             self.setupHeaderBottomCornerRadius()
         }
     }
+    
+    
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setNavigationAppearanceToCustomMode();
+        
+    }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        setNavigationAppearanceToDefaultMode();
+        
+    }
+
     
     private func setupHeaderBottomCornerRadius() {
         let path = UIBezierPath(
@@ -254,6 +273,30 @@ class MyInfoViewController: UIViewController {
         mask.path = path.cgPath
         headerWrapperView.layer.mask = mask
     }
+    
+    private func setNavigationAppearanceToCustomMode(){
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .lightGray
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        appearance.shadowColor = .clear
+
+        navigationController?.navigationBar.isTranslucent = false
+
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+    
+    private func setNavigationAppearanceToDefaultMode(){
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .thirdGray
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+    
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+
 
     
     private func setupUI(){
@@ -379,9 +422,27 @@ class MyInfoViewController: UIViewController {
     
     private func setupStyle(){
         view.backgroundColor = UIColor.lightGray
+    }
+    
+    private func setupNavigation(){
+        let titleLabel = UILabel()
+        titleLabel.text = "마이페이지"
+        titleLabel.textColor = .white
+        titleLabel.font = .boldSystemFont(ofSize: 20) // 🔥 크기 키우기
+        titleLabel.textAlignment = .left
+
+        let titleItem = UIBarButtonItem(customView: titleLabel)
+        navigationItem.leftBarButtonItem = titleItem
+        
+        
         
     }
     
+    @objc private func tappedManagedButton(){
+
+        let accountVC = AccountSettingViewController()
+        navigationController?.pushViewController(accountVC, animated: true)
+    }
     
 
     /*

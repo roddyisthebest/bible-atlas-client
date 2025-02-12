@@ -26,13 +26,24 @@ class MainTabBarController: UITabBarController {
         // 각 VC를 UINavigationController로 감싸기
         let homeNav = UINavigationController(rootViewController: homeVC)
         let searchNav = UINavigationController(rootViewController: searchVC)
+        let myInfoNav = UINavigationController(rootViewController: myInfoVC)
+
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .thirdGray
+        appearance.titleTextAttributes = [ .foregroundColor: UIColor.white]
+        
+        
+        
+        myInfoNav.navigationBar.standardAppearance = appearance
+        myInfoNav.navigationBar.scrollEdgeAppearance = appearance
+
 
         
-              // 탭 바 아이템 설정
         homeNav.tabBarItem = UITabBarItem(title: "홈", image: UIImage(systemName: "house.fill"), tag: 0)
         searchNav.tabBarItem = UITabBarItem(title: "검색", image: UIImage(systemName: "magnifyingglass"), tag: 1)
-        myInfoVC.tabBarItem = UITabBarItem(title: "프로필", image: UIImage(systemName: "person.fill"), tag: 2)
-        self.viewControllers = [homeNav, searchNav, myInfoVC]
+        myInfoNav.tabBarItem = UITabBarItem(title: "프로필", image: UIImage(systemName: "person.fill"), tag: 2)
+        self.viewControllers = [homeNav, searchNav, myInfoNav]
     }
     
     
