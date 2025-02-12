@@ -151,7 +151,8 @@ class MyInfoViewController: UIViewController {
         button.setTitle("모두 보기", for: .normal)
         button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12);
         button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-
+        
+        button.addTarget(self, action: #selector(tappedFirstSectionHeaderButton), for:.touchUpInside)
         return button;
     }()
     
@@ -444,6 +445,23 @@ class MyInfoViewController: UIViewController {
         navigationController?.pushViewController(accountVC, animated: true)
     }
     
+    @objc private func tappedFirstSectionHeaderButton(){
+        let myActivitiesVC = MyActivitiesViewController();
+        myActivitiesVC.modalPresentationStyle = .fullScreen;
+        
+        let transition = CATransition();
+        
+        transition.duration = 0.3;
+        
+        transition.type = .push;
+        transition.subtype = .fromRight;
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+ 
+        view.window?.layer.add(transition, forKey: kCATransition)
+        
+        present(myActivitiesVC, animated:false )
+
+    }
 
     /*
     // MARK: - Navigation

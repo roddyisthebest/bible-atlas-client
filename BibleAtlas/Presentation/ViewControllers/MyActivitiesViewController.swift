@@ -1,54 +1,102 @@
 //
-//  HomeViewController.swift
+//  MyActivitiesViewController.swift
 //  BibleAtlas
 //
-//  Created by 배성연 on 2/4/25.
+//  Created by 배성연 on 2/12/25.
 //
 
 import UIKit
-import SnapKit
 
-final class HomeViewController: UIViewController{
-    
-    private var moreFetching = false // ✅ 중복 호출 방지
+final class MyActivitiesViewController: UIViewController {
+
+    private var moreFetching = false
 
     private var dummyData = ["Apple", "Banana", "Cherry", "Date", "Elderberry"]
 
     private let tableView = UITableView()
+    
+    private lazy var navigationBar: UINavigationBar = {
+        let navBar = UINavigationBar()
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .thirdGray
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+         
+        navBar.standardAppearance = appearance
+        navBar.scrollEdgeAppearance = appearance
+        
+        
+        let navItem = UINavigationItem(title: "내 활동기록")
+        
+        let backButton = UIButton(type: .system)
+        backButton.setTitle("Back", for: .normal)
+        backButton.setTitleColor(.systemBlue, for: .normal)
+        backButton.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+        
+        let boldConfig = UIImage.SymbolConfiguration(weight: .bold)
+        let backImage = UIImage(systemName: "chevron.left", withConfiguration: boldConfig)
+        backButton.setImage(backImage, for: .normal)
+        
+        backButton.tintColor = .systemBlue
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
 
+        backButton.contentHorizontalAlignment = .left
+        backButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 5)
+
+        let backBarButtonItem = UIBarButtonItem(customView: backButton) // ✅ 커스텀 뷰 적용
+        navItem.leftBarButtonItem = backBarButtonItem
+        navBar.setItems([navItem], animated: false)
+        return navBar
+     }()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setTitle()
         setupStyle();
+        setupNavigationBar();
         setupTable();
         setupConstraint();
-        setupNavigationBar();
         setupRefreshControl();
+        
+    }
+    
+    private func setupNavigationBar(){
+        view.addSubview(navigationBar);
     }
     
     
+    
+
     private func setupConstraint(){
-        view.addSubview(tableView);
+
+        navigationBar.snp.makeConstraints{ make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide);
+            make.height.equalTo(40)
+        }
+        
+        
         
         tableView.snp.makeConstraints{make in
-            make.leading.trailing.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
-            make.bottom.equalToSuperview().inset(10)
+            make.leading.trailing.bottom.equalToSuperview()
+            make.top.equalTo(navigationBar.snp.bottom)
         }
+        
+        
+        
     }
     
     private func setupTable(){
+        view.addSubview(tableView);
         tableView.register(ActivityCell.self, forCellReuseIdentifier: ActivityCell.identifier)
         tableView.dataSource = self;
         tableView.delegate = self;
     }
     
-    private func setTitle(titleText:String = "활동(300)"){
-        navigationItem.title = titleText
-    }
+
     
     private func setupStyle(){
-        view.backgroundColor = .tabbarGray
+        view.backgroundColor = .thirdGray
 
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
@@ -62,22 +110,12 @@ final class HomeViewController: UIViewController{
            navigationBar.scrollEdgeAppearance = appearance
         }
         
-        tableView.backgroundColor = .tabbarGray;
+        tableView.backgroundColor = .thirdGray;
     }
 
     
-    private func setupNavigationBar(){
-        
-        let addButton = UIBarButtonItem(
-            image: UIImage(systemName: "plus.circle"),
-            style: .plain,
-            target: self,
-            action: #selector(rightButtonTapped)
-        )
-        addButton.tintColor = UIColor.white
 
-        navigationItem.rightBarButtonItem = addButton
-    }
+    
     
     private func setupRefreshControl(){
         let refreshControl = UIRefreshControl();
@@ -87,6 +125,20 @@ final class HomeViewController: UIViewController{
     }
   
     @objc private func rightButtonTapped(){
+    }
+    
+    @objc private func backButtonTapped(){
+        let transition = CATransition();
+        
+        transition.duration = 0.3;
+        
+        transition.type = .push;
+        transition.subtype = .fromLeft;
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+ 
+        view.window?.layer.add(transition, forKey: kCATransition)
+        
+        dismiss(animated: false)
     }
     
     
@@ -128,7 +180,8 @@ final class HomeViewController: UIViewController{
 }
 
 
-extension HomeViewController: UITableViewDataSource{
+
+extension MyActivitiesViewController: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dummyData.count;
@@ -145,7 +198,7 @@ extension HomeViewController: UITableViewDataSource{
     }
 }
 
-extension HomeViewController:UITableViewDelegate {
+extension MyActivitiesViewController:UITableViewDelegate {
         
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 300
@@ -154,7 +207,7 @@ extension HomeViewController:UITableViewDelegate {
 }
 
 
-extension HomeViewController: UIScrollViewDelegate{
+extension MyActivitiesViewController: UIScrollViewDelegate{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
            let offsetY = scrollView.contentOffset.y
            let contentHeight = scrollView.contentSize.height
