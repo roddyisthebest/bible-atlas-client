@@ -12,6 +12,7 @@
 		39B9D8CDDF5E2F1957E7A42C /* Pods_BibleAtlas.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC275028A6E0F37DC7A90D5 /* Pods_BibleAtlas.framework */; };
 		EC0652442D5C6FA9006EABC9 /* AccountSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0652432D5C6FA9006EABC9 /* AccountSettingCell.swift */; };
 		EC0652462D5C8919006EABC9 /* MyActivitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0652452D5C8919006EABC9 /* MyActivitiesViewController.swift */; };
+		EC0652482D5C9FC2006EABC9 /* MyAlertsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0652472D5C9FC2006EABC9 /* MyAlertsViewController.swift */; };
 		ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B962D5082B9005B0428 /* AppDelegate.swift */; };
 		ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B982D5082B9005B0428 /* SceneDelegate.swift */; };
 		ECA94B9B2D5082B9005B0428 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B9A2D5082B9005B0428 /* ViewController.swift */; };
@@ -74,6 +75,7 @@
 		DA55ABE10F06790553768BDF /* Pods_BibleAtlas_BibleAtlasUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BibleAtlas_BibleAtlasUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC0652432D5C6FA9006EABC9 /* AccountSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingCell.swift; sourceTree = "<group>"; };
 		EC0652452D5C8919006EABC9 /* MyActivitiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActivitiesViewController.swift; sourceTree = "<group>"; };
+		EC0652472D5C9FC2006EABC9 /* MyAlertsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAlertsViewController.swift; sourceTree = "<group>"; };
 		ECA94B932D5082B9005B0428 /* BibleAtlas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BibleAtlas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECA94B962D5082B9005B0428 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ECA94B982D5082B9005B0428 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 				ECA94BFF2D520F8A005B0428 /* MainTabBarControllerViewController.swift */,
 				ECADA5822D5B3EF7005E1E95 /* AccountSettingViewController.swift */,
 				EC0652452D5C8919006EABC9 /* MyActivitiesViewController.swift */,
+				EC0652472D5C9FC2006EABC9 /* MyAlertsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -647,6 +650,7 @@
 				ECA94C002D520F8A005B0428 /* MainTabBarControllerViewController.swift in Sources */,
 				ECA94BA12D5082B9005B0428 /* BibleAtlas.xcdatamodeld in Sources */,
 				ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */,
+				EC0652482D5C9FC2006EABC9 /* MyAlertsViewController.swift in Sources */,
 				ECA94BD52D5094F1005B0428 /* User.swift in Sources */,
 				ECA94C0B2D53494A005B0428 /* Constants.swift in Sources */,
 			);

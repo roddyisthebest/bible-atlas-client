@@ -66,9 +66,13 @@ class MyInfoViewController: UIViewController {
         return imageView
     }()
     
-    private let pointButtonContainerView: UIView = {
+    
+    private let spacerView = UIView()
+
+
+    
+    private let pointButtonWrapperView: UIView = {
         let view = UIView()
-        
         return view
     }()
     
@@ -126,11 +130,17 @@ class MyInfoViewController: UIViewController {
         return st;
     }();
     
+    
+
+    
+    
     let firstSectionHeaderStackView = {
         let st = UIStackView();
         st.axis = .horizontal;
         st.alignment = .fill;
-        st.distribution = .equalSpacing
+        st.distribution = .fill
+        st.isLayoutMarginsRelativeArrangement = true
+        st.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         return st;
     }();
     
@@ -141,6 +151,8 @@ class MyInfoViewController: UIViewController {
         label.textColor = .white;
         return label;
     }();
+    
+    
     
     let firstSectionHeaderButton = {
         let button = UIButton();
@@ -188,7 +200,10 @@ class MyInfoViewController: UIViewController {
         let st = UIStackView();
         st.axis = .horizontal;
         st.alignment = .fill;
-        st.distribution = .equalSpacing
+        st.distribution = .fill
+        st.isLayoutMarginsRelativeArrangement = true
+        st.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+
         return st;
     }();
     
@@ -209,6 +224,8 @@ class MyInfoViewController: UIViewController {
         button.setTitle("모두 보기", for: .normal)
         button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12);
         button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+
+        button.addTarget(self, action: #selector(tappedSecondSectionHeaderButton), for:.touchUpInside)
 
         return button;
     }()
@@ -309,24 +326,28 @@ class MyInfoViewController: UIViewController {
         
         headerStackView.addArrangedSubview(imageView)
         headerStackView.addArrangedSubview(headerUserInfoStackView)
-        headerStackView.addArrangedSubview(pointButtonContainerView);
+        headerStackView.addArrangedSubview(spacerView)
+        headerStackView.addArrangedSubview(pointButtonWrapperView)
         
         headerUserInfoStackView.addArrangedSubview(userNameStackView);
         userNameStackView.addArrangedSubview(userNameLabel);
         userNameStackView.addArrangedSubview(crownIcon);
-        
-        pointButtonContainerView.addSubview(pointButton)
-        
+
+
         headerUserInfoStackView.addArrangedSubview(manageAccountButton)
         
-        
+        pointButtonWrapperView.addSubview(pointButton)
+
         safeWrapperView.addSubview(firstSectionStackView);
+        
         firstSectionStackView.addArrangedSubview(firstSectionHeaderStackView);
-        firstSectionStackView.addArrangedSubview(collectionView);
+        firstSectionStackView.addArrangedSubview(collectionView)
     
         firstSectionHeaderStackView.addArrangedSubview(firstSectionHeaderLabel);
         firstSectionHeaderStackView.addArrangedSubview(firstSectionHeaderButton);
         
+    
+
         safeWrapperView.addSubview(secondSectionStackView);
         secondSectionStackView.addArrangedSubview(secondSectionHeaderStackView);
 
@@ -342,7 +363,7 @@ class MyInfoViewController: UIViewController {
     
     private func setupConstraint(){
         safeWrapperView.snp.makeConstraints{make in
-            make.top.trailing.leading.bottom.equalTo(view.safeAreaLayoutGuide);
+            make.edges.equalTo(view.safeAreaLayoutGuide).inset(0)
         }
         
         headerWrapperView.snp.makeConstraints{make in
@@ -359,43 +380,49 @@ class MyInfoViewController: UIViewController {
             make.width.equalTo(65);
             make.height.equalTo(65);
         }
-        
+
         
         crownIcon.snp.makeConstraints{make in
             make.width.equalTo(20);
             make.height.equalTo(20);
         }
         
-        pointButtonContainerView.snp.makeConstraints { make in
-            make.top.equalTo(headerWrapperView.snp.top)
-            make.bottom.equalTo(headerWrapperView.snp.bottom)
+        pointButtonWrapperView.snp.makeConstraints { make in
+            make.width.equalTo(90)
+            make.top.equalTo(headerStackView.snp.top).offset(10)
+
+        }
         
+        spacerView.snp.makeConstraints { make in
+            make.width.greaterThanOrEqualTo(1) // 최소한의 공간 유지
         }
 
+        
+
+        
         pointButton.snp.makeConstraints { make in
-            make.trailing.equalTo(pointButtonContainerView.snp.trailing)
-            make.top.equalTo(pointButtonContainerView.snp.top).offset(15)
-            make.width.equalTo(90);
+            make.top.equalToSuperview()
+            make.width.equalToSuperview()
             make.height.equalTo(40)
         }
         
         firstSectionStackView.snp.makeConstraints{ make in
-            make.top.equalTo(headerWrapperView.snp.bottom).offset(35);
+            make.top.equalTo(headerStackView.snp.bottom).offset(40);
             make.leading.equalTo(view.safeAreaLayoutGuide);
             make.trailing.equalTo(view.safeAreaLayoutGuide);
         }
         
+
         
         firstSectionHeaderStackView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().inset(20)
+            make.width.equalToSuperview()
         }
         
+
         
         collectionView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
-            make.top.equalToSuperview().offset(50)
-            make.height.equalTo(110) // 카드 높이 설정
+            make.height.equalTo(110)
         }
         
         
@@ -407,14 +434,15 @@ class MyInfoViewController: UIViewController {
         
         
         secondSectionHeaderStackView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().inset(20)
+            make.width.equalToSuperview()
         }
         
+
         
         tableView.snp.makeConstraints{ make in
-            make.leading.trailing.bottom.equalToSuperview()
-            make.top.equalTo(secondSectionStackView.snp.bottom).offset(20)
+            make.bottom.equalToSuperview()
+            make.top.equalTo(secondSectionStackView.snp.bottom).offset(10)
+            make.trailing.leading.equalTo(view.safeAreaLayoutGuide).inset(10)
         }
         
 
@@ -460,6 +488,25 @@ class MyInfoViewController: UIViewController {
         view.window?.layer.add(transition, forKey: kCATransition)
         
         present(myActivitiesVC, animated:false )
+
+    }
+    
+    
+    @objc private func tappedSecondSectionHeaderButton(){
+        let myAlertsVC = MyAlertsViewController();
+        myAlertsVC.modalPresentationStyle = .fullScreen;
+        
+        let transition = CATransition();
+        
+        transition.duration = 0.3;
+        
+        transition.type = .push;
+        transition.subtype = .fromRight;
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+ 
+        view.window?.layer.add(transition, forKey: kCATransition)
+        
+        present(myAlertsVC, animated:false )
 
     }
 

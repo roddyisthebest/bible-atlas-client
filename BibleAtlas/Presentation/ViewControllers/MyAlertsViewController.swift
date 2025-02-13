@@ -1,17 +1,18 @@
 //
-//  MyActivitiesViewController.swift
+//  MyAlertsViewController.swift
 //  BibleAtlas
 //
 //  Created by 배성연 on 2/12/25.
 //
-
+//MyAlertsViewController
 import UIKit
 
-final class MyActivitiesViewController: UIViewController {
+final class MyAlertsViewController: UIViewController {
 
     private var moreFetching = false
+    private var refreshing = false
 
-    private var dummyData = ["Apple", "Banana", "Cherry", "Date", "Elderberry"]
+    private var dummyData = ["Apple", "Banana", "Cherry", "Date", "Elderberry","Apple", "Banana", "Cherry", "Date", "Elderberry"]
 
     private let tableView = UITableView()
     
@@ -34,7 +35,7 @@ final class MyActivitiesViewController: UIViewController {
         backButton.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         
         let boldConfig = UIImage.SymbolConfiguration(weight: .bold)
-        let backImage = UIImage(systemName: "chevron.left", withConfiguration: boldConfig) // ✅ 적용
+        let backImage = UIImage(systemName: "chevron.left", withConfiguration: boldConfig)
         backButton.setImage(backImage, for: .normal)
         
         backButton.tintColor = .systemBlue
@@ -88,7 +89,7 @@ final class MyActivitiesViewController: UIViewController {
     
     private func setupTable(){
         view.addSubview(tableView);
-        tableView.register(ActivityCell.self, forCellReuseIdentifier: ActivityCell.identifier)
+        tableView.register(AlertCell.self, forCellReuseIdentifier: AlertCell.identifier)
         tableView.dataSource = self;
         tableView.delegate = self;
     }
@@ -143,16 +144,17 @@ final class MyActivitiesViewController: UIViewController {
     
     
     private func resetData(){
-        dummyData = ["Apple", "Banana", "Cherry", "Date", "Elderberry"]
+        dummyData = ["Apple", "Banana", "Cherry", "Date", "Elderberry","Apple", "Banana", "Cherry", "Date", "Elderberry"]
     }
     
     private func loadMoreData(){
-        guard !moreFetching else { return }
+        guard !moreFetching && !refreshing else { return }
         moreFetching = true;
+        
         
         DispatchQueue.global().async{
             
-            let newData = ["Item \( self.dummyData.count + 1)", "Item \(self.dummyData.count + 2)"]
+            let newData = ["Apple", "Banana", "Cherry", "Date", "Elderberry","Apple", "Banana", "Cherry", "Date", "Elderberry"]
             self.dummyData.append(contentsOf: newData)
             
             
@@ -164,7 +166,8 @@ final class MyActivitiesViewController: UIViewController {
     }
     
     @objc private func refreshData(){
-        guard !moreFetching else { return }
+        guard !moreFetching && !refreshing else { return }
+        refreshing = true;
         
         DispatchQueue.global().async{
             self.resetData();
@@ -172,25 +175,29 @@ final class MyActivitiesViewController: UIViewController {
             DispatchQueue.main.asyncAfter(deadline:.now() + 1.5){
                 self.tableView.reloadData();
                 self.tableView.refreshControl?.endRefreshing();
+                self.refreshing = false;
             }
         }
         
     }
+    
+
 
 }
 
 
 
-extension MyActivitiesViewController: UITableViewDataSource{
+extension MyAlertsViewController: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dummyData.count;
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ActivityCell.identifier , for: indexPath) as? ActivityCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: AlertCell.identifier , for: indexPath) as? AlertCell else {
             return  UITableViewCell()
         }
+
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
         
@@ -198,16 +205,16 @@ extension MyActivitiesViewController: UITableViewDataSource{
     }
 }
 
-extension MyActivitiesViewController:UITableViewDelegate {
+extension MyAlertsViewController:UITableViewDelegate {
         
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300
+        return 100
     }
 
 }
 
 
-extension MyActivitiesViewController: UIScrollViewDelegate{
+extension MyAlertsViewController: UIScrollViewDelegate{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
            let offsetY = scrollView.contentOffset.y
            let contentHeight = scrollView.contentSize.height

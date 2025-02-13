@@ -46,17 +46,6 @@ class AccountSettingCell: UITableViewCell {
     }
     
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupUI();
-        setupConstraints()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-    
-    
     private func setupUI() {
         backgroundColor = .clear
         contentView.addSubview(titleLabel)
@@ -65,7 +54,7 @@ class AccountSettingCell: UITableViewCell {
     }
     
     
-    private func setupConstraints(){
+    private func setupConstraint(){
         titleLabel.snp.makeConstraints{ make in
             make.leading.equalToSuperview().offset(15)
             make.centerY.equalToSuperview()
@@ -82,10 +71,8 @@ class AccountSettingCell: UITableViewCell {
             make.width.height.equalTo(15)
         }
     }
-    
-    
 
-    func configure(title: String, showArrow: Bool, detailText: String? = nil, isDestructive: Bool = false){
+     func configure(title: String, showArrow: Bool, detailText: String? = nil, isDestructive: Bool = false){
         titleLabel.text = title;
         
         arrowImageView.isHidden = !showArrow;
@@ -97,7 +84,6 @@ class AccountSettingCell: UITableViewCell {
             titleLabel.textColor = .red
         }
     }
-    
     
     
 }
