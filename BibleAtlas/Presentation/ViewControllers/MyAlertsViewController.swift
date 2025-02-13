@@ -10,219 +10,172 @@ import UIKit
 final class MyAlertsViewController: UIViewController {
 
     private var moreFetching = false
-    private var refreshing = false
-
     private var dummyData = ["Apple", "Banana", "Cherry", "Date", "Elderberry","Apple", "Banana", "Cherry", "Date", "Elderberry"]
-
+    
     private let tableView = UITableView()
-    
-    private lazy var navigationBar: UINavigationBar = {
-        let navBar = UINavigationBar()
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .thirdGray
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-         
-        navBar.standardAppearance = appearance
-        navBar.scrollEdgeAppearance = appearance
-        
-        
-        let navItem = UINavigationItem(title: "내 활동기록")
-        
-        let backButton = UIButton(type: .system)
-        backButton.setTitle("Back", for: .normal)
-        backButton.setTitleColor(.systemBlue, for: .normal)
-        backButton.titleLabel?.font = UIFont.systemFont(ofSize: 18)
-        
-        let boldConfig = UIImage.SymbolConfiguration(weight: .bold)
-        let backImage = UIImage(systemName: "chevron.left", withConfiguration: boldConfig)
-        backButton.setImage(backImage, for: .normal)
-        
-        backButton.tintColor = .systemBlue
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
 
-        backButton.contentHorizontalAlignment = .left
-        backButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 5)
+    private lazy var filterWrapperView: UIView = {
+        let wrapperView = UIView()
+        wrapperView.backgroundColor = .thirdGray
+   
+        wrapperView.addSubview(sortButton)
 
-        let backBarButtonItem = UIBarButtonItem(customView: backButton) // ✅ 커스텀 뷰 적용
-        navItem.leftBarButtonItem = backBarButtonItem
-        navBar.setItems([navItem], animated: false)
-        return navBar
-     }()
-    
-    
+        return wrapperView
+    }()
+
+    private let sortButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .tabbarGray
+        button.layer.cornerRadius = 8
+        button.layer.masksToBounds = true
+        button.setTitle("정렬기준", for: .normal)
+        
+        button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+        button.setImage(UIImage(systemName: "chevron.down"),for:.normal);
+        button.tintColor = .white;
+        button.imageView?.contentMode = .scaleAspectFit;
+        
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 5)
+        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: -5)
+        
+       
+        button.titleLabel?.font = .boldSystemFont(ofSize: 14);
+        return button
+    }()
+
+    private let sortButton2: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .tabbarGray
+        button.layer.cornerRadius = 8
+        button.layer.masksToBounds = true
+        button.setTitle("여름엔덥게", for: .normal)
+        
+        button.setContentHuggingPriority(.defaultHigh, for: .horizontal)  // ✨ 너비를 자동 조정하도록 설정
+        button.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)  // ✨ 내용이 줄어들지 않도록 설정
+        
+       
+        return button
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupStyle();
-        setupNavigationBar();
-        setupTable();
-        setupConstraint();
-        setupRefreshControl();
-        
+        setupUI()
+        setupStyle()
+        setupTable()
+        setupConstraints()
+        setupRefreshControl()
+        setupNavigationBar()
     }
-    
-    private func setupNavigationBar(){
-        view.addSubview(navigationBar);
+
+    private func setupUI() {
+        view.addSubview(filterWrapperView)
+        view.addSubview(tableView)
     }
-    
-    
-    
 
-    private func setupConstraint(){
-
-        navigationBar.snp.makeConstraints{ make in
-            make.leading.trailing.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide);
-            make.height.equalTo(40)
+    private func setupConstraints() {
+        filterWrapperView.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20);
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(5)
+            make.height.equalTo(50)
         }
-        
-        
-        
-        tableView.snp.makeConstraints{make in
+
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(filterWrapperView.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
-            make.top.equalTo(navigationBar.snp.bottom)
         }
         
         
+        sortButton.snp.makeConstraints{ make in
+            make.leading.equalToSuperview();
+            make.centerY.equalToSuperview();
+        }
         
     }
-    
-    private func setupTable(){
-        view.addSubview(tableView);
+
+    private func setupTable() {
         tableView.register(AlertCell.self, forCellReuseIdentifier: AlertCell.identifier)
-        tableView.dataSource = self;
-        tableView.delegate = self;
+        tableView.dataSource = self
+        tableView.delegate = self
     }
-    
 
-    
-    private func setupStyle(){
+    private func setupNavigationBar() {
+        navigationItem.title = "내 알림"
+    }
+
+    private func setupStyle() {
         view.backgroundColor = .thirdGray
+        tableView.backgroundColor = .thirdGray
+    }
 
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor.thirdGray
-        appearance.titleTextAttributes = [
-            .foregroundColor: UIColor.white,
-        ]
+    private func setupRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+    }
 
-        if let navigationBar = navigationController?.navigationBar {
-           navigationBar.standardAppearance = appearance
-           navigationBar.scrollEdgeAppearance = appearance
+    
+
+    @objc private func refreshData() {
+        guard !moreFetching else { return }
+
+        DispatchQueue.global().async {
+            self.resetData()
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.tableView.reloadData()
+                self.tableView.refreshControl?.endRefreshing()
+            }
         }
-        
-        tableView.backgroundColor = .thirdGray;
     }
 
-    
-
-    
-    
-    private func setupRefreshControl(){
-        let refreshControl = UIRefreshControl();
-        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged);
-        tableView.refreshControl = refreshControl;
-        
-    }
-  
-    @objc private func rightButtonTapped(){
-    }
-    
-    @objc private func backButtonTapped(){
-        let transition = CATransition();
-        
-        transition.duration = 0.3;
-        
-        transition.type = .push;
-        transition.subtype = .fromLeft;
-        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
- 
-        view.window?.layer.add(transition, forKey: kCATransition)
-        
-        dismiss(animated: false)
-    }
-    
-    
-    private func resetData(){
+    private func resetData() {
         dummyData = ["Apple", "Banana", "Cherry", "Date", "Elderberry","Apple", "Banana", "Cherry", "Date", "Elderberry"]
     }
-    
-    private func loadMoreData(){
-        guard !moreFetching && !refreshing else { return }
-        moreFetching = true;
-        
-        
-        DispatchQueue.global().async{
-            
-            let newData = ["Apple", "Banana", "Cherry", "Date", "Elderberry","Apple", "Banana", "Cherry", "Date", "Elderberry"]
+
+    private func loadMoreData() {
+        guard !moreFetching else { return }
+        moreFetching = true
+
+        DispatchQueue.global().async {
+            let newData = ["Item \(self.dummyData.count + 1)", "Item \(self.dummyData.count + 2)"]
             self.dummyData.append(contentsOf: newData)
-            
-            
-            DispatchQueue.main.async{
-                self.tableView.reloadData();
+
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
                 self.moreFetching = false
             }
         }
     }
-    
-    @objc private func refreshData(){
-        guard !moreFetching && !refreshing else { return }
-        refreshing = true;
-        
-        DispatchQueue.global().async{
-            self.resetData();
-        
-            DispatchQueue.main.asyncAfter(deadline:.now() + 1.5){
-                self.tableView.reloadData();
-                self.tableView.refreshControl?.endRefreshing();
-                self.refreshing = false;
-            }
-        }
-        
-    }
-    
-
-
 }
 
-
-
-extension MyAlertsViewController: UITableViewDataSource{
-    
+// ✅ UITableView DataSource & Delegate
+extension MyAlertsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dummyData.count;
+        return dummyData.count
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: AlertCell.identifier , for: indexPath) as? AlertCell else {
-            return  UITableViewCell()
-        }
 
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: AlertCell.identifier, for: indexPath) as? AlertCell else {
+            return UITableViewCell()
+        }
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
-        
-        return cell;
+        return cell
     }
-}
 
-extension MyAlertsViewController:UITableViewDelegate {
-        
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
-
 }
 
-
-extension MyAlertsViewController: UIScrollViewDelegate{
+// ✅ UIScrollViewDelegate (Infinite Scroll)
+extension MyAlertsViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-           let offsetY = scrollView.contentOffset.y
-           let contentHeight = scrollView.contentSize.height
-           let frameHeight = scrollView.frame.size.height
-           
-           // ✅ 스크롤이 제일 밑에 도달했을 때 실행
-           if offsetY + frameHeight >= contentHeight - 10 { // 약간의 여유 (10px)
-               loadMoreData()
-           }
-       }
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let frameHeight = scrollView.frame.size.height
+
+        if offsetY + frameHeight >= contentHeight - 10 {
+            loadMoreData()
+        }
+    }
 }

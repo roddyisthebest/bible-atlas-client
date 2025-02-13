@@ -10,7 +10,7 @@ import UIKit
 final class MyActivitiesViewController: UIViewController {
 
     private var moreFetching = false
-    private var dummyData = ["Apple", "Banana", "Cherry", "Date", "Elderberry"]
+    private var dummyData = ["Apple", "Banana", "Cherry", "Date", "Elderberry",]
 
     private let tableView = UITableView()
 
