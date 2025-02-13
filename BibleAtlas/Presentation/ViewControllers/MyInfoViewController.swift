@@ -164,7 +164,7 @@ class MyInfoViewController: UIViewController {
         button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12);
         button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         
-        button.addTarget(self, action: #selector(tappedFirstSectionHeaderButton), for:.touchUpInside)
+        button.addTarget(self, action: #selector(openMyActivitiesVC), for:.touchUpInside)
         return button;
     }()
     
@@ -300,6 +300,7 @@ class MyInfoViewController: UIViewController {
         appearance.shadowColor = .clear
 
         navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.prefersLargeTitles = false
 
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
@@ -310,7 +311,11 @@ class MyInfoViewController: UIViewController {
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .thirdGray
         appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-    
+        appearance.largeTitleTextAttributes = [
+             .foregroundColor: UIColor.white,
+             .font: UIFont.boldSystemFont(ofSize: 32) 
+         ]
+        
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
@@ -460,6 +465,7 @@ class MyInfoViewController: UIViewController {
         titleLabel.font = .boldSystemFont(ofSize: 20) // 🔥 크기 키우기
         titleLabel.textAlignment = .left
 
+        
         let titleItem = UIBarButtonItem(customView: titleLabel)
         navigationItem.leftBarButtonItem = titleItem
         
@@ -473,22 +479,9 @@ class MyInfoViewController: UIViewController {
         navigationController?.pushViewController(accountVC, animated: true)
     }
     
-    @objc private func tappedFirstSectionHeaderButton(){
+    @objc private func openMyActivitiesVC(){
         let myActivitiesVC = MyActivitiesViewController();
-        myActivitiesVC.modalPresentationStyle = .fullScreen;
-        
-        let transition = CATransition();
-        
-        transition.duration = 0.3;
-        
-        transition.type = .push;
-        transition.subtype = .fromRight;
-        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
- 
-        view.window?.layer.add(transition, forKey: kCATransition)
-        
-        present(myActivitiesVC, animated:false )
-
+        navigationController?.pushViewController(myActivitiesVC, animated: true)
     }
     
     

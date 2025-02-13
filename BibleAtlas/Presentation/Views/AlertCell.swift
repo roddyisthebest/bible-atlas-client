@@ -130,46 +130,46 @@ class AlertCell: UITableViewCell {
             
         }
         
-        stackView.snp.makeConstraints{ make in
-            make.leading.top.equalToSuperview().offset(10);
-            make.trailing.bottom.equalToSuperview().inset(10)
-        }
-        
-        alertImageWrapperView.snp.makeConstraints{make in
-            make.width.equalTo(50)
-            make.height.equalTo(50)
-
-        }
-        
-        alertImageView.snp.makeConstraints{make in
-            make.width.equalTo(30);
-            make.height.equalTo(30);
-            make.trailing.bottom.equalToSuperview().inset(10);
-        }
-        
- 
-        
-        
-        contentStackView.snp.makeConstraints{make in
-            make.trailing.equalToSuperview().inset(10)
-        }
-        
-        titleStackView.snp.makeConstraints{make in
-            make.width.equalToSuperview()
-        }
+//        stackView.snp.makeConstraints{ make in
+//            make.leading.top.equalToSuperview().offset(10);
+//            make.trailing.bottom.equalToSuperview().inset(10)
+//        }
+//        
+//        alertImageWrapperView.snp.makeConstraints{make in
+//            make.width.equalTo(50)
+//            make.height.equalTo(50)
+//
+//        }
+//        
+//        alertImageView.snp.makeConstraints{make in
+//            make.width.equalTo(30);
+//            make.height.equalTo(30);
+//            make.trailing.bottom.equalToSuperview().inset(10);
+//        }
+//        
+// 
+//        
+//        
+//        contentStackView.snp.makeConstraints{make in
+//            make.trailing.equalToSuperview().inset(10)
+//        }
+//        
+//        titleStackView.snp.makeConstraints{make in
+//            make.width.equalToSuperview()
+//        }
         
     }
     
     private func setupUI(){
         contentView.addSubview(wrapperView);
-        wrapperView.addSubview(stackView);
-        stackView.addArrangedSubview(alertImageWrapperView)
-        alertImageWrapperView.addSubview(alertImageView);
-        stackView.addArrangedSubview(contentStackView);
-        contentStackView.addArrangedSubview(titleStackView);
-        contentStackView.addArrangedSubview(contentLabel)
-        titleStackView.addArrangedSubview(titleLabel);
-        titleStackView.addArrangedSubview(timeLabel);
+//        wrapperView.addSubview(stackView);
+//        stackView.addArrangedSubview(alertImageWrapperView)
+//        alertImageWrapperView.addSubview(alertImageView);
+//        stackView.addArrangedSubview(contentStackView);
+//        contentStackView.addArrangedSubview(titleStackView);
+//        contentStackView.addArrangedSubview(contentLabel)
+//        titleStackView.addArrangedSubview(titleLabel);
+//        titleStackView.addArrangedSubview(timeLabel);
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

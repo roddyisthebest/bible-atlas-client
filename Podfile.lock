@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.8.1)
+  - FloatingPanel (2.8.6)
   - OHHTTPStubs (9.1.0):
     - OHHTTPStubs/Default (= 9.1.0)
   - OHHTTPStubs/Core (9.1.0)
@@ -25,6 +26,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - FloatingPanel
   - OHHTTPStubs
   - OHHTTPStubs/Swift
   - RxCocoa
@@ -34,6 +36,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - FloatingPanel
     - OHHTTPStubs
     - RxCocoa
     - RxRelay
@@ -42,12 +45,13 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
+  FloatingPanel: 11559d3700c39f1c2ee8dbb7a5415223b52fdce0
   OHHTTPStubs: 90eac6d8f2c18317baeca36698523dc67c513831
   RxCocoa: 2d33c1e1e5d66492052ad46b11024ae287572880
   RxRelay: 335c78b926a2aea8d863a6d25f1ed3b5ad8e8705
   RxSwift: 4e28be97cbcfeee614af26d83415febbf2bf6f45
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
 
-PODFILE CHECKSUM: 5f15881764e3b987e70ceedfa79e97f83829de14
+PODFILE CHECKSUM: a89776ca10916e0717113fd6697075a369e67018
 
 COCOAPODS: 1.16.2

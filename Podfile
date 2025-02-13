@@ -11,7 +11,8 @@ target 'BibleAtlas' do
     pod "OHHTTPStubs/Swift" 
     pod "RxSwift"
     pod "RxCocoa"
-    pod "SnapKit"   	
+    pod "SnapKit"
+    pod "FloatingPanel"  	
 
   target 'BibleAtlasTests' do
     inherit! :search_paths

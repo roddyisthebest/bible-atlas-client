@@ -13,6 +13,7 @@
 		EC0652442D5C6FA9006EABC9 /* AccountSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0652432D5C6FA9006EABC9 /* AccountSettingCell.swift */; };
 		EC0652462D5C8919006EABC9 /* MyActivitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0652452D5C8919006EABC9 /* MyActivitiesViewController.swift */; };
 		EC0652482D5C9FC2006EABC9 /* MyAlertsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0652472D5C9FC2006EABC9 /* MyAlertsViewController.swift */; };
+		EC06524A2D5DEAA1006EABC9 /* SortSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0652492D5DEAA1006EABC9 /* SortSelectionViewController.swift */; };
 		ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B962D5082B9005B0428 /* AppDelegate.swift */; };
 		ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B982D5082B9005B0428 /* SceneDelegate.swift */; };
 		ECA94B9B2D5082B9005B0428 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B9A2D5082B9005B0428 /* ViewController.swift */; };
@@ -76,6 +77,7 @@
 		EC0652432D5C6FA9006EABC9 /* AccountSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingCell.swift; sourceTree = "<group>"; };
 		EC0652452D5C8919006EABC9 /* MyActivitiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActivitiesViewController.swift; sourceTree = "<group>"; };
 		EC0652472D5C9FC2006EABC9 /* MyAlertsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAlertsViewController.swift; sourceTree = "<group>"; };
+		EC0652492D5DEAA1006EABC9 /* SortSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortSelectionViewController.swift; sourceTree = "<group>"; };
 		ECA94B932D5082B9005B0428 /* BibleAtlas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BibleAtlas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECA94B962D5082B9005B0428 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ECA94B982D5082B9005B0428 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 				ECADA5822D5B3EF7005E1E95 /* AccountSettingViewController.swift */,
 				EC0652452D5C8919006EABC9 /* MyActivitiesViewController.swift */,
 				EC0652472D5C9FC2006EABC9 /* MyAlertsViewController.swift */,
+				EC0652492D5DEAA1006EABC9 /* SortSelectionViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -641,6 +644,7 @@
 				ECA94BCC2D508D1E005B0428 /* DefaultSession.swift in Sources */,
 				ECA94BD12D509377005B0428 /* NetworkError.swift in Sources */,
 				ECA94BD72D50977A005B0428 /* NetworkManager.swift in Sources */,
+				EC06524A2D5DEAA1006EABC9 /* SortSelectionViewController.swift in Sources */,
 				ECA94BDD2D50A59E005B0428 /* AuthNetworkManager.swift in Sources */,
 				ECA94BEB2D50B0B9005B0428 /* AuthUsecase.swift in Sources */,
 				ECA94BE52D50AE92005B0428 /* AuthRepositoryProtocol.swift in Sources */,
