@@ -9,8 +9,35 @@ import UIKit
 
 final class AccountSettingViewController: UIViewController {
     
+    private lazy var titleView = {
+        let view = UIView();
+        view.addSubview(backButton);
+        view.addSubview(titleLabel);
+        return view;
+    }();
     private let tableView = UITableView(frame:.zero,style:.plain)
-
+    
+    
+    private lazy var backButton:UIButton = {
+        let button = UIButton();
+        
+        let icon = UIImage(systemName: "xmark");
+        button.setImage(icon, for: .normal);
+        button.imageView?.contentMode = .scaleAspectFit;
+        button.tintColor = .white;
+        button.addTarget(self, action: #selector(backbuttonTapped), for: .touchUpInside)
+        return button;
+    }();
+ 
+    
+    private let titleLabel = {
+        let label = UILabel();
+        label.text = "설정"
+        label.font = .boldSystemFont(ofSize: 22)
+        label.textColor = .white;
+        return label;
+    }()
+    
     
     private let sections: [(title: String, showArrow: Bool, detailText: String?, isDestructive: Bool)] = [
         ("고객센터 문의하기", true, nil, false),
@@ -42,6 +69,8 @@ final class AccountSettingViewController: UIViewController {
     }
     
     private func setupUI(){
+        
+        view.addSubview(titleView);
         view.addSubview(tableView)
         tableView.dataSource = self
         tableView.delegate = self
@@ -49,13 +78,35 @@ final class AccountSettingViewController: UIViewController {
     }
     
     private func setupConstraint(){
+        
+        titleView.snp.makeConstraints{make in
+            make.top.equalTo(view.safeAreaLayoutGuide);
+            make.leading.trailing.equalToSuperview().inset(10);
+            make.height.equalTo(30)
+        }
+        
+        backButton.snp.makeConstraints{make in
+            make.height.equalTo(22);
+            make.width.equalTo(22);
+            make.leading.equalToSuperview().offset(10);
+            make.centerY.equalToSuperview()
+        }
+        
+        titleLabel.snp.makeConstraints{make in
+            make.leading.equalTo(backButton.snp.trailing).offset(10);
+            make.centerY.equalToSuperview()
+        }
+        
         tableView.snp.makeConstraints { make in
             make.bottom.leading.trailing.equalToSuperview();
-            make.top.equalToSuperview().offset(5)
+            make.top.equalTo(titleView.snp.bottom).offset(10)
          }
     }
 
     
+    @objc private func backbuttonTapped(){
+        dismiss(animated: true)
+    }
 
 }
 

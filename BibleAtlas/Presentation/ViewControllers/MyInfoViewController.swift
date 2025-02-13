@@ -476,7 +476,9 @@ class MyInfoViewController: UIViewController {
     @objc private func tappedManagedButton(){
 
         let accountVC = AccountSettingViewController()
-        navigationController?.pushViewController(accountVC, animated: true)
+        accountVC.modalPresentationStyle = .fullScreen
+
+        present(accountVC,animated: true)
     }
     
     @objc private func openMyActivitiesVC(){
