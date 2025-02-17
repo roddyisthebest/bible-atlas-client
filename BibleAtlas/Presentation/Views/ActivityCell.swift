@@ -61,7 +61,12 @@ class ActivityCell: UITableViewCell {
             make.top.equalToSuperview().offset(10);
             make.bottom.equalToSuperview().inset(10)
         }
-            
+
     }
 
+    override func prepareForReuse() {
+           super.prepareForReuse()
+           // ✅ 기존 뷰를 유지하여 성능 최적화
+    }
+    
 }

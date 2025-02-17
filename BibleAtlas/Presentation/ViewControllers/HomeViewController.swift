@@ -32,8 +32,8 @@ final class HomeViewController: UIViewController{
         
         tableView.snp.makeConstraints{make in
             make.leading.trailing.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
-            make.bottom.equalToSuperview().inset(10)
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalToSuperview()
         }
     }
     
@@ -117,9 +117,9 @@ final class HomeViewController: UIViewController{
         DispatchQueue.global().async{
             self.resetData();
         
-            DispatchQueue.main.asyncAfter(deadline:.now() + 1.5){
+            DispatchQueue.main.async {
                 self.tableView.reloadData();
-                self.tableView.refreshControl?.endRefreshing();
+                self.tableView.refreshControl?.endRefreshing()
             }
         }
         
@@ -140,9 +140,10 @@ extension HomeViewController: UITableViewDataSource{
         }
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
-        
+
         return cell;
     }
+    
 }
 
 extension HomeViewController:UITableViewDelegate {
