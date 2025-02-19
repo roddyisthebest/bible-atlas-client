@@ -13,7 +13,8 @@ final class SearchViewController: UIViewController {
     
     private let backButton = {
         let button =  UIButton();
-        button.setImage(UIImage(systemName: "chevron.left"),for:.normal)
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 18, weight: .bold)
+        button.setImage(UIImage(systemName: "chevron.left",withConfiguration: largeConfig),for:.normal)
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         return button;
     }();
