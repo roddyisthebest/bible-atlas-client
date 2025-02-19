@@ -1,151 +1,149 @@
-//
-//  SearchViewController.swift
-//  BibleAtlas
-//
-//  Created by 배성연 on 2/4/25.
-//
-
 import UIKit
+import SnapKit
 
-class SearchViewController: UIViewController {
-
+final class SearchViewController: UIViewController {
     
-    let bibleImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named:"bibleImage"));
-        imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
-        imageView.backgroundColor = .clear
-        imageView.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
-        return imageView;
+    private let tableView = {
+        let tv = UITableView();
+        tv.backgroundColor = .backgroundDark
+        tv.separatorStyle = .singleLine
+        tv.separatorColor = .lightGray
+        return tv;
     }()
     
-    lazy var buttonStackView:UIStackView = {
-        let st = UIStackView();
-        st.axis = .vertical;
-        st.alignment = .fill;
-        st.distribution = .fillEqually;
-        st.spacing = 10.0;
-        
-        st.addArrangedSubview(imageSearchButton)
-        st.addArrangedSubview(keywordSearchButton)
-        st.addArrangedSubview(bibleSearchButton)
-        return st;
+    private let backButton = {
+        let button =  UIButton();
+        button.setImage(UIImage(systemName: "chevron.left"),for:.normal)
+        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        return button;
     }();
     
-    let imageSearchButton:UIButton = {
-        let button = UIButton()
-        button.backgroundColor = UIColor.thirdGray
-        button.setTitleColor(.white, for: .normal)
-        button.setTitle("이미지로 검색하기", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        
-        let iconConfig = UIImage.SymbolConfiguration(pointSize: 18, weight: .medium)
-        let icon = UIImage(systemName: "photo.artframe", withConfiguration: iconConfig)?
-            .withTintColor(.primaryViolet, renderingMode: .alwaysOriginal)
-        
-        button.setImage(icon, for: .normal)
-        button.contentHorizontalAlignment = .left
-            
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0);
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 0);
-        
-
-        button.layer.cornerRadius = 8;
-        return button
+    private let searchTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Search..."
+        textField.backgroundColor = .thirdGray
+        textField.textColor = .white // 텍스트 색상 설정 (필요 시)
+        textField.borderStyle = .roundedRect // UI 스타일 적용
+        return textField
     }()
     
-    
-    let keywordSearchButton:UIButton = {
-        let button = UIButton()
-        button.backgroundColor = UIColor.thirdGray
-        button.setTitleColor(.white, for: .normal)
-        button.setTitle("키워드로 검색하기", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        
-        let iconConfig = UIImage.SymbolConfiguration(pointSize: 18, weight: .medium)
-        let icon = UIImage(systemName: "captions.bubble.fill", withConfiguration: iconConfig)?
-            .withTintColor(.primaryViolet, renderingMode: .alwaysOriginal)
-        
-        button.setImage(icon, for: .normal)
-        button.contentHorizontalAlignment = .left
-            
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0);
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 0);
-        
+    private lazy var searchContainer = {
+        let container = UIView();
+        container.addSubview(backButton)
+        container.addSubview(searchTextField)
 
-        button.layer.cornerRadius = 8;
-        return button
-    }()
+        return container
+    }();
     
     
-    let bibleSearchButton:UIButton = {
-        let button = UIButton()
-        button.backgroundColor = UIColor.thirdGray
-        button.setTitleColor(.white, for: .normal)
-        button.setTitle("성경으로 검색하기", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        
-        let iconConfig = UIImage.SymbolConfiguration(pointSize: 18, weight: .medium)
-        let icon = UIImage(systemName: "book.fill", withConfiguration: iconConfig)?
-            .withTintColor(.primaryViolet, renderingMode: .alwaysOriginal)
-        
-        button.setImage(icon, for: .normal)
-        button.contentHorizontalAlignment = .left
-            
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0);
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 0);
-        
-
-        button.layer.cornerRadius = 8;
-        return button
-    }()
     
+    private var data = ["Apple", "Banana", "Cherry", "Date", "Fig", "Grapes"] // 더미 데이터
+    private var filteredData: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupStyle();
+        view.backgroundColor = .white
+        filteredData = data  // 초기 데이터 설정
         setupUI();
-        setupConstraint();
+        setupSearchBar()
+        setupTableView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        activateTextField()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true) // 화면 터치 시 키보드 내리기
+    }
+
+    
+    private func setupSearchBar() {
+        searchTextField.delegate = self
+        
+        searchContainer.snp.makeConstraints{make in
+            make.top.trailing.leading.equalTo(view.safeAreaLayoutGuide);
+            make.height.equalTo(50)
+            
+        }
+        
+        backButton.snp.makeConstraints{make in
+            make.height.width.equalTo(30)
+            make.leading.equalToSuperview().offset(20);
+            make.centerY.equalToSuperview();
+        }
+        searchTextField.snp.makeConstraints{make in
+
+            make.leading.equalTo(backButton.snp.trailing).offset(10)
+            make.trailing.equalToSuperview().inset(20);
+            make.height.equalTo(40);
+            make.centerY.equalToSuperview();
+        }
+    }
+    
+    private func setupTableView() {
+        tableView.frame = view.bounds
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        tableView.register(SearchCell.self, forCellReuseIdentifier: SearchCell.identifier)
+        
+        tableView.snp.makeConstraints{make in
+            make.leading.trailing.equalToSuperview();
+            make.bottom.equalToSuperview();
+            make.top.equalTo(searchContainer.snp.bottom)
+        }
         
     }
     
     private func setupUI(){
-        view.addSubview(bibleImageView);
-        view.addSubview(buttonStackView);
+        view.addSubview(searchContainer)
+        view.addSubview(tableView)
+        view.backgroundColor = .backgroundDark
     }
     
-    private func setupConstraint(){
-        bibleImageView.snp.makeConstraints{make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(30);
-            make.trailing.leading.equalToSuperview().offset(20);
-            make.height.equalTo(200)
-        }
-        
-        buttonStackView.snp.makeConstraints{make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(30)
-            make.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().offset(-20);
-
-        }
-        
-        imageSearchButton.snp.makeConstraints{make in make.height.equalTo(65)}
-        keywordSearchButton.snp.makeConstraints{make in make.height.equalTo(65)}
-        bibleSearchButton.snp.makeConstraints{make in make.height.equalTo(65)}
+    private func activateTextField(){
+        searchTextField.becomeFirstResponder()
     }
     
-    private func setupStyle(){
-        view.backgroundColor = .tabbarGray
+    
+    @objc private func backButtonTapped(){
+        dismiss(animated: false)
+    }
+    
 
+    
+}
+
+extension SearchViewController:UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return filteredData.count
     }
 
-    /*
-    // MARK: - Navigation
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchCell.identifier , for: indexPath) as? SearchCell else {
+            return  UITableViewCell()
+        }
+        
+        cell.configure(keyword: filteredData[indexPath.row])
+    
+        return cell
     }
-    */
+}
 
+
+
+extension SearchViewController:UITextFieldDelegate{
+    
+}
+
+
+extension SearchViewController:UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
+    }
 }

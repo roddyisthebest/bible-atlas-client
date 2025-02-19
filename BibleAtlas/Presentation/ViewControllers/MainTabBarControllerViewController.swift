@@ -17,7 +17,7 @@ class MainTabBarController: UITabBarController {
 
     private func setupTabs() {
         let homeVC = HomeViewController()
-        let searchVC = SearchViewController()
+        let searchOptionVC = SearchOptionViewController()
         let myInfoVC = MyInfoViewController()
 
         
@@ -25,7 +25,7 @@ class MainTabBarController: UITabBarController {
         
         // 각 VC를 UINavigationController로 감싸기
         let homeNav = UINavigationController(rootViewController: homeVC)
-        let searchNav = UINavigationController(rootViewController: searchVC)
+        let searchNav = UINavigationController(rootViewController: searchOptionVC)
         let myInfoNav = UINavigationController(rootViewController: myInfoVC)
 
         let appearance = UINavigationBarAppearance()
