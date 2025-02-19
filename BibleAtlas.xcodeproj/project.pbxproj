@@ -16,6 +16,7 @@
 		EC06524A2D5DEAA1006EABC9 /* SortSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0652492D5DEAA1006EABC9 /* SortSelectionViewController.swift */; };
 		EC06524C2D62D315006EABC9 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC06524B2D62D315006EABC9 /* SearchViewController.swift */; };
 		EC06524E2D656EE6006EABC9 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC06524D2D656EE6006EABC9 /* SearchCell.swift */; };
+		EC0652502D660188006EABC9 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC06524F2D660188006EABC9 /* DetailViewController.swift */; };
 		ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B962D5082B9005B0428 /* AppDelegate.swift */; };
 		ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B982D5082B9005B0428 /* SceneDelegate.swift */; };
 		ECA94B9B2D5082B9005B0428 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B9A2D5082B9005B0428 /* ViewController.swift */; };
@@ -82,6 +83,7 @@
 		EC0652492D5DEAA1006EABC9 /* SortSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortSelectionViewController.swift; sourceTree = "<group>"; };
 		EC06524B2D62D315006EABC9 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		EC06524D2D656EE6006EABC9 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
+		EC06524F2D660188006EABC9 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		ECA94B932D5082B9005B0428 /* BibleAtlas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BibleAtlas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECA94B962D5082B9005B0428 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ECA94B982D5082B9005B0428 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -342,6 +344,7 @@
 				EC0652472D5C9FC2006EABC9 /* MyAlertsViewController.swift */,
 				EC0652492D5DEAA1006EABC9 /* SortSelectionViewController.swift */,
 				EC06524B2D62D315006EABC9 /* SearchViewController.swift */,
+				EC06524F2D660188006EABC9 /* DetailViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -633,6 +636,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ECA94C0F2D5B08B1005B0428 /* AlertCell.swift in Sources */,
+				EC0652502D660188006EABC9 /* DetailViewController.swift in Sources */,
 				EC06524E2D656EE6006EABC9 /* SearchCell.swift in Sources */,
 				ECA94C032D52F00C005B0428 /* AppCoordinator.swift in Sources */,
 				EC0652462D5C8919006EABC9 /* MyActivitiesViewController.swift in Sources */,

@@ -120,7 +120,9 @@ final class SearchViewController: UIViewController {
     }
     
     private func activateTextField(){
-        searchTextField.becomeFirstResponder()
+        DispatchQueue.main.async {
+               self.activateTextField() // 🔹 비동기적으로 실행
+        }
     }
     
     
@@ -161,5 +163,14 @@ extension SearchViewController:UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        print("tabbed")
+        let detailVC = DetailViewController()
+        detailVC.modalPresentationStyle = .fullScreen
+        present(detailVC,animated: true)
+//        navigationController?.pushViewController(detailVC, animated: true)
     }
 }
