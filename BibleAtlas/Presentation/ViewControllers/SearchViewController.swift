@@ -16,6 +16,7 @@ final class SearchViewController: UIViewController {
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 18, weight: .bold)
         button.setImage(UIImage(systemName: "chevron.left",withConfiguration: largeConfig),for:.normal)
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        button.tintColor = .white
         return button;
     }();
     
@@ -23,8 +24,22 @@ final class SearchViewController: UIViewController {
         let textField = UITextField()
         textField.placeholder = "Search..."
         textField.backgroundColor = .thirdGray
-        textField.textColor = .white // 텍스트 색상 설정 (필요 시)
-        textField.borderStyle = .roundedRect // UI 스타일 적용
+        textField.textColor = .white
+        textField.borderStyle = .roundedRect
+        
+  
+         textField.attributedPlaceholder = NSAttributedString(
+             string: "Search...",
+             attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
+         )
+
+      
+         let iconImageView = UIImageView(image: UIImage(systemName: "magnifyingglass"))
+         iconImageView.tintColor = .white
+
+         textField.rightView = iconImageView
+         textField.leftViewMode = .always
+        
         return textField
     }()
     
