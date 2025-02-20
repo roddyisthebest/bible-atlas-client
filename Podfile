@@ -12,7 +12,8 @@ target 'BibleAtlas' do
     pod "RxSwift"
     pod "RxCocoa"
     pod "SnapKit"
-    pod "FloatingPanel"  	
+    pod "FloatingPanel"
+    pod "MarkdownView" 	
 
   target 'BibleAtlasTests' do
     inherit! :search_paths
