@@ -12,7 +12,7 @@ final class HomeViewController: UIViewController{
     
     private var moreFetching = false // ✅ 중복 호출 방지
 
-    private var dummyData = ["Apple", "Banana", "Cherry", "Date", "Elderberry"]
+    private var dummyData = ["여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ asdasdsdasdasdsdsdasd", "여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ asdasdsdasdasdsdsdasd여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ asdasdsdasdasdsdsdasd", "여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇ", "여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ asdasdsdasdasdsdsdasd", "여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇasd"]
 
     private let tableView = UITableView()
 
@@ -41,6 +41,8 @@ final class HomeViewController: UIViewController{
         tableView.register(ActivityCell.self, forCellReuseIdentifier: ActivityCell.identifier)
         tableView.dataSource = self;
         tableView.delegate = self;
+        tableView.rowHeight = UITableView.automaticDimension // ✅ 셀 높이를 자동 조절
+        tableView.estimatedRowHeight = 300 // ✅ 예상 높이 (초기값)
     }
     
     private func setTitle(titleText:String = "활동(300)"){
@@ -91,7 +93,7 @@ final class HomeViewController: UIViewController{
     
     
     private func resetData(){
-        dummyData = ["Apple", "Banana", "Cherry", "Date", "Elderberry"]
+        dummyData = ["여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ asdasdsdasdasdsdsdasd", "여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ asdasdsdasdasdsdsdasd여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ asdasdsdasdasdsdsdasd", "여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇ", "여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ asdasdsdasdasdsdsdasd", "여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㅁㄴㅇ여기ㅇㅁㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇasd"]
     }
     
     private func loadMoreData(){
@@ -140,19 +142,22 @@ extension HomeViewController: UITableViewDataSource{
         }
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
+        
+        cell.configure(text: dummyData[indexPath.row])
 
         return cell;
     }
     
 }
 
-extension HomeViewController:UITableViewDelegate {
-        
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300
-    }
 
+extension HomeViewController:UITableViewDelegate{
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//          return 300
+//      }
 }
+
+
 
 
 extension HomeViewController: UIScrollViewDelegate{
