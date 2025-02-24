@@ -17,6 +17,7 @@
 		EC06524C2D62D315006EABC9 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC06524B2D62D315006EABC9 /* SearchViewController.swift */; };
 		EC06524E2D656EE6006EABC9 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC06524D2D656EE6006EABC9 /* SearchCell.swift */; };
 		EC0652502D660188006EABC9 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC06524F2D660188006EABC9 /* DetailViewController.swift */; };
+		EC0652522D676E08006EABC9 /* CreateVoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0652512D676E08006EABC9 /* CreateVoteViewController.swift */; };
 		ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B962D5082B9005B0428 /* AppDelegate.swift */; };
 		ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B982D5082B9005B0428 /* SceneDelegate.swift */; };
 		ECA94B9B2D5082B9005B0428 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B9A2D5082B9005B0428 /* ViewController.swift */; };
@@ -84,6 +85,7 @@
 		EC06524B2D62D315006EABC9 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		EC06524D2D656EE6006EABC9 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		EC06524F2D660188006EABC9 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		EC0652512D676E08006EABC9 /* CreateVoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateVoteViewController.swift; sourceTree = "<group>"; };
 		ECA94B932D5082B9005B0428 /* BibleAtlas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BibleAtlas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECA94B962D5082B9005B0428 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ECA94B982D5082B9005B0428 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 				EC0652492D5DEAA1006EABC9 /* SortSelectionViewController.swift */,
 				EC06524B2D62D315006EABC9 /* SearchViewController.swift */,
 				EC06524F2D660188006EABC9 /* DetailViewController.swift */,
+				EC0652512D676E08006EABC9 /* CreateVoteViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -661,6 +664,7 @@
 				ECA94BEB2D50B0B9005B0428 /* AuthUsecase.swift in Sources */,
 				ECA94BE52D50AE92005B0428 /* AuthRepositoryProtocol.swift in Sources */,
 				ECA94BEF2D50B492005B0428 /* MockingApi.swift in Sources */,
+				EC0652522D676E08006EABC9 /* CreateVoteViewController.swift in Sources */,
 				ECA94C082D534684005B0428 /* ActivityCell.swift in Sources */,
 				ECA94BF82D51AE28005B0428 /* LoginViewController.swift in Sources */,
 				ECA94C002D520F8A005B0428 /* MainTabBarControllerViewController.swift in Sources */,

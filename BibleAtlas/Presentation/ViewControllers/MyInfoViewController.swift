@@ -483,12 +483,15 @@ class MyInfoViewController: UIViewController {
     
     @objc private func openMyActivitiesVC(){
         let myActivitiesVC = MyActivitiesViewController();
+        myActivitiesVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(myActivitiesVC, animated: true)
     }
     
     
     @objc private func openMyAlertsVC(){
         let myAlertsVC = MyAlertsViewController();
+        myAlertsVC.hidesBottomBarWhenPushed = true
+
         navigationController?.pushViewController(myAlertsVC, animated: true)
 
     }
