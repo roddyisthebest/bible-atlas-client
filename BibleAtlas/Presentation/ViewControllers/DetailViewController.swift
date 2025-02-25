@@ -385,7 +385,7 @@ class DetailViewController: UIViewController {
               longitudinalMeters: regionRadius
           )
           mapView.setRegion(coordinateRegion, animated: true)
-      }
+    }
     
     private func addAnnotation(latitude: CLLocationDegrees, longitude: CLLocationDegrees, title: String, subtitle: String?) {
         let annotation = MKPointAnnotation()

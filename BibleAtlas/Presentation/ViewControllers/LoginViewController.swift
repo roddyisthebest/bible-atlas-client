@@ -215,7 +215,7 @@ extension UIColor {
     static let lightGray = UIColor(hex:"#5D5D5D")
     static let lightestGray = UIColor(hex:"#DBDBDB")
     static let tabbarGray = UIColor(hex:"#404040")
-    
+    static let wrapperGray = UIColor(hex:"#5D5D5D")
     
     static let activityCreationBGColor = UIColor(hex:"#E2F3FF")
     static let activityCreationTextColor = UIColor(hex:"#57B9FF")

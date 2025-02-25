@@ -89,7 +89,7 @@ final class HomeViewController: UIViewController{
     }
   
     @objc private func rightButtonTapped(){
-        let createVoteVC = CreateVoteViewController();
+        let createVoteVC = DeleteVoteViewController();
         createVoteVC.hidesBottomBarWhenPushed = true
 
         navigationController?.pushViewController(createVoteVC, animated: true)
