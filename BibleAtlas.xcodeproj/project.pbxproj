@@ -20,6 +20,8 @@
 		EC0652522D676E08006EABC9 /* CreateVoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0652512D676E08006EABC9 /* CreateVoteViewController.swift */; };
 		EC0652572D6C6D8B006EABC9 /* DeleteVoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0652562D6C6D8B006EABC9 /* DeleteVoteViewController.swift */; };
 		EC0652592D6C72A6006EABC9 /* LocationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0652582D6C72A6006EABC9 /* LocationCard.swift */; };
+		EC06525B2D6D869A006EABC9 /* UpdateVoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC06525A2D6D869A006EABC9 /* UpdateVoteViewController.swift */; };
+		EC06525E2D6D9841006EABC9 /* ScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC06525D2D6D9841006EABC9 /* ScrollViewController.swift */; };
 		ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B962D5082B9005B0428 /* AppDelegate.swift */; };
 		ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B982D5082B9005B0428 /* SceneDelegate.swift */; };
 		ECA94B9B2D5082B9005B0428 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B9A2D5082B9005B0428 /* ViewController.swift */; };
@@ -90,6 +92,8 @@
 		EC0652512D676E08006EABC9 /* CreateVoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateVoteViewController.swift; sourceTree = "<group>"; };
 		EC0652562D6C6D8B006EABC9 /* DeleteVoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteVoteViewController.swift; sourceTree = "<group>"; };
 		EC0652582D6C72A6006EABC9 /* LocationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCard.swift; sourceTree = "<group>"; };
+		EC06525A2D6D869A006EABC9 /* UpdateVoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateVoteViewController.swift; sourceTree = "<group>"; };
+		EC06525D2D6D9841006EABC9 /* ScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewController.swift; sourceTree = "<group>"; };
 		ECA94B932D5082B9005B0428 /* BibleAtlas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BibleAtlas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECA94B962D5082B9005B0428 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ECA94B982D5082B9005B0428 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -353,6 +357,8 @@
 				EC06524F2D660188006EABC9 /* DetailViewController.swift */,
 				EC0652512D676E08006EABC9 /* CreateVoteViewController.swift */,
 				EC0652562D6C6D8B006EABC9 /* DeleteVoteViewController.swift */,
+				EC06525A2D6D869A006EABC9 /* UpdateVoteViewController.swift */,
+				EC06525D2D6D9841006EABC9 /* ScrollViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -651,6 +657,7 @@
 				EC0652462D5C8919006EABC9 /* MyActivitiesViewController.swift in Sources */,
 				EC0652572D6C6D8B006EABC9 /* DeleteVoteViewController.swift in Sources */,
 				ECADA5832D5B3EF7005E1E95 /* AccountSettingViewController.swift in Sources */,
+				EC06525E2D6D9841006EABC9 /* ScrollViewController.swift in Sources */,
 				ECA94BE82D50AF41005B0428 /* AuthRepository.swift in Sources */,
 				ECA94BDA2D509AFF005B0428 /* AuthManager.swift in Sources */,
 				ECA94BFE2D520CEF005B0428 /* MyInfoViewController.swift in Sources */,
@@ -675,6 +682,7 @@
 				EC0652592D6C72A6006EABC9 /* LocationCard.swift in Sources */,
 				ECA94C082D534684005B0428 /* ActivityCell.swift in Sources */,
 				ECA94BF82D51AE28005B0428 /* LoginViewController.swift in Sources */,
+				EC06525B2D6D869A006EABC9 /* UpdateVoteViewController.swift in Sources */,
 				ECA94C002D520F8A005B0428 /* MainTabBarControllerViewController.swift in Sources */,
 				ECA94BA12D5082B9005B0428 /* BibleAtlas.xcdatamodeld in Sources */,
 				ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */,
