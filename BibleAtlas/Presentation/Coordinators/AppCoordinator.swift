@@ -46,36 +46,16 @@ class AppCoordinator:AppCoordinatorProtocol{
     }
     
     func showMainTabFlow() {
-        let mainTabBarController = UITabBarController()
-        let homeVC = HomeViewController()
-        let searchVC = SearchViewController()
-        let myInfoViewVC = MyInfoViewController()
         
-        homeVC.tabBarItem = UITabBarItem(title: "홈", image: UIImage(systemName: "house.fill"), tag: 0)
-        searchVC.tabBarItem = UITabBarItem(title: "검색", image: UIImage(systemName: "magnifyingglass"), tag: 1)
-        myInfoViewVC.tabBarItem = UITabBarItem(title: "프로필", image: UIImage(systemName: "person.fill"), tag: 2)
 
-        mainTabBarController.viewControllers = [homeVC, searchVC, myInfoViewVC]
+        let mainTabBarController = MainTabBarController()
 
         window?.rootViewController = mainTabBarController
         window?.makeKeyAndVisible()
     }
     
     func start(){
-        let session = DefaultSession();
-        let networkManager = NetworkManager(session: session, authManager: AuthManager.shared)
-        
-        let authNetworkManager = AuthNetworkManager(manager: networkManager, url: "https://api.bible-atlas.com/auth")
-        
-        let authRP = AuthRepository(networkManager: authNetworkManager);
-        
-        let authUC = AuthUsecase(repository:authRP);
-        let loginVM = LoginViewModel(authUsecase: authUC);
-        let loginVC = LoginViewController(loginViewModel: loginVM, appCoordinator: self);
-        
-        
-        window?.rootViewController = loginVC;
-        window?.makeKeyAndVisible();
+        showMainTabFlow()
     }
     
   

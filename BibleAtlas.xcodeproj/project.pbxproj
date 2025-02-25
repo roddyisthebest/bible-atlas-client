@@ -10,6 +10,18 @@
 		1AA065047DE92DF69959A910 /* Pods_BibleAtlas_BibleAtlasUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA55ABE10F06790553768BDF /* Pods_BibleAtlas_BibleAtlasUITests.framework */; };
 		296CB238BA49943CA6B4BDF2 /* Pods_BibleAtlasTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EA6D60ADC15852CAC915A09 /* Pods_BibleAtlasTests.framework */; };
 		39B9D8CDDF5E2F1957E7A42C /* Pods_BibleAtlas.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC275028A6E0F37DC7A90D5 /* Pods_BibleAtlas.framework */; };
+		EC0652442D5C6FA9006EABC9 /* AccountSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0652432D5C6FA9006EABC9 /* AccountSettingCell.swift */; };
+		EC0652462D5C8919006EABC9 /* MyActivitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0652452D5C8919006EABC9 /* MyActivitiesViewController.swift */; };
+		EC0652482D5C9FC2006EABC9 /* MyAlertsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0652472D5C9FC2006EABC9 /* MyAlertsViewController.swift */; };
+		EC06524A2D5DEAA1006EABC9 /* SortSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0652492D5DEAA1006EABC9 /* SortSelectionViewController.swift */; };
+		EC06524C2D62D315006EABC9 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC06524B2D62D315006EABC9 /* SearchViewController.swift */; };
+		EC06524E2D656EE6006EABC9 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC06524D2D656EE6006EABC9 /* SearchCell.swift */; };
+		EC0652502D660188006EABC9 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC06524F2D660188006EABC9 /* DetailViewController.swift */; };
+		EC0652522D676E08006EABC9 /* CreateVoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0652512D676E08006EABC9 /* CreateVoteViewController.swift */; };
+		EC0652572D6C6D8B006EABC9 /* DeleteVoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0652562D6C6D8B006EABC9 /* DeleteVoteViewController.swift */; };
+		EC0652592D6C72A6006EABC9 /* LocationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0652582D6C72A6006EABC9 /* LocationCard.swift */; };
+		EC06525B2D6D869A006EABC9 /* UpdateVoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC06525A2D6D869A006EABC9 /* UpdateVoteViewController.swift */; };
+		EC06525E2D6D9841006EABC9 /* ScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC06525D2D6D9841006EABC9 /* ScrollViewController.swift */; };
 		ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B962D5082B9005B0428 /* AppDelegate.swift */; };
 		ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B982D5082B9005B0428 /* SceneDelegate.swift */; };
 		ECA94B9B2D5082B9005B0428 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B9A2D5082B9005B0428 /* ViewController.swift */; };
@@ -32,10 +44,15 @@
 		ECA94BF42D51ADAF005B0428 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BF32D51ADAF005B0428 /* LoginViewModel.swift */; };
 		ECA94BF82D51AE28005B0428 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BF72D51AE28005B0428 /* LoginViewController.swift */; };
 		ECA94BFA2D520CC9005B0428 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BF92D520CC9005B0428 /* HomeViewController.swift */; };
-		ECA94BFC2D520CE1005B0428 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BFB2D520CE1005B0428 /* SearchViewController.swift */; };
+		ECA94BFC2D520CE1005B0428 /* SearchOptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BFB2D520CE1005B0428 /* SearchOptionViewController.swift */; };
 		ECA94BFE2D520CEF005B0428 /* MyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BFD2D520CEF005B0428 /* MyInfoViewController.swift */; };
 		ECA94C002D520F8A005B0428 /* MainTabBarControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BFF2D520F8A005B0428 /* MainTabBarControllerViewController.swift */; };
 		ECA94C032D52F00C005B0428 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94C022D52F00C005B0428 /* AppCoordinator.swift */; };
+		ECA94C082D534684005B0428 /* ActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94C072D534684005B0428 /* ActivityCell.swift */; };
+		ECA94C0B2D53494A005B0428 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94C0A2D53494A005B0428 /* Constants.swift */; };
+		ECA94C0D2D5A3714005B0428 /* ActivitySmallCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94C0C2D5A3714005B0428 /* ActivitySmallCell.swift */; };
+		ECA94C0F2D5B08B1005B0428 /* AlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94C0E2D5B08B1005B0428 /* AlertCell.swift */; };
+		ECADA5832D5B3EF7005E1E95 /* AccountSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECADA5822D5B3EF7005E1E95 /* AccountSettingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +82,18 @@
 		B99651049227BE5701E9D126 /* Pods-BibleAtlasTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlasTests.debug.xcconfig"; path = "Target Support Files/Pods-BibleAtlasTests/Pods-BibleAtlasTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CCF5D5F9277B71DAA500A8F2 /* Pods-BibleAtlas-BibleAtlasUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlas-BibleAtlasUITests.release.xcconfig"; path = "Target Support Files/Pods-BibleAtlas-BibleAtlasUITests/Pods-BibleAtlas-BibleAtlasUITests.release.xcconfig"; sourceTree = "<group>"; };
 		DA55ABE10F06790553768BDF /* Pods_BibleAtlas_BibleAtlasUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BibleAtlas_BibleAtlasUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC0652432D5C6FA9006EABC9 /* AccountSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingCell.swift; sourceTree = "<group>"; };
+		EC0652452D5C8919006EABC9 /* MyActivitiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActivitiesViewController.swift; sourceTree = "<group>"; };
+		EC0652472D5C9FC2006EABC9 /* MyAlertsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAlertsViewController.swift; sourceTree = "<group>"; };
+		EC0652492D5DEAA1006EABC9 /* SortSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortSelectionViewController.swift; sourceTree = "<group>"; };
+		EC06524B2D62D315006EABC9 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		EC06524D2D656EE6006EABC9 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
+		EC06524F2D660188006EABC9 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		EC0652512D676E08006EABC9 /* CreateVoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateVoteViewController.swift; sourceTree = "<group>"; };
+		EC0652562D6C6D8B006EABC9 /* DeleteVoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteVoteViewController.swift; sourceTree = "<group>"; };
+		EC0652582D6C72A6006EABC9 /* LocationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCard.swift; sourceTree = "<group>"; };
+		EC06525A2D6D869A006EABC9 /* UpdateVoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateVoteViewController.swift; sourceTree = "<group>"; };
+		EC06525D2D6D9841006EABC9 /* ScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewController.swift; sourceTree = "<group>"; };
 		ECA94B932D5082B9005B0428 /* BibleAtlas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BibleAtlas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECA94B962D5082B9005B0428 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ECA94B982D5082B9005B0428 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -91,10 +120,15 @@
 		ECA94BF32D51ADAF005B0428 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		ECA94BF72D51AE28005B0428 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		ECA94BF92D520CC9005B0428 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		ECA94BFB2D520CE1005B0428 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		ECA94BFB2D520CE1005B0428 /* SearchOptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOptionViewController.swift; sourceTree = "<group>"; };
 		ECA94BFD2D520CEF005B0428 /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
 		ECA94BFF2D520F8A005B0428 /* MainTabBarControllerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarControllerViewController.swift; sourceTree = "<group>"; };
 		ECA94C022D52F00C005B0428 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		ECA94C072D534684005B0428 /* ActivityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCell.swift; sourceTree = "<group>"; };
+		ECA94C0A2D53494A005B0428 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		ECA94C0C2D5A3714005B0428 /* ActivitySmallCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySmallCell.swift; sourceTree = "<group>"; };
+		ECA94C0E2D5B08B1005B0428 /* AlertCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertCell.swift; sourceTree = "<group>"; };
+		ECADA5822D5B3EF7005E1E95 /* AccountSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -282,6 +316,7 @@
 		ECA94BEC2D50B464005B0428 /* Helplers */ = {
 			isa = PBXGroup;
 			children = (
+				ECA94C092D53488B005B0428 /* Const */,
 				ECA94BED2D50B47A005B0428 /* Utils */,
 			);
 			path = Helplers;
@@ -299,6 +334,7 @@
 			isa = PBXGroup;
 			children = (
 				ECA94C012D52EFC0005B0428 /* Coordinators */,
+				ECA94C062D53464D005B0428 /* Views */,
 				ECA94BF22D51AD94005B0428 /* ViewModels */,
 				ECA94BF12D51AD7F005B0428 /* ViewControllers */,
 			);
@@ -310,9 +346,19 @@
 			children = (
 				ECA94BF72D51AE28005B0428 /* LoginViewController.swift */,
 				ECA94BF92D520CC9005B0428 /* HomeViewController.swift */,
-				ECA94BFB2D520CE1005B0428 /* SearchViewController.swift */,
+				ECA94BFB2D520CE1005B0428 /* SearchOptionViewController.swift */,
 				ECA94BFD2D520CEF005B0428 /* MyInfoViewController.swift */,
 				ECA94BFF2D520F8A005B0428 /* MainTabBarControllerViewController.swift */,
+				ECADA5822D5B3EF7005E1E95 /* AccountSettingViewController.swift */,
+				EC0652452D5C8919006EABC9 /* MyActivitiesViewController.swift */,
+				EC0652472D5C9FC2006EABC9 /* MyAlertsViewController.swift */,
+				EC0652492D5DEAA1006EABC9 /* SortSelectionViewController.swift */,
+				EC06524B2D62D315006EABC9 /* SearchViewController.swift */,
+				EC06524F2D660188006EABC9 /* DetailViewController.swift */,
+				EC0652512D676E08006EABC9 /* CreateVoteViewController.swift */,
+				EC0652562D6C6D8B006EABC9 /* DeleteVoteViewController.swift */,
+				EC06525A2D6D869A006EABC9 /* UpdateVoteViewController.swift */,
+				EC06525D2D6D9841006EABC9 /* ScrollViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -331,6 +377,27 @@
 				ECA94C022D52F00C005B0428 /* AppCoordinator.swift */,
 			);
 			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		ECA94C062D53464D005B0428 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				ECA94C072D534684005B0428 /* ActivityCell.swift */,
+				ECA94C0C2D5A3714005B0428 /* ActivitySmallCell.swift */,
+				ECA94C0E2D5B08B1005B0428 /* AlertCell.swift */,
+				EC0652432D5C6FA9006EABC9 /* AccountSettingCell.swift */,
+				EC06524D2D656EE6006EABC9 /* SearchCell.swift */,
+				EC0652582D6C72A6006EABC9 /* LocationCard.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		ECA94C092D53488B005B0428 /* Const */ = {
+			isa = PBXGroup;
+			children = (
+				ECA94C0A2D53494A005B0428 /* Constants.swift */,
+			);
+			path = Const;
 			sourceTree = "<group>";
 		};
 		FA9885F27C7E364B662974A9 /* Pods */ = {
@@ -583,28 +650,45 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECA94C0F2D5B08B1005B0428 /* AlertCell.swift in Sources */,
+				EC0652502D660188006EABC9 /* DetailViewController.swift in Sources */,
+				EC06524E2D656EE6006EABC9 /* SearchCell.swift in Sources */,
 				ECA94C032D52F00C005B0428 /* AppCoordinator.swift in Sources */,
+				EC0652462D5C8919006EABC9 /* MyActivitiesViewController.swift in Sources */,
+				EC0652572D6C6D8B006EABC9 /* DeleteVoteViewController.swift in Sources */,
+				ECADA5832D5B3EF7005E1E95 /* AccountSettingViewController.swift in Sources */,
+				EC06525E2D6D9841006EABC9 /* ScrollViewController.swift in Sources */,
 				ECA94BE82D50AF41005B0428 /* AuthRepository.swift in Sources */,
 				ECA94BDA2D509AFF005B0428 /* AuthManager.swift in Sources */,
 				ECA94BFE2D520CEF005B0428 /* MyInfoViewController.swift in Sources */,
 				ECA94B9B2D5082B9005B0428 /* ViewController.swift in Sources */,
+				ECA94C0D2D5A3714005B0428 /* ActivitySmallCell.swift in Sources */,
 				ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */,
-				ECA94BFC2D520CE1005B0428 /* SearchViewController.swift in Sources */,
+				EC06524C2D62D315006EABC9 /* SearchViewController.swift in Sources */,
+				ECA94BFC2D520CE1005B0428 /* SearchOptionViewController.swift in Sources */,
+				EC0652442D5C6FA9006EABC9 /* AccountSettingCell.swift in Sources */,
 				ECA94BF42D51ADAF005B0428 /* LoginViewModel.swift in Sources */,
 				ECA94BFA2D520CC9005B0428 /* HomeViewController.swift in Sources */,
 				ECA94BE12D50A739005B0428 /* AuthData.swift in Sources */,
 				ECA94BCC2D508D1E005B0428 /* DefaultSession.swift in Sources */,
 				ECA94BD12D509377005B0428 /* NetworkError.swift in Sources */,
 				ECA94BD72D50977A005B0428 /* NetworkManager.swift in Sources */,
+				EC06524A2D5DEAA1006EABC9 /* SortSelectionViewController.swift in Sources */,
 				ECA94BDD2D50A59E005B0428 /* AuthNetworkManager.swift in Sources */,
 				ECA94BEB2D50B0B9005B0428 /* AuthUsecase.swift in Sources */,
 				ECA94BE52D50AE92005B0428 /* AuthRepositoryProtocol.swift in Sources */,
 				ECA94BEF2D50B492005B0428 /* MockingApi.swift in Sources */,
+				EC0652522D676E08006EABC9 /* CreateVoteViewController.swift in Sources */,
+				EC0652592D6C72A6006EABC9 /* LocationCard.swift in Sources */,
+				ECA94C082D534684005B0428 /* ActivityCell.swift in Sources */,
 				ECA94BF82D51AE28005B0428 /* LoginViewController.swift in Sources */,
+				EC06525B2D6D869A006EABC9 /* UpdateVoteViewController.swift in Sources */,
 				ECA94C002D520F8A005B0428 /* MainTabBarControllerViewController.swift in Sources */,
 				ECA94BA12D5082B9005B0428 /* BibleAtlas.xcdatamodeld in Sources */,
 				ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */,
+				EC0652482D5C9FC2006EABC9 /* MyAlertsViewController.swift in Sources */,
 				ECA94BD52D5094F1005B0428 /* User.swift in Sources */,
+				ECA94C0B2D53494A005B0428 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -768,6 +852,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T76LKQ7QGR;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BibleAtlas/Info.plist;
@@ -775,6 +860,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -796,6 +882,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T76LKQ7QGR;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BibleAtlas/Info.plist;
@@ -803,6 +890,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

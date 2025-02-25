@@ -210,5 +210,24 @@ extension UIColor {
     static let secondaryGray = UIColor(hex: "#8E8E93")  // 시스템 그레이
     static let primaryInput = UIColor(hex: "#313131")
     static let primaryViolet = UIColor(hex: "#8160C4")
+    static let thirdGray = UIColor(hex:"#313131")
+    
+    static let lightGray = UIColor(hex:"#5D5D5D")
+    static let lightestGray = UIColor(hex:"#DBDBDB")
+    static let tabbarGray = UIColor(hex:"#404040")
+    static let wrapperGray = UIColor(hex:"#5D5D5D")
+    
+    static let activityCreationBGColor = UIColor(hex:"#E2F3FF")
+    static let activityCreationTextColor = UIColor(hex:"#57B9FF")
 
+    static let activityUpdateBGColor = UIColor(hex:"#E9FFE2")
+    static let activityUpdateTextColor = UIColor(hex:"#4ABD26")
+    
+    static let activityDeleteBGColor = UIColor(hex:"#FFEAEA")
+    static let activityDeleteTextColor = UIColor(hex:"#FF1D1D")
+    
+    static let upIconColor = UIColor(hex:"#47FF78");
+    static let downIconColor = UIColor(hex:"#FF5454");
+
+    
 }
