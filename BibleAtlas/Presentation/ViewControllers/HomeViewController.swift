@@ -157,9 +157,12 @@ extension HomeViewController: UITableViewDataSource{
 
 
 extension HomeViewController:UITableViewDelegate{
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//          return 300
-//      }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let createVoteDetailVC = CreateVoteDetailViewController();
+        createVoteDetailVC.hidesBottomBarWhenPushed = true;
+        
+        navigationController?.pushViewController(createVoteDetailVC, animated: true)
+    }
 }
 
 
