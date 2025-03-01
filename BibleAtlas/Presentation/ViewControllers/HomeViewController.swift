@@ -158,7 +158,7 @@ extension HomeViewController: UITableViewDataSource{
 
 extension HomeViewController:UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let createVoteDetailVC = CreateVoteDetailViewController();
+        let createVoteDetailVC = DeleteVoteDetailViewController();
         createVoteDetailVC.hidesBottomBarWhenPushed = true;
         
         navigationController?.pushViewController(createVoteDetailVC, animated: true)
