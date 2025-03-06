@@ -1,61 +1,17 @@
 //
-//  CreateVoteDetailViewController.swift
+//  UpdateVoteDetailView.swift
 //  BibleAtlas
 //
-//  Created by 배성연 on 2/26/25.
+//  Created by 배성연 on 3/3/25.
 //
 
 import UIKit
 import MapKit
 import MarkdownView
-import Markdown
-
-class CreateVoteDetailViewController: UIViewController {
+final class UpdateVoteDetailView: UIViewController {
     
-    
-    private let oldMarkdown = """
-        <style>
-        body { color: white !important; }
-        </style>
 
-        ### **🔹 로컬에서 배포하는 방법**
 
-        GitHub Actions을 사용하지 않고, 로컬에서 직접 배포를 실행할 수도 있습니다.
-
-        아래는 환경별 배포 명령어입니다.
-
-        #### **Curation 배포**
-
-        -   **스테이징 배포**
-            ```bash
-            yarn deploy:curation:stage
-            ```
-        -   **프로덕션 배포**
-            ```bash
-            yarn predeploy:curation:prod  # 빌드 전 기존 dist 삭제 후 빌드 실행
-            yarn deploy:curation:prod     # 배포 실행
-            ```
-
-        #### **Partners 배포**
-
-        -   **스테이징 배포**
-            ```bash
-            yarn predeploy:partners:stage  # 빌드 전 기존 dist 삭제 후 빌드 실행
-            yarn deploy:partners:stage     # 배포 실행
-            ```
-        -   **프로덕션 배포**
-            ```bash
-            yarn predeploy:partners:prod  # 빌드 전 기존 dist 삭제 후 빌드 실행
-            yarn deploy:partners:prod     # 배포 실행
-            ```
-
-        각 배포 스크립트는 `./scripts/` 디렉터리 내 `.sh` 파일을 실행하며, 해당 스크립트를 참고하여 배포 로직을 조정할 수 있습니다.
-
-        로컬에서 배포 시, 위 명령어를 실행하면 해당 환경(`stage` 또는 `prod`)에 맞게 애플리케이션이 빌드되고 업로드됩니다. 🚀
-
-        """
-    
-    
     private lazy var scrollView = {
         let sv = UIScrollView();
 
@@ -101,7 +57,6 @@ class CreateVoteDetailViewController: UIViewController {
     private lazy var contentContainerView = {
         let cv = UIView();
         cv.addSubview(mapView)
-        cv.addSubview(md)
         return cv;
     }()
     
@@ -155,7 +110,7 @@ class CreateVoteDetailViewController: UIViewController {
         let label = UILabel();
         label.font = UIFont.boldSystemFont(ofSize: 16);
         label.textColor = .white;
-        label.text = "달리치안소 달리치안소"
+        label.text = "달리치안소 22달리치안소"
         return label;
     }()
     
@@ -278,23 +233,6 @@ class CreateVoteDetailViewController: UIViewController {
         return sv;
     }();
     
-//    private let contentTextView = {
-//        let tv = UITextView();
-//        tv.textColor = .white;
-//        tv.font = UIFont.systemFont(ofSize: 14)
-//        tv.text = "sdddasasdasdsdㅇㄹㄴㅇㅁㄹㅁ dkssuddkdsasfd asdasdfasdfasdfasdfasdfasdfsdfsdfsdfdsf"
-//        tv.backgroundColor = .clear
-//        tv.isScrollEnabled = false;
-//        tv.isEditable = false;
-//        return tv;
-//    }()
-
-    private let md = {
-        let md = MarkdownView();
-        md.isScrollEnabled = false
-        return md;
-    }()
-
     private let bottomStackHeight = 115;
     
     private lazy var bottomContainerView = {
@@ -420,10 +358,12 @@ class CreateVoteDetailViewController: UIViewController {
         super.viewDidLoad()
         setupUI();
         setupMapView();
-        setupMarkdownView()
         setupConstraints()
 
     }
+    
+   
+    
     
     
     private func setupMapView(){
@@ -431,9 +371,14 @@ class CreateVoteDetailViewController: UIViewController {
         addAnnotation(latitude: 37.7749, longitude: -122.4194, title: "샌프란시스코", subtitle: "골든 게이트 브리지 근처")
     }
     
+
+    
     private func setupUI(){
         view.backgroundColor = .tabbarGray;
     }
+
+
+    
 
     
     private func centerMapOnLocation(latitude: CLLocationDegrees, longitude: CLLocationDegrees, regionRadius: CLLocationDistance = 1000) {
@@ -454,14 +399,14 @@ class CreateVoteDetailViewController: UIViewController {
         mapView.addAnnotation(annotation)
     }
     
-    func parseMarkdown(_ text: String) -> Document {
-        return Document(parsing: text)
-    }
-    
-    
-    private func setupMarkdownView(){
-        md.load(markdown: oldMarkdown)
-    }
+//    func parseMarkdown(_ text: String) -> Document {
+//        return Document(parsing: text)
+//    }
+//    
+//    
+//    private func setupMarkdownView(){
+//        md.load(markdown: oldMarkdown)
+//    }
     
     private func setupConstraints(){
         
@@ -475,6 +420,7 @@ class CreateVoteDetailViewController: UIViewController {
             make.bottom.trailing.leading.equalTo(scrollView.contentLayoutGuide)
             make.top.equalTo(scrollView.contentLayoutGuide).offset(0)
             make.width.equalTo(scrollView.frameLayoutGuide)
+            
         }
         
         
@@ -510,15 +456,14 @@ class CreateVoteDetailViewController: UIViewController {
             make.height.equalTo(200);
             make.top.equalToSuperview();
             make.trailing.leading.equalToSuperview()
+            make.bottom.equalToSuperview()
 
         }
         
         
-        md.snp.makeConstraints { make in
-            make.top.equalTo(mapView.snp.bottom).offset(20);
-            make.trailing.leading.equalToSuperview()
-            make.bottom.equalToSuperview().priority(.low)
-        }
+   
+
+        
         
         dotButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(20);
@@ -598,5 +543,8 @@ class CreateVoteDetailViewController: UIViewController {
         }
         
     }
-    
+
 }
+
+
+

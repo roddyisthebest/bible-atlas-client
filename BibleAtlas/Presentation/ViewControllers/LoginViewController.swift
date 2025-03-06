@@ -230,4 +230,14 @@ extension UIColor {
     static let downIconColor = UIColor(hex:"#FF5454");
 
     
+    static let diffLightGreen = UIColor(hex:"#F0FFF1");
+    static let diffGreen = UIColor(hex:"#CEFFD2");
+    
+    static let diffLightRed = UIColor(hex:"#FFE6E6");
+    static let diffRed = UIColor(hex:"#FFCECE")
+    
+    static let diffLightGray = UIColor(hex:"#F2F2F2")
+    
+    static let diffLabel = UIColor(hex:"#767676")
+    
 }

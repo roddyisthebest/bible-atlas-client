@@ -46,6 +46,7 @@ class DetailViewController: UIViewController {
     
     private let globalIcon = {
         let imageView = UIImageView(image:UIImage(systemName: "globe.asia.australia.fill"));
+        
         imageView.contentMode = .scaleAspectFit
         imageView.tintColor = .primaryViolet;
         return imageView;

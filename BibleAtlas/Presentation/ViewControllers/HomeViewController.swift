@@ -89,7 +89,7 @@ final class HomeViewController: UIViewController{
     }
   
     @objc private func rightButtonTapped(){
-        let createVoteVC = UpdateVoteViewController();
+        let createVoteVC = UpdateVoteDetailView();
         createVoteVC.hidesBottomBarWhenPushed = true
 
         navigationController?.pushViewController(createVoteVC, animated: true)
@@ -148,6 +148,7 @@ extension HomeViewController: UITableViewDataSource{
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
         
+
         cell.configure(text: dummyData[indexPath.row])
 
         return cell;
