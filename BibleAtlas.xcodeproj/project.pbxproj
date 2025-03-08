@@ -28,6 +28,8 @@
 		EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF92D75923C00AEC01B /* DiffCode.swift */; };
 		EC8ABAFC2D75975B00AEC01B /* DiffTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAFB2D75975B00AEC01B /* DiffTableViewController.swift */; };
 		EC8ABB022D75AA2200AEC01B /* UpdateVoteDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABB012D75AA2200AEC01B /* UpdateVoteDetailView.swift */; };
+		EC9884332D7AE8F500224DAA /* LocationSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9884322D7AE8F500224DAA /* LocationSearchViewController.swift */; };
+		EC9884352D7C3AA100224DAA /* LocationBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9884342D7C3AA100224DAA /* LocationBottomSheet.swift */; };
 		ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B962D5082B9005B0428 /* AppDelegate.swift */; };
 		ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B982D5082B9005B0428 /* SceneDelegate.swift */; };
 		ECA94B9B2D5082B9005B0428 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B9A2D5082B9005B0428 /* ViewController.swift */; };
@@ -105,6 +107,8 @@
 		EC8ABAF92D75923C00AEC01B /* DiffCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffCode.swift; sourceTree = "<group>"; };
 		EC8ABAFB2D75975B00AEC01B /* DiffTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTableViewController.swift; sourceTree = "<group>"; };
 		EC8ABB012D75AA2200AEC01B /* UpdateVoteDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateVoteDetailView.swift; sourceTree = "<group>"; };
+		EC9884322D7AE8F500224DAA /* LocationSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchViewController.swift; sourceTree = "<group>"; };
+		EC9884342D7C3AA100224DAA /* LocationBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationBottomSheet.swift; sourceTree = "<group>"; };
 		ECA94B932D5082B9005B0428 /* BibleAtlas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BibleAtlas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECA94B962D5082B9005B0428 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ECA94B982D5082B9005B0428 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -374,6 +378,8 @@
 				EC0652632D6EF53C006EABC9 /* CreateVoteDetailViewController.swift */,
 				EC0652652D72BF9F006EABC9 /* DeleteVoteDetailViewController.swift */,
 				EC8ABB012D75AA2200AEC01B /* UpdateVoteDetailView.swift */,
+				EC9884322D7AE8F500224DAA /* LocationSearchViewController.swift */,
+				EC9884342D7C3AA100224DAA /* LocationBottomSheet.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -678,8 +684,10 @@
 				EC06524E2D656EE6006EABC9 /* SearchCell.swift in Sources */,
 				ECA94C032D52F00C005B0428 /* AppCoordinator.swift in Sources */,
 				EC0652462D5C8919006EABC9 /* MyActivitiesViewController.swift in Sources */,
+				EC9884352D7C3AA100224DAA /* LocationBottomSheet.swift in Sources */,
 				EC0652572D6C6D8B006EABC9 /* DeleteVoteViewController.swift in Sources */,
 				ECADA5832D5B3EF7005E1E95 /* AccountSettingViewController.swift in Sources */,
+				EC9884332D7AE8F500224DAA /* LocationSearchViewController.swift in Sources */,
 				EC06525E2D6D9841006EABC9 /* ScrollViewController.swift in Sources */,
 				EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */,
 				ECA94BE82D50AF41005B0428 /* AuthRepository.swift in Sources */,

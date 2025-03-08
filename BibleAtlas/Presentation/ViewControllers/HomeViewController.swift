@@ -89,11 +89,17 @@ final class HomeViewController: UIViewController{
     }
   
     @objc private func rightButtonTapped(){
-        let createVoteVC = UpdateVoteDetailView();
-        createVoteVC.hidesBottomBarWhenPushed = true
-
-        navigationController?.pushViewController(createVoteVC, animated: true)
+//        let createVoteVC = UpdateVoteDetailView();
+//        createVoteVC.hidesBottomBarWhenPushed = true
+//
+//        navigationController?.pushViewController(createVoteVC, animated: true)
         
+        
+        let locationSearchVC = LocationSearchViewController();
+        locationSearchVC.modalPresentationStyle = .fullScreen;
+//        locationSearchVC.hidesBottomBarWhenPushed = true;
+        present(locationSearchVC,animated: true)
+//        navigationController?.pushViewController(locationSearchVC, animated: true)
     }
     
     
