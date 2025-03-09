@@ -10,10 +10,6 @@ import UIKit
 final class LocationBottomSheet: UIViewController {
     
     
-
-    
-    
-    
     private lazy var container = {
         let v = UIView();
         v.backgroundColor = .thirdGray;
@@ -159,7 +155,6 @@ final class LocationBottomSheet: UIViewController {
     
     private func setupStyle(){
         view.backgroundColor = .clear
-
     }
     
     

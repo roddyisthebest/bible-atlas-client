@@ -95,11 +95,18 @@ final class HomeViewController: UIViewController{
 //        navigationController?.pushViewController(createVoteVC, animated: true)
         
         
-        let locationSearchVC = LocationSearchViewController();
-        locationSearchVC.modalPresentationStyle = .fullScreen;
-//        locationSearchVC.hidesBottomBarWhenPushed = true;
-        present(locationSearchVC,animated: true)
-//        navigationController?.pushViewController(locationSearchVC, animated: true)
+//        let locationSearchVC = LocationSearchViewController();
+//        locationSearchVC.modalPresentationStyle = .fullScreen;
+//
+//        present(locationSearchVC,animated: true)
+
+        
+        
+        let locationPickerVC = LocationPickerViewController();
+        locationPickerVC.modalPresentationStyle = .fullScreen;
+
+        present(locationPickerVC,animated: true)
+        
     }
     
     

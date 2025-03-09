@@ -210,6 +210,9 @@ extension UIColor {
     static let secondaryGray = UIColor(hex: "#8E8E93")  // 시스템 그레이
     static let primaryInput = UIColor(hex: "#313131")
     static let primaryViolet = UIColor(hex: "#8160C4")
+    
+    
+    static let primaryRed = UIColor(hex:"#FF7979");
     static let thirdGray = UIColor(hex:"#313131")
     
     static let lightGray = UIColor(hex:"#5D5D5D")

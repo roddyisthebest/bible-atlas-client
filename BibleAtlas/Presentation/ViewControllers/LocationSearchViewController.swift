@@ -14,7 +14,7 @@ struct BiblicalLocation {
 import UIKit
 import MapKit
 import SnapKit
-class LocationSearchViewController: UIViewController {
+final class LocationSearchViewController: UIViewController {
     
     
     let biblicalLocations: [BiblicalLocation] = [

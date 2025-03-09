@@ -30,6 +30,8 @@
 		EC8ABB022D75AA2200AEC01B /* UpdateVoteDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABB012D75AA2200AEC01B /* UpdateVoteDetailView.swift */; };
 		EC9884332D7AE8F500224DAA /* LocationSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9884322D7AE8F500224DAA /* LocationSearchViewController.swift */; };
 		EC9884352D7C3AA100224DAA /* LocationBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9884342D7C3AA100224DAA /* LocationBottomSheet.swift */; };
+		EC9884372D7C86E900224DAA /* LocationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9884362D7C86E900224DAA /* LocationPickerViewController.swift */; };
+		EC9884392D7DB06100224DAA /* LocationComfirmBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9884382D7DB06100224DAA /* LocationComfirmBottomSheet.swift */; };
 		ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B962D5082B9005B0428 /* AppDelegate.swift */; };
 		ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B982D5082B9005B0428 /* SceneDelegate.swift */; };
 		ECA94B9B2D5082B9005B0428 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B9A2D5082B9005B0428 /* ViewController.swift */; };
@@ -109,6 +111,8 @@
 		EC8ABB012D75AA2200AEC01B /* UpdateVoteDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateVoteDetailView.swift; sourceTree = "<group>"; };
 		EC9884322D7AE8F500224DAA /* LocationSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchViewController.swift; sourceTree = "<group>"; };
 		EC9884342D7C3AA100224DAA /* LocationBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationBottomSheet.swift; sourceTree = "<group>"; };
+		EC9884362D7C86E900224DAA /* LocationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPickerViewController.swift; sourceTree = "<group>"; };
+		EC9884382D7DB06100224DAA /* LocationComfirmBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationComfirmBottomSheet.swift; sourceTree = "<group>"; };
 		ECA94B932D5082B9005B0428 /* BibleAtlas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BibleAtlas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECA94B962D5082B9005B0428 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ECA94B982D5082B9005B0428 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -380,6 +384,8 @@
 				EC8ABB012D75AA2200AEC01B /* UpdateVoteDetailView.swift */,
 				EC9884322D7AE8F500224DAA /* LocationSearchViewController.swift */,
 				EC9884342D7C3AA100224DAA /* LocationBottomSheet.swift */,
+				EC9884362D7C86E900224DAA /* LocationPickerViewController.swift */,
+				EC9884382D7DB06100224DAA /* LocationComfirmBottomSheet.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -718,12 +724,14 @@
 				EC0652522D676E08006EABC9 /* CreateVoteViewController.swift in Sources */,
 				EC0652592D6C72A6006EABC9 /* LocationCard.swift in Sources */,
 				ECA94C082D534684005B0428 /* ActivityCell.swift in Sources */,
+				EC9884372D7C86E900224DAA /* LocationPickerViewController.swift in Sources */,
 				ECA94BF82D51AE28005B0428 /* LoginViewController.swift in Sources */,
 				ECA94C002D520F8A005B0428 /* MainTabBarControllerViewController.swift in Sources */,
 				ECA94BA12D5082B9005B0428 /* BibleAtlas.xcdatamodeld in Sources */,
 				ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */,
 				EC0652482D5C9FC2006EABC9 /* MyAlertsViewController.swift in Sources */,
 				ECA94BD52D5094F1005B0428 /* User.swift in Sources */,
+				EC9884392D7DB06100224DAA /* LocationComfirmBottomSheet.swift in Sources */,
 				ECA94C0B2D53494A005B0428 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
