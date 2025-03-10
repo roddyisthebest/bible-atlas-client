@@ -117,7 +117,7 @@ final class LocationPickerViewController: UIViewController {
         button.configuration?.imagePadding = 4
         button.configuration?.imagePlacement = .leading
         
-
+        button.addTarget(self, action: #selector(locationSelectButtontapped), for: .touchUpInside)
         
 
         
@@ -211,7 +211,11 @@ final class LocationPickerViewController: UIViewController {
         mapView.addAnnotation(annotation)
     }
     
-    
+    @objc private func locationSelectButtontapped(){
+        let vc = PlaceSearchViewController();
+        vc.modalPresentationStyle = .fullScreen
+        present(vc,animated: false)
+    }
     
     @objc private func handleMapTap(_ sender: UITapGestureRecognizer){
         let locationInView = sender.location(in: mapView)
