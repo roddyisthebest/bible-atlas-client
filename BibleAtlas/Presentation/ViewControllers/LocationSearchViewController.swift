@@ -15,7 +15,10 @@ import UIKit
 import MapKit
 import SnapKit
 final class LocationSearchViewController: UIViewController {
-    
+        
+    private var initialCoordinate: CLLocationCoordinate2D?
+    private let bottomSheetHeightRatio = 0.65;
+
     
     let biblicalLocations: [BiblicalLocation] = [
         BiblicalLocation(name: "예루살렘", latitude: 31.7683, longitude: 35.2137),
@@ -56,6 +59,7 @@ final class LocationSearchViewController: UIViewController {
         button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         button.tintColor = .primaryViolet
         
+        
         let title = "여기서 검색"
         let attributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.boldSystemFont(ofSize: 16), // Bold 폰트
@@ -80,10 +84,34 @@ final class LocationSearchViewController: UIViewController {
     }()
 
     
+    init(coordinate: CLLocationCoordinate2D?) {
+        super.init(nibName: nil, bundle: nil)
+        
+        print("✅ LocationSearchViewController init called with coordinate: \(String(describing: coordinate))")
+
+        guard let coordinate = coordinate else {
+            print("❌ Error: coordinate is nil")
+            return
+        }
+
+        initialCoordinate = coordinate
+    }
+
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupConstraints()
         addCustomPins();
+        
+        guard let initialCoordinate = initialCoordinate else {
+            return;
+        }
+        
+        moveToNewLocation(coordinate: initialCoordinate)
         // Do any additional setup after loading the view.
     }
 
@@ -119,27 +147,53 @@ final class LocationSearchViewController: UIViewController {
         present(searchVC,animated: false)
     }
     
+    private func moveToNewLocation(coordinate:CLLocationCoordinate2D){
+        guard let filteredLocation = biblicalLocations.filter({ $0.latitude == coordinate.latitude}).first else {
+            return;
+        };
+        
+        centerMapOnLocation(coordinate);
+        showBottomSheet(name:filteredLocation.name)
+    }
+    
+    
     @objc private func showBottomSheet(name:String?) {
-        let bottomSheetVC = LocationBottomSheet(locationTitle:name)
+        let bottomSheetVC = LocationDetailBottomSheet()
         
         if let sheet = bottomSheetVC.sheetPresentationController {
             
             let customDetent = UISheetPresentationController.Detent.custom { context in
-                return UIScreen.main.bounds.height * 0.22
+                return UIScreen.main.bounds.height * self.bottomSheetHeightRatio
             }
+            
             sheet.detents = [customDetent] // 높이 조절 가능 (중간, 전체 화면)
             sheet.prefersGrabberVisible = true // 위쪽 핸들 표시
             sheet.prefersScrollingExpandsWhenScrolledToEdge = true // 스크롤 시 확장 가능
             
         }
-        present(bottomSheetVC, animated: true)
+        
+        // TODO: background에서 실행될수도 있음 why?
+        DispatchQueue.main.async {
+            self.present(bottomSheetVC, animated: true)
+        }
     }
     
     
     private func centerMapOnLocation(_ location: CLLocationCoordinate2D) {
+        let remainingRatio = 1 - bottomSheetHeightRatio
+        let halfRemainingRatio = remainingRatio / 2
         
-        let region = MKCoordinateRegion(center: location, latitudinalMeters: 100000, longitudinalMeters: 100000)
-        mapView.setRegion(region, animated: true)
+        let screenHeight = UIScreen.main.bounds.height
+        let yOffset = screenHeight * halfRemainingRatio
+        let adjustedLatitude = location.latitude - (yOffset * 0.0045);
+        
+        let adjustedLocation = CLLocationCoordinate2D(
+               latitude: adjustedLatitude,
+               longitude: location.longitude
+        )
+        let region = MKCoordinateRegion(center: adjustedLocation, latitudinalMeters: 100000, longitudinalMeters: 100000);
+        self.mapView.setRegion(region, animated: true)
+
     }
 }
 
@@ -151,13 +205,7 @@ extension LocationSearchViewController:MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let annotation = view.annotation as? CustomAnnotation else { return }
-        
-        guard let filteredLocation = biblicalLocations.filter { $0.latitude == annotation.coordinate.latitude}.first else {
-            return;
-        };
-        
-        centerMapOnLocation(annotation.coordinate);
-        showBottomSheet(name:filteredLocation.name)
+        moveToNewLocation(coordinate: annotation.coordinate);
     }
     
     

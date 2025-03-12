@@ -33,6 +33,7 @@
 		EC9884372D7C86E900224DAA /* LocationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9884362D7C86E900224DAA /* LocationPickerViewController.swift */; };
 		EC9884392D7DB06100224DAA /* LocationComfirmBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9884382D7DB06100224DAA /* LocationComfirmBottomSheet.swift */; };
 		EC98843B2D7DBBFF00224DAA /* PlaceSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC98843A2D7DBBFF00224DAA /* PlaceSearchViewController.swift */; };
+		EC9884B52D7F0F1800224DAA /* LocationDetailBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9884B42D7F0F1800224DAA /* LocationDetailBottomSheet.swift */; };
 		ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B962D5082B9005B0428 /* AppDelegate.swift */; };
 		ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B982D5082B9005B0428 /* SceneDelegate.swift */; };
 		ECA94B9B2D5082B9005B0428 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B9A2D5082B9005B0428 /* ViewController.swift */; };
@@ -115,6 +116,7 @@
 		EC9884362D7C86E900224DAA /* LocationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPickerViewController.swift; sourceTree = "<group>"; };
 		EC9884382D7DB06100224DAA /* LocationComfirmBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationComfirmBottomSheet.swift; sourceTree = "<group>"; };
 		EC98843A2D7DBBFF00224DAA /* PlaceSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSearchViewController.swift; sourceTree = "<group>"; };
+		EC9884B42D7F0F1800224DAA /* LocationDetailBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailBottomSheet.swift; sourceTree = "<group>"; };
 		ECA94B932D5082B9005B0428 /* BibleAtlas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BibleAtlas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECA94B962D5082B9005B0428 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ECA94B982D5082B9005B0428 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 				EC9884362D7C86E900224DAA /* LocationPickerViewController.swift */,
 				EC9884382D7DB06100224DAA /* LocationComfirmBottomSheet.swift */,
 				EC98843A2D7DBBFF00224DAA /* PlaceSearchViewController.swift */,
+				EC9884B42D7F0F1800224DAA /* LocationDetailBottomSheet.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -700,6 +703,7 @@
 				EC06525E2D6D9841006EABC9 /* ScrollViewController.swift in Sources */,
 				EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */,
 				ECA94BE82D50AF41005B0428 /* AuthRepository.swift in Sources */,
+				EC9884B52D7F0F1800224DAA /* LocationDetailBottomSheet.swift in Sources */,
 				ECA94BDA2D509AFF005B0428 /* AuthManager.swift in Sources */,
 				ECA94BFE2D520CEF005B0428 /* MyInfoViewController.swift in Sources */,
 				EC8ABB022D75AA2200AEC01B /* UpdateVoteDetailView.swift in Sources */,

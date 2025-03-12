@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import MapKit
 
 final class HomeViewController: UIViewController{
     
@@ -93,19 +94,24 @@ final class HomeViewController: UIViewController{
 //        createVoteVC.hidesBottomBarWhenPushed = true
 //
 //        navigationController?.pushViewController(createVoteVC, animated: true)
+
+        
+        let coordinate = CLLocationCoordinate2D(
+               latitude: 35.6895,
+               longitude: 139.6917
+        )
+        
+        let locationSearchVC = LocationSearchViewController(coordinate: coordinate);
+        locationSearchVC.modalPresentationStyle = .fullScreen;
+
+        present(locationSearchVC,animated: true)
+
         
         
-//        let locationSearchVC = LocationSearchViewController();
-//        locationSearchVC.modalPresentationStyle = .fullScreen;
+//        let locationPickerVC = LocationPickerViewController();
+//        locationPickerVC.modalPresentationStyle = .fullScreen;
 //
-//        present(locationSearchVC,animated: true)
-
-        
-        
-        let locationPickerVC = LocationPickerViewController();
-        locationPickerVC.modalPresentationStyle = .fullScreen;
-
-        present(locationPickerVC,animated: true)
+//        present(locationPickerVC,animated: true)
         
     }
     
