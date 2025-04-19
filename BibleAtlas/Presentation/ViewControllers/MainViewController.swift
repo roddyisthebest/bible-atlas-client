@@ -8,7 +8,9 @@
 import UIKit
 import MapKit
 
-class MainViewController: UIViewController {
+final class MainViewController: UIViewController,BottomSheetPresentable {
+
+    private var navigator: BottomSheetNavigator;
 
     private lazy var mapView = {
         let mv = MKMapView();
@@ -23,7 +25,8 @@ class MainViewController: UIViewController {
     }
     
             
-    init() {
+    init(navigator:BottomSheetNavigator) {
+        self.navigator = navigator
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -37,7 +40,13 @@ class MainViewController: UIViewController {
         setupUI();
     }
     
+    func present(_ viewController: UIViewController, animated: Bool) {
+        super.present(viewController, animated: animated)
+     }
 
+     func dismiss(animated: Bool) {
+         super.dismiss(animated: animated)
+     }
     
 
 }
