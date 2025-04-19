@@ -23,6 +23,7 @@
 		EC06525E2D6D9841006EABC9 /* ScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC06525D2D6D9841006EABC9 /* ScrollViewController.swift */; };
 		EC0652642D6EF53C006EABC9 /* CreateVoteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0652632D6EF53C006EABC9 /* CreateVoteDetailViewController.swift */; };
 		EC0652662D72BF9F006EABC9 /* DeleteVoteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0652652D72BF9F006EABC9 /* DeleteVoteDetailViewController.swift */; };
+		EC70587B2DB39629002D47DF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70587A2DB39629002D47DF /* MainViewController.swift */; };
 		EC8ABAF62D74828200AEC01B /* Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = EC8ABAF52D74828200AEC01B /* Markdown */; };
 		EC8ABAF82D7591B100AEC01B /* DiffTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF72D7591B100AEC01B /* DiffTableViewCell.swift */; };
 		EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF92D75923C00AEC01B /* DiffCode.swift */; };
@@ -107,6 +108,7 @@
 		EC06525D2D6D9841006EABC9 /* ScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewController.swift; sourceTree = "<group>"; };
 		EC0652632D6EF53C006EABC9 /* CreateVoteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateVoteDetailViewController.swift; sourceTree = "<group>"; };
 		EC0652652D72BF9F006EABC9 /* DeleteVoteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteVoteDetailViewController.swift; sourceTree = "<group>"; };
+		EC70587A2DB39629002D47DF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		EC8ABAF72D7591B100AEC01B /* DiffTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTableViewCell.swift; sourceTree = "<group>"; };
 		EC8ABAF92D75923C00AEC01B /* DiffCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffCode.swift; sourceTree = "<group>"; };
 		EC8ABAFB2D75975B00AEC01B /* DiffTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTableViewController.swift; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 				EC9884382D7DB06100224DAA /* LocationComfirmBottomSheet.swift */,
 				EC98843A2D7DBBFF00224DAA /* PlaceSearchViewController.swift */,
 				EC9884B42D7F0F1800224DAA /* LocationDetailBottomSheet.swift */,
+				EC70587A2DB39629002D47DF /* MainViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -715,6 +718,7 @@
 				ECA94BFC2D520CE1005B0428 /* SearchOptionViewController.swift in Sources */,
 				EC0652442D5C6FA9006EABC9 /* AccountSettingCell.swift in Sources */,
 				EC8ABAF82D7591B100AEC01B /* DiffTableViewCell.swift in Sources */,
+				EC70587B2DB39629002D47DF /* MainViewController.swift in Sources */,
 				ECA94BF42D51ADAF005B0428 /* LoginViewModel.swift in Sources */,
 				EC98843B2D7DBBFF00224DAA /* PlaceSearchViewController.swift in Sources */,
 				ECA94BFA2D520CC9005B0428 /* HomeViewController.swift in Sources */,
