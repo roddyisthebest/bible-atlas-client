@@ -17,7 +17,7 @@ final class MainViewController: UIViewController,BottomSheetPresentable {
         view.addSubview(mv)
         return mv;
     }()
-
+    
     private func setupUI(){
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview();
@@ -38,6 +38,7 @@ final class MainViewController: UIViewController,BottomSheetPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI();
+        navigator.present(.home)
     }
     
     func present(_ viewController: UIViewController, animated: Bool) {

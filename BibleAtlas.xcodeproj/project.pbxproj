@@ -27,6 +27,12 @@
 		EC70587E2DB397CF002D47DF /* BottomSheetCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70587D2DB397CF002D47DF /* BottomSheetCoordinator.swift */; };
 		EC7058802DB3992D002D47DF /* BottomSheetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70587F2DB3992D002D47DF /* BottomSheetType.swift */; };
 		EC7058822DB3A2D9002D47DF /* BottomSheetFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7058812DB3A2D9002D47DF /* BottomSheetFactory.swift */; };
+		EC7058842DB3BAE5002D47DF /* HomeBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7058832DB3BAE5002D47DF /* HomeBottomSheetViewController.swift */; };
+		EC7058882DB3CA5B002D47DF /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7058872DB3CA5B002D47DF /* UIColor.swift */; };
+		EC70588B2DB8BCCE002D47DF /* CollectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70588A2DB8BCCE002D47DF /* CollectionButton.swift */; };
+		EC70588E2DB8BEB1002D47DF /* MainLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70588D2DB8BEB1002D47DF /* MainLabel.swift */; };
+		EC7058942DB9D93D002D47DF /* RecentSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7058932DB9D93D002D47DF /* RecentSearchTableViewCell.swift */; };
+		EC7058982DBA772E002D47DF /* GuideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7058972DBA772E002D47DF /* GuideButton.swift */; };
 		EC8ABAF62D74828200AEC01B /* Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = EC8ABAF52D74828200AEC01B /* Markdown */; };
 		EC8ABAF82D7591B100AEC01B /* DiffTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF72D7591B100AEC01B /* DiffTableViewCell.swift */; };
 		EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF92D75923C00AEC01B /* DiffCode.swift */; };
@@ -115,6 +121,12 @@
 		EC70587D2DB397CF002D47DF /* BottomSheetCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetCoordinator.swift; sourceTree = "<group>"; };
 		EC70587F2DB3992D002D47DF /* BottomSheetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetType.swift; sourceTree = "<group>"; };
 		EC7058812DB3A2D9002D47DF /* BottomSheetFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetFactory.swift; sourceTree = "<group>"; };
+		EC7058832DB3BAE5002D47DF /* HomeBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomSheetViewController.swift; sourceTree = "<group>"; };
+		EC7058872DB3CA5B002D47DF /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		EC70588A2DB8BCCE002D47DF /* CollectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionButton.swift; sourceTree = "<group>"; };
+		EC70588D2DB8BEB1002D47DF /* MainLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLabel.swift; sourceTree = "<group>"; };
+		EC7058932DB9D93D002D47DF /* RecentSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchTableViewCell.swift; sourceTree = "<group>"; };
+		EC7058972DBA772E002D47DF /* GuideButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideButton.swift; sourceTree = "<group>"; };
 		EC8ABAF72D7591B100AEC01B /* DiffTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTableViewCell.swift; sourceTree = "<group>"; };
 		EC8ABAF92D75923C00AEC01B /* DiffCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffCode.swift; sourceTree = "<group>"; };
 		EC8ABAFB2D75975B00AEC01B /* DiffTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTableViewController.swift; sourceTree = "<group>"; };
@@ -210,6 +222,47 @@
 			path = Dependencies;
 			sourceTree = "<group>";
 		};
+		EC7058852DB3C97D002D47DF /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				EC70587F2DB3992D002D47DF /* BottomSheetType.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
+		EC7058862DB3CA48002D47DF /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				EC7058872DB3CA5B002D47DF /* UIColor.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		EC7058892DB8BCA5002D47DF /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				EC70588A2DB8BCCE002D47DF /* CollectionButton.swift */,
+				EC7058972DBA772E002D47DF /* GuideButton.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
+		EC70588C2DB8BDB9002D47DF /* Labels */ = {
+			isa = PBXGroup;
+			children = (
+				EC70588D2DB8BEB1002D47DF /* MainLabel.swift */,
+			);
+			path = Labels;
+			sourceTree = "<group>";
+		};
+		EC70588F2DB9D8B9002D47DF /* Tables */ = {
+			isa = PBXGroup;
+			children = (
+				EC7058932DB9D93D002D47DF /* RecentSearchTableViewCell.swift */,
+			);
+			path = Tables;
+			sourceTree = "<group>";
+		};
 		ECA94B8A2D5082B9005B0428 = {
 			isa = PBXGroup;
 			children = (
@@ -236,9 +289,9 @@
 			isa = PBXGroup;
 			children = (
 				ECA94BF02D51AB3D005B0428 /* Presentation */,
-				ECA94BEC2D50B464005B0428 /* Helplers */,
 				ECA94BCD2D50931C005B0428 /* Domain */,
 				ECA94BC92D508BDF005B0428 /* Data */,
+				ECA94BEC2D50B464005B0428 /* Helplers */,
 				ECA94B962D5082B9005B0428 /* AppDelegate.swift */,
 				ECA94B982D5082B9005B0428 /* SceneDelegate.swift */,
 				ECA94B9A2D5082B9005B0428 /* ViewController.swift */,
@@ -358,10 +411,10 @@
 		ECA94BEC2D50B464005B0428 /* Helplers */ = {
 			isa = PBXGroup;
 			children = (
+				EC7058852DB3C97D002D47DF /* Enums */,
 				EC70587C2DB397B1002D47DF /* Dependencies */,
 				ECA94C092D53488B005B0428 /* Const */,
 				ECA94BED2D50B47A005B0428 /* Utils */,
-				EC70587F2DB3992D002D47DF /* BottomSheetType.swift */,
 			);
 			path = Helplers;
 			sourceTree = "<group>";
@@ -377,6 +430,7 @@
 		ECA94BF02D51AB3D005B0428 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				EC7058862DB3CA48002D47DF /* Extensions */,
 				ECA94C012D52EFC0005B0428 /* Coordinators */,
 				ECA94C062D53464D005B0428 /* Views */,
 				ECA94BF22D51AD94005B0428 /* ViewModels */,
@@ -412,6 +466,7 @@
 				EC98843A2D7DBBFF00224DAA /* PlaceSearchViewController.swift */,
 				EC9884B42D7F0F1800224DAA /* LocationDetailBottomSheet.swift */,
 				EC70587A2DB39629002D47DF /* MainViewController.swift */,
+				EC7058832DB3BAE5002D47DF /* HomeBottomSheetViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -435,11 +490,14 @@
 		ECA94C062D53464D005B0428 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				ECA94C072D534684005B0428 /* ActivityCell.swift */,
+				EC70588F2DB9D8B9002D47DF /* Tables */,
+				EC70588C2DB8BDB9002D47DF /* Labels */,
+				EC7058892DB8BCA5002D47DF /* Buttons */,
 				ECA94C0C2D5A3714005B0428 /* ActivitySmallCell.swift */,
 				ECA94C0E2D5B08B1005B0428 /* AlertCell.swift */,
 				EC0652432D5C6FA9006EABC9 /* AccountSettingCell.swift */,
 				EC06524D2D656EE6006EABC9 /* SearchCell.swift */,
+				ECA94C072D534684005B0428 /* ActivityCell.swift */,
 				EC0652582D6C72A6006EABC9 /* LocationCard.swift */,
 				EC8ABAF72D7591B100AEC01B /* DiffTableViewCell.swift */,
 				EC8ABAFB2D75975B00AEC01B /* DiffTableViewController.swift */,
@@ -719,11 +777,13 @@
 				EC9884352D7C3AA100224DAA /* LocationBottomSheet.swift in Sources */,
 				EC0652572D6C6D8B006EABC9 /* DeleteVoteViewController.swift in Sources */,
 				ECADA5832D5B3EF7005E1E95 /* AccountSettingViewController.swift in Sources */,
+				EC70588E2DB8BEB1002D47DF /* MainLabel.swift in Sources */,
 				EC9884332D7AE8F500224DAA /* LocationSearchViewController.swift in Sources */,
 				EC06525E2D6D9841006EABC9 /* ScrollViewController.swift in Sources */,
 				EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */,
 				ECA94BE82D50AF41005B0428 /* AuthRepository.swift in Sources */,
 				EC9884B52D7F0F1800224DAA /* LocationDetailBottomSheet.swift in Sources */,
+				EC7058982DBA772E002D47DF /* GuideButton.swift in Sources */,
 				EC70587E2DB397CF002D47DF /* BottomSheetCoordinator.swift in Sources */,
 				ECA94BDA2D509AFF005B0428 /* AuthManager.swift in Sources */,
 				ECA94BFE2D520CEF005B0428 /* MyInfoViewController.swift in Sources */,
@@ -740,12 +800,14 @@
 				ECA94BF42D51ADAF005B0428 /* LoginViewModel.swift in Sources */,
 				EC98843B2D7DBBFF00224DAA /* PlaceSearchViewController.swift in Sources */,
 				ECA94BFA2D520CC9005B0428 /* HomeViewController.swift in Sources */,
+				EC7058882DB3CA5B002D47DF /* UIColor.swift in Sources */,
 				ECA94BE12D50A739005B0428 /* AuthData.swift in Sources */,
 				ECA94BCC2D508D1E005B0428 /* DefaultSession.swift in Sources */,
 				ECA94BD12D509377005B0428 /* NetworkError.swift in Sources */,
 				EC7058802DB3992D002D47DF /* BottomSheetType.swift in Sources */,
 				ECA94BD72D50977A005B0428 /* NetworkManager.swift in Sources */,
 				EC06524A2D5DEAA1006EABC9 /* SortSelectionViewController.swift in Sources */,
+				EC70588B2DB8BCCE002D47DF /* CollectionButton.swift in Sources */,
 				ECA94BDD2D50A59E005B0428 /* AuthNetworkManager.swift in Sources */,
 				ECA94BEB2D50B0B9005B0428 /* AuthUsecase.swift in Sources */,
 				EC0652662D72BF9F006EABC9 /* DeleteVoteDetailViewController.swift in Sources */,
@@ -754,6 +816,7 @@
 				EC8ABAFC2D75975B00AEC01B /* DiffTableViewController.swift in Sources */,
 				EC0652522D676E08006EABC9 /* CreateVoteViewController.swift in Sources */,
 				EC0652592D6C72A6006EABC9 /* LocationCard.swift in Sources */,
+				EC7058842DB3BAE5002D47DF /* HomeBottomSheetViewController.swift in Sources */,
 				ECA94C082D534684005B0428 /* ActivityCell.swift in Sources */,
 				EC9884372D7C86E900224DAA /* LocationPickerViewController.swift in Sources */,
 				EC7058822DB3A2D9002D47DF /* BottomSheetFactory.swift in Sources */,
@@ -763,6 +826,7 @@
 				ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */,
 				EC0652482D5C9FC2006EABC9 /* MyAlertsViewController.swift in Sources */,
 				ECA94BD52D5094F1005B0428 /* User.swift in Sources */,
+				EC7058942DB9D93D002D47DF /* RecentSearchTableViewCell.swift in Sources */,
 				EC9884392D7DB06100224DAA /* LocationComfirmBottomSheet.swift in Sources */,
 				ECA94C0B2D53494A005B0428 /* Constants.swift in Sources */,
 			);

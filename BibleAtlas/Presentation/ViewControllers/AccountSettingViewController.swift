@@ -15,6 +15,7 @@ final class AccountSettingViewController: UIViewController {
         view.addSubview(titleLabel);
         return view;
     }();
+    
     private let tableView = UITableView(frame:.zero,style:.plain)
     
     

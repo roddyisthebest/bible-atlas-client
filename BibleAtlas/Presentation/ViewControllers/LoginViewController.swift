@@ -206,7 +206,6 @@ extension UIColor {
     
     
     static let backgroundDark = UIColor(hex: "#1E1E1E")  // 배경색
-    static let primaryBlue = UIColor(hex: "#007AFF")  // iOS 기본 파란색
     static let secondaryGray = UIColor(hex: "#8E8E93")  // 시스템 그레이
     static let primaryInput = UIColor(hex: "#313131")
     static let primaryViolet = UIColor(hex: "#8160C4")

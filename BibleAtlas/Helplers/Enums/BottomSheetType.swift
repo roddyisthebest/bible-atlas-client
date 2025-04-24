@@ -9,5 +9,5 @@ import Foundation
 import MapKit
 
 enum BottomSheetType {
-    case placeDetail(placeId:String)
+    case home
 }
