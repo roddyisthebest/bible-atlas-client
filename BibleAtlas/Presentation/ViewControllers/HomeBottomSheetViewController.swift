@@ -69,6 +69,7 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
         
         button.setTitleColor(.primaryBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 12, weight: .medium)
+        button.addTarget(self, action: #selector(loginBtnTapped), for: .touchUpInside)
         return button;
     }()
     
@@ -192,19 +193,22 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
     }
 
    
+    @objc private func loginBtnTapped(){
+
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupStyle();
-        setupUI();
+        setupConstraints();
     }
     
     private func setupStyle(){
         view.backgroundColor = .mainBkg;
     }
     
-    private func setupUI(){
+    private func setupConstraints(){
         bodyView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }

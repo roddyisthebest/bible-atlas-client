@@ -48,6 +48,11 @@ extension UIColor {
     static let mainButtonBkg = UIColor { traitCollection in
         return traitCollection.userInterfaceStyle == .dark ? UIColor(hex: "#313437") : UIColor(hex: "#EBEBEB")
     }
+    
+    static let closeButtonBkg = UIColor { traitCollection in
+        return traitCollection.userInterfaceStyle == .dark ? UIColor(hex: "#37393C") : UIColor(hex: "#E7E7E7")
+    }
+    
 
     static let collectionCircle = UIColor { traitCollection in
         return traitCollection.userInterfaceStyle == .dark ? UIColor(hex: "#49494B") : UIColor(hex: "#EBEBEB")
@@ -70,5 +75,9 @@ extension UIColor {
     }
     
     static let collectionSubText = UIColor(hex: "#868782")
+    
+    static let closeIcon = UIColor { traitCollection in
+        return traitCollection.userInterfaceStyle == .dark ? UIColor(hex: "#9B9C9E") : UIColor(hex: "#6C6C6C")
+    }
     
 }

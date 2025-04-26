@@ -33,6 +33,9 @@
 		EC70588E2DB8BEB1002D47DF /* MainLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70588D2DB8BEB1002D47DF /* MainLabel.swift */; };
 		EC7058942DB9D93D002D47DF /* RecentSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7058932DB9D93D002D47DF /* RecentSearchTableViewCell.swift */; };
 		EC7058982DBA772E002D47DF /* GuideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7058972DBA772E002D47DF /* GuideButton.swift */; };
+		EC70589A2DBC7BE1002D47DF /* LoginBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7058992DBC7BE1002D47DF /* LoginBottomSheetViewController.swift */; };
+		EC70589C2DBC7C4D002D47DF /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70589B2DBC7C4D002D47DF /* CloseButton.swift */; };
+		EC70589E2DBCA8B6002D47DF /* HeaderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70589D2DBCA8B6002D47DF /* HeaderLabel.swift */; };
 		EC8ABAF62D74828200AEC01B /* Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = EC8ABAF52D74828200AEC01B /* Markdown */; };
 		EC8ABAF82D7591B100AEC01B /* DiffTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF72D7591B100AEC01B /* DiffTableViewCell.swift */; };
 		EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF92D75923C00AEC01B /* DiffCode.swift */; };
@@ -127,6 +130,9 @@
 		EC70588D2DB8BEB1002D47DF /* MainLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLabel.swift; sourceTree = "<group>"; };
 		EC7058932DB9D93D002D47DF /* RecentSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchTableViewCell.swift; sourceTree = "<group>"; };
 		EC7058972DBA772E002D47DF /* GuideButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideButton.swift; sourceTree = "<group>"; };
+		EC7058992DBC7BE1002D47DF /* LoginBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginBottomSheetViewController.swift; sourceTree = "<group>"; };
+		EC70589B2DBC7C4D002D47DF /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
+		EC70589D2DBCA8B6002D47DF /* HeaderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderLabel.swift; sourceTree = "<group>"; };
 		EC8ABAF72D7591B100AEC01B /* DiffTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTableViewCell.swift; sourceTree = "<group>"; };
 		EC8ABAF92D75923C00AEC01B /* DiffCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffCode.swift; sourceTree = "<group>"; };
 		EC8ABAFB2D75975B00AEC01B /* DiffTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTableViewController.swift; sourceTree = "<group>"; };
@@ -243,6 +249,7 @@
 			children = (
 				EC70588A2DB8BCCE002D47DF /* CollectionButton.swift */,
 				EC7058972DBA772E002D47DF /* GuideButton.swift */,
+				EC70589B2DBC7C4D002D47DF /* CloseButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -251,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				EC70588D2DB8BEB1002D47DF /* MainLabel.swift */,
+				EC70589D2DBCA8B6002D47DF /* HeaderLabel.swift */,
 			);
 			path = Labels;
 			sourceTree = "<group>";
@@ -467,6 +475,7 @@
 				EC9884B42D7F0F1800224DAA /* LocationDetailBottomSheet.swift */,
 				EC70587A2DB39629002D47DF /* MainViewController.swift */,
 				EC7058832DB3BAE5002D47DF /* HomeBottomSheetViewController.swift */,
+				EC7058992DBC7BE1002D47DF /* LoginBottomSheetViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -776,6 +785,7 @@
 				EC0652462D5C8919006EABC9 /* MyActivitiesViewController.swift in Sources */,
 				EC9884352D7C3AA100224DAA /* LocationBottomSheet.swift in Sources */,
 				EC0652572D6C6D8B006EABC9 /* DeleteVoteViewController.swift in Sources */,
+				EC70589E2DBCA8B6002D47DF /* HeaderLabel.swift in Sources */,
 				ECADA5832D5B3EF7005E1E95 /* AccountSettingViewController.swift in Sources */,
 				EC70588E2DB8BEB1002D47DF /* MainLabel.swift in Sources */,
 				EC9884332D7AE8F500224DAA /* LocationSearchViewController.swift in Sources */,
@@ -797,6 +807,7 @@
 				EC0652442D5C6FA9006EABC9 /* AccountSettingCell.swift in Sources */,
 				EC8ABAF82D7591B100AEC01B /* DiffTableViewCell.swift in Sources */,
 				EC70587B2DB39629002D47DF /* MainViewController.swift in Sources */,
+				EC70589C2DBC7C4D002D47DF /* CloseButton.swift in Sources */,
 				ECA94BF42D51ADAF005B0428 /* LoginViewModel.swift in Sources */,
 				EC98843B2D7DBBFF00224DAA /* PlaceSearchViewController.swift in Sources */,
 				ECA94BFA2D520CC9005B0428 /* HomeViewController.swift in Sources */,
@@ -808,6 +819,7 @@
 				ECA94BD72D50977A005B0428 /* NetworkManager.swift in Sources */,
 				EC06524A2D5DEAA1006EABC9 /* SortSelectionViewController.swift in Sources */,
 				EC70588B2DB8BCCE002D47DF /* CollectionButton.swift in Sources */,
+				EC70589A2DBC7BE1002D47DF /* LoginBottomSheetViewController.swift in Sources */,
 				ECA94BDD2D50A59E005B0428 /* AuthNetworkManager.swift in Sources */,
 				ECA94BEB2D50B0B9005B0428 /* AuthUsecase.swift in Sources */,
 				EC0652662D72BF9F006EABC9 /* DeleteVoteDetailViewController.swift in Sources */,

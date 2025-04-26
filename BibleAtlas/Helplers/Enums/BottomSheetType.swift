@@ -10,4 +10,5 @@ import MapKit
 
 enum BottomSheetType {
     case home
+    case login
 }
