@@ -19,6 +19,7 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
     
     private lazy var scrollView = {
         let sv = UIScrollView();
+        
         sv.addSubview(contentView)
         return sv;
     }()
@@ -166,7 +167,7 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
     private let myGuidesLabel = MainLabel(text:"My Guides")
     
     private lazy var guideButtonsStackView = {
-        let sv = UIStackView(arrangedSubviews: [ExplorePlacesButton, ReportIssueButton]);
+        let sv = UIStackView(arrangedSubviews: [explorePlacesButton, reportIssueButton]);
         sv.axis = .vertical;
         sv.distribution = .fill;
         sv.alignment = .fill
@@ -174,9 +175,17 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
         return sv;
     }()
     
-    private let ExplorePlacesButton = GuideButton(titleText: "Explore Places");
+    private let explorePlacesButton = {
+        let button = GuideButton(titleText: "Explore Places")
+        button.addTarget(self, action: #selector(explorePlacesBtnTapped), for: .touchUpInside)
+        return button;
+    }()
     
-    private let ReportIssueButton =  GuideButton(titleText: "Report an Issue");
+    private let reportIssueButton =  {
+        let button = GuideButton(titleText: "Report an Issue");
+        button.addTarget(self, action: #selector(reportIssueBtnTapped), for: .touchUpInside)
+        return button;
+    }()
     
     private let dummySearches:[String] = ["onasdasdasdasdasddfasdfdfasdfasdfasdfasdfasdfe", "sdfasdfadsfasdfasdffsdsadf"];
     
@@ -196,12 +205,47 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
     @objc private func loginBtnTapped(){
 
     }
+
     
+    @objc private func explorePlacesBtnTapped(){
+
+        let action1 = UIAction(title: "A-Z", image: UIImage(systemName: "character.phonetic")) { _ in
+            print("A-Z")
+        }
+        let action2 = UIAction(title: "By Type", image: UIImage(systemName: "mappin.and.ellipse")) { _ in
+            print("By Type")
+        }
+               
+        let menu = UIMenu(title: "Explore Places", children: [action1, action2])
+        
+        explorePlacesButton.showsMenuAsPrimaryAction = true
+        explorePlacesButton.menu = menu
+
+    }
+    
+    
+    @objc private func reportIssueBtnTapped(){
+
+        let action1 = UIAction(title: "Spam", image: UIImage(systemName: "exclamationmark.bubble.fill")) { _ in
+            print("A-Z")
+        }
+
+        let action2 = UIAction(title: "Inappropriate", image: UIImage(systemName: "hand.raised.fill")) { _ in
+            print("By Type")
+        }
+               
+        let menu = UIMenu(title: "Report Issue", children: [action1, action2])
+        
+        reportIssueButton.showsMenuAsPrimaryAction = true
+        reportIssueButton.menu = menu
+
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupStyle();
         setupConstraints();
+
     }
     
     private func setupStyle(){
@@ -231,8 +275,8 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
         
         
         contentView.snp.makeConstraints { make in
-            make.edges.equalToSuperview() // scrollView의 contentLayoutGuide랑 연결됨
-            make.width.equalTo(scrollView.snp.width) // ← 이거 중요!
+            make.edges.equalTo(scrollView.contentLayoutGuide)
+            make.width.equalTo(scrollView.frameLayoutGuide)
         }
         
         
@@ -252,11 +296,19 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
             make.top.equalTo(recentStackView.snp.bottom).offset(30);
             make.leading.equalToSuperview().offset(20);
             make.trailing.equalToSuperview().offset(-20);
+            make.bottom.equalToSuperview().offset(-30)
+
         }
         
         recentStackView.addArrangedSubview(recentSearchTableView)
 
-
+        explorePlacesButton.snp.makeConstraints { make in
+            make.height.equalTo(64)
+        }
+        
+        reportIssueButton.snp.makeConstraints { make in
+            make.height.equalTo(64)
+        }
        
         
     }

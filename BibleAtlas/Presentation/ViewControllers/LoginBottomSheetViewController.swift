@@ -30,13 +30,10 @@ class LoginBottomSheetViewController: UIViewController {
         sv.spacing = 10;
         return sv;
     }()
-    
-    
+        
     private let googleButton = GuideButton(titleText: "Google");
     private let kakaoButton = GuideButton(titleText: "Kakao");
 
-    
-    
     private func setupStyle(){
         view.backgroundColor = .mainBkg;
     }

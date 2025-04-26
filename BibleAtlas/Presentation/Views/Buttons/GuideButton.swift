@@ -23,6 +23,7 @@ final class GuideButton: UIButton {
         self.layer.masksToBounds = true;
         self.titleLabel?.font = .systemFont(ofSize: 15, weight: .medium)
 
+        self.isUserInteractionEnabled = true 
     }
     
 

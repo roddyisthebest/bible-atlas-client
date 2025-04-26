@@ -38,7 +38,7 @@ final class MainViewController: UIViewController,BottomSheetPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI();
-        navigator.present(.login)
+        navigator.present(.home)
     }
     
     func present(_ viewController: UIViewController, animated: Bool) {
