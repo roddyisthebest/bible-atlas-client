@@ -36,6 +36,9 @@
 		EC70589A2DBC7BE1002D47DF /* LoginBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7058992DBC7BE1002D47DF /* LoginBottomSheetViewController.swift */; };
 		EC70589C2DBC7C4D002D47DF /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70589B2DBC7C4D002D47DF /* CloseButton.swift */; };
 		EC70589E2DBCA8B6002D47DF /* HeaderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70589D2DBCA8B6002D47DF /* HeaderLabel.swift */; };
+		EC7058A02DBCC6FE002D47DF /* MyCollectionBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70589F2DBCC6FE002D47DF /* MyCollectionBottomSheetViewController.swift */; };
+		EC7058A22DBCCA9D002D47DF /* PlaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7058A12DBCCA9D002D47DF /* PlaceTableViewCell.swift */; };
+		EC7058A42DBCDC6C002D47DF /* PlaceTypesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7058A32DBCDC6C002D47DF /* PlaceTypesViewController.swift */; };
 		EC8ABAF62D74828200AEC01B /* Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = EC8ABAF52D74828200AEC01B /* Markdown */; };
 		EC8ABAF82D7591B100AEC01B /* DiffTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF72D7591B100AEC01B /* DiffTableViewCell.swift */; };
 		EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF92D75923C00AEC01B /* DiffCode.swift */; };
@@ -133,6 +136,9 @@
 		EC7058992DBC7BE1002D47DF /* LoginBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginBottomSheetViewController.swift; sourceTree = "<group>"; };
 		EC70589B2DBC7C4D002D47DF /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		EC70589D2DBCA8B6002D47DF /* HeaderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderLabel.swift; sourceTree = "<group>"; };
+		EC70589F2DBCC6FE002D47DF /* MyCollectionBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionBottomSheetViewController.swift; sourceTree = "<group>"; };
+		EC7058A12DBCCA9D002D47DF /* PlaceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTableViewCell.swift; sourceTree = "<group>"; };
+		EC7058A32DBCDC6C002D47DF /* PlaceTypesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTypesViewController.swift; sourceTree = "<group>"; };
 		EC8ABAF72D7591B100AEC01B /* DiffTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTableViewCell.swift; sourceTree = "<group>"; };
 		EC8ABAF92D75923C00AEC01B /* DiffCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffCode.swift; sourceTree = "<group>"; };
 		EC8ABAFB2D75975B00AEC01B /* DiffTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTableViewController.swift; sourceTree = "<group>"; };
@@ -267,6 +273,7 @@
 			isa = PBXGroup;
 			children = (
 				EC7058932DB9D93D002D47DF /* RecentSearchTableViewCell.swift */,
+				EC7058A12DBCCA9D002D47DF /* PlaceTableViewCell.swift */,
 			);
 			path = Tables;
 			sourceTree = "<group>";
@@ -476,6 +483,8 @@
 				EC70587A2DB39629002D47DF /* MainViewController.swift */,
 				EC7058832DB3BAE5002D47DF /* HomeBottomSheetViewController.swift */,
 				EC7058992DBC7BE1002D47DF /* LoginBottomSheetViewController.swift */,
+				EC70589F2DBCC6FE002D47DF /* MyCollectionBottomSheetViewController.swift */,
+				EC7058A32DBCDC6C002D47DF /* PlaceTypesViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -782,7 +791,9 @@
 				EC0652502D660188006EABC9 /* DetailViewController.swift in Sources */,
 				EC06524E2D656EE6006EABC9 /* SearchCell.swift in Sources */,
 				ECA94C032D52F00C005B0428 /* AppCoordinator.swift in Sources */,
+				EC7058A22DBCCA9D002D47DF /* PlaceTableViewCell.swift in Sources */,
 				EC0652462D5C8919006EABC9 /* MyActivitiesViewController.swift in Sources */,
+				EC7058A02DBCC6FE002D47DF /* MyCollectionBottomSheetViewController.swift in Sources */,
 				EC9884352D7C3AA100224DAA /* LocationBottomSheet.swift in Sources */,
 				EC0652572D6C6D8B006EABC9 /* DeleteVoteViewController.swift in Sources */,
 				EC70589E2DBCA8B6002D47DF /* HeaderLabel.swift in Sources */,
@@ -792,6 +803,7 @@
 				EC06525E2D6D9841006EABC9 /* ScrollViewController.swift in Sources */,
 				EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */,
 				ECA94BE82D50AF41005B0428 /* AuthRepository.swift in Sources */,
+				EC7058A42DBCDC6C002D47DF /* PlaceTypesViewController.swift in Sources */,
 				EC9884B52D7F0F1800224DAA /* LocationDetailBottomSheet.swift in Sources */,
 				EC7058982DBA772E002D47DF /* GuideButton.swift in Sources */,
 				EC70587E2DB397CF002D47DF /* BottomSheetCoordinator.swift in Sources */,

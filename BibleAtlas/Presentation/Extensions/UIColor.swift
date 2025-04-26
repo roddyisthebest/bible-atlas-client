@@ -63,6 +63,9 @@ extension UIColor {
         return traitCollection.userInterfaceStyle == .dark ? UIColor(hex: "#969696") : UIColor(hex: "#B7B7B5")
     }
     
+    static let placeCircle = UIColor { traitCollection in
+        return traitCollection.userInterfaceStyle == .dark ? UIColor(hex: "#49494B") : UIColor(hex: "#EBEBEB")
+    }
     
     static let primaryBlue = UIColor(hex: "#007BFE")
     
@@ -75,6 +78,8 @@ extension UIColor {
     }
     
     static let collectionSubText = UIColor(hex: "#868782")
+    
+    static let placeDescriptionText = UIColor(hex: "#868782")
     
     static let closeIcon = UIColor { traitCollection in
         return traitCollection.userInterfaceStyle == .dark ? UIColor(hex: "#9B9C9E") : UIColor(hex: "#6C6C6C")

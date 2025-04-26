@@ -74,13 +74,14 @@ class RecentSearchTableViewCell: UITableViewCell {
         backgroundColor = .mainItemBkg;
     }
 
-    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
-        super.setHighlighted(highlighted, animated: animated)
-
-        UIView.animate(withDuration: 0.2) {
-            self.containerStackView.backgroundColor = highlighted ? .focusedMainItemBkg : .mainItemBkg
-        }
-    }
+//    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+//        super.setHighlighted(highlighted, animated: animated)
+//
+//        UIView.animate(withDuration: 0.2) {
+//            self.containerStackView.backgroundColor = highlighted ? .focusedMainItemBkg : .mainItemBkg
+//
+//        }
+//    }
 
     func setText(text: String) {
         searchLabel.text = text
