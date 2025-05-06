@@ -6,9 +6,14 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import PanModal
+class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
 
-class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
- 
+    
+    private var homeBottomSheetViewModel:HomeBottomSheetViewModelProtocol?
+    
     private lazy var bodyView = {
         let v = UIView();
         v.addSubview(headerStackView);
@@ -16,6 +21,7 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
         view.addSubview(v);
         return v;
     }()
+    
     
     private lazy var scrollView = {
         let sv = UIScrollView();
@@ -34,7 +40,7 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
     
     
     private lazy var headerStackView = {
-        let sv = UIStackView(arrangedSubviews: [searchTextField, userAvatarBtn]);
+        let sv = UIStackView(arrangedSubviews: [searchTextField, userAvatarButton]);
         
         sv.axis = .horizontal;
         sv.spacing = 10;
@@ -60,7 +66,7 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
     
     
     
-    private lazy var userAvatarBtn = {
+    private lazy var userAvatarButton = {
         let button = UIButton(type: .system)
         
         button.backgroundColor = .userAvatarBkg;
@@ -70,7 +76,8 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
         
         button.setTitleColor(.primaryBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 12, weight: .medium)
-        button.addTarget(self, action: #selector(loginBtnTapped), for: .touchUpInside)
+ 
+        
         return button;
     }()
     
@@ -189,6 +196,21 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
     
     private let dummySearches:[String] = ["onasdasdasdasdasddfasdfdfasdfasdfasdfasdfasdfe", "sdfasdfadsfasdfasdffsdsadf"];
     
+    init(){
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    
+    init(homeBottomSheetViewModel:HomeBottomSheetViewModelProtocol) {
+        self.homeBottomSheetViewModel = homeBottomSheetViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
@@ -202,9 +224,20 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
     }
 
    
-    @objc private func loginBtnTapped(){
+    private func bindViewModel(){
+        let avatarButtonTapped$ = userAvatarButton.rx.tap.asObservable();
+        
+        let favoriteTapped$ = favoriteButton.rx.tap.map { MyCollectionType.favorite }
+        let bookmarkTapped$ = bookmarkButton.rx.tap.map { MyCollectionType.save }
+        let memoTapped$ = memoButton.rx.tap.map { MyCollectionType.memo }
 
+        let collectionButtonTapped$ = Observable.merge(favoriteTapped$, bookmarkTapped$, memoTapped$)
+        
+        homeBottomSheetViewModel?.transform(input: HomeBottomSheetViewModel.Input(avatarButtonTapped$: avatarButtonTapped$, collectionButtonTapped$: collectionButtonTapped$) )
     }
+    
+    
+
 
     
     @objc private func explorePlacesBtnTapped(){
@@ -245,8 +278,11 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
         super.viewDidLoad()
         setupStyle();
         setupConstraints();
-
+        bindViewModel();
+        
     }
+    
+    
     
     private func setupStyle(){
         view.backgroundColor = .mainBkg;
@@ -264,7 +300,7 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
             make.height.equalTo(40);
         }
         
-        userAvatarBtn.snp.makeConstraints { make in
+        userAvatarButton.snp.makeConstraints { make in
             make.width.equalTo(40);
         }
         
@@ -313,6 +349,8 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
         
     }
     
+
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dummySearches.count;
@@ -337,5 +375,42 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80;
+    }
+}
+
+
+
+
+extension HomeBottomSheetViewController: PanModalPresentable {
+
+    var shouldShowBackgroundView: Bool { return false } // 기본값
+
+    var panScrollable: UIScrollView? {
+        return scrollView
+    }
+    
+
+    var allowsDragToDismiss: Bool {
+        return false
+    }
+
+    var allowsTapToDismiss: Bool {
+        return false
+    }
+
+    var panModalBackgroundColor: UIColor {
+        return .clear
+    }
+
+    var shortFormHeight: PanModalHeight {
+        return .contentHeight(300)
+    }
+
+    var longFormHeight: PanModalHeight {
+        return .maxHeightWithTopInset(0)
+    }
+
+    var allowsExtendedPanScrolling: Bool {
+        return false // 💥 핵심!
     }
 }

@@ -6,8 +6,19 @@
 //
 
 import UIKit
-
-class LoginBottomSheetViewController: UIViewController {
+import RxSwift
+import RxCocoa
+import PanModal
+class LoginBottomSheetViewController: UIViewController, PanModalPresentable {
+    var shouldShowBackgroundView: Bool {
+        return true;
+    }
+    
+    var panScrollable: UIScrollView? {
+        return nil
+    }
+    
+    private var loginBottomSheetViewModel:LoginBottomSheetViewModelProtocol?;
     
     private lazy var headerStackView = {
         let sv = UIStackView(arrangedSubviews: [headerLabel, closeButton]);
@@ -19,7 +30,7 @@ class LoginBottomSheetViewController: UIViewController {
     
     
     private let headerLabel = HeaderLabel(text: "Login");
-    private let closeButton = CloseButton();
+    private let closeButton = CircleButton(iconSystemName: "xmark" );
     
     
     private lazy var buttonsStackView = {
@@ -34,6 +45,24 @@ class LoginBottomSheetViewController: UIViewController {
     private let googleButton = GuideButton(titleText: "Google");
     private let kakaoButton = GuideButton(titleText: "Kakao");
 
+        
+    init(loginBottomSheetViewModel:LoginBottomSheetViewModelProtocol) {
+        self.loginBottomSheetViewModel = loginBottomSheetViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func bindViewModel(){
+        let googleButtonTapped$ = googleButton.rx.tap.asObservable();
+        let kakaoButtonTapped$ = kakaoButton.rx.tap.asObservable();
+        let closeButtonTapped$ = closeButton.rx.tap.asObservable();
+        
+        loginBottomSheetViewModel?.transform(input: LoginBottomSheetViewModel.Input(googleButtonTapped$: googleButtonTapped$, kakaoButtonTapped$: kakaoButtonTapped$, closeButtonTapped$:closeButtonTapped$))
+    }
+    
     private func setupStyle(){
         view.backgroundColor = .mainBkg;
     }
@@ -58,12 +87,14 @@ class LoginBottomSheetViewController: UIViewController {
         }
     }
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI();
         setupConstraints();
         setupStyle()
-
+        bindViewModel();
     }
     
 }

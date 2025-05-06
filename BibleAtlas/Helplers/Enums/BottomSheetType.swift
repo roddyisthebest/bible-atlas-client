@@ -11,5 +11,11 @@ import MapKit
 enum BottomSheetType {
     case home
     case login
-    case myCollection
+    case myCollection(MyCollectionType)
+}
+
+enum MyCollectionType {
+    case favorite
+    case save
+    case memo
 }

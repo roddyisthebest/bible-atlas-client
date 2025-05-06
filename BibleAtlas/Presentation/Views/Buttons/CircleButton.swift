@@ -7,17 +7,17 @@
 
 import UIKit
 
-class CloseButton: UIButton {
+class CircleButton: UIButton {
 
-    init() {
+    init(iconSystemName: String) {
            super.init(frame: .zero)
            
-           self.backgroundColor = .closeButtonBkg
+           self.backgroundColor = .circleButtonBkg
            
            let config = UIImage.SymbolConfiguration(pointSize: 18, weight: .bold)
-           let xmarkImage = UIImage(systemName: "xmark", withConfiguration: config)
+           let xmarkImage = UIImage(systemName: iconSystemName, withConfiguration: config)
            self.setImage(xmarkImage, for: .normal)
-           self.tintColor = .closeIcon
+           self.tintColor = .circleIcon
            
         
             self.snp.makeConstraints { make in

@@ -6,8 +6,24 @@
 //
 
 import UIKit
+import RxSwift
+import RxRelay
+import PanModal
+class MyCollectionBottomSheetViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, PanModalPresentable {
+    
+    var shouldShowBackgroundView: Bool {
+        return true;
+    }
+    var panScrollable: UIScrollView?{
+        return nil
+    }
+    
+    private var myCollectionBottomSheetViewModel:MyCollectionBottomSheetViewModelProtocol?;
+    
+    private let disposeBag = DisposeBag();
 
-class MyCollectionBottomSheetViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    private let bottomReached$ = PublishRelay<Void>();
+    private let placeTabelCellSelected$ = PublishRelay<Int>();
     
     private let dummyPlaces:[String] = ["onasdasdasdasdasddfasdfdfasdfasdfasdfasdfasdfe", "sdfasdfadsfasdfasdffsdsadf"];
     
@@ -23,11 +39,9 @@ class MyCollectionBottomSheetViewController: UIViewController, UITableViewDelega
     }()
     
     
-    
-    
     private let headerLabel = HeaderLabel(text: "Favorites");
     
-    private let closeButton = CloseButton();
+    private let closeButton = CircleButton(iconSystemName: "xmark")
     
     private lazy var tableView = {
         let tv = UITableView();
@@ -71,21 +85,59 @@ class MyCollectionBottomSheetViewController: UIViewController, UITableViewDelega
         
     }
     
-    init(text:String = "Favorites") {
-        headerLabel.text = text;
+    private func bindViewModel(){
+        let closeButtonTapped$ = closeButton.rx.tap.asObservable();
+        
+        
+        let output = myCollectionBottomSheetViewModel?.transform(input: MyCollectionBottomSheetViewModel.Input(closeButtonTapped$: closeButtonTapped$, placeTabelCellSelected$: placeTabelCellSelected$.asObservable(), bottomReached$: bottomReached$.asObservable()))
+        
+        output?.placesResponse$.observe(on: MainScheduler.instance).bind{
+            [weak self] response in
+            print(response,"response")
+        }.disposed(by: disposeBag)
+        
+        output?.error$.observe(on: MainScheduler.instance).bind{
+            [weak self] errorMsg in
+            let alert = UIAlertController(title: "에러", message: errorMsg, preferredStyle: .alert);
+            alert.addAction(.init(title:"확인", style:.default));
+            self?.present(alert,animated: true);
+
+        }.disposed(by: disposeBag)
+        
+        output?.type$.observe(on: MainScheduler.instance).bind{
+            [weak self] type in           
+                switch(type){
+                case .favorite:
+                    self?.headerLabel.text = "Favorite"
+                case .memo:
+                    self?.headerLabel.text = "Memo"
+                case .save:
+                    self?.headerLabel.text = "Save"
+                }
+            
+          
+        }.disposed(by: disposeBag)
+        
+    }
+    
+
+    
+    
+    init(myCollectionBottomSheetViewModel:MyCollectionBottomSheetViewModelProtocol) {
+        self.myCollectionBottomSheetViewModel = myCollectionBottomSheetViewModel
         super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI();
         setupConstraints();
         setupStyle();
+        bindViewModel();
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

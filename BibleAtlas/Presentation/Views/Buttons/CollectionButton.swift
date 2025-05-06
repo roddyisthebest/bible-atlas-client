@@ -43,6 +43,8 @@ final class CollectionButton: UIButton {
             addSubview(stack)
             
             stack.snp.makeConstraints { $0.edges.equalToSuperview() }
+            stack.isUserInteractionEnabled = false 
+
         }
 
         required init?(coder: NSCoder) {

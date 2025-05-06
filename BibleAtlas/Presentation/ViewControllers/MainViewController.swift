@@ -7,8 +7,17 @@
 
 import UIKit
 import MapKit
+import PanModal
 
-final class MainViewController: UIViewController,BottomSheetPresentable {
+final class MainViewController: UIViewController, PanModalPresentable  {
+    
+    var shouldShowBackgroundView: Bool {
+        return false;
+    }
+    
+    var panScrollable: UIScrollView? {
+         return nil
+    }
 
     private var navigator: BottomSheetNavigator;
 
@@ -22,6 +31,7 @@ final class MainViewController: UIViewController,BottomSheetPresentable {
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview();
         }
+
     }
     
             
@@ -38,7 +48,6 @@ final class MainViewController: UIViewController,BottomSheetPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI();
-        navigator.present(.myCollection)
     }
     
     func present(_ viewController: UIViewController, animated: Bool) {

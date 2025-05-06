@@ -6,7 +6,8 @@
 //
 
 import UIKit
-
+import UBottomSheet
+import PanModal
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -19,14 +20,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        let bottomSheetFactory = BottomSheetFactory();
-        let bottomSheetCoordinator = BottomSheetCoordinator(factory: bottomSheetFactory)
-
+        let vmFactory = VMFactory();
+        let vcFactory = VCFactory();
+            
+        let bottomSheetCoordinator = BottomSheetCoordinator(vcFactory: vcFactory, vmFactory: vmFactory);
+        
+        vmFactory.configure(navigator: bottomSheetCoordinator)
+        
         let mainVC = MainViewController(navigator: bottomSheetCoordinator);
-        bottomSheetCoordinator.setPresenter(mainVC)
 
+        mainVC.modalPresentationStyle = .custom
+        bottomSheetCoordinator.setPresenter(mainVC)
+        DispatchQueue.main.async {
+            bottomSheetCoordinator.present(.home)
+        }
+        
         window?.rootViewController = mainVC;
         window?.makeKeyAndVisible()
+        
+        
+       
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
