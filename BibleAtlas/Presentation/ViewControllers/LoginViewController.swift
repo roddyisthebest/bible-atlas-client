@@ -211,7 +211,6 @@ extension UIColor {
     static let primaryViolet = UIColor(hex: "#8160C4")
     
     
-    static let primaryRed = UIColor(hex:"#FF7979");
     static let thirdGray = UIColor(hex:"#313131")
     
     static let lightGray = UIColor(hex:"#5D5D5D")

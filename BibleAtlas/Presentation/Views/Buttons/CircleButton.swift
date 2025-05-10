@@ -25,10 +25,6 @@ class CircleButton: UIButton {
             }
             self.layer.cornerRadius = 15;
             self.layer.masksToBounds = true;
-        
-           
-        
-
 
     }
     

@@ -19,7 +19,7 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
     private weak var navigator: BottomSheetNavigator?
     
     private let placeResponse$ = PublishRelay<Place>();
-
+    private let placeId:String?
     func transform(input: Input) -> Output {
         input.placeDetailViewLoaded$.subscribe(onNext:{
             [weak self] in
@@ -28,14 +28,20 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
         
         input.likeButtonTapped$.subscribe(onNext: {[weak self] in print("aas")}).disposed(by: disposeBag)
         
+        input.memoButtonTapped$.subscribe(onNext: {
+            [weak self] in
+            guard let placeId = self?.placeId else { return }
+            self?.navigator?.present(.memo(placeId))
+        }).disposed(by: disposeBag)
         return Output(placeData$: placeResponse$.asObservable())
         
     }
     
     
     
-    init(navigator:BottomSheetNavigator?){
+    init(navigator:BottomSheetNavigator?, placeId:String){
         self.navigator = navigator
+        self.placeId = placeId;
     }
     
     public struct Input {
@@ -45,7 +51,7 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
         let closeButtonTapped$:Observable<Void>
         let likeButtonTapped$:Observable<Void>
 //        let verseButtonTapped$:Observable<String>
-//        let memoButtonTapped$:Observable<Void>
+        let memoButtonTapped$:Observable<Void>
     }
     
     public struct Output{

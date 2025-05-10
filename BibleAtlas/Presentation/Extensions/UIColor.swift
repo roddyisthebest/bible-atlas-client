@@ -74,6 +74,8 @@ extension UIColor {
     
     static let primaryBlue = UIColor(hex: "#007BFE")
     
+    static let primaryRed = UIColor(hex:"#FF382B")
+    
     static let mainLabelText = UIColor { traitCollection in
         return traitCollection.userInterfaceStyle == .dark ? UIColor(hex: "#9A9DA0") : UIColor(hex: "#868782")
     }

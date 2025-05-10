@@ -54,6 +54,9 @@
 		EC77CE302DCF2D9C0030DEF5 /* RelatedVerseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE2F2DCF2D9C0030DEF5 /* RelatedVerseTableViewCell.swift */; };
 		EC77CE322DCF34110030DEF5 /* VersedItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE312DCF34110030DEF5 /* VersedItemCell.swift */; };
 		EC77CE342DCF348D0030DEF5 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE332DCF348D0030DEF5 /* LeftAlignedCollectionViewFlowLayout.swift */; };
+		EC77CE362DCF630E0030DEF5 /* MemoBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE352DCF630E0030DEF5 /* MemoBottomSheetViewController.swift */; };
+		EC77CE382DCF79800030DEF5 /* IconTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE372DCF79800030DEF5 /* IconTextButton.swift */; };
+		EC77CE3A2DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE392DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift */; };
 		EC8ABAF82D7591B100AEC01B /* DiffTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF72D7591B100AEC01B /* DiffTableViewCell.swift */; };
 		EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF92D75923C00AEC01B /* DiffCode.swift */; };
 		EC8ABAFC2D75975B00AEC01B /* DiffTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAFB2D75975B00AEC01B /* DiffTableViewController.swift */; };
@@ -166,6 +169,9 @@
 		EC77CE2F2DCF2D9C0030DEF5 /* RelatedVerseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedVerseTableViewCell.swift; sourceTree = "<group>"; };
 		EC77CE312DCF34110030DEF5 /* VersedItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersedItemCell.swift; sourceTree = "<group>"; };
 		EC77CE332DCF348D0030DEF5 /* LeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		EC77CE352DCF630E0030DEF5 /* MemoBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoBottomSheetViewController.swift; sourceTree = "<group>"; };
+		EC77CE372DCF79800030DEF5 /* IconTextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTextButton.swift; sourceTree = "<group>"; };
+		EC77CE392DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		EC8ABAF72D7591B100AEC01B /* DiffTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTableViewCell.swift; sourceTree = "<group>"; };
 		EC8ABAF92D75923C00AEC01B /* DiffCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffCode.swift; sourceTree = "<group>"; };
 		EC8ABAFB2D75975B00AEC01B /* DiffTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTableViewController.swift; sourceTree = "<group>"; };
@@ -286,6 +292,7 @@
 				EC70588A2DB8BCCE002D47DF /* CollectionButton.swift */,
 				EC7058972DBA772E002D47DF /* GuideButton.swift */,
 				EC70589B2DBC7C4D002D47DF /* CircleButton.swift */,
+				EC77CE372DCF79800030DEF5 /* IconTextButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -529,6 +536,7 @@
 				EC7058992DBC7BE1002D47DF /* LoginBottomSheetViewController.swift */,
 				EC70589F2DBCC6FE002D47DF /* MyCollectionBottomSheetViewController.swift */,
 				EC77CE002DC5DA8D0030DEF5 /* PlaceDetailViewController.swift */,
+				EC77CE352DCF630E0030DEF5 /* MemoBottomSheetViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -541,6 +549,7 @@
 				EC77CDF12DC318EB0030DEF5 /* LoginBottomSheetViewModel.swift */,
 				EC77CDF52DC337FC0030DEF5 /* MyCollectionBottomSheetViewModel.swift */,
 				EC77CE022DC5E3460030DEF5 /* PlaceDetailViewModel.swift */,
+				EC77CE392DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -867,11 +876,13 @@
 				ECA94BDA2D509AFF005B0428 /* AuthManager.swift in Sources */,
 				EC7058A72DBFA570002D47DF /* HomeBottomSheetViewModel.swift in Sources */,
 				ECA94BFE2D520CEF005B0428 /* MyInfoViewController.swift in Sources */,
+				EC77CE382DCF79800030DEF5 /* IconTextButton.swift in Sources */,
 				EC8ABB022D75AA2200AEC01B /* UpdateVoteDetailView.swift in Sources */,
 				EC0652642D6EF53C006EABC9 /* CreateVoteDetailViewController.swift in Sources */,
 				ECA94B9B2D5082B9005B0428 /* ViewController.swift in Sources */,
 				ECA94C0D2D5A3714005B0428 /* ActivitySmallCell.swift in Sources */,
 				ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */,
+				EC77CE362DCF630E0030DEF5 /* MemoBottomSheetViewController.swift in Sources */,
 				EC7058A92DBFAEB5002D47DF /* VCFactory.swift in Sources */,
 				EC77CDF42DC32C020030DEF5 /* UIViewController.swift in Sources */,
 				EC77CDF22DC318EB0030DEF5 /* LoginBottomSheetViewModel.swift in Sources */,
@@ -900,6 +911,7 @@
 				ECA94BDD2D50A59E005B0428 /* AuthNetworkManager.swift in Sources */,
 				ECA94BEB2D50B0B9005B0428 /* AuthUsecase.swift in Sources */,
 				EC0652662D72BF9F006EABC9 /* DeleteVoteDetailViewController.swift in Sources */,
+				EC77CE3A2DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift in Sources */,
 				ECA94BE52D50AE92005B0428 /* AuthRepositoryProtocol.swift in Sources */,
 				ECA94BEF2D50B492005B0428 /* MockingApi.swift in Sources */,
 				EC8ABAFC2D75975B00AEC01B /* DiffTableViewController.swift in Sources */,

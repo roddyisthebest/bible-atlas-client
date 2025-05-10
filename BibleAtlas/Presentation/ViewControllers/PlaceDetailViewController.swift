@@ -23,6 +23,8 @@ class PlaceDetailViewController: UIViewController {
     private var placeDetailViewModel:PlaceDetailViewModelProtocol?
     
     private let disposeBag = DisposeBag();
+    
+    private let memoButtonTapped$ = PublishRelay<Void>()
 
     private let dummyPlaces:[String] = ["onasf", "sdfasdfadsfasdfasddasdasdsadasdasdadsffsdsadf","ffeqfdasdsqssdqwddsas"];
         
@@ -303,56 +305,11 @@ class PlaceDetailViewController: UIViewController {
         return label
     }()
     
-    
     private lazy var reportIssueButton = {
-        let button = UIButton(type:.system);
-        button.addSubview(reportIssueButtonStackView)
-        button.backgroundColor = .mainItemBkg
-        button.layer.cornerRadius = 8;
-        button.layer.masksToBounds = true;
+        let button = IconTextButton(iconSystemName: "exclamationmark.bubble.fill", color: .primaryBlue, labelText: "Report an issue");
         button.menu = buildIssueReportMenu();
         button.showsMenuAsPrimaryAction = true
         return button;
-    }()
-    
-    
-    private lazy var reportIssueButtonStackView = {
-        let sv = UIStackView(arrangedSubviews: [reportIssueIcon, reportIssueLabel]);
-        sv.axis = .horizontal
-        sv.distribution = .fill;
-        sv.alignment = .center;
-        sv.spacing = 10;
-        return sv;
-    }()
-    
-    private lazy var reportIssueIcon = {
-        let v = UIView()
-        v.backgroundColor = .collectionCircle
-        v.layer.cornerRadius = 15
-        v.layer.masksToBounds = true
-
-        let iv = UIImageView()
-        iv.image = UIImage(systemName: "exclamationmark.bubble.fill")
-        iv.tintColor = .primaryBlue
-        iv.contentMode = .scaleAspectFit
-        
-        v.addSubview(iv);
-
-        iv.snp.makeConstraints { make in
-            make.width.height.equalTo(15)
-            make.center.equalToSuperview()
-        }
-        
-        
-        return v;
-    }()
-    
-    private lazy var reportIssueLabel = {
-        let label = UILabel();
-        label.text = "Report an issue"
-        label.font = .systemFont(ofSize: 15, weight: .semibold);
-        label.textColor = .primaryBlue;
-        return label;
     }()
     
     private lazy var relatedVerseStackView = {
@@ -536,18 +493,8 @@ class PlaceDetailViewController: UIViewController {
             make.bottom.equalToSuperview().offset(-20)
             
         }
-    
-        reportIssueButtonStackView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(15);
-            make.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().inset(20);
-            make.bottom.equalToSuperview().inset(15);
-        }
+
         
-        reportIssueIcon.snp.makeConstraints { make in
-            make.width.height.equalTo(30) // 아이콘 사이즈
-        }
-       
         
     }
     
@@ -564,7 +511,7 @@ class PlaceDetailViewController: UIViewController {
         let likeButtonTapped$ = likeButton.rx.tap.asObservable();
         
     
-        let output = placeDetailViewModel?.transform(input: PlaceDetailViewModel.Input(placeDetailViewLoaded$: placeDetailViewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$, shareButtonTapped$: shareButtonTapped$, closeButtonTapped$: closeButtonTapped$, likeButtonTapped$: likeButtonTapped$));
+        let output = placeDetailViewModel?.transform(input: PlaceDetailViewModel.Input(placeDetailViewLoaded$: placeDetailViewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$, shareButtonTapped$: shareButtonTapped$, closeButtonTapped$: closeButtonTapped$, likeButtonTapped$: likeButtonTapped$,memoButtonTapped$: memoButtonTapped$.asObservable()));
     
         output?.placeData$.observe(on: MainScheduler.instance).bind{
             [weak self] data in
@@ -575,6 +522,7 @@ class PlaceDetailViewController: UIViewController {
     
     private func buildMoreMenu() -> UIMenu {
         let action1 = UIAction(title: "Add Memo", image: UIImage(systemName: "note.text.badge.plus")) { _ in
+            self.memoButtonTapped$.accept(Void())
             print("Add Memo")
         }
 
