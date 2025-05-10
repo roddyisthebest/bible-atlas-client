@@ -8,9 +8,8 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import PanModal
 class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
-
+    
     
     private var homeBottomSheetViewModel:HomeBottomSheetViewModelProtocol?
     
@@ -25,7 +24,7 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
     
     private lazy var scrollView = {
         let sv = UIScrollView();
-        
+        sv.isScrollEnabled = false
         sv.addSubview(contentView)
         return sv;
     }()
@@ -194,6 +193,8 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
         return button;
     }()
     
+
+    
     private let dummySearches:[String] = ["onasdasdasdasdasddfasdfdfasdfasdfasdfasdfasdfe", "sdfasdfadsfasdfasdffsdsadf"];
     
     init(){
@@ -278,8 +279,17 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
         super.viewDidLoad()
         setupStyle();
         setupConstraints();
+        setupSheet();
         bindViewModel();
         
+    }
+    
+    
+    
+    private func setupSheet(){
+        if let sheet = self.sheetPresentationController {
+            sheet.delegate = self
+        }
     }
     
     
@@ -379,38 +389,10 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
 }
 
 
-
-
-extension HomeBottomSheetViewController: PanModalPresentable {
-
-    var shouldShowBackgroundView: Bool { return false } // 기본값
-
-    var panScrollable: UIScrollView? {
-        return scrollView
-    }
-    
-
-    var allowsDragToDismiss: Bool {
-        return false
-    }
-
-    var allowsTapToDismiss: Bool {
-        return false
-    }
-
-    var panModalBackgroundColor: UIColor {
-        return .clear
-    }
-
-    var shortFormHeight: PanModalHeight {
-        return .contentHeight(300)
-    }
-
-    var longFormHeight: PanModalHeight {
-        return .maxHeightWithTopInset(0)
-    }
-
-    var allowsExtendedPanScrolling: Bool {
-        return false // 💥 핵심!
-    }
+extension HomeBottomSheetViewController:UISheetPresentationControllerDelegate{
+    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
+          let isLarge = sheetPresentationController.selectedDetentIdentifier == .large
+          print("힙합")
+          scrollView.isScrollEnabled = isLarge
+      }
 }

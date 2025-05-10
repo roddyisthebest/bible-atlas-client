@@ -14,7 +14,7 @@ class CircleButton: UIButton {
            
            self.backgroundColor = .circleButtonBkg
            
-           let config = UIImage.SymbolConfiguration(pointSize: 18, weight: .bold)
+           let config = UIImage.SymbolConfiguration(pointSize: 13, weight: .bold)
            let xmarkImage = UIImage(systemName: iconSystemName, withConfiguration: config)
            self.setImage(xmarkImage, for: .normal)
            self.tintColor = .circleIcon

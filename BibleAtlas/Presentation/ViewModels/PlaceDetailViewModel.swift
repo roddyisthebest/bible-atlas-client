@@ -23,8 +23,10 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
     func transform(input: Input) -> Output {
         input.placeDetailViewLoaded$.subscribe(onNext:{
             [weak self] in
-            
         }).disposed(by: disposeBag)
+        
+        
+        input.likeButtonTapped$.subscribe(onNext: {[weak self] in print("aas")}).disposed(by: disposeBag)
         
         return Output(placeData$: placeResponse$.asObservable())
         
@@ -42,8 +44,8 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
         let shareButtonTapped$:Observable<Void>
         let closeButtonTapped$:Observable<Void>
         let likeButtonTapped$:Observable<Void>
-        let verseButtonTapped$:Observable<String>
-        let memoButtonTapped$:Observable<Void>
+//        let verseButtonTapped$:Observable<String>
+//        let memoButtonTapped$:Observable<Void>
     }
     
     public struct Output{

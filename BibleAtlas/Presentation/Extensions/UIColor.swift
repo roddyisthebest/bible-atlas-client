@@ -53,7 +53,12 @@ extension UIColor {
         return traitCollection.userInterfaceStyle == .dark ? UIColor(hex: "#37393C") : UIColor(hex: "#E7E7E7")
     }
     
+    
+    static let oneHunnitPercentBadgeBkg = UIColor(hex: "#8144FC")
+    
+    static let fiftyPercentBadgeBkg = UIColor(hex:"#44C2FC")
 
+    
     static let collectionCircle = UIColor { traitCollection in
         return traitCollection.userInterfaceStyle == .dark ? UIColor(hex: "#49494B") : UIColor(hex: "#EBEBEB")
     }
@@ -81,8 +86,12 @@ extension UIColor {
     
     static let placeDescriptionText = UIColor(hex: "#868782")
     
+    static let detailLabelText = UIColor(hex:"#999999")
+    
     static let circleIcon = UIColor { traitCollection in
         return traitCollection.userInterfaceStyle == .dark ? UIColor(hex: "#9B9C9E") : UIColor(hex: "#6C6C6C")
     }
+    
+    
     
 }

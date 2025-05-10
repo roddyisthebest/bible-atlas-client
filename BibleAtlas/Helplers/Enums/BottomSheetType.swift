@@ -12,6 +12,7 @@ enum BottomSheetType {
     case home
     case login
     case myCollection(MyCollectionType)
+    case placeDetail(String)
 }
 
 enum MyCollectionType {

@@ -50,6 +50,10 @@
 		EC77CE082DC5EB700030DEF5 /* PlaceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE072DC5EB700030DEF5 /* PlaceType.swift */; };
 		EC77CE0E2DC87C2A0030DEF5 /* PassthroughDimmedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE0D2DC87C2A0030DEF5 /* PassthroughDimmedView.swift */; };
 		EC77CE2C2DC8B0610030DEF5 /* PanModal in Frameworks */ = {isa = PBXBuildFile; productRef = EC77CE2B2DC8B0610030DEF5 /* PanModal */; };
+		EC77CE2E2DCF193D0030DEF5 /* RelatedPlaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE2D2DCF193D0030DEF5 /* RelatedPlaceTableViewCell.swift */; };
+		EC77CE302DCF2D9C0030DEF5 /* RelatedVerseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE2F2DCF2D9C0030DEF5 /* RelatedVerseTableViewCell.swift */; };
+		EC77CE322DCF34110030DEF5 /* VersedItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE312DCF34110030DEF5 /* VersedItemCell.swift */; };
+		EC77CE342DCF348D0030DEF5 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE332DCF348D0030DEF5 /* LeftAlignedCollectionViewFlowLayout.swift */; };
 		EC8ABAF82D7591B100AEC01B /* DiffTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF72D7591B100AEC01B /* DiffTableViewCell.swift */; };
 		EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF92D75923C00AEC01B /* DiffCode.swift */; };
 		EC8ABAFC2D75975B00AEC01B /* DiffTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAFB2D75975B00AEC01B /* DiffTableViewController.swift */; };
@@ -158,6 +162,10 @@
 		EC77CE052DC5E9910030DEF5 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		EC77CE072DC5EB700030DEF5 /* PlaceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceType.swift; sourceTree = "<group>"; };
 		EC77CE0D2DC87C2A0030DEF5 /* PassthroughDimmedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassthroughDimmedView.swift; sourceTree = "<group>"; };
+		EC77CE2D2DCF193D0030DEF5 /* RelatedPlaceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedPlaceTableViewCell.swift; sourceTree = "<group>"; };
+		EC77CE2F2DCF2D9C0030DEF5 /* RelatedVerseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedVerseTableViewCell.swift; sourceTree = "<group>"; };
+		EC77CE312DCF34110030DEF5 /* VersedItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersedItemCell.swift; sourceTree = "<group>"; };
+		EC77CE332DCF348D0030DEF5 /* LeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		EC8ABAF72D7591B100AEC01B /* DiffTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTableViewCell.swift; sourceTree = "<group>"; };
 		EC8ABAF92D75923C00AEC01B /* DiffCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffCode.swift; sourceTree = "<group>"; };
 		EC8ABAFB2D75975B00AEC01B /* DiffTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTableViewController.swift; sourceTree = "<group>"; };
@@ -296,6 +304,10 @@
 			children = (
 				EC7058932DB9D93D002D47DF /* RecentSearchTableViewCell.swift */,
 				EC7058A12DBCCA9D002D47DF /* PlaceTableViewCell.swift */,
+				EC77CE2D2DCF193D0030DEF5 /* RelatedPlaceTableViewCell.swift */,
+				EC77CE2F2DCF2D9C0030DEF5 /* RelatedVerseTableViewCell.swift */,
+				EC77CE312DCF34110030DEF5 /* VersedItemCell.swift */,
+				EC77CE332DCF348D0030DEF5 /* LeftAlignedCollectionViewFlowLayout.swift */,
 			);
 			path = Tables;
 			sourceTree = "<group>";
@@ -838,6 +850,7 @@
 				EC7058A02DBCC6FE002D47DF /* MyCollectionBottomSheetViewController.swift in Sources */,
 				EC77CE032DC5E3460030DEF5 /* PlaceDetailViewModel.swift in Sources */,
 				EC9884352D7C3AA100224DAA /* LocationBottomSheet.swift in Sources */,
+				EC77CE302DCF2D9C0030DEF5 /* RelatedVerseTableViewCell.swift in Sources */,
 				EC0652572D6C6D8B006EABC9 /* DeleteVoteViewController.swift in Sources */,
 				EC70589E2DBCA8B6002D47DF /* HeaderLabel.swift in Sources */,
 				ECADA5832D5B3EF7005E1E95 /* AccountSettingViewController.swift in Sources */,
@@ -866,8 +879,10 @@
 				ECA94BFC2D520CE1005B0428 /* SearchOptionViewController.swift in Sources */,
 				EC0652442D5C6FA9006EABC9 /* AccountSettingCell.swift in Sources */,
 				EC8ABAF82D7591B100AEC01B /* DiffTableViewCell.swift in Sources */,
+				EC77CE2E2DCF193D0030DEF5 /* RelatedPlaceTableViewCell.swift in Sources */,
 				EC70587B2DB39629002D47DF /* MainViewController.swift in Sources */,
 				EC70589C2DBC7C4D002D47DF /* CircleButton.swift in Sources */,
+				EC77CE322DCF34110030DEF5 /* VersedItemCell.swift in Sources */,
 				ECA94BF42D51ADAF005B0428 /* LoginViewModel.swift in Sources */,
 				EC98843B2D7DBBFF00224DAA /* PlaceSearchViewController.swift in Sources */,
 				ECA94BFA2D520CC9005B0428 /* HomeViewController.swift in Sources */,
@@ -875,6 +890,7 @@
 				ECA94BE12D50A739005B0428 /* AuthData.swift in Sources */,
 				ECA94BCC2D508D1E005B0428 /* DefaultSession.swift in Sources */,
 				ECA94BD12D509377005B0428 /* NetworkError.swift in Sources */,
+				EC77CE342DCF348D0030DEF5 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				EC7058802DB3992D002D47DF /* BottomSheetType.swift in Sources */,
 				ECA94BD72D50977A005B0428 /* NetworkManager.swift in Sources */,
 				EC06524A2D5DEAA1006EABC9 /* SortSelectionViewController.swift in Sources */,

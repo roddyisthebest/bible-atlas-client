@@ -7,17 +7,8 @@
 
 import UIKit
 import MapKit
-import PanModal
 
-final class MainViewController: UIViewController, PanModalPresentable  {
-    
-    var shouldShowBackgroundView: Bool {
-        return false;
-    }
-    
-    var panScrollable: UIScrollView? {
-         return nil
-    }
+final class MainViewController: UIViewController, Presentable  {
 
     private var navigator: BottomSheetNavigator;
 
@@ -50,9 +41,9 @@ final class MainViewController: UIViewController, PanModalPresentable  {
         setupUI();
     }
     
-    func present(_ viewController: UIViewController, animated: Bool) {
-        super.present(viewController, animated: animated)
-     }
+    func present(vc: ViewController, animated: Bool) {
+               super.present(vc, animated: animated)
+    }
 
      func dismiss(animated: Bool) {
          super.dismiss(animated: animated)
