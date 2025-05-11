@@ -25,7 +25,9 @@ class PlaceDetailViewController: UIViewController {
     private let disposeBag = DisposeBag();
     
     private let memoButtonTapped$ = PublishRelay<Void>()
-
+    private let placeModificationButtonTapped$ = PublishRelay<Void>();
+    
+    
     private let dummyPlaces:[String] = ["onasf", "sdfasdfadsfasdfasddasdasdsadasdasdadsffsdsadf","ffeqfdasdsqssdqwddsas"];
         
     private let dummyVerse:[Bible] = [ Bible(bookName:"창세기", verses: ["12:23","12:24"]), Bible(bookName:"출애굽기", verses: ["11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24"])]
@@ -511,7 +513,7 @@ class PlaceDetailViewController: UIViewController {
         let likeButtonTapped$ = likeButton.rx.tap.asObservable();
         
     
-        let output = placeDetailViewModel?.transform(input: PlaceDetailViewModel.Input(placeDetailViewLoaded$: placeDetailViewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$, shareButtonTapped$: shareButtonTapped$, closeButtonTapped$: closeButtonTapped$, likeButtonTapped$: likeButtonTapped$,memoButtonTapped$: memoButtonTapped$.asObservable()));
+        let output = placeDetailViewModel?.transform(input: PlaceDetailViewModel.Input(placeDetailViewLoaded$: placeDetailViewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$, shareButtonTapped$: shareButtonTapped$, closeButtonTapped$: closeButtonTapped$, likeButtonTapped$: likeButtonTapped$, placeModificationButtonTapped$: placeModificationButtonTapped$.asObservable(),memoButtonTapped$: memoButtonTapped$.asObservable()));
     
         output?.placeData$.observe(on: MainScheduler.instance).bind{
             [weak self] data in
@@ -523,11 +525,10 @@ class PlaceDetailViewController: UIViewController {
     private func buildMoreMenu() -> UIMenu {
         let action1 = UIAction(title: "Add Memo", image: UIImage(systemName: "note.text.badge.plus")) { _ in
             self.memoButtonTapped$.accept(Void())
-            print("Add Memo")
         }
 
         let action2 = UIAction(title: "Request Modification", image: UIImage(systemName: "pencil.and.scribble")) { _ in
-            print("Request Modification")
+            self.placeModificationButtonTapped$.accept(Void())
         }
 
         // 신고 타입별 submenu actions

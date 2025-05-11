@@ -57,6 +57,8 @@
 		EC77CE362DCF630E0030DEF5 /* MemoBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE352DCF630E0030DEF5 /* MemoBottomSheetViewController.swift */; };
 		EC77CE382DCF79800030DEF5 /* IconTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE372DCF79800030DEF5 /* IconTextButton.swift */; };
 		EC77CE3A2DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE392DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift */; };
+		EC77CE3C2DD09AB10030DEF5 /* PlaceModificationBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE3B2DD09AB10030DEF5 /* PlaceModificationBottomSheetViewController.swift */; };
+		EC77CE3E2DD09AD30030DEF5 /* PlaceModificationBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE3D2DD09AD30030DEF5 /* PlaceModificationBottomSheetViewModel.swift */; };
 		EC8ABAF82D7591B100AEC01B /* DiffTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF72D7591B100AEC01B /* DiffTableViewCell.swift */; };
 		EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF92D75923C00AEC01B /* DiffCode.swift */; };
 		EC8ABAFC2D75975B00AEC01B /* DiffTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAFB2D75975B00AEC01B /* DiffTableViewController.swift */; };
@@ -172,6 +174,8 @@
 		EC77CE352DCF630E0030DEF5 /* MemoBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoBottomSheetViewController.swift; sourceTree = "<group>"; };
 		EC77CE372DCF79800030DEF5 /* IconTextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTextButton.swift; sourceTree = "<group>"; };
 		EC77CE392DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoBottomSheetViewModel.swift; sourceTree = "<group>"; };
+		EC77CE3B2DD09AB10030DEF5 /* PlaceModificationBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModificationBottomSheetViewController.swift; sourceTree = "<group>"; };
+		EC77CE3D2DD09AD30030DEF5 /* PlaceModificationBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModificationBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		EC8ABAF72D7591B100AEC01B /* DiffTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTableViewCell.swift; sourceTree = "<group>"; };
 		EC8ABAF92D75923C00AEC01B /* DiffCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffCode.swift; sourceTree = "<group>"; };
 		EC8ABAFB2D75975B00AEC01B /* DiffTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTableViewController.swift; sourceTree = "<group>"; };
@@ -537,6 +541,7 @@
 				EC70589F2DBCC6FE002D47DF /* MyCollectionBottomSheetViewController.swift */,
 				EC77CE002DC5DA8D0030DEF5 /* PlaceDetailViewController.swift */,
 				EC77CE352DCF630E0030DEF5 /* MemoBottomSheetViewController.swift */,
+				EC77CE3B2DD09AB10030DEF5 /* PlaceModificationBottomSheetViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -550,6 +555,7 @@
 				EC77CDF52DC337FC0030DEF5 /* MyCollectionBottomSheetViewModel.swift */,
 				EC77CE022DC5E3460030DEF5 /* PlaceDetailViewModel.swift */,
 				EC77CE392DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift */,
+				EC77CE3D2DD09AD30030DEF5 /* PlaceModificationBottomSheetViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -874,6 +880,7 @@
 				EC7058982DBA772E002D47DF /* GuideButton.swift in Sources */,
 				EC70587E2DB397CF002D47DF /* BottomSheetCoordinator.swift in Sources */,
 				ECA94BDA2D509AFF005B0428 /* AuthManager.swift in Sources */,
+				EC77CE3E2DD09AD30030DEF5 /* PlaceModificationBottomSheetViewModel.swift in Sources */,
 				EC7058A72DBFA570002D47DF /* HomeBottomSheetViewModel.swift in Sources */,
 				ECA94BFE2D520CEF005B0428 /* MyInfoViewController.swift in Sources */,
 				EC77CE382DCF79800030DEF5 /* IconTextButton.swift in Sources */,
@@ -901,6 +908,7 @@
 				ECA94BE12D50A739005B0428 /* AuthData.swift in Sources */,
 				ECA94BCC2D508D1E005B0428 /* DefaultSession.swift in Sources */,
 				ECA94BD12D509377005B0428 /* NetworkError.swift in Sources */,
+				EC77CE3C2DD09AB10030DEF5 /* PlaceModificationBottomSheetViewController.swift in Sources */,
 				EC77CE342DCF348D0030DEF5 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				EC7058802DB3992D002D47DF /* BottomSheetType.swift in Sources */,
 				ECA94BD72D50977A005B0428 /* NetworkManager.swift in Sources */,

@@ -28,6 +28,12 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
         
         input.likeButtonTapped$.subscribe(onNext: {[weak self] in print("aas")}).disposed(by: disposeBag)
         
+        input.placeModificationButtonTapped$.subscribe(onNext: {
+            [weak self] in
+            guard let placeId = self?.placeId else { return }
+            self?.navigator?.present(.placeModification(placeId))
+        }).disposed(by: disposeBag)
+        
         input.memoButtonTapped$.subscribe(onNext: {
             [weak self] in
             guard let placeId = self?.placeId else { return }
@@ -50,6 +56,7 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
         let shareButtonTapped$:Observable<Void>
         let closeButtonTapped$:Observable<Void>
         let likeButtonTapped$:Observable<Void>
+        let placeModificationButtonTapped$:Observable<Void>
 //        let verseButtonTapped$:Observable<String>
         let memoButtonTapped$:Observable<Void>
     }
