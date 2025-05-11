@@ -9,7 +9,7 @@ import UIKit
 
 final class VersedItemCell: UICollectionViewCell {
     
-    static let identifier = "VersedItemCell"
+    static let identifier = "versedItemCell"
 
     private var verseText: String? {
         didSet{

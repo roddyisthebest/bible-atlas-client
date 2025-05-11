@@ -33,11 +33,16 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
         input.collectionButtonTapped$.subscribe(onNext: { [weak self] collectionType in
             self?.navigator?.present(.myCollection(collectionType))
         }).disposed(by: disposeBag)
+        
+        input.placesByTypeButtonTapped$.subscribe(onNext:{[weak self] in
+            self?.navigator?.present(.placesByType)
+        }).disposed(by: disposeBag)
     }
     
     public struct Input {
         let avatarButtonTapped$:Observable<Void>
         let collectionButtonTapped$:Observable<MyCollectionType>
+        let placesByTypeButtonTapped$:Observable<Void>
     }
     
   

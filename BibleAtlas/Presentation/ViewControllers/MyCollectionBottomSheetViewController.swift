@@ -9,14 +9,9 @@ import UIKit
 import RxSwift
 import RxRelay
 import PanModal
-class MyCollectionBottomSheetViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, PanModalPresentable {
+class MyCollectionBottomSheetViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var shouldShowBackgroundView: Bool {
-        return true;
-    }
-    var panScrollable: UIScrollView?{
-        return nil
-    }
+
     
     private var myCollectionBottomSheetViewModel:MyCollectionBottomSheetViewModelProtocol?;
     

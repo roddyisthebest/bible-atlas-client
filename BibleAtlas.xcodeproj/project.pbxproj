@@ -59,6 +59,9 @@
 		EC77CE3A2DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE392DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift */; };
 		EC77CE3C2DD09AB10030DEF5 /* PlaceModificationBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE3B2DD09AB10030DEF5 /* PlaceModificationBottomSheetViewController.swift */; };
 		EC77CE3E2DD09AD30030DEF5 /* PlaceModificationBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE3D2DD09AD30030DEF5 /* PlaceModificationBottomSheetViewModel.swift */; };
+		EC77CE402DD0A7E90030DEF5 /* PlacesByTypeBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE3F2DD0A7E90030DEF5 /* PlacesByTypeBottomSheetViewController.swift */; };
+		EC77CE422DD0A8670030DEF5 /* PlaceTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE412DD0A8670030DEF5 /* PlaceTypeCell.swift */; };
+		EC77CE442DD0AF630030DEF5 /* PlacesByTypeBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE432DD0AF630030DEF5 /* PlacesByTypeBottomSheetViewModel.swift */; };
 		EC8ABAF82D7591B100AEC01B /* DiffTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF72D7591B100AEC01B /* DiffTableViewCell.swift */; };
 		EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF92D75923C00AEC01B /* DiffCode.swift */; };
 		EC8ABAFC2D75975B00AEC01B /* DiffTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAFB2D75975B00AEC01B /* DiffTableViewController.swift */; };
@@ -176,6 +179,9 @@
 		EC77CE392DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		EC77CE3B2DD09AB10030DEF5 /* PlaceModificationBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModificationBottomSheetViewController.swift; sourceTree = "<group>"; };
 		EC77CE3D2DD09AD30030DEF5 /* PlaceModificationBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModificationBottomSheetViewModel.swift; sourceTree = "<group>"; };
+		EC77CE3F2DD0A7E90030DEF5 /* PlacesByTypeBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesByTypeBottomSheetViewController.swift; sourceTree = "<group>"; };
+		EC77CE412DD0A8670030DEF5 /* PlaceTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTypeCell.swift; sourceTree = "<group>"; };
+		EC77CE432DD0AF630030DEF5 /* PlacesByTypeBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesByTypeBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		EC8ABAF72D7591B100AEC01B /* DiffTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTableViewCell.swift; sourceTree = "<group>"; };
 		EC8ABAF92D75923C00AEC01B /* DiffCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffCode.swift; sourceTree = "<group>"; };
 		EC8ABAFB2D75975B00AEC01B /* DiffTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTableViewController.swift; sourceTree = "<group>"; };
@@ -319,6 +325,7 @@
 				EC77CE2F2DCF2D9C0030DEF5 /* RelatedVerseTableViewCell.swift */,
 				EC77CE312DCF34110030DEF5 /* VersedItemCell.swift */,
 				EC77CE332DCF348D0030DEF5 /* LeftAlignedCollectionViewFlowLayout.swift */,
+				EC77CE412DD0A8670030DEF5 /* PlaceTypeCell.swift */,
 			);
 			path = Tables;
 			sourceTree = "<group>";
@@ -542,6 +549,7 @@
 				EC77CE002DC5DA8D0030DEF5 /* PlaceDetailViewController.swift */,
 				EC77CE352DCF630E0030DEF5 /* MemoBottomSheetViewController.swift */,
 				EC77CE3B2DD09AB10030DEF5 /* PlaceModificationBottomSheetViewController.swift */,
+				EC77CE3F2DD0A7E90030DEF5 /* PlacesByTypeBottomSheetViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -556,6 +564,7 @@
 				EC77CE022DC5E3460030DEF5 /* PlaceDetailViewModel.swift */,
 				EC77CE392DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift */,
 				EC77CE3D2DD09AD30030DEF5 /* PlaceModificationBottomSheetViewModel.swift */,
+				EC77CE432DD0AF630030DEF5 /* PlacesByTypeBottomSheetViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -856,6 +865,7 @@
 			files = (
 				ECA94C0F2D5B08B1005B0428 /* AlertCell.swift in Sources */,
 				EC0652502D660188006EABC9 /* DetailViewController.swift in Sources */,
+				EC77CE402DD0A7E90030DEF5 /* PlacesByTypeBottomSheetViewController.swift in Sources */,
 				EC06524E2D656EE6006EABC9 /* SearchCell.swift in Sources */,
 				ECA94C032D52F00C005B0428 /* AppCoordinator.swift in Sources */,
 				EC7058A22DBCCA9D002D47DF /* PlaceTableViewCell.swift in Sources */,
@@ -871,6 +881,7 @@
 				ECADA5832D5B3EF7005E1E95 /* AccountSettingViewController.swift in Sources */,
 				EC70588E2DB8BEB1002D47DF /* MainLabel.swift in Sources */,
 				EC9884332D7AE8F500224DAA /* LocationSearchViewController.swift in Sources */,
+				EC77CE442DD0AF630030DEF5 /* PlacesByTypeBottomSheetViewModel.swift in Sources */,
 				EC77CE062DC5E9910030DEF5 /* Place.swift in Sources */,
 				EC06525E2D6D9841006EABC9 /* ScrollViewController.swift in Sources */,
 				EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */,
@@ -918,6 +929,7 @@
 				EC70589A2DBC7BE1002D47DF /* LoginBottomSheetViewController.swift in Sources */,
 				ECA94BDD2D50A59E005B0428 /* AuthNetworkManager.swift in Sources */,
 				ECA94BEB2D50B0B9005B0428 /* AuthUsecase.swift in Sources */,
+				EC77CE422DD0A8670030DEF5 /* PlaceTypeCell.swift in Sources */,
 				EC0652662D72BF9F006EABC9 /* DeleteVoteDetailViewController.swift in Sources */,
 				EC77CE3A2DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift in Sources */,
 				ECA94BE52D50AE92005B0428 /* AuthRepositoryProtocol.swift in Sources */,

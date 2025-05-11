@@ -32,7 +32,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         mainVC.modalPresentationStyle = .custom
         bottomSheetCoordinator.setPresenter(mainVC)
         DispatchQueue.main.async {
-            bottomSheetCoordinator.present(.placeDetail("fasd"))
+            bottomSheetCoordinator.present(.home)
         }
         
         window?.rootViewController = mainVC;

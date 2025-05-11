@@ -10,8 +10,9 @@ import RxSwift
 import RxCocoa
 class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     
-    
     private var homeBottomSheetViewModel:HomeBottomSheetViewModelProtocol?
+    
+    private let placesByTypeButtonTapped$ = PublishRelay<Void>();
     
     private lazy var bodyView = {
         let v = UIView();
@@ -234,7 +235,7 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
 
         let collectionButtonTapped$ = Observable.merge(favoriteTapped$, bookmarkTapped$, memoTapped$)
         
-        homeBottomSheetViewModel?.transform(input: HomeBottomSheetViewModel.Input(avatarButtonTapped$: avatarButtonTapped$, collectionButtonTapped$: collectionButtonTapped$) )
+        homeBottomSheetViewModel?.transform(input: HomeBottomSheetViewModel.Input(avatarButtonTapped$: avatarButtonTapped$, collectionButtonTapped$: collectionButtonTapped$, placesByTypeButtonTapped$: placesByTypeButtonTapped$.asObservable()) )
     }
     
     
@@ -247,7 +248,8 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
             print("A-Z")
         }
         let action2 = UIAction(title: "By Type", image: UIImage(systemName: "mappin.and.ellipse")) { _ in
-            print("By Type")
+            self.placesByTypeButtonTapped$.accept(Void())
+
         }
                
         let menu = UIMenu(title: "Explore Places", children: [action1, action2])
