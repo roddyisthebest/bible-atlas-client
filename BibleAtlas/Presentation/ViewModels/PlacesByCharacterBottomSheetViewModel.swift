@@ -1,5 +1,5 @@
 //
-//  PlacesByTypeBottomSheetViewModel.swift
+//  PlacesByCharacterBottomSheetViewModel.swift
 //  BibleAtlas
 //
 //  Created by 배성연 on 5/11/25.
@@ -8,15 +8,16 @@
 import Foundation
 import RxSwift
 
-protocol PlacesByTypeBottomSheetViewModelProtocol {
-    func transform(input:PlacesByTypeBottomSheetViewModel.Input)
+protocol PlacesByCharacterBottomSheetViewModelProtocol {
+    func transform(input:PlacesByCharacterBottomSheetViewModel.Input)
+
 }
 
-final class PlacesByTypeBottomSheetViewModel:PlacesByTypeBottomSheetViewModelProtocol {
-    
+final class PlacesByCharacterBottomSheetViewModel:PlacesByCharacterBottomSheetViewModelProtocol{
     func transform(input: Input) {
-        input.placeTypeCellTapped$.subscribe(onNext: {[weak self] placeTypeId in
-        print(placeTypeId,"placeTypeId")
+        
+        input.placeCharacterCellTapped$.subscribe(onNext: {[weak self] character in
+            print(character, "character")
         }).disposed(by: disposeBag)
         
         input.closeButtonTapped$.subscribe(onNext: {[weak self] in
@@ -26,14 +27,14 @@ final class PlacesByTypeBottomSheetViewModel:PlacesByTypeBottomSheetViewModelPro
     
     
     private let disposeBag = DisposeBag();
-    private weak var navigator: BottomSheetNavigator?
-    
+    private weak var navigator:BottomSheetNavigator?
+        
     init(navigator:BottomSheetNavigator?){
         self.navigator = navigator
     }
     
     public struct Input {
-        let placeTypeCellTapped$:Observable<Int>
+        let placeCharacterCellTapped$:Observable<String>
         let closeButtonTapped$:Observable<Void>
     }
     

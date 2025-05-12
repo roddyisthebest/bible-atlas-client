@@ -13,6 +13,7 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
     private var homeBottomSheetViewModel:HomeBottomSheetViewModelProtocol?
     
     private let placesByTypeButtonTapped$ = PublishRelay<Void>();
+    private let placesByCharacterButtonTapped$ = PublishRelay<Void>();
     
     private lazy var bodyView = {
         let v = UIView();
@@ -235,7 +236,7 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
 
         let collectionButtonTapped$ = Observable.merge(favoriteTapped$, bookmarkTapped$, memoTapped$)
         
-        homeBottomSheetViewModel?.transform(input: HomeBottomSheetViewModel.Input(avatarButtonTapped$: avatarButtonTapped$, collectionButtonTapped$: collectionButtonTapped$, placesByTypeButtonTapped$: placesByTypeButtonTapped$.asObservable()) )
+        homeBottomSheetViewModel?.transform(input: HomeBottomSheetViewModel.Input(avatarButtonTapped$: avatarButtonTapped$, collectionButtonTapped$: collectionButtonTapped$, placesByTypeButtonTapped$: placesByTypeButtonTapped$.asObservable(), placesByCharacterButtonTapped$: placesByCharacterButtonTapped$.asObservable()) )
     }
     
     
@@ -245,7 +246,7 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
     @objc private func explorePlacesBtnTapped(){
 
         let action1 = UIAction(title: "A-Z", image: UIImage(systemName: "character.phonetic")) { _ in
-            print("A-Z")
+            self.placesByCharacterButtonTapped$.accept(Void())
         }
         let action2 = UIAction(title: "By Type", image: UIImage(systemName: "mappin.and.ellipse")) { _ in
             self.placesByTypeButtonTapped$.accept(Void())

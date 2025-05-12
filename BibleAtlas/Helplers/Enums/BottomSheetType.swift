@@ -16,6 +16,7 @@ enum BottomSheetType {
     case memo(String)
     case placeModification(String)
     case placesByType
+    case placesByCharacter
 }
 
 enum MyCollectionType {

@@ -1,5 +1,5 @@
 //
-//  PlacesByTypeViewController.swift
+//  PlacesByCharacterBottomSheetViewController.swift
 //  BibleAtlas
 //
 //  Created by 배성연 on 5/11/25.
@@ -9,13 +9,14 @@ import UIKit
 import RxSwift
 import RxRelay
 
-class PlacesByTypeBottomSheetViewController: UIViewController {
+class PlacesByCharacterBottomSheetViewController: UIViewController {
 
-    private var placesByTypeBottomSheetViewModel: PlacesByTypeBottomSheetViewModelProtocol?
+    private var placesByCharacterBottomSheetViewModel:PlacesByCharacterBottomSheetViewModelProtocol?
     
-    private let placeTypeCellTapped$ = PublishRelay<Int>()
+    private let placeCharacterCellTapped$ = PublishRelay<String>()
     
-    private let dummyPlaces:[String] = ["water Of Body", "land", "land park", "ground" , "underground", "water Of Body", "land", "land park", "ground" , "underground", "water Of Body", "land", "land park", "ground" , "underground", "water Of Body", "land", "land park", "ground" , "underground"];
+    private let dummyCharacters:[String] = ["A","B","C","D","E"];
+    
     
     private lazy var headerStackView = {
         let sv = UIStackView(arrangedSubviews: [headerLabel, closeButton]);
@@ -35,7 +36,7 @@ class PlacesByTypeBottomSheetViewController: UIViewController {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.delegate = self
         cv.dataSource = self
-        cv.register(PlaceTypeCell.self,forCellWithReuseIdentifier: PlaceTypeCell.identifier);
+        cv.register(PlaceCharacterCell.self,forCellWithReuseIdentifier: PlaceCharacterCell.identifier);
         cv.backgroundColor = .mainItemBkg
         cv.layer.cornerRadius = 8;
         cv.layer.masksToBounds = true
@@ -73,12 +74,12 @@ class PlacesByTypeBottomSheetViewController: UIViewController {
         
         let closeButtonTapped$ = closeButton.rx.tap.asObservable()
         
-        placesByTypeBottomSheetViewModel?.transform(input: PlacesByTypeBottomSheetViewModel.Input(placeTypeCellTapped$: placeTypeCellTapped$.asObservable(),closeButtonTapped$: closeButtonTapped$))
+        placesByCharacterBottomSheetViewModel?.transform(input: PlacesByCharacterBottomSheetViewModel.Input(placeCharacterCellTapped$: placeCharacterCellTapped$.asObservable(), closeButtonTapped$: closeButtonTapped$))
     }
     
     
-    init(vm:PlacesByTypeBottomSheetViewModelProtocol){
-        self.placesByTypeBottomSheetViewModel = vm
+    init(vm:PlacesByCharacterBottomSheetViewModelProtocol){
+        self.placesByCharacterBottomSheetViewModel = vm
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -88,37 +89,39 @@ class PlacesByTypeBottomSheetViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        setupUI();
         setupStyle()
         setupConstraints()
         bindViewModel()
     }
+    
 
 }
 
-extension PlacesByTypeBottomSheetViewController: UICollectionViewDelegate, UICollectionViewDataSource{
+
+extension PlacesByCharacterBottomSheetViewController: UICollectionViewDelegate, UICollectionViewDataSource{
         
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dummyPlaces.count
+        return dummyCharacters.count
     }
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceTypeCell.identifier, for: indexPath) as! PlaceTypeCell
-            cell.configure(text: dummyPlaces[indexPath.item])
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceCharacterCell.identifier, for: indexPath) as! PlaceCharacterCell
+            cell.configure(text: dummyCharacters[indexPath.item])
 
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedPlace = dummyPlaces[indexPath.item]
-        placeTypeCellTapped$.accept(1)
+        let character = dummyCharacters[indexPath.item]
+        placeCharacterCellTapped$.accept(character)
     }
     
     
 }
 
-extension PlacesByTypeBottomSheetViewController:UICollectionViewDelegateFlowLayout{
+extension PlacesByCharacterBottomSheetViewController:UICollectionViewDelegateFlowLayout{
     
         func collectionView(_ collectionView: UICollectionView,
                            layout collectionViewLayout: UICollectionViewLayout,
@@ -128,7 +131,7 @@ extension PlacesByTypeBottomSheetViewController:UICollectionViewDelegateFlowLayo
            let totalSpacing = spacing * 2 + spacing * 2 // 좌우 inset + 두 번의 간격
            let itemWidth = (collectionView.bounds.width - totalSpacing) / 3
 
-           return CGSize(width: itemWidth, height: itemWidth + 20) // height는 적절히 조절
+           return CGSize(width: itemWidth, height: itemWidth ) // height는 적절히 조절
        }
 
        func collectionView(_ collectionView: UICollectionView,
