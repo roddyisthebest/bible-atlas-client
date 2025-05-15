@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxRelay
 
-class PlacesByTypeBottomSheetViewController: UIViewController {
+final class PlacesByTypeBottomSheetViewController: UIViewController {
 
     private var placesByTypeBottomSheetViewModel: PlacesByTypeBottomSheetViewModelProtocol?
     

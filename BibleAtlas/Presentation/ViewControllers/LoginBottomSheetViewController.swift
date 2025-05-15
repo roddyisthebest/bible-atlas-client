@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import PanModal
-class LoginBottomSheetViewController: UIViewController, PanModalPresentable {
+final class LoginBottomSheetViewController: UIViewController, PanModalPresentable {
     var shouldShowBackgroundView: Bool {
         return true;
     }

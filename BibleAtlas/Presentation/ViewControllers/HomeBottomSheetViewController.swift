@@ -8,7 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
-class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+final class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     
     private var homeBottomSheetViewModel:HomeBottomSheetViewModelProtocol?
     

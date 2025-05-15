@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PlaceModificationBottomSheetViewController: UIViewController {
+final class PlaceModificationBottomSheetViewController: UIViewController {
     
     private var placeModificationBottomSheetViewModel:PlaceModificationBottomSheetViewModelProtocol?
 

@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxRelay
 import PanModal
-class MyCollectionBottomSheetViewController: UIViewController {
+final class MyCollectionBottomSheetViewController: UIViewController {
     
 
     

@@ -18,7 +18,7 @@ final class Bible {
     }
 }
 
-class PlaceDetailViewController: UIViewController {
+final class PlaceDetailViewController: UIViewController {
     
     private var placeDetailViewModel:PlaceDetailViewModelProtocol?
     
