@@ -8,11 +8,11 @@
 import Foundation
 import RxSwift
 
-protocol PlacesByTypeBottomSheetViewModelProtocol {
-    func transform(input:PlacesByTypeBottomSheetViewModel.Input)
+protocol PlaceTypesBottomSheetViewModelProtocol {
+    func transform(input:PlaceTypesBottomSheetViewModel.Input)
 }
 
-final class PlacesByTypeBottomSheetViewModel:PlacesByTypeBottomSheetViewModelProtocol {
+final class PlaceTypesBottomSheetViewModel:PlaceTypesBottomSheetViewModelProtocol {
     
     func transform(input: Input) {
         input.placeTypeCellTapped$.subscribe(onNext: {[weak self] placeTypeId in

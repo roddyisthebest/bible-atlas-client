@@ -9,9 +9,9 @@ import UIKit
 import RxSwift
 import RxRelay
 
-final class PlacesByTypeBottomSheetViewController: UIViewController {
+final class PlaceTypesBottomSheetViewController: UIViewController {
 
-    private var placesByTypeBottomSheetViewModel: PlacesByTypeBottomSheetViewModelProtocol?
+    private var placeTypesBottomSheetViewModel: PlaceTypesBottomSheetViewModelProtocol?
     
     private let placeTypeCellTapped$ = PublishRelay<Int>()
     
@@ -73,12 +73,12 @@ final class PlacesByTypeBottomSheetViewController: UIViewController {
         
         let closeButtonTapped$ = closeButton.rx.tap.asObservable()
         
-        placesByTypeBottomSheetViewModel?.transform(input: PlacesByTypeBottomSheetViewModel.Input(placeTypeCellTapped$: placeTypeCellTapped$.asObservable(),closeButtonTapped$: closeButtonTapped$))
+        placeTypesBottomSheetViewModel?.transform(input: PlaceTypesBottomSheetViewModel.Input(placeTypeCellTapped$: placeTypeCellTapped$.asObservable(),closeButtonTapped$: closeButtonTapped$))
     }
     
     
-    init(vm:PlacesByTypeBottomSheetViewModelProtocol){
-        self.placesByTypeBottomSheetViewModel = vm
+    init(vm:PlaceTypesBottomSheetViewModelProtocol){
+        self.placeTypesBottomSheetViewModel = vm
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -96,7 +96,7 @@ final class PlacesByTypeBottomSheetViewController: UIViewController {
 
 }
 
-extension PlacesByTypeBottomSheetViewController: UICollectionViewDelegate, UICollectionViewDataSource{
+extension PlaceTypesBottomSheetViewController: UICollectionViewDelegate, UICollectionViewDataSource{
         
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dummyPlaces.count
@@ -118,7 +118,7 @@ extension PlacesByTypeBottomSheetViewController: UICollectionViewDelegate, UICol
     
 }
 
-extension PlacesByTypeBottomSheetViewController:UICollectionViewDelegateFlowLayout{
+extension PlaceTypesBottomSheetViewController:UICollectionViewDelegateFlowLayout{
     
         func collectionView(_ collectionView: UICollectionView,
                            layout collectionViewLayout: UICollectionViewLayout,

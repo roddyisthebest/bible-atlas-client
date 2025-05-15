@@ -59,11 +59,11 @@
 		EC77CE3A2DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE392DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift */; };
 		EC77CE3C2DD09AB10030DEF5 /* PlaceModificationBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE3B2DD09AB10030DEF5 /* PlaceModificationBottomSheetViewController.swift */; };
 		EC77CE3E2DD09AD30030DEF5 /* PlaceModificationBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE3D2DD09AD30030DEF5 /* PlaceModificationBottomSheetViewModel.swift */; };
-		EC77CE402DD0A7E90030DEF5 /* PlacesByTypeBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE3F2DD0A7E90030DEF5 /* PlacesByTypeBottomSheetViewController.swift */; };
+		EC77CE402DD0A7E90030DEF5 /* PlaceTypesBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE3F2DD0A7E90030DEF5 /* PlaceTypesBottomSheetViewController.swift */; };
 		EC77CE422DD0A8670030DEF5 /* PlaceTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE412DD0A8670030DEF5 /* PlaceTypeCell.swift */; };
-		EC77CE442DD0AF630030DEF5 /* PlacesByTypeBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE432DD0AF630030DEF5 /* PlacesByTypeBottomSheetViewModel.swift */; };
-		EC77CE462DD0E2540030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE452DD0E2540030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift */; };
-		EC77CE482DD0E3E70030DEF5 /* PlacesByCharacterBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE472DD0E3E70030DEF5 /* PlacesByCharacterBottomSheetViewController.swift */; };
+		EC77CE442DD0AF630030DEF5 /* PlaceTypesBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE432DD0AF630030DEF5 /* PlaceTypesBottomSheetViewModel.swift */; };
+		EC77CE462DD0E2540030DEF5 /* PlaceCharactersBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE452DD0E2540030DEF5 /* PlaceCharactersBottomSheetViewModel.swift */; };
+		EC77CE482DD0E3E70030DEF5 /* PlaceCharactersBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE472DD0E3E70030DEF5 /* PlaceCharactersBottomSheetViewController.swift */; };
 		EC77CE4A2DD0E4DC0030DEF5 /* PlaceCharacterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE492DD0E4DC0030DEF5 /* PlaceCharacterCell.swift */; };
 		EC8ABAF82D7591B100AEC01B /* DiffTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF72D7591B100AEC01B /* DiffTableViewCell.swift */; };
 		EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF92D75923C00AEC01B /* DiffCode.swift */; };
@@ -182,11 +182,11 @@
 		EC77CE392DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		EC77CE3B2DD09AB10030DEF5 /* PlaceModificationBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModificationBottomSheetViewController.swift; sourceTree = "<group>"; };
 		EC77CE3D2DD09AD30030DEF5 /* PlaceModificationBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModificationBottomSheetViewModel.swift; sourceTree = "<group>"; };
-		EC77CE3F2DD0A7E90030DEF5 /* PlacesByTypeBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesByTypeBottomSheetViewController.swift; sourceTree = "<group>"; };
+		EC77CE3F2DD0A7E90030DEF5 /* PlaceTypesBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTypesBottomSheetViewController.swift; sourceTree = "<group>"; };
 		EC77CE412DD0A8670030DEF5 /* PlaceTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTypeCell.swift; sourceTree = "<group>"; };
-		EC77CE432DD0AF630030DEF5 /* PlacesByTypeBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesByTypeBottomSheetViewModel.swift; sourceTree = "<group>"; };
-		EC77CE452DD0E2540030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesByCharacterBottomSheetViewModel.swift; sourceTree = "<group>"; };
-		EC77CE472DD0E3E70030DEF5 /* PlacesByCharacterBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesByCharacterBottomSheetViewController.swift; sourceTree = "<group>"; };
+		EC77CE432DD0AF630030DEF5 /* PlaceTypesBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTypesBottomSheetViewModel.swift; sourceTree = "<group>"; };
+		EC77CE452DD0E2540030DEF5 /* PlaceCharactersBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCharactersBottomSheetViewModel.swift; sourceTree = "<group>"; };
+		EC77CE472DD0E3E70030DEF5 /* PlaceCharactersBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCharactersBottomSheetViewController.swift; sourceTree = "<group>"; };
 		EC77CE492DD0E4DC0030DEF5 /* PlaceCharacterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCharacterCell.swift; sourceTree = "<group>"; };
 		EC8ABAF72D7591B100AEC01B /* DiffTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTableViewCell.swift; sourceTree = "<group>"; };
 		EC8ABAF92D75923C00AEC01B /* DiffCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffCode.swift; sourceTree = "<group>"; };
@@ -556,8 +556,8 @@
 				EC77CE002DC5DA8D0030DEF5 /* PlaceDetailViewController.swift */,
 				EC77CE352DCF630E0030DEF5 /* MemoBottomSheetViewController.swift */,
 				EC77CE3B2DD09AB10030DEF5 /* PlaceModificationBottomSheetViewController.swift */,
-				EC77CE3F2DD0A7E90030DEF5 /* PlacesByTypeBottomSheetViewController.swift */,
-				EC77CE472DD0E3E70030DEF5 /* PlacesByCharacterBottomSheetViewController.swift */,
+				EC77CE3F2DD0A7E90030DEF5 /* PlaceTypesBottomSheetViewController.swift */,
+				EC77CE472DD0E3E70030DEF5 /* PlaceCharactersBottomSheetViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -572,8 +572,8 @@
 				EC77CE022DC5E3460030DEF5 /* PlaceDetailViewModel.swift */,
 				EC77CE392DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift */,
 				EC77CE3D2DD09AD30030DEF5 /* PlaceModificationBottomSheetViewModel.swift */,
-				EC77CE432DD0AF630030DEF5 /* PlacesByTypeBottomSheetViewModel.swift */,
-				EC77CE452DD0E2540030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift */,
+				EC77CE432DD0AF630030DEF5 /* PlaceTypesBottomSheetViewModel.swift */,
+				EC77CE452DD0E2540030DEF5 /* PlaceCharactersBottomSheetViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -874,7 +874,7 @@
 			files = (
 				ECA94C0F2D5B08B1005B0428 /* AlertCell.swift in Sources */,
 				EC0652502D660188006EABC9 /* DetailViewController.swift in Sources */,
-				EC77CE402DD0A7E90030DEF5 /* PlacesByTypeBottomSheetViewController.swift in Sources */,
+				EC77CE402DD0A7E90030DEF5 /* PlaceTypesBottomSheetViewController.swift in Sources */,
 				EC06524E2D656EE6006EABC9 /* SearchCell.swift in Sources */,
 				ECA94C032D52F00C005B0428 /* AppCoordinator.swift in Sources */,
 				EC7058A22DBCCA9D002D47DF /* PlaceTableViewCell.swift in Sources */,
@@ -890,14 +890,14 @@
 				ECADA5832D5B3EF7005E1E95 /* AccountSettingViewController.swift in Sources */,
 				EC70588E2DB8BEB1002D47DF /* MainLabel.swift in Sources */,
 				EC9884332D7AE8F500224DAA /* LocationSearchViewController.swift in Sources */,
-				EC77CE442DD0AF630030DEF5 /* PlacesByTypeBottomSheetViewModel.swift in Sources */,
+				EC77CE442DD0AF630030DEF5 /* PlaceTypesBottomSheetViewModel.swift in Sources */,
 				EC77CE062DC5E9910030DEF5 /* Place.swift in Sources */,
 				EC06525E2D6D9841006EABC9 /* ScrollViewController.swift in Sources */,
 				EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */,
 				ECA94BE82D50AF41005B0428 /* AuthRepository.swift in Sources */,
 				EC77CE012DC5DA8D0030DEF5 /* PlaceDetailViewController.swift in Sources */,
 				EC9884B52D7F0F1800224DAA /* LocationDetailBottomSheet.swift in Sources */,
-				EC77CE482DD0E3E70030DEF5 /* PlacesByCharacterBottomSheetViewController.swift in Sources */,
+				EC77CE482DD0E3E70030DEF5 /* PlaceCharactersBottomSheetViewController.swift in Sources */,
 				EC7058982DBA772E002D47DF /* GuideButton.swift in Sources */,
 				EC70587E2DB397CF002D47DF /* BottomSheetCoordinator.swift in Sources */,
 				ECA94BDA2D509AFF005B0428 /* AuthManager.swift in Sources */,
@@ -937,7 +937,7 @@
 				EC77CE082DC5EB700030DEF5 /* PlaceType.swift in Sources */,
 				EC70588B2DB8BCCE002D47DF /* CollectionButton.swift in Sources */,
 				EC70589A2DBC7BE1002D47DF /* LoginBottomSheetViewController.swift in Sources */,
-				EC77CE462DD0E2540030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift in Sources */,
+				EC77CE462DD0E2540030DEF5 /* PlaceCharactersBottomSheetViewModel.swift in Sources */,
 				ECA94BDD2D50A59E005B0428 /* AuthNetworkManager.swift in Sources */,
 				ECA94BEB2D50B0B9005B0428 /* AuthUsecase.swift in Sources */,
 				EC77CE422DD0A8670030DEF5 /* PlaceTypeCell.swift in Sources */,

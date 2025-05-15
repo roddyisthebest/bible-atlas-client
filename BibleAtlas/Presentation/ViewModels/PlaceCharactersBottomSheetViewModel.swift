@@ -8,12 +8,12 @@
 import Foundation
 import RxSwift
 
-protocol PlacesByCharacterBottomSheetViewModelProtocol {
-    func transform(input:PlacesByCharacterBottomSheetViewModel.Input)
+protocol PlaceCharactersBottomSheetViewModelProtocol {
+    func transform(input:PlaceCharactersBottomSheetViewModel.Input)
 
 }
 
-final class PlacesByCharacterBottomSheetViewModel:PlacesByCharacterBottomSheetViewModelProtocol{
+final class PlaceCharactersBottomSheetViewModel:PlaceCharactersBottomSheetViewModelProtocol{
     func transform(input: Input) {
         
         input.placeCharacterCellTapped$.subscribe(onNext: {[weak self] character in

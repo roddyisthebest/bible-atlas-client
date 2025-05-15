@@ -35,11 +35,11 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
         }).disposed(by: disposeBag)
         
         input.placesByTypeButtonTapped$.subscribe(onNext:{[weak self] in
-            self?.navigator?.present(.placesByType)
+            self?.navigator?.present(.placeTypes)
         }).disposed(by: disposeBag)
         
         input.placesByCharacterButtonTapped$.subscribe(onNext: {[weak self] in
-            self?.navigator?.present(.placesByCharacter)
+            self?.navigator?.present(.placeCharacters)
         }).disposed(by: disposeBag)
     }
     

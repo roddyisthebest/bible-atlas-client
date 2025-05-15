@@ -9,9 +9,9 @@ import UIKit
 import RxSwift
 import RxRelay
 
-final class PlacesByCharacterBottomSheetViewController: UIViewController {
+final class PlaceCharactersBottomSheetViewController: UIViewController {
 
-    private var placesByCharacterBottomSheetViewModel:PlacesByCharacterBottomSheetViewModelProtocol?
+    private var placeCharactersBottomSheetViewModel:PlaceCharactersBottomSheetViewModelProtocol?
     
     private let placeCharacterCellTapped$ = PublishRelay<String>()
     
@@ -74,12 +74,12 @@ final class PlacesByCharacterBottomSheetViewController: UIViewController {
         
         let closeButtonTapped$ = closeButton.rx.tap.asObservable()
         
-        placesByCharacterBottomSheetViewModel?.transform(input: PlacesByCharacterBottomSheetViewModel.Input(placeCharacterCellTapped$: placeCharacterCellTapped$.asObservable(), closeButtonTapped$: closeButtonTapped$))
+        placeCharactersBottomSheetViewModel?.transform(input: PlaceCharactersBottomSheetViewModel.Input(placeCharacterCellTapped$: placeCharacterCellTapped$.asObservable(), closeButtonTapped$: closeButtonTapped$))
     }
     
     
-    init(vm:PlacesByCharacterBottomSheetViewModelProtocol){
-        self.placesByCharacterBottomSheetViewModel = vm
+    init(vm:PlaceCharactersBottomSheetViewModelProtocol){
+        self.placeCharactersBottomSheetViewModel = vm
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -99,7 +99,7 @@ final class PlacesByCharacterBottomSheetViewController: UIViewController {
 }
 
 
-extension PlacesByCharacterBottomSheetViewController: UICollectionViewDelegate, UICollectionViewDataSource{
+extension PlaceCharactersBottomSheetViewController: UICollectionViewDelegate, UICollectionViewDataSource{
         
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dummyCharacters.count
@@ -121,7 +121,7 @@ extension PlacesByCharacterBottomSheetViewController: UICollectionViewDelegate, 
     
 }
 
-extension PlacesByCharacterBottomSheetViewController:UICollectionViewDelegateFlowLayout{
+extension PlaceCharactersBottomSheetViewController:UICollectionViewDelegateFlowLayout{
     
         func collectionView(_ collectionView: UICollectionView,
                            layout collectionViewLayout: UICollectionViewLayout,
