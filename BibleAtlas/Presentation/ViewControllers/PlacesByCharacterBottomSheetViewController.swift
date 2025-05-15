@@ -15,7 +15,7 @@ class PlacesByCharacterBottomSheetViewController: UIViewController {
     
     private let placeCharacterCellTapped$ = PublishRelay<String>()
     
-    private let dummyCharacters:[String] = ["A","B","C","D","E"];
+    private let dummyCharacters:[String] = ["A","B","C","D","E","F","G"];
     
     
     private lazy var headerStackView = {
@@ -27,7 +27,7 @@ class PlacesByCharacterBottomSheetViewController: UIViewController {
     }()
     
     
-    private let headerLabel = HeaderLabel(text: "Places By Type");
+    private let headerLabel = HeaderLabel(text: "Places By A-Z");
     private let closeButton = CircleButton(iconSystemName: "xmark");
 
     

@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxRelay
 import PanModal
-class MyCollectionBottomSheetViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MyCollectionBottomSheetViewController: UIViewController {
     
 
     
@@ -18,7 +18,7 @@ class MyCollectionBottomSheetViewController: UIViewController, UITableViewDelega
     private let disposeBag = DisposeBag();
 
     private let bottomReached$ = PublishRelay<Void>();
-    private let placeTabelCellSelected$ = PublishRelay<Int>();
+    private let placeTabelCellSelected$ = PublishRelay<String>();
     
     private let dummyPlaces:[String] = ["onasdasdasdasdasddfasdfdfasdfasdfasdfasdfasdfe", "sdfasdfadsfasdfasdffsdsadf"];
     
@@ -134,6 +134,10 @@ class MyCollectionBottomSheetViewController: UIViewController, UITableViewDelega
         setupStyle();
         bindViewModel();
     }
+
+}
+
+extension MyCollectionBottomSheetViewController:UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PlaceTableViewCell.identifier, for: indexPath) as? PlaceTableViewCell else {
@@ -152,6 +156,12 @@ class MyCollectionBottomSheetViewController: UIViewController, UITableViewDelega
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        placeTabelCellSelected$.accept(dummyPlaces[indexPath.row])
+    }
+    
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dummyPlaces.count;
@@ -161,6 +171,4 @@ class MyCollectionBottomSheetViewController: UIViewController, UITableViewDelega
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80;
     }
-    
-
 }

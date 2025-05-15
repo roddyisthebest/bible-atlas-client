@@ -46,11 +46,11 @@ class PlaceCharacterCell: UICollectionViewCell {
     
     private let numberLabel = {
         let label = UILabel();
-        label.textColor = .placeDescriptionText;
+        label.textColor = .mainText;
         label.numberOfLines = 1;
         label.lineBreakMode = .byTruncatingTail
         label.font = .systemFont(ofSize: 14, weight: .medium)
-        label.text = "12 places"
+        label.text = "123 places"
         return label;
     }()
     

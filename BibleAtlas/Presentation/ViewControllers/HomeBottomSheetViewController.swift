@@ -204,27 +204,7 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     
-    init(homeBottomSheetViewModel:HomeBottomSheetViewModelProtocol) {
-        self.homeBottomSheetViewModel = homeBottomSheetViewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        recentSearchTableView.reloadData()
-        recentSearchTableView.layoutIfNeeded()
-
-        let height = recentSearchTableView.contentSize.height
-        recentSearchTableView.snp.updateConstraints {
-            $0.height.equalTo(height)
-        }
-    }
+ 
 
    
     private func bindViewModel(){
@@ -278,6 +258,30 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
 
     }
     
+    
+    init(homeBottomSheetViewModel:HomeBottomSheetViewModelProtocol) {
+        self.homeBottomSheetViewModel = homeBottomSheetViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        recentSearchTableView.reloadData()
+        recentSearchTableView.layoutIfNeeded()
+
+        let height = recentSearchTableView.contentSize.height
+        recentSearchTableView.snp.updateConstraints {
+            $0.height.equalTo(height)
+        }
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupStyle();
@@ -286,8 +290,7 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
         bindViewModel();
         
     }
-    
-    
+
     
     private func setupSheet(){
         if let sheet = self.sheetPresentationController {
@@ -395,7 +398,6 @@ class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITa
 extension HomeBottomSheetViewController:UISheetPresentationControllerDelegate{
     func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
           let isLarge = sheetPresentationController.selectedDetentIdentifier == .large
-          print("힙합")
           scrollView.isScrollEnabled = isLarge
       }
 }

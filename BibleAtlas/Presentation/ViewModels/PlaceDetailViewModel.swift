@@ -25,6 +25,7 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
             [weak self] in
         }).disposed(by: disposeBag)
         
+        input.closeButtonTapped$.subscribe(onNext:{[weak self] in self?.navigator?.dismissFromDetail(animated: true )}).disposed(by: disposeBag)
         
         input.likeButtonTapped$.subscribe(onNext: {[weak self] in print("aas")}).disposed(by: disposeBag)
         
@@ -39,6 +40,12 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
             guard let placeId = self?.placeId else { return }
             self?.navigator?.present(.memo(placeId))
         }).disposed(by: disposeBag)
+        
+        input.placeCellTapped$.subscribe(onNext: {[weak self] placeId in
+            self?.navigator?.present(.placeDetail(placeId))
+        }).disposed(by: disposeBag)
+        
+        
         return Output(placeData$: placeResponse$.asObservable())
         
     }
@@ -59,6 +66,7 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
         let placeModificationButtonTapped$:Observable<Void>
 //        let verseButtonTapped$:Observable<String>
         let memoButtonTapped$:Observable<Void>
+        let placeCellTapped$:Observable<String>
     }
     
     public struct Output{

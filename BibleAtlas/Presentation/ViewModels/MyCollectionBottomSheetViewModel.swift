@@ -44,7 +44,8 @@ final class MyCollectionBottomSheetViewModel:MyCollectionBottomSheetViewModelPro
         }).disposed(by: disposeBag)
         
         input.placeTabelCellSelected$.subscribe(onNext:{ [weak self] placeId in
-            print("Selected cell at index: \(placeId)")
+            self?.navigator?.present(.placeDetail(placeId))
+
         }).disposed(by:disposeBag)
         
         
@@ -54,7 +55,7 @@ final class MyCollectionBottomSheetViewModel:MyCollectionBottomSheetViewModelPro
     
     public struct Input {
         let closeButtonTapped$:Observable<Void>
-        let placeTabelCellSelected$:Observable<Int>
+        let placeTabelCellSelected$:Observable<String>
         let bottomReached$:Observable<Void>
     }
     

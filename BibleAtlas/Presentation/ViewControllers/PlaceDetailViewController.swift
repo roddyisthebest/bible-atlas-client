@@ -26,7 +26,8 @@ class PlaceDetailViewController: UIViewController {
     
     private let memoButtonTapped$ = PublishRelay<Void>()
     private let placeModificationButtonTapped$ = PublishRelay<Void>();
-    
+        
+    private let placeCellTapped$ = PublishRelay<String>();
     
     private let dummyPlaces:[String] = ["onasf", "sdfasdfadsfasdfasddasdasdsadasdasdadsffsdsadf","ffeqfdasdsqssdqwddsas"];
         
@@ -46,6 +47,7 @@ class PlaceDetailViewController: UIViewController {
         sv.addSubview(contentView)
         return sv;
     }()
+    
     
     private lazy var contentView = {
         let v = UIView()
@@ -363,6 +365,10 @@ class PlaceDetailViewController: UIViewController {
         }
     }
     
+    func scrollUp(){
+        self.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+    }
+    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -384,6 +390,7 @@ class PlaceDetailViewController: UIViewController {
             $0.height.equalTo(relatedVerseTableHeight)
         }
         
+        
     }
     
     
@@ -396,6 +403,14 @@ class PlaceDetailViewController: UIViewController {
         bindViewModel();
         placeDetailViewLoaded$.accept(Void())
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        scrollUp();
+        
+    }
+
     
     private func setupUI(){
         view.addSubview(bodyView)
@@ -513,7 +528,7 @@ class PlaceDetailViewController: UIViewController {
         let likeButtonTapped$ = likeButton.rx.tap.asObservable();
         
     
-        let output = placeDetailViewModel?.transform(input: PlaceDetailViewModel.Input(placeDetailViewLoaded$: placeDetailViewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$, shareButtonTapped$: shareButtonTapped$, closeButtonTapped$: closeButtonTapped$, likeButtonTapped$: likeButtonTapped$, placeModificationButtonTapped$: placeModificationButtonTapped$.asObservable(),memoButtonTapped$: memoButtonTapped$.asObservable()));
+        let output = placeDetailViewModel?.transform(input: PlaceDetailViewModel.Input(placeDetailViewLoaded$: placeDetailViewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$, shareButtonTapped$: shareButtonTapped$, closeButtonTapped$: closeButtonTapped$, likeButtonTapped$: likeButtonTapped$, placeModificationButtonTapped$: placeModificationButtonTapped$.asObservable(),memoButtonTapped$: memoButtonTapped$.asObservable(), placeCellTapped$: placeCellTapped$.asObservable()));
     
         output?.placeData$.observe(on: MainScheduler.instance).bind{
             [weak self] data in
@@ -631,7 +646,17 @@ extension PlaceDetailViewController:UITableViewDelegate, UITableViewDataSource {
         return UITableViewCell()
     }
     
-
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            if tableView == relatedPlaceTable {
+                let selectedPlace = dummyPlaces[indexPath.row]
+                placeCellTapped$.accept(selectedPlace)
+                scrollView.isScrollEnabled = false;
+                scrollUp();
+                
+            } else if tableView == relatedVerseTable {
+                // 선택해도 별도 처리가 없다면 비워둬도 OK
+            }
+        }
     
     
 }
