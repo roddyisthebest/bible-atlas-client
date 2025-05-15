@@ -11,8 +11,6 @@ import RxRelay
 import PanModal
 final class MyCollectionBottomSheetViewController: UIViewController {
     
-
-    
     private var myCollectionBottomSheetViewModel:MyCollectionBottomSheetViewModelProtocol?;
     
     private let disposeBag = DisposeBag();

@@ -17,6 +17,7 @@ enum BottomSheetType {
     case placeModification(String)
     case placeTypes
     case placeCharacters
+    case placesByType(Int)
 }
 
 enum MyCollectionType {

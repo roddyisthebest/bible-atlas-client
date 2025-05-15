@@ -65,6 +65,8 @@
 		EC77CE462DD0E2540030DEF5 /* PlaceCharactersBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE452DD0E2540030DEF5 /* PlaceCharactersBottomSheetViewModel.swift */; };
 		EC77CE482DD0E3E70030DEF5 /* PlaceCharactersBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE472DD0E3E70030DEF5 /* PlaceCharactersBottomSheetViewController.swift */; };
 		EC77CE4A2DD0E4DC0030DEF5 /* PlaceCharacterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE492DD0E4DC0030DEF5 /* PlaceCharacterCell.swift */; };
+		EC77CE4C2DD5AACA0030DEF5 /* PlacesByTypeBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE4B2DD5AACA0030DEF5 /* PlacesByTypeBottomSheetViewController.swift */; };
+		EC77CE4E2DD5B3480030DEF5 /* PlacesByTypeBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE4D2DD5B3480030DEF5 /* PlacesByTypeBottomSheetViewModel.swift */; };
 		EC8ABAF82D7591B100AEC01B /* DiffTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF72D7591B100AEC01B /* DiffTableViewCell.swift */; };
 		EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF92D75923C00AEC01B /* DiffCode.swift */; };
 		EC8ABAFC2D75975B00AEC01B /* DiffTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAFB2D75975B00AEC01B /* DiffTableViewController.swift */; };
@@ -188,6 +190,8 @@
 		EC77CE452DD0E2540030DEF5 /* PlaceCharactersBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCharactersBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		EC77CE472DD0E3E70030DEF5 /* PlaceCharactersBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCharactersBottomSheetViewController.swift; sourceTree = "<group>"; };
 		EC77CE492DD0E4DC0030DEF5 /* PlaceCharacterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCharacterCell.swift; sourceTree = "<group>"; };
+		EC77CE4B2DD5AACA0030DEF5 /* PlacesByTypeBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesByTypeBottomSheetViewController.swift; sourceTree = "<group>"; };
+		EC77CE4D2DD5B3480030DEF5 /* PlacesByTypeBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesByTypeBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		EC8ABAF72D7591B100AEC01B /* DiffTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTableViewCell.swift; sourceTree = "<group>"; };
 		EC8ABAF92D75923C00AEC01B /* DiffCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffCode.swift; sourceTree = "<group>"; };
 		EC8ABAFB2D75975B00AEC01B /* DiffTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTableViewController.swift; sourceTree = "<group>"; };
@@ -558,6 +562,7 @@
 				EC77CE3B2DD09AB10030DEF5 /* PlaceModificationBottomSheetViewController.swift */,
 				EC77CE3F2DD0A7E90030DEF5 /* PlaceTypesBottomSheetViewController.swift */,
 				EC77CE472DD0E3E70030DEF5 /* PlaceCharactersBottomSheetViewController.swift */,
+				EC77CE4B2DD5AACA0030DEF5 /* PlacesByTypeBottomSheetViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -574,6 +579,7 @@
 				EC77CE3D2DD09AD30030DEF5 /* PlaceModificationBottomSheetViewModel.swift */,
 				EC77CE432DD0AF630030DEF5 /* PlaceTypesBottomSheetViewModel.swift */,
 				EC77CE452DD0E2540030DEF5 /* PlaceCharactersBottomSheetViewModel.swift */,
+				EC77CE4D2DD5B3480030DEF5 /* PlacesByTypeBottomSheetViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -896,6 +902,7 @@
 				EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */,
 				ECA94BE82D50AF41005B0428 /* AuthRepository.swift in Sources */,
 				EC77CE012DC5DA8D0030DEF5 /* PlaceDetailViewController.swift in Sources */,
+				EC77CE4E2DD5B3480030DEF5 /* PlacesByTypeBottomSheetViewModel.swift in Sources */,
 				EC9884B52D7F0F1800224DAA /* LocationDetailBottomSheet.swift in Sources */,
 				EC77CE482DD0E3E70030DEF5 /* PlaceCharactersBottomSheetViewController.swift in Sources */,
 				EC7058982DBA772E002D47DF /* GuideButton.swift in Sources */,
@@ -914,6 +921,7 @@
 				EC7058A92DBFAEB5002D47DF /* VCFactory.swift in Sources */,
 				EC77CDF42DC32C020030DEF5 /* UIViewController.swift in Sources */,
 				EC77CDF22DC318EB0030DEF5 /* LoginBottomSheetViewModel.swift in Sources */,
+				EC77CE4C2DD5AACA0030DEF5 /* PlacesByTypeBottomSheetViewController.swift in Sources */,
 				EC06524C2D62D315006EABC9 /* SearchViewController.swift in Sources */,
 				ECA94BFC2D520CE1005B0428 /* SearchOptionViewController.swift in Sources */,
 				EC0652442D5C6FA9006EABC9 /* AccountSettingCell.swift in Sources */,
