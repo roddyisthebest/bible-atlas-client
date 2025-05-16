@@ -13,7 +13,6 @@ class LocationCard: UIView {
     
     private let containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .thirdGray
         
         view.layer.cornerRadius = 8
         view.clipsToBounds = true

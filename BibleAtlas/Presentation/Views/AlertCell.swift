@@ -40,7 +40,6 @@ class AlertCell: UITableViewCell {
         let view = UIView();
         view.layer.cornerRadius = 25;
         view.clipsToBounds = true;
-        view.backgroundColor = .lightestGray;
         return view;
     }();
     
@@ -51,7 +50,6 @@ class AlertCell: UITableViewCell {
         imageView.layer.cornerRadius = 20
         imageView.clipsToBounds = true
         imageView.image = UIImage(systemName: "bell.fill")
-        imageView.tintColor = .tabbarGray
         return imageView
     }();
     

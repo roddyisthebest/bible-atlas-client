@@ -33,7 +33,6 @@ class DiffTableViewCell: UITableViewCell {
     private let oldLineLabel = {
         let label = UILabel();
         label.font = .boldSystemFont(ofSize: 12);
-        label.textColor = .diffLabel
         label.textAlignment = .center;
         return label;
     }()
@@ -41,7 +40,6 @@ class DiffTableViewCell: UITableViewCell {
     private let newLineLabel = {
         let label = UILabel();
         label.font = .boldSystemFont(ofSize: 12);
-        label.textColor = .diffLabel
         label.textAlignment = .center;
 
         return label;
@@ -131,24 +129,7 @@ class DiffTableViewCell: UITableViewCell {
         
         
         
-        switch(diffCode.status){
-            case .add:
-                lineContainer.backgroundColor = .diffLightGreen;
-                contentContainer.backgroundColor = .diffGreen;
-                newLineLabel.textColor = .black;
-                contentMarkImage.image = UIImage(systemName: "plus")
-                lineContainer.alignment = .bottom
-            case .delete:
-                lineContainer.backgroundColor = .diffLightRed;
-                contentContainer.backgroundColor = .diffRed;
-                oldLineLabel.textColor = .black;
-                contentMarkImage.image = UIImage(systemName: "minus")
-                lineContainer.alignment = .top
-
-            case .notChange:
-                lineContainer.backgroundColor = .diffLightGray;
-                contentContainer.backgroundColor = .white;
-        }
+        
         
     }
     
