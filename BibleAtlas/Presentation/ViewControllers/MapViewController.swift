@@ -1,17 +1,33 @@
 //
-//  UpdateVoteViewController.swift
+//  MapViewController.swift
 //  BibleAtlas
 //
-//  Created by 배성연 on 3/3/25.
+//  Created by 배성연 on 5/3/25.
 //
 
 import UIKit
+import MapKit
+class MapViewController: UIViewController {
 
-class UpdateVoteViewController: UIViewController {
+    private lazy var mapView = {
+        let mv = MKMapView();
+        mv.layoutMargins = .zero
 
+        view.addSubview(mv)
+        return mv;
+    }()
+    
+    private func setupUI(){
+        mapView.snp.makeConstraints { make in
+            make.edges.equalToSuperview();
+        }
+                
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupUI()
         // Do any additional setup after loading the view.
     }
     

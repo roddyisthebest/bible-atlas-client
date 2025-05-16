@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import MapKit
 
 final class HomeViewController: UIViewController{
     
@@ -89,10 +90,28 @@ final class HomeViewController: UIViewController{
     }
   
     @objc private func rightButtonTapped(){
-        let createVoteVC = UpdateVoteViewController();
-        createVoteVC.hidesBottomBarWhenPushed = true
+//        let createVoteVC = UpdateVoteDetailView();
+//        createVoteVC.hidesBottomBarWhenPushed = true
+//
+//        navigationController?.pushViewController(createVoteVC, animated: true)
 
-        navigationController?.pushViewController(createVoteVC, animated: true)
+        
+        let coordinate = CLLocationCoordinate2D(
+               latitude: 35.6895,
+               longitude: 139.6917
+        )
+        
+        let locationSearchVC = LocationSearchViewController(coordinate: coordinate);
+        locationSearchVC.modalPresentationStyle = .fullScreen;
+
+        present(locationSearchVC,animated: true)
+
+        
+        
+//        let locationPickerVC = LocationPickerViewController();
+//        locationPickerVC.modalPresentationStyle = .fullScreen;
+//
+//        present(locationPickerVC,animated: true)
         
     }
     
@@ -148,6 +167,7 @@ extension HomeViewController: UITableViewDataSource{
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
         
+
         cell.configure(text: dummyData[indexPath.row])
 
         return cell;
@@ -157,9 +177,12 @@ extension HomeViewController: UITableViewDataSource{
 
 
 extension HomeViewController:UITableViewDelegate{
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//          return 300
-//      }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let createVoteDetailVC = DeleteVoteDetailViewController();
+        createVoteDetailVC.hidesBottomBarWhenPushed = true;
+        
+        navigationController?.pushViewController(createVoteDetailVC, animated: true)
+    }
 }
 
 

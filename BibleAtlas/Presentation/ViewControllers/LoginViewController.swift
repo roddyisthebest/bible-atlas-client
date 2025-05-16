@@ -206,10 +206,11 @@ extension UIColor {
     
     
     static let backgroundDark = UIColor(hex: "#1E1E1E")  // 배경색
-    static let primaryBlue = UIColor(hex: "#007AFF")  // iOS 기본 파란색
     static let secondaryGray = UIColor(hex: "#8E8E93")  // 시스템 그레이
     static let primaryInput = UIColor(hex: "#313131")
     static let primaryViolet = UIColor(hex: "#8160C4")
+    
+    
     static let thirdGray = UIColor(hex:"#313131")
     
     static let lightGray = UIColor(hex:"#5D5D5D")
@@ -229,5 +230,15 @@ extension UIColor {
     static let upIconColor = UIColor(hex:"#47FF78");
     static let downIconColor = UIColor(hex:"#FF5454");
 
+    
+    static let diffLightGreen = UIColor(hex:"#F0FFF1");
+    static let diffGreen = UIColor(hex:"#CEFFD2");
+    
+    static let diffLightRed = UIColor(hex:"#FFE6E6");
+    static let diffRed = UIColor(hex:"#FFCECE")
+    
+    static let diffLightGray = UIColor(hex:"#F2F2F2")
+    
+    static let diffLabel = UIColor(hex:"#767676")
     
 }
