@@ -67,6 +67,8 @@
 		EC77CE4A2DD0E4DC0030DEF5 /* PlaceCharacterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE492DD0E4DC0030DEF5 /* PlaceCharacterCell.swift */; };
 		EC77CE4C2DD5AACA0030DEF5 /* PlacesByTypeBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE4B2DD5AACA0030DEF5 /* PlacesByTypeBottomSheetViewController.swift */; };
 		EC77CE4E2DD5B3480030DEF5 /* PlacesByTypeBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE4D2DD5B3480030DEF5 /* PlacesByTypeBottomSheetViewModel.swift */; };
+		EC77CE502DD5C86A0030DEF5 /* PlacesByCharacterBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE4F2DD5C86A0030DEF5 /* PlacesByCharacterBottomSheetViewController.swift */; };
+		EC77CE522DD5C8950030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE512DD5C8950030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift */; };
 		EC8ABAF82D7591B100AEC01B /* DiffTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF72D7591B100AEC01B /* DiffTableViewCell.swift */; };
 		EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF92D75923C00AEC01B /* DiffCode.swift */; };
 		EC8ABAFC2D75975B00AEC01B /* DiffTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAFB2D75975B00AEC01B /* DiffTableViewController.swift */; };
@@ -192,6 +194,8 @@
 		EC77CE492DD0E4DC0030DEF5 /* PlaceCharacterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCharacterCell.swift; sourceTree = "<group>"; };
 		EC77CE4B2DD5AACA0030DEF5 /* PlacesByTypeBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesByTypeBottomSheetViewController.swift; sourceTree = "<group>"; };
 		EC77CE4D2DD5B3480030DEF5 /* PlacesByTypeBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesByTypeBottomSheetViewModel.swift; sourceTree = "<group>"; };
+		EC77CE4F2DD5C86A0030DEF5 /* PlacesByCharacterBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesByCharacterBottomSheetViewController.swift; sourceTree = "<group>"; };
+		EC77CE512DD5C8950030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesByCharacterBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		EC8ABAF72D7591B100AEC01B /* DiffTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTableViewCell.swift; sourceTree = "<group>"; };
 		EC8ABAF92D75923C00AEC01B /* DiffCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffCode.swift; sourceTree = "<group>"; };
 		EC8ABAFB2D75975B00AEC01B /* DiffTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTableViewController.swift; sourceTree = "<group>"; };
@@ -563,6 +567,7 @@
 				EC77CE3F2DD0A7E90030DEF5 /* PlaceTypesBottomSheetViewController.swift */,
 				EC77CE472DD0E3E70030DEF5 /* PlaceCharactersBottomSheetViewController.swift */,
 				EC77CE4B2DD5AACA0030DEF5 /* PlacesByTypeBottomSheetViewController.swift */,
+				EC77CE4F2DD5C86A0030DEF5 /* PlacesByCharacterBottomSheetViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -580,6 +585,7 @@
 				EC77CE432DD0AF630030DEF5 /* PlaceTypesBottomSheetViewModel.swift */,
 				EC77CE452DD0E2540030DEF5 /* PlaceCharactersBottomSheetViewModel.swift */,
 				EC77CE4D2DD5B3480030DEF5 /* PlacesByTypeBottomSheetViewModel.swift */,
+				EC77CE512DD5C8950030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -912,6 +918,7 @@
 				EC7058A72DBFA570002D47DF /* HomeBottomSheetViewModel.swift in Sources */,
 				ECA94BFE2D520CEF005B0428 /* MyInfoViewController.swift in Sources */,
 				EC77CE382DCF79800030DEF5 /* IconTextButton.swift in Sources */,
+				EC77CE502DD5C86A0030DEF5 /* PlacesByCharacterBottomSheetViewController.swift in Sources */,
 				EC8ABB022D75AA2200AEC01B /* UpdateVoteDetailView.swift in Sources */,
 				EC0652642D6EF53C006EABC9 /* CreateVoteDetailViewController.swift in Sources */,
 				ECA94B9B2D5082B9005B0428 /* ViewController.swift in Sources */,
@@ -925,6 +932,7 @@
 				EC06524C2D62D315006EABC9 /* SearchViewController.swift in Sources */,
 				ECA94BFC2D520CE1005B0428 /* SearchOptionViewController.swift in Sources */,
 				EC0652442D5C6FA9006EABC9 /* AccountSettingCell.swift in Sources */,
+				EC77CE522DD5C8950030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift in Sources */,
 				EC8ABAF82D7591B100AEC01B /* DiffTableViewCell.swift in Sources */,
 				EC77CE2E2DCF193D0030DEF5 /* RelatedPlaceTableViewCell.swift in Sources */,
 				EC70587B2DB39629002D47DF /* MainViewController.swift in Sources */,

@@ -17,7 +17,7 @@ final class PlaceCharactersBottomSheetViewModel:PlaceCharactersBottomSheetViewMo
     func transform(input: Input) {
         
         input.placeCharacterCellTapped$.subscribe(onNext: {[weak self] character in
-            print(character, "character")
+            self?.navigator?.present(.placesByCharacter(character))
         }).disposed(by: disposeBag)
         
         input.closeButtonTapped$.subscribe(onNext: {[weak self] in

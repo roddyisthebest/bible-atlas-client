@@ -15,8 +15,7 @@ final class PlaceCharactersBottomSheetViewController: UIViewController {
     
     private let placeCharacterCellTapped$ = PublishRelay<String>()
     
-    private let dummyCharacters:[String] = ["A","B","C","D","E","F","G"];
-    
+    private let dummyCharacters:[String] = (65...90).map { String(UnicodeScalar($0)!) }
     
     private lazy var headerStackView = {
         let sv = UIStackView(arrangedSubviews: [headerLabel, closeButton]);

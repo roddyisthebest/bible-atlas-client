@@ -1,5 +1,5 @@
 //
-//  PlacesByTypeBottomSheetViewController.swift
+//  PlacesByCharacterBottomSheetViewController.swift
 //  BibleAtlas
 //
 //  Created by 배성연 on 5/15/25.
@@ -9,19 +9,16 @@ import UIKit
 import RxSwift
 import RxRelay
 
-class PlacesByTypeBottomSheetViewController: UIViewController {
-    
-    
-    private var placesByTypeBottomSheetViewModel:PlacesByTypeBottomSheetViewModelProtocol?
+class PlacesByCharacterBottomSheetViewController: UIViewController {
+
+    private var placesByCharacterBottomSheetViewModel:PlacesByCharacterBottomSheetViewModelProtocol?
     
     private let bottomReached$ = PublishRelay<Void>();
     private let placeCellTapped$ = PublishRelay<String>()
 
     private let disposeBag = DisposeBag();
-
     
     private let dummyPlaces:[String] = ["onasdasdasdasdasddfasdfdfasdfasdfasdfasdfasdfe", "sdfasdfadsfasdfasdffsdsadf","sda","dfsdfasdf","erer","dsff","dd","asdsd","sdsd","qweqwe","fdfdsd"];
-    
     
     private lazy var headerStackView = {
         let v = UIView();
@@ -47,20 +44,7 @@ class PlacesByTypeBottomSheetViewController: UIViewController {
     }()
     
     private let closeButton = CircleButton(iconSystemName: "xmark");
-    
-    
-    private lazy var searchTextField: UISearchTextField = {
-        let input = UISearchTextField()
-        
-        
-        input.placeholder = "search places..."
-        input.font = .systemFont(ofSize: 16)
-        input.returnKeyType = .search
-        input.delegate = self;
-        
-        return input
-    }()
-    
+
     private lazy var tableView = {
         let tv = UITableView();
         tv.register(PlaceTableViewCell.self, forCellReuseIdentifier: PlaceTableViewCell.identifier)
@@ -76,9 +60,9 @@ class PlacesByTypeBottomSheetViewController: UIViewController {
         return tv;
     }()
     
+    
     private func setupUI(){
         view.addSubview(headerStackView);
-        view.addSubview(searchTextField);
         view.addSubview(tableView)
     }
     
@@ -93,40 +77,33 @@ class PlacesByTypeBottomSheetViewController: UIViewController {
             make.trailing.equalToSuperview().offset(-20);
 
         }
-        
-        
-        searchTextField.snp.makeConstraints { make in
-        
-            make.top.equalTo(headerStackView.snp.bottom).offset(20)
-            make.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().offset(-20);
-            
-        }
+    
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(searchTextField.snp.bottom).offset(20);
+            make.top.equalTo(headerStackView.snp.bottom).offset(20);
             make.leading.equalToSuperview().offset(20);
             make.trailing.equalToSuperview().offset(-20);
             make.bottom.equalToSuperview().offset(-20);
-            
         }
         
     }
     
     private func bindViewModel(){
         let closeButtonTapped$ = closeButton.rx.tap.asObservable()
-        let textFieldTyped$ = searchTextField.rx.text.asObservable();
+
         
         
-        let output = placesByTypeBottomSheetViewModel?.transform(input: PlacesByTypeBottomSheetViewModel.Input(placeCellTapped$: placeCellTapped$.asObservable(), closeButtonTapped$: closeButtonTapped$, textFieldTyped$: textFieldTyped$, bottomReached$: bottomReached$.asObservable()))
+        let output = placesByCharacterBottomSheetViewModel?.transform(input: PlacesByCharacterBottomSheetViewModel.Input(placeCellTapped$: placeCellTapped$.asObservable(), closeButtonTapped$: closeButtonTapped$,bottomReached$: bottomReached$.asObservable()))
         
         
-        output?.type$.observe(on:MainScheduler.instance).bind{
-            [weak self] type in
-            self?.headerLabel.text = type.name;
+        output?.character$.observe(on:MainScheduler.instance).bind{
+            [weak self] character in
+            print("hoo ha!")
+            self?.headerLabel.text = "Sorted By \(character)"
         }.disposed(by: disposeBag)
         
         
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -136,23 +113,20 @@ class PlacesByTypeBottomSheetViewController: UIViewController {
         bindViewModel();
     }
     
-    
-    init(vm:PlacesByTypeBottomSheetViewModelProtocol){
-        self.placesByTypeBottomSheetViewModel = vm
+    init(vm:PlacesByCharacterBottomSheetViewModelProtocol){
+        self.placesByCharacterBottomSheetViewModel = vm
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
-
 
 }
 
 
-extension PlacesByTypeBottomSheetViewController:UITableViewDelegate, UITableViewDataSource {
+
+extension PlacesByCharacterBottomSheetViewController:UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PlaceTableViewCell.identifier, for: indexPath) as? PlaceTableViewCell else {
@@ -185,17 +159,4 @@ extension PlacesByTypeBottomSheetViewController:UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80;
     }
-}
-
-extension PlacesByTypeBottomSheetViewController: UITextFieldDelegate{
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-          textField.resignFirstResponder() // 키보드 내리기 (선택)
-          return true
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-        super.touchesBegan(touches, with: event)
-    }
-
 }
