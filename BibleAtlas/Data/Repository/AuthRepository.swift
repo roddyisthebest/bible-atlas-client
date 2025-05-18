@@ -8,17 +8,17 @@
 import Foundation
 
 public struct AuthRepository:AuthRepositoryProtocol{
-    let networkManager:AuthNetworkManagerProtocol;
+    let authApiService:AuthApiServiceProtocol;
     
-    init(networkManager: AuthNetworkManagerProtocol) {
-        self.networkManager = networkManager
+    init(authApiService: AuthApiServiceProtocol) {
+        self.authApiService = authApiService
     }
     
     func loginUser(body: AuthPayload) async -> Result<UserResponse, NetworkError> {
-        return await networkManager.loginUser(body: body)
+        return await authApiService.loginUser(body: body)
     }
     
     func logout() async -> Result<Bool, NetworkError> {
-        return await networkManager.logout()
+        return await authApiService.logout()
     }
 }

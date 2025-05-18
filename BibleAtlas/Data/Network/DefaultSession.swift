@@ -39,7 +39,6 @@ class DefaultSession: SessionProtocol {
         
         return session.request(urlRequest)
     }
-    
 }
 
 

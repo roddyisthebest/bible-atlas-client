@@ -8,17 +8,11 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import PanModal
-final class LoginBottomSheetViewController: UIViewController, PanModalPresentable {
-    var shouldShowBackgroundView: Bool {
-        return true;
-    }
-    
-    var panScrollable: UIScrollView? {
-        return nil
-    }
+final class LoginBottomSheetViewController: UIViewController {
     
     private var loginBottomSheetViewModel:LoginBottomSheetViewModelProtocol?;
+    
+    private var disposeBag = DisposeBag();
     
     private lazy var headerStackView = {
         let sv = UIStackView(arrangedSubviews: [headerLabel, closeButton]);
@@ -34,23 +28,24 @@ final class LoginBottomSheetViewController: UIViewController, PanModalPresentabl
     
     
     private lazy var buttonsStackView = {
-        let sv = UIStackView(arrangedSubviews: [googleButton, kakaoButton]);
+        let sv = UIStackView(arrangedSubviews: [localButton, googleButton, kakaoButton]);
         sv.axis = .vertical;
         sv.distribution = .fill;
         sv.alignment = .fill
         sv.spacing = 10;
         return sv;
     }()
-        
+    
+    private let localButton = GuideButton(titleText: "Local");
     private let googleButton = GuideButton(titleText: "Google");
     private let kakaoButton = GuideButton(titleText: "Kakao");
-
-        
+    
+    
     init(loginBottomSheetViewModel:LoginBottomSheetViewModelProtocol) {
         self.loginBottomSheetViewModel = loginBottomSheetViewModel
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -59,8 +54,25 @@ final class LoginBottomSheetViewController: UIViewController, PanModalPresentabl
         let googleButtonTapped$ = googleButton.rx.tap.asObservable();
         let kakaoButtonTapped$ = kakaoButton.rx.tap.asObservable();
         let closeButtonTapped$ = closeButton.rx.tap.asObservable();
+        let localButtonTapped$ = localButton.rx.tap.asObservable();
         
-        loginBottomSheetViewModel?.transform(input: LoginBottomSheetViewModel.Input(googleButtonTapped$: googleButtonTapped$, kakaoButtonTapped$: kakaoButtonTapped$, closeButtonTapped$:closeButtonTapped$))
+        let output = loginBottomSheetViewModel?.transform(input: LoginBottomSheetViewModel.Input(localButtonTapped$: localButtonTapped$.asObservable(), googleButtonTapped$: googleButtonTapped$, kakaoButtonTapped$: kakaoButtonTapped$, closeButtonTapped$:closeButtonTapped$))
+        
+        output?.error$.subscribe(onNext: { [weak self] error in
+            switch(error){
+                case .serverErrorWithMessage(let errorResponse):
+                    self?.showAlert(message: errorResponse.message)
+                default:
+                    self?.showAlert(message: error.description)
+                }
+        }).disposed(by: disposeBag)
+        
+        
+        output?.loading$.subscribe(onNext: { [weak self] loading in
+            DispatchQueue.main.async {
+                self?.localButton.setLoading(loading)
+            }
+        }).disposed(by: disposeBag)
     }
     
     private func setupStyle(){
@@ -77,7 +89,7 @@ final class LoginBottomSheetViewController: UIViewController, PanModalPresentabl
             make.top.equalToSuperview().offset(20);
             make.leading.equalToSuperview().offset(20);
             make.trailing.equalToSuperview().offset(-20);
-
+            
         }
         
         buttonsStackView.snp.makeConstraints { make in
@@ -87,7 +99,13 @@ final class LoginBottomSheetViewController: UIViewController, PanModalPresentabl
         }
     }
     
-    
+    private func showAlert(message: String) {
+        let alert = UIAlertController(title: "오류", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        DispatchQueue.main.async {
+            self.present(alert, animated: true)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,5 +114,7 @@ final class LoginBottomSheetViewController: UIViewController, PanModalPresentabl
         setupStyle()
         bindViewModel();
     }
+    
+    
     
 }

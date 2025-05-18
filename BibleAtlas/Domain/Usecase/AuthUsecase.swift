@@ -17,16 +17,34 @@ protocol AuthUsecaseProtocol{
 public struct AuthUsecase:AuthUsecaseProtocol{
     
     private let repository:AuthRepositoryProtocol;
+    private let tokenProvider: TokenProviderProtocol
+
     
-    
-    init(repository: AuthRepositoryProtocol) {
+    init(repository: AuthRepositoryProtocol, tokenProvider:TokenProviderProtocol) {
         self.repository = repository
+        self.tokenProvider = tokenProvider
     }
+    
     func loginUser(body: AuthPayload) async -> Result<UserResponse, NetworkError> {
-        return await repository.loginUser(body: body)
+        let result = await repository.loginUser(body: body)
+        
+        if case let .success(response) = result {
+            tokenProvider.save(
+                accessToken: response.authData.accessToken,
+                refreshToken: response.authData.refreshToken
+            )
+        }
+        
+        return result;
     }
     
     func logout() async -> Result<Bool, NetworkError> {
-        return await repository.logout();
+        let result = await repository.logout()
+
+        if case .success = result {
+               tokenProvider.clear()
+        }
+        
+        return result
     }
 }

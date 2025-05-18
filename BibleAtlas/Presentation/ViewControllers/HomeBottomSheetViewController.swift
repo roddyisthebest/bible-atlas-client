@@ -15,6 +15,8 @@ final class HomeBottomSheetViewController: UIViewController, UITableViewDelegate
     private let placesByTypeButtonTapped$ = PublishRelay<Void>();
     private let placesByCharacterButtonTapped$ = PublishRelay<Void>();
     
+    private let disposeBag = DisposeBag()
+    
     private lazy var bodyView = {
         let v = UIView();
         v.addSubview(headerStackView);
@@ -216,7 +218,28 @@ final class HomeBottomSheetViewController: UIViewController, UITableViewDelegate
 
         let collectionButtonTapped$ = Observable.merge(favoriteTapped$, bookmarkTapped$, memoTapped$)
         
-        homeBottomSheetViewModel?.transform(input: HomeBottomSheetViewModel.Input(avatarButtonTapped$: avatarButtonTapped$, collectionButtonTapped$: collectionButtonTapped$, placesByTypeButtonTapped$: placesByTypeButtonTapped$.asObservable(), placesByCharacterButtonTapped$: placesByCharacterButtonTapped$.asObservable()) )
+        let output = homeBottomSheetViewModel?.transform(input: HomeBottomSheetViewModel.Input(avatarButtonTapped$: avatarButtonTapped$, collectionButtonTapped$: collectionButtonTapped$, placesByTypeButtonTapped$: placesByTypeButtonTapped$.asObservable(), placesByCharacterButtonTapped$: placesByCharacterButtonTapped$.asObservable()) )
+        
+        
+        
+        Observable
+            .combineLatest(output!.isLoggedIn$, output!.profile$)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isLoggedIn, profile in
+                
+                if isLoggedIn {
+                    guard let profile = profile else {
+                        return
+                    }
+                    self?.userAvatarButton.setTitle(profile.name ?? "shy", for: .normal)
+                    return
+                }
+                
+                self?.userAvatarButton.setTitle("로그인", for: .normal)
+                
+            })
+            .disposed(by: disposeBag)
+
     }
     
     

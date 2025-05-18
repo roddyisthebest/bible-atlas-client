@@ -19,7 +19,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        let vmFactory = VMFactory();
+        
+        let session = DefaultSession();
+        let tokenProvider = KeychainTokenProvider();
+        let apiClient = AuthorizedApiClient(session: session, tokenProvider: tokenProvider)
+        
+        let apiService = AuthApiService(apiClient: apiClient, url: Constants.shared.url)
+        
+        let authRepository = AuthRepository(authApiService: apiService)
+        let authUsecase = AuthUsecase(repository: authRepository, tokenProvider: tokenProvider)
+        let usecases = UseCases(auth: authUsecase)
+        
+        let appStore = AppStore();
+        
+        let vmFactory = VMFactory(appStore: appStore, usecases: usecases);
         let vcFactory = VCFactory();
             
         let bottomSheetCoordinator = BottomSheetCoordinator(vcFactory: vcFactory, vmFactory: vmFactory);

@@ -12,7 +12,7 @@ final class Constants {
     static let shared = Constants()
 
     private init() {}
-
-    let activityCellId = "activitiyCell";
+    
+    let url = "http://localhost:4343"
     
 }

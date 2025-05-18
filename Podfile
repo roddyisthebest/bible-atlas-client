@@ -15,6 +15,7 @@ target 'BibleAtlas' do
     pod "FloatingPanel"
     pod "MarkdownView"
     pod "UBottomSheet"
+    pod "KeychainAccess"
 
   target 'BibleAtlasTests' do
     inherit! :search_paths

@@ -8,37 +8,33 @@
 import Foundation
 import Alamofire
 
-protocol NetworkManagerProtocol{
+protocol AuthorizedApiClientProtocol{
     func getData<T: Decodable>(url:String, parameters:Parameters?) async -> Result<T,NetworkError>
-    func postData<T: Decodable>(url:String, parameters:Parameters?, body:Data?) async -> Result<T,NetworkError>
+    func postData<T: Decodable>(url:String, parameters:Parameters?, body:Data?, headers:HTTPHeaders?) async -> Result<T,NetworkError>
     func updateData<T: Decodable>(url:String, method: HTTPMethod, parameters:Parameters?, body:Data?) async -> Result<T,NetworkError>
     func deleteData<T: Decodable>(url:String, parameters:Parameters?) async -> Result<T,NetworkError>
 }
 
 
-public final class NetworkManager:NetworkManagerProtocol{
+public final class AuthorizedApiClient:AuthorizedApiClientProtocol{
     
     private let session:SessionProtocol
-    private let authManager:AuthManagerProtocol
+    private let tokenProvider:TokenProviderProtocol
     
-    init(session: SessionProtocol, authManager: AuthManagerProtocol) {
+    init(session: SessionProtocol, tokenProvider: TokenProviderProtocol) {
         self.session = session
-        self.authManager = authManager;
+        self.tokenProvider = tokenProvider;
     }
     
-    // TODO: 후에 토큰 설정 로직 개선 필요
-    // 계속 갱신할 필요 있을듯
     
-    private lazy var tokenHeaders:HTTPHeaders = {
-        
-        guard let accessToken = authManager.accessToken else{
-            return HTTPHeaders();
+    private var tokenHeaders: HTTPHeaders {
+        guard let accessToken = tokenProvider.accessToken else {
+            return HTTPHeaders()
         }
         
-        let header = HTTPHeader(name:"Authorization", value:"Bearer \(accessToken)");
-        
-        return HTTPHeaders([header]);
-    }();
+        return HTTPHeaders([.authorization(bearerToken: accessToken)])
+    }
+    
     
     
     /// ✅ API 요청을 수행하는 공통 메서드
@@ -46,7 +42,8 @@ public final class NetworkManager:NetworkManagerProtocol{
         url: String,
         method: HTTPMethod,
         parameters: Parameters?,
-        body: Data?
+        body: Data?,
+        headers: HTTPHeaders? = nil
     ) async -> Result<T, NetworkError> {
            
            guard let url = URL(string: url) else {
@@ -57,7 +54,7 @@ public final class NetworkManager:NetworkManagerProtocol{
                url,
                method: method,
                parameters: parameters,
-               headers: tokenHeaders,
+               headers: headers ?? tokenHeaders,
                body: body
            ).serializingData().response
            
@@ -82,26 +79,59 @@ public final class NetworkManager:NetworkManagerProtocol{
            
            if (200..<400).contains(response.statusCode) {
                do {
+                   print(T.self,"yoyo")
                    let decodedData = try JSONDecoder().decode(T.self, from: data)
                    return .success(decodedData)
                } catch {
                    return .failure(.failToDecode(error.localizedDescription))
                }
            } else {
-               return .failure(.serverError(response.statusCode))
+               // 💥 서버 에러 응답 디코딩 시도
+               if let serverError = try? JSONDecoder().decode(ErrorResponse.self, from: data) {
+                   print(serverError)
+                    return .failure(.serverErrorWithMessage(serverError))
+                 }
+               else {
+                    return .failure(.serverError(response.statusCode))
+                }
            }
        }
     
     
        // MARK: - API 호출 메서드
-       
+    
+    
        func getData<T: Decodable>(url: String, parameters: Parameters?) async -> Result<T, NetworkError> {
            return await performRequest(url: url, method: .get, parameters: parameters, body: nil)
        }
        
-       func postData<T: Decodable>(url: String, parameters: Parameters?, body: Data?) async -> Result<T, NetworkError> {
-           return await performRequest(url: url, method: .post, parameters: parameters, body: body)
+       func postData<T: Decodable>(url: String, parameters: Parameters?, body: Data?, headers:HTTPHeaders?) async -> Result<T, NetworkError> {
+            return await performRequest(url: url, method: .post, parameters: parameters, body: body, headers:headers)
        }
+    
+//        func postWithBasicAuth<T: Decodable>(
+//            url: String,
+//            parameters: Parameters?,
+//            username: String,
+//            password: String
+//        ) async -> Result<T, NetworkError> {
+//            let credential = "\(username):\(password)"
+//            guard let base64 = credential.data(using: .utf8)?.base64EncodedString() else {
+//                return .failure(.clientError("Invalid credentials"))
+//            }
+//
+//            let headers: HTTPHeaders = [
+//                "Authorization": "Basic \(base64)"
+//            ]
+//
+//            return await performRequest(
+//                url: url,
+//                method: .post,
+//                parameters: parameters,
+//                body: nil,
+//                headers: headers
+//            )
+//    }
        
        func updateData<T: Decodable>(url: String, method: HTTPMethod, parameters: Parameters?, body: Data?) async -> Result<T, NetworkError> {
            return await performRequest(url: url, method: method, parameters: parameters, body: body)

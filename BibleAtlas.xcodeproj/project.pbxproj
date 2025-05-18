@@ -10,6 +10,9 @@
 		1AA065047DE92DF69959A910 /* Pods_BibleAtlas_BibleAtlasUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA55ABE10F06790553768BDF /* Pods_BibleAtlas_BibleAtlasUITests.framework */; };
 		296CB238BA49943CA6B4BDF2 /* Pods_BibleAtlasTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EA6D60ADC15852CAC915A09 /* Pods_BibleAtlasTests.framework */; };
 		39B9D8CDDF5E2F1957E7A42C /* Pods_BibleAtlas.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC275028A6E0F37DC7A90D5 /* Pods_BibleAtlas.framework */; };
+		EC64B9522DD838E300D3C8A7 /* TokenProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9512DD838E300D3C8A7 /* TokenProviderProtocol.swift */; };
+		EC64B9582DD8482C00D3C8A7 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9572DD8482C00D3C8A7 /* AppStore.swift */; };
+		EC64B95C2DD9A18D00D3C8A7 /* KeychainTokenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B95B2DD9A18D00D3C8A7 /* KeychainTokenProvider.swift */; };
 		EC70587B2DB39629002D47DF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70587A2DB39629002D47DF /* MainViewController.swift */; };
 		EC70587E2DB397CF002D47DF /* BottomSheetCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70587D2DB397CF002D47DF /* BottomSheetCoordinator.swift */; };
 		EC7058802DB3992D002D47DF /* BottomSheetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70587F2DB3992D002D47DF /* BottomSheetType.swift */; };
@@ -67,9 +70,9 @@
 		ECA94BCC2D508D1E005B0428 /* DefaultSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BCB2D508D1E005B0428 /* DefaultSession.swift */; };
 		ECA94BD12D509377005B0428 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BD02D509377005B0428 /* NetworkError.swift */; };
 		ECA94BD52D5094F1005B0428 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BD42D5094F1005B0428 /* User.swift */; };
-		ECA94BD72D50977A005B0428 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BD62D50977A005B0428 /* NetworkManager.swift */; };
+		ECA94BD72D50977A005B0428 /* AuthorizedApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BD62D50977A005B0428 /* AuthorizedApiClient.swift */; };
 		ECA94BDA2D509AFF005B0428 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BD92D509AFF005B0428 /* AuthManager.swift */; };
-		ECA94BDD2D50A59E005B0428 /* AuthNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BDC2D50A59E005B0428 /* AuthNetworkManager.swift */; };
+		ECA94BDD2D50A59E005B0428 /* AuthApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BDC2D50A59E005B0428 /* AuthApiService.swift */; };
 		ECA94BE12D50A739005B0428 /* AuthData.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BE02D50A739005B0428 /* AuthData.swift */; };
 		ECA94BE52D50AE92005B0428 /* AuthRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BE42D50AE92005B0428 /* AuthRepositoryProtocol.swift */; };
 		ECA94BE82D50AF41005B0428 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BE72D50AF41005B0428 /* AuthRepository.swift */; };
@@ -105,6 +108,9 @@
 		B99651049227BE5701E9D126 /* Pods-BibleAtlasTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlasTests.debug.xcconfig"; path = "Target Support Files/Pods-BibleAtlasTests/Pods-BibleAtlasTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CCF5D5F9277B71DAA500A8F2 /* Pods-BibleAtlas-BibleAtlasUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlas-BibleAtlasUITests.release.xcconfig"; path = "Target Support Files/Pods-BibleAtlas-BibleAtlasUITests/Pods-BibleAtlas-BibleAtlasUITests.release.xcconfig"; sourceTree = "<group>"; };
 		DA55ABE10F06790553768BDF /* Pods_BibleAtlas_BibleAtlasUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BibleAtlas_BibleAtlasUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC64B9512DD838E300D3C8A7 /* TokenProviderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProviderProtocol.swift; sourceTree = "<group>"; };
+		EC64B9572DD8482C00D3C8A7 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
+		EC64B95B2DD9A18D00D3C8A7 /* KeychainTokenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainTokenProvider.swift; sourceTree = "<group>"; };
 		EC70587A2DB39629002D47DF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		EC70587D2DB397CF002D47DF /* BottomSheetCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetCoordinator.swift; sourceTree = "<group>"; };
 		EC70587F2DB3992D002D47DF /* BottomSheetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetType.swift; sourceTree = "<group>"; };
@@ -164,9 +170,9 @@
 		ECA94BCB2D508D1E005B0428 /* DefaultSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSession.swift; sourceTree = "<group>"; };
 		ECA94BD02D509377005B0428 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		ECA94BD42D5094F1005B0428 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		ECA94BD62D50977A005B0428 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		ECA94BD62D50977A005B0428 /* AuthorizedApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizedApiClient.swift; sourceTree = "<group>"; };
 		ECA94BD92D509AFF005B0428 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
-		ECA94BDC2D50A59E005B0428 /* AuthNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNetworkManager.swift; sourceTree = "<group>"; };
+		ECA94BDC2D50A59E005B0428 /* AuthApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthApiService.swift; sourceTree = "<group>"; };
 		ECA94BE02D50A739005B0428 /* AuthData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthData.swift; sourceTree = "<group>"; };
 		ECA94BE42D50AE92005B0428 /* AuthRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryProtocol.swift; sourceTree = "<group>"; };
 		ECA94BE72D50AF41005B0428 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
@@ -213,6 +219,38 @@
 				8EA6D60ADC15852CAC915A09 /* Pods_BibleAtlasTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EC64B9502DD8388A00D3C8A7 /* ServiceProtocol */ = {
+			isa = PBXGroup;
+			children = (
+				EC64B9512DD838E300D3C8A7 /* TokenProviderProtocol.swift */,
+			);
+			path = ServiceProtocol;
+			sourceTree = "<group>";
+		};
+		EC64B9562DD8481000D3C8A7 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				EC64B9572DD8482C00D3C8A7 /* AppStore.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		EC64B9592DD9A15B00D3C8A7 /* Infra */ = {
+			isa = PBXGroup;
+			children = (
+				EC64B95A2DD9A16400D3C8A7 /* Token */,
+			);
+			path = Infra;
+			sourceTree = "<group>";
+		};
+		EC64B95A2DD9A16400D3C8A7 /* Token */ = {
+			isa = PBXGroup;
+			children = (
+				EC64B95B2DD9A18D00D3C8A7 /* KeychainTokenProvider.swift */,
+			);
+			path = Token;
 			sourceTree = "<group>";
 		};
 		EC70587C2DB397B1002D47DF /* Dependencies */ = {
@@ -309,6 +347,8 @@
 		ECA94B952D5082B9005B0428 /* BibleAtlas */ = {
 			isa = PBXGroup;
 			children = (
+				EC64B9592DD9A15B00D3C8A7 /* Infra */,
+				EC64B9562DD8481000D3C8A7 /* Store */,
 				ECA94BF02D51AB3D005B0428 /* Presentation */,
 				ECA94BCD2D50931C005B0428 /* Domain */,
 				ECA94BC92D508BDF005B0428 /* Data */,
@@ -354,8 +394,8 @@
 			isa = PBXGroup;
 			children = (
 				ECA94BCB2D508D1E005B0428 /* DefaultSession.swift */,
-				ECA94BD62D50977A005B0428 /* NetworkManager.swift */,
-				ECA94BDC2D50A59E005B0428 /* AuthNetworkManager.swift */,
+				ECA94BD62D50977A005B0428 /* AuthorizedApiClient.swift */,
+				ECA94BDC2D50A59E005B0428 /* AuthApiService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -363,6 +403,7 @@
 		ECA94BCD2D50931C005B0428 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				EC64B9502DD8388A00D3C8A7 /* ServiceProtocol */,
 				ECA94BE92D50B03C005B0428 /* Usecase */,
 				ECA94BE22D50ACC9005B0428 /* RepositoryProtocol */,
 				ECA94BCE2D509329005B0428 /* Entity */,
@@ -778,6 +819,7 @@
 				EC7058A22DBCCA9D002D47DF /* PlaceTableViewCell.swift in Sources */,
 				EC77CDF62DC337FC0030DEF5 /* MyCollectionBottomSheetViewModel.swift in Sources */,
 				EC7058AB2DBFB072002D47DF /* VMFactory.swift in Sources */,
+				EC64B9522DD838E300D3C8A7 /* TokenProviderProtocol.swift in Sources */,
 				EC7058A02DBCC6FE002D47DF /* MyCollectionBottomSheetViewController.swift in Sources */,
 				EC77CE032DC5E3460030DEF5 /* PlaceDetailViewModel.swift in Sources */,
 				EC77CE302DCF2D9C0030DEF5 /* RelatedVerseTableViewCell.swift in Sources */,
@@ -816,12 +858,13 @@
 				EC77CE3C2DD09AB10030DEF5 /* PlaceModificationBottomSheetViewController.swift in Sources */,
 				EC77CE342DCF348D0030DEF5 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				EC7058802DB3992D002D47DF /* BottomSheetType.swift in Sources */,
-				ECA94BD72D50977A005B0428 /* NetworkManager.swift in Sources */,
+				EC64B9582DD8482C00D3C8A7 /* AppStore.swift in Sources */,
+				ECA94BD72D50977A005B0428 /* AuthorizedApiClient.swift in Sources */,
 				EC77CE082DC5EB700030DEF5 /* PlaceType.swift in Sources */,
 				EC70588B2DB8BCCE002D47DF /* CollectionButton.swift in Sources */,
 				EC70589A2DBC7BE1002D47DF /* LoginBottomSheetViewController.swift in Sources */,
 				EC77CE462DD0E2540030DEF5 /* PlaceCharactersBottomSheetViewModel.swift in Sources */,
-				ECA94BDD2D50A59E005B0428 /* AuthNetworkManager.swift in Sources */,
+				ECA94BDD2D50A59E005B0428 /* AuthApiService.swift in Sources */,
 				ECA94BEB2D50B0B9005B0428 /* AuthUsecase.swift in Sources */,
 				EC77CE422DD0A8670030DEF5 /* PlaceTypeCell.swift in Sources */,
 				EC77CE3A2DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift in Sources */,
@@ -829,6 +872,7 @@
 				ECA94BEF2D50B492005B0428 /* MockingApi.swift in Sources */,
 				EC7058842DB3BAE5002D47DF /* HomeBottomSheetViewController.swift in Sources */,
 				ECA94BA12D5082B9005B0428 /* BibleAtlas.xcdatamodeld in Sources */,
+				EC64B95C2DD9A18D00D3C8A7 /* KeychainTokenProvider.swift in Sources */,
 				ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */,
 				EC77CE4A2DD0E4DC0030DEF5 /* PlaceCharacterCell.swift in Sources */,
 				ECA94BD52D5094F1005B0428 /* User.swift in Sources */,
