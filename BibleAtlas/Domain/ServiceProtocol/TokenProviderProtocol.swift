@@ -15,4 +15,5 @@ protocol TokenProviderProtocol {
     var refreshToken: String? { get }
     func save(accessToken: String, refreshToken: String)
     func clear()
+    var hasToken:Bool { get }
 }

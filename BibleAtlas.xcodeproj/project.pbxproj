@@ -13,6 +13,7 @@
 		EC64B9522DD838E300D3C8A7 /* TokenProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9512DD838E300D3C8A7 /* TokenProviderProtocol.swift */; };
 		EC64B9582DD8482C00D3C8A7 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9572DD8482C00D3C8A7 /* AppStore.swift */; };
 		EC64B95C2DD9A18D00D3C8A7 /* KeychainTokenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B95B2DD9A18D00D3C8A7 /* KeychainTokenProvider.swift */; };
+		EC64B9602DDAEDFA00D3C8A7 /* AppInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B95F2DDAEDFA00D3C8A7 /* AppInitializer.swift */; };
 		EC70587B2DB39629002D47DF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70587A2DB39629002D47DF /* MainViewController.swift */; };
 		EC70587E2DB397CF002D47DF /* BottomSheetCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70587D2DB397CF002D47DF /* BottomSheetCoordinator.swift */; };
 		EC7058802DB3992D002D47DF /* BottomSheetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70587F2DB3992D002D47DF /* BottomSheetType.swift */; };
@@ -111,6 +112,7 @@
 		EC64B9512DD838E300D3C8A7 /* TokenProviderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProviderProtocol.swift; sourceTree = "<group>"; };
 		EC64B9572DD8482C00D3C8A7 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		EC64B95B2DD9A18D00D3C8A7 /* KeychainTokenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainTokenProvider.swift; sourceTree = "<group>"; };
+		EC64B95F2DDAEDFA00D3C8A7 /* AppInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInitializer.swift; sourceTree = "<group>"; };
 		EC70587A2DB39629002D47DF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		EC70587D2DB397CF002D47DF /* BottomSheetCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetCoordinator.swift; sourceTree = "<group>"; };
 		EC70587F2DB3992D002D47DF /* BottomSheetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetType.swift; sourceTree = "<group>"; };
@@ -240,17 +242,26 @@
 		EC64B9592DD9A15B00D3C8A7 /* Infra */ = {
 			isa = PBXGroup;
 			children = (
-				EC64B95A2DD9A16400D3C8A7 /* Token */,
+				EC64B95E2DDAEDD400D3C8A7 /* Initializer */,
+				EC64B95D2DDAEDC700D3C8A7 /* Token */,
 			);
 			path = Infra;
 			sourceTree = "<group>";
 		};
-		EC64B95A2DD9A16400D3C8A7 /* Token */ = {
+		EC64B95D2DDAEDC700D3C8A7 /* Token */ = {
 			isa = PBXGroup;
 			children = (
 				EC64B95B2DD9A18D00D3C8A7 /* KeychainTokenProvider.swift */,
 			);
 			path = Token;
+			sourceTree = "<group>";
+		};
+		EC64B95E2DDAEDD400D3C8A7 /* Initializer */ = {
+			isa = PBXGroup;
+			children = (
+				EC64B95F2DDAEDFA00D3C8A7 /* AppInitializer.swift */,
+			);
+			path = Initializer;
 			sourceTree = "<group>";
 		};
 		EC70587C2DB397B1002D47DF /* Dependencies */ = {
@@ -835,6 +846,7 @@
 				EC7058982DBA772E002D47DF /* GuideButton.swift in Sources */,
 				EC70587E2DB397CF002D47DF /* BottomSheetCoordinator.swift in Sources */,
 				ECA94BDA2D509AFF005B0428 /* AuthManager.swift in Sources */,
+				EC64B9602DDAEDFA00D3C8A7 /* AppInitializer.swift in Sources */,
 				EC77CE3E2DD09AD30030DEF5 /* PlaceModificationBottomSheetViewModel.swift in Sources */,
 				EC7058A72DBFA570002D47DF /* HomeBottomSheetViewModel.swift in Sources */,
 				EC77CE382DCF79800030DEF5 /* IconTextButton.swift in Sources */,

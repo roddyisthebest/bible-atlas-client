@@ -18,7 +18,7 @@ struct User:Decodable, Hashable{
     var createdAt: String?
     var updatedAt: String?
     var deletedAt: String?
-    var version: Int
+    var version: Int?
     var id:Int
     var name:String?
     var email:String?

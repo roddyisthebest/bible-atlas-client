@@ -9,6 +9,11 @@ import Foundation
 import KeychainAccess
 
 final class KeychainTokenProvider: TokenProviderProtocol {
+    
+    var hasToken: Bool {
+        (self.accessToken != nil) && (self.refreshToken != nil)
+    }
+    
 
     private let keychain: Keychain
     
