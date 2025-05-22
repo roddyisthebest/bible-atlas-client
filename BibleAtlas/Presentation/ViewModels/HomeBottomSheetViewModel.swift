@@ -42,10 +42,7 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
     }
     
     func transform(input: Input) -> Output{
-        
-        
-        
-        
+
         input.avatarButtonTapped$
             .withLatestFrom(profile$)
             .observe(on: MainScheduler.asyncInstance)
@@ -72,8 +69,19 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
             
  
         
-        input.collectionButtonTapped$.subscribe(onNext: { [weak self] collectionType in
-            self?.navigator?.present(.myCollection(collectionType))
+        input.collectionButtonTapped$
+            .withLatestFrom(isLoggedIn$, resultSelector: { collectionType, isLoggedIn in
+                return (collectionType, isLoggedIn)
+            })
+            .observe(on: MainScheduler.asyncInstance)
+            .subscribe(onNext: { [weak self] collectionType, isLoggedIn in
+                if(isLoggedIn){
+                    self?.navigator?.present(.myCollection(collectionType))
+                }
+                else{
+                    self?.navigator?.present(.login)
+                }
+                
         }).disposed(by: disposeBag)
         
         input.placesByTypeButtonTapped$.subscribe(onNext:{[weak self] in
