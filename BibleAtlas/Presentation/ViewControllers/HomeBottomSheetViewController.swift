@@ -85,7 +85,7 @@ final class HomeBottomSheetViewController: UIViewController, UITableViewDelegate
     }()
     
     private lazy var collectionStackView = {
-        let sv = UIStackView(arrangedSubviews: [collectionLabel, collectionContentStackView]);
+        let sv = UIStackView(arrangedSubviews: [collectionLabel, collectionDynamicContainer]);
         sv.axis = .vertical;
         sv.distribution = .fill;
         sv.alignment = .fill
@@ -94,6 +94,27 @@ final class HomeBottomSheetViewController: UIViewController, UITableViewDelegate
     }();
     
     private let collectionLabel = MainLabel(text:"Collections")
+    
+    private lazy var collectionDynamicContainer = {
+        let sv = UIStackView(arrangedSubviews: [collectionContentStackView])
+        sv.axis = .vertical
+           sv.alignment = .fill
+           sv.distribution = .fill
+           return sv
+    }()
+    
+    private let loadingView: UIView = {
+        let v = UIView()
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.startAnimating()
+        v.addSubview(indicator)
+        v.backgroundColor = .mainItemBkg;
+        v.layer.cornerRadius = 10;
+        v.layer.masksToBounds = true;
+        v.snp.makeConstraints{ $0.height.equalTo(150)}
+        indicator.snp.makeConstraints { $0.center.equalToSuperview() }
+        return v
+    }()
     
     private lazy var collectionContentStackView = {
         let sv = UIStackView(arrangedSubviews: [favoriteButton, bookmarkButton, memoButton]);
@@ -241,10 +262,19 @@ final class HomeBottomSheetViewController: UIViewController, UITableViewDelegate
             })
             .disposed(by: disposeBag)
 
-        
-        output?.likePlacesCount$.observe(on: MainScheduler.instance).subscribe(onNext: { likePlacesCount in
+        Observable.combineLatest(output!.likePlacesCount$,output!.savePlacesCount$, output!.memoPlacesCount$).observe(on: MainScheduler.instance).subscribe { (likePlacesCount, savePlacesCount, memoPlacesCount) in
             self.favoriteButton.setSubLabelText(subText: "\(likePlacesCount) places")
-        }).disposed(by: disposeBag)
+            self.bookmarkButton.setSubLabelText(subText: "\(savePlacesCount) places")
+            self.memoButton.setSubLabelText(subText: "\(memoPlacesCount) places")
+            
+        }.disposed(by: disposeBag)
+        
+        output?.loading$.observe(on: MainScheduler.instance)
+            .subscribe(onNext: { loading in
+                self.showLoadingView(loading)
+            }).disposed(by: disposeBag)
+   
+        
         
     }
     
@@ -285,6 +315,19 @@ final class HomeBottomSheetViewController: UIViewController, UITableViewDelegate
         reportIssueButton.showsMenuAsPrimaryAction = true
         reportIssueButton.menu = menu
 
+    }
+    
+    private func showLoadingView(_ isLoading: Bool) {
+        collectionDynamicContainer.arrangedSubviews.forEach {
+            collectionDynamicContainer.removeArrangedSubview($0)
+            $0.removeFromSuperview()
+        }
+
+        if isLoading {
+            collectionDynamicContainer.addArrangedSubview(loadingView)
+        } else {
+            collectionDynamicContainer.addArrangedSubview(collectionContentStackView)
+        }
     }
     
     

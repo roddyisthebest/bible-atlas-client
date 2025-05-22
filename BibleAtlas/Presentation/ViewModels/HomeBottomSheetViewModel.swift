@@ -26,7 +26,10 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
     private var profile$ = BehaviorRelay<User?>(value:nil)
     
     private var likePlacesCount$ = BehaviorRelay<Int>(value:0);
+    private var savePlacesCount$ = BehaviorRelay<Int>(value:0);
+    private var memoPlacesCount$ = BehaviorRelay<Int>(value:0);
     
+    private let loading$ = BehaviorRelay<Bool>(value:false);
 
     init(navigator:BottomSheetNavigator?, appStore:AppStoreProtocol?,userUsecase:UserUsecaseProtocol?){
         self.navigator = navigator
@@ -70,7 +73,7 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
             self?.navigator?.present(.placeCharacters)
         }).disposed(by: disposeBag)
         
-        return Output(profile$: profile$.asObservable(), isLoggedIn$: isLoggedIn$.asObservable(),likePlacesCount$: likePlacesCount$.asObservable() )
+        return Output(profile$: profile$.asObservable(), isLoggedIn$: isLoggedIn$.asObservable(),likePlacesCount$: likePlacesCount$.asObservable(),savePlacesCount$: savePlacesCount$.asObservable(),memoPlacesCount$: memoPlacesCount$.asObservable(),loading$: loading$.asObservable() )
         
     }
     
@@ -83,19 +86,45 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
             if(appState.isLoggedIn){
                 
                 Task{
-                    let result = await self.userUsecase?.getPlaces(limit:nil, page: nil, filter: .like)
-                        
-                    switch(result){
-                    case .success(let response):
-                        print(response,"response")
-                        self.likePlacesCount$.accept(response.total)
-                        break;
-                    case .failure(let error):
-                        print(error.description)
-                        break
-                    case .none:
-                        break
+                    
+                    self.loading$.accept(true)
+                    
+                    defer {
+                          self.loading$.accept(false) 
                     }
+                    
+                    async let result1 = self.userUsecase?.getPlaces(limit: nil, page: nil, filter: .like)
+                    async let result2 = self.userUsecase?.getPlaces(limit: nil, page: nil, filter: .memo)
+                    async let result3 = self.userUsecase?.getPlaces(limit: nil, page: nil, filter: .save)
+                    
+                    let results: [(PlaceFilter, Result<ListResponse<Place>, NetworkError>?)] = [
+                            (.like, await result1),
+                            (.memo, await result2),
+                            (.save, await result3)
+                        ]
+                    
+                    
+
+                    for (filter, result) in results {
+                          guard let result else { continue }
+                          
+                          switch result {
+                          case .success(let response):
+                              switch(filter){
+                                case .like:
+                                    self.likePlacesCount$.accept(response.total)
+                                case .memo:
+                                    self.memoPlacesCount$.accept(response.total)
+                                case .save:
+                                    self.savePlacesCount$.accept(response.total)
+                              }
+                              if filter == .like {
+                                  self.likePlacesCount$.accept(response.total)
+                              }
+                          case .failure(let error):
+                              print("❌ \(filter) → \(error.description)")
+                          }
+                      }
                     
                             
                 }
@@ -122,6 +151,10 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
         let profile$:Observable<User?>
         let isLoggedIn$:Observable<Bool>
         let likePlacesCount$:Observable<Int>
+        let savePlacesCount$:Observable<Int>
+        let memoPlacesCount$:Observable<Int>
+        let loading$:Observable<Bool>
+
     }
     
   
