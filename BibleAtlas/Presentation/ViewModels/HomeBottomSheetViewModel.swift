@@ -20,6 +20,8 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
 
     private weak var navigator: BottomSheetNavigator?
     private let userUsecase:UserUsecaseProtocol?
+    private let authUsecase:AuthUsecaseProtocol?
+
     private var appStore:AppStoreProtocol?
     
     private var isLoggedIn$ = BehaviorRelay<Bool>(value:false)
@@ -31,10 +33,11 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
     
     private let loading$ = BehaviorRelay<Bool>(value:false);
 
-    init(navigator:BottomSheetNavigator?, appStore:AppStoreProtocol?,userUsecase:UserUsecaseProtocol?){
+    init(navigator:BottomSheetNavigator?, appStore:AppStoreProtocol?,userUsecase:UserUsecaseProtocol?, authUseCase:AuthUsecaseProtocol?){
         self.navigator = navigator
         self.appStore = appStore
         self.userUsecase = userUsecase
+        self.authUsecase = authUseCase
         bindAppStore();
     }
     
@@ -43,21 +46,29 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
         
         
         
-        
-        Observable
-            .combineLatest(input.avatarButtonTapped$, profile$)
-            .observe(on: MainScheduler.instance)
-            .subscribe { [weak self ](_, profile) in
+        input.avatarButtonTapped$
+            .withLatestFrom(profile$)
+            .observe(on: MainScheduler.asyncInstance)
+            .subscribe(onNext: { [weak self] profile in
+                guard let self = self else { return }
                 
-                if(profile != nil){
+                if (profile != nil) {
                     // TODO: implement mypage
-                    print("my-page")
-                    return;
+                    print("logout!")
+                    let result = self.authUsecase?.logout()
+                    switch result {
+                        case .success:
+                            self.appStore?.dispatch(.logout)
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                        case .none:
+                            print("none")
+                    }
+                } else {
+                    self.navigator?.present(.login)
                 }
-                
-                
-                self?.navigator?.present(.login)
-            }.disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
             
  
         
@@ -84,13 +95,12 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
             self.isLoggedIn$.accept(appState.isLoggedIn)
                 
             if(appState.isLoggedIn){
-                
                 Task{
                     
                     self.loading$.accept(true)
                     
                     defer {
-                          self.loading$.accept(false) 
+                          self.loading$.accept(false)
                     }
                     
                     async let result1 = self.userUsecase?.getPlaces(limit: nil, page: nil, filter: .like)
@@ -128,12 +138,16 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
                     
                             
                 }
-          
+        
                         
                     
                 
             }
-            
+            else{
+                self.likePlacesCount$.accept(0)
+                self.memoPlacesCount$.accept(0)
+                self.savePlacesCount$.accept(0)
+            }
             
         }).disposed(by: disposeBag)
         

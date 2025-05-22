@@ -12,7 +12,6 @@ import Alamofire
 
 protocol AuthApiServiceProtocol{
     func loginUser(body:AuthPayload) async -> Result<UserResponse,NetworkError>
-    func logout() async -> Result<Bool,NetworkError>
 
 }
 
@@ -45,9 +44,8 @@ final public class AuthApiService:AuthApiServiceProtocol {
     
     }
     
-    func logout() async -> Result<Bool, NetworkError> {
-        return await apiClient.postData(url: "\(url)/logout", parameters: nil, body: nil, headers:nil)
-    }
+
+    
     
 
  

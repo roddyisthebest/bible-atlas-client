@@ -8,6 +8,8 @@
 import Foundation
 import KeychainAccess
 
+
+
 final class KeychainTokenProvider: TokenProviderProtocol {
     
     var hasToken: Bool {
@@ -52,12 +54,14 @@ final class KeychainTokenProvider: TokenProviderProtocol {
         }
     }
 
-    func clear() {
+    func clear() -> Result<Bool, Error>{
         do {
-            try keychain.remove(Keys.accessToken)
-            try keychain.remove(Keys.refreshToken)
-        } catch {
-            print("❌ Failed to clear tokens from Keychain: \(error)")
+               try keychain.remove(Keys.accessToken)
+               try keychain.remove(Keys.refreshToken)
+               return .success(true)
+           } catch {
+               print("❌ Failed to clear tokens from Keychain: \(error.localizedDescription)")
+               return .failure(error)
         }
     }
 }

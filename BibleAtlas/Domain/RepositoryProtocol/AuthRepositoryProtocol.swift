@@ -9,5 +9,4 @@ import Foundation
 
 protocol AuthRepositoryProtocol {
     func loginUser(body:AuthPayload) async -> Result<UserResponse,NetworkError>
-    func logout() async -> Result<Bool,NetworkError>
 }
