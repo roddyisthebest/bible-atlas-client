@@ -228,6 +228,7 @@ final class HomeBottomSheetViewController: UIViewController, UITableViewDelegate
             .subscribe(onNext: { [weak self] isLoggedIn, profile in
                 
                 if isLoggedIn {
+                    
                     guard let profile = profile else {
                         return
                     }
@@ -240,6 +241,11 @@ final class HomeBottomSheetViewController: UIViewController, UITableViewDelegate
             })
             .disposed(by: disposeBag)
 
+        
+        output?.likePlacesCount$.observe(on: MainScheduler.instance).subscribe(onNext: { likePlacesCount in
+            self.favoriteButton.setSubLabelText(subText: "\(likePlacesCount) places")
+        }).disposed(by: disposeBag)
+        
     }
     
     
@@ -313,7 +319,17 @@ final class HomeBottomSheetViewController: UIViewController, UITableViewDelegate
         bindViewModel();
         
     }
+    
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        print("home 없어짐")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("home 나타남")
+    }
     
     private func setupSheet(){
         if let sheet = self.sheetPresentationController {

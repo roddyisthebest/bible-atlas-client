@@ -24,20 +24,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tokenProvider = KeychainTokenProvider();
         let apiClient = AuthorizedApiClient(session: session, tokenProvider: tokenProvider)
         
-        let authApiService = AuthApiService(apiClient: apiClient, url: Constants.shared.url)
+        let authApiService = AuthApiService(apiClient: apiClient, url: "\(Constants.shared.url)/auth")
+        
+        let userApiService = UserApiService(apiClient: apiClient, url: "\(Constants.shared.url)/user")
+        
+        
         
         let appStore = AppStore();
         
    
         
         Task{
-            let appInitializer = AppInitializer(tokenProvider: tokenProvider, appStore: appStore, authApiService: authApiService);
+            let appInitializer = AppInitializer(tokenProvider: tokenProvider, appStore: appStore, userApiService: userApiService);
             await appInitializer.restoreSessionIfPossible()
         }
         
         let authRepository = AuthRepository(authApiService: authApiService)
         let authUsecase = AuthUsecase(repository: authRepository, tokenProvider: tokenProvider)
-        let usecases = UseCases(auth: authUsecase)
+        
+        let userRepository = UserRepository(userApiService: userApiService)
+        let userUsecase = UserUsecase(repository:userRepository)
+        
+        let usecases = UseCases(auth: authUsecase, user: userUsecase)
         
         
         let vmFactory = VMFactory(appStore: appStore, usecases: usecases);

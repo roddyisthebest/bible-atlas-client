@@ -8,6 +8,16 @@
 import Foundation
 import Alamofire
 
+
+struct ListResponse<T:Decodable>:Decodable{
+    let total:Int
+    let page:Int
+    let limit:Int
+    let data:[T]
+}
+
+
+
 protocol AuthorizedApiClientProtocol{
     func getData<T: Decodable>(url:String, parameters:Parameters?) async -> Result<T,NetworkError>
     func postData<T: Decodable>(url:String, parameters:Parameters?, body:Data?, headers:HTTPHeaders?) async -> Result<T,NetworkError>
@@ -79,7 +89,6 @@ public final class AuthorizedApiClient:AuthorizedApiClientProtocol{
            
            if (200..<400).contains(response.statusCode) {
                do {
-                   print(T.self,"yoyo")
                    let decodedData = try JSONDecoder().decode(T.self, from: data)
                    return .success(decodedData)
                } catch {
@@ -88,10 +97,12 @@ public final class AuthorizedApiClient:AuthorizedApiClientProtocol{
            } else {
                // 💥 서버 에러 응답 디코딩 시도
                if let serverError = try? JSONDecoder().decode(ErrorResponse.self, from: data) {
-                   print(serverError)
                     return .failure(.serverErrorWithMessage(serverError))
                  }
                else {
+                   if let jsonString = String(data: data, encoding: .utf8) {
+                        print("📦 서버 에러 원본 데이터:\n\(jsonString)")
+                   }
                     return .failure(.serverError(response.statusCode))
                 }
            }

@@ -23,6 +23,7 @@ public enum NetworkError:Error {
     case serverError(Int)
     case clientError(String)
     
+    
     public var description: String {
         switch self {
         case .urlError:
@@ -41,6 +42,9 @@ public enum NetworkError:Error {
             return errorResponse.message
         case .clientError(let msg):
             return "클라이언트에서 서버 요청 실패 \(msg)"
+        
         }
     }
 }
+
+

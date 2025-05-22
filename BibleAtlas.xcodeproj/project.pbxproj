@@ -14,6 +14,10 @@
 		EC64B9582DD8482C00D3C8A7 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9572DD8482C00D3C8A7 /* AppStore.swift */; };
 		EC64B95C2DD9A18D00D3C8A7 /* KeychainTokenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B95B2DD9A18D00D3C8A7 /* KeychainTokenProvider.swift */; };
 		EC64B9602DDAEDFA00D3C8A7 /* AppInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B95F2DDAEDFA00D3C8A7 /* AppInitializer.swift */; };
+		EC64B9642DDDC45500D3C8A7 /* UserApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9632DDDC45500D3C8A7 /* UserApiService.swift */; };
+		EC64B9662DDE049500D3C8A7 /* UserRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9652DDE049500D3C8A7 /* UserRepositoryProtocol.swift */; };
+		EC64B9692DDE051D00D3C8A7 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9682DDE051D00D3C8A7 /* UserRepository.swift */; };
+		EC64B96B2DDE05C900D3C8A7 /* UserUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B96A2DDE05C900D3C8A7 /* UserUsecase.swift */; };
 		EC70587B2DB39629002D47DF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70587A2DB39629002D47DF /* MainViewController.swift */; };
 		EC70587E2DB397CF002D47DF /* BottomSheetCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70587D2DB397CF002D47DF /* BottomSheetCoordinator.swift */; };
 		EC7058802DB3992D002D47DF /* BottomSheetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70587F2DB3992D002D47DF /* BottomSheetType.swift */; };
@@ -38,7 +42,6 @@
 		EC77CE012DC5DA8D0030DEF5 /* PlaceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE002DC5DA8D0030DEF5 /* PlaceDetailViewController.swift */; };
 		EC77CE032DC5E3460030DEF5 /* PlaceDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE022DC5E3460030DEF5 /* PlaceDetailViewModel.swift */; };
 		EC77CE062DC5E9910030DEF5 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE052DC5E9910030DEF5 /* Place.swift */; };
-		EC77CE082DC5EB700030DEF5 /* PlaceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE072DC5EB700030DEF5 /* PlaceType.swift */; };
 		EC77CE2C2DC8B0610030DEF5 /* PanModal in Frameworks */ = {isa = PBXBuildFile; productRef = EC77CE2B2DC8B0610030DEF5 /* PanModal */; };
 		EC77CE2E2DCF193D0030DEF5 /* RelatedPlaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE2D2DCF193D0030DEF5 /* RelatedPlaceTableViewCell.swift */; };
 		EC77CE302DCF2D9C0030DEF5 /* RelatedVerseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE2F2DCF2D9C0030DEF5 /* RelatedVerseTableViewCell.swift */; };
@@ -72,7 +75,6 @@
 		ECA94BD12D509377005B0428 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BD02D509377005B0428 /* NetworkError.swift */; };
 		ECA94BD52D5094F1005B0428 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BD42D5094F1005B0428 /* User.swift */; };
 		ECA94BD72D50977A005B0428 /* AuthorizedApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BD62D50977A005B0428 /* AuthorizedApiClient.swift */; };
-		ECA94BDA2D509AFF005B0428 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BD92D509AFF005B0428 /* AuthManager.swift */; };
 		ECA94BDD2D50A59E005B0428 /* AuthApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BDC2D50A59E005B0428 /* AuthApiService.swift */; };
 		ECA94BE12D50A739005B0428 /* AuthData.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BE02D50A739005B0428 /* AuthData.swift */; };
 		ECA94BE52D50AE92005B0428 /* AuthRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BE42D50AE92005B0428 /* AuthRepositoryProtocol.swift */; };
@@ -113,6 +115,10 @@
 		EC64B9572DD8482C00D3C8A7 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		EC64B95B2DD9A18D00D3C8A7 /* KeychainTokenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainTokenProvider.swift; sourceTree = "<group>"; };
 		EC64B95F2DDAEDFA00D3C8A7 /* AppInitializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInitializer.swift; sourceTree = "<group>"; };
+		EC64B9632DDDC45500D3C8A7 /* UserApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserApiService.swift; sourceTree = "<group>"; };
+		EC64B9652DDE049500D3C8A7 /* UserRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepositoryProtocol.swift; sourceTree = "<group>"; };
+		EC64B9682DDE051D00D3C8A7 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		EC64B96A2DDE05C900D3C8A7 /* UserUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUsecase.swift; sourceTree = "<group>"; };
 		EC70587A2DB39629002D47DF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		EC70587D2DB397CF002D47DF /* BottomSheetCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetCoordinator.swift; sourceTree = "<group>"; };
 		EC70587F2DB3992D002D47DF /* BottomSheetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetType.swift; sourceTree = "<group>"; };
@@ -136,7 +142,6 @@
 		EC77CE002DC5DA8D0030DEF5 /* PlaceDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailViewController.swift; sourceTree = "<group>"; };
 		EC77CE022DC5E3460030DEF5 /* PlaceDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailViewModel.swift; sourceTree = "<group>"; };
 		EC77CE052DC5E9910030DEF5 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
-		EC77CE072DC5EB700030DEF5 /* PlaceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceType.swift; sourceTree = "<group>"; };
 		EC77CE2D2DCF193D0030DEF5 /* RelatedPlaceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedPlaceTableViewCell.swift; sourceTree = "<group>"; };
 		EC77CE2F2DCF2D9C0030DEF5 /* RelatedVerseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedVerseTableViewCell.swift; sourceTree = "<group>"; };
 		EC77CE312DCF34110030DEF5 /* VersedItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersedItemCell.swift; sourceTree = "<group>"; };
@@ -173,7 +178,6 @@
 		ECA94BD02D509377005B0428 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		ECA94BD42D5094F1005B0428 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		ECA94BD62D50977A005B0428 /* AuthorizedApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizedApiClient.swift; sourceTree = "<group>"; };
-		ECA94BD92D509AFF005B0428 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		ECA94BDC2D50A59E005B0428 /* AuthApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthApiService.swift; sourceTree = "<group>"; };
 		ECA94BE02D50A739005B0428 /* AuthData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthData.swift; sourceTree = "<group>"; };
 		ECA94BE42D50AE92005B0428 /* AuthRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryProtocol.swift; sourceTree = "<group>"; };
@@ -262,6 +266,15 @@
 				EC64B95F2DDAEDFA00D3C8A7 /* AppInitializer.swift */,
 			);
 			path = Initializer;
+			sourceTree = "<group>";
+		};
+		EC64B9672DDE050600D3C8A7 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				ECA94BDC2D50A59E005B0428 /* AuthApiService.swift */,
+				EC64B9632DDDC45500D3C8A7 /* UserApiService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		EC70587C2DB397B1002D47DF /* Dependencies */ = {
@@ -394,8 +407,8 @@
 		ECA94BC92D508BDF005B0428 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				EC64B9672DDE050600D3C8A7 /* Service */,
 				ECA94BE62D50AF02005B0428 /* Repository */,
-				ECA94BD82D509ADF005B0428 /* Auth */,
 				ECA94BCA2D508BEE005B0428 /* Network */,
 			);
 			path = Data;
@@ -406,7 +419,6 @@
 			children = (
 				ECA94BCB2D508D1E005B0428 /* DefaultSession.swift */,
 				ECA94BD62D50977A005B0428 /* AuthorizedApiClient.swift */,
-				ECA94BDC2D50A59E005B0428 /* AuthApiService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -446,23 +458,15 @@
 				ECA94BE02D50A739005B0428 /* AuthData.swift */,
 				EC8ABAF92D75923C00AEC01B /* DiffCode.swift */,
 				EC77CE052DC5E9910030DEF5 /* Place.swift */,
-				EC77CE072DC5EB700030DEF5 /* PlaceType.swift */,
 			);
 			name = Data;
-			sourceTree = "<group>";
-		};
-		ECA94BD82D509ADF005B0428 /* Auth */ = {
-			isa = PBXGroup;
-			children = (
-				ECA94BD92D509AFF005B0428 /* AuthManager.swift */,
-			);
-			path = Auth;
 			sourceTree = "<group>";
 		};
 		ECA94BE22D50ACC9005B0428 /* RepositoryProtocol */ = {
 			isa = PBXGroup;
 			children = (
 				ECA94BE42D50AE92005B0428 /* AuthRepositoryProtocol.swift */,
+				EC64B9652DDE049500D3C8A7 /* UserRepositoryProtocol.swift */,
 			);
 			path = RepositoryProtocol;
 			sourceTree = "<group>";
@@ -471,6 +475,7 @@
 			isa = PBXGroup;
 			children = (
 				ECA94BE72D50AF41005B0428 /* AuthRepository.swift */,
+				EC64B9682DDE051D00D3C8A7 /* UserRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -479,6 +484,7 @@
 			isa = PBXGroup;
 			children = (
 				ECA94BEA2D50B0B9005B0428 /* AuthUsecase.swift */,
+				EC64B96A2DDE05C900D3C8A7 /* UserUsecase.swift */,
 			);
 			path = Usecase;
 			sourceTree = "<group>";
@@ -837,7 +843,9 @@
 				EC70589E2DBCA8B6002D47DF /* HeaderLabel.swift in Sources */,
 				EC70588E2DB8BEB1002D47DF /* MainLabel.swift in Sources */,
 				EC77CE442DD0AF630030DEF5 /* PlaceTypesBottomSheetViewModel.swift in Sources */,
+				EC64B9662DDE049500D3C8A7 /* UserRepositoryProtocol.swift in Sources */,
 				EC77CE062DC5E9910030DEF5 /* Place.swift in Sources */,
+				EC64B9692DDE051D00D3C8A7 /* UserRepository.swift in Sources */,
 				EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */,
 				ECA94BE82D50AF41005B0428 /* AuthRepository.swift in Sources */,
 				EC77CE012DC5DA8D0030DEF5 /* PlaceDetailViewController.swift in Sources */,
@@ -845,7 +853,6 @@
 				EC77CE482DD0E3E70030DEF5 /* PlaceCharactersBottomSheetViewController.swift in Sources */,
 				EC7058982DBA772E002D47DF /* GuideButton.swift in Sources */,
 				EC70587E2DB397CF002D47DF /* BottomSheetCoordinator.swift in Sources */,
-				ECA94BDA2D509AFF005B0428 /* AuthManager.swift in Sources */,
 				EC64B9602DDAEDFA00D3C8A7 /* AppInitializer.swift in Sources */,
 				EC77CE3E2DD09AD30030DEF5 /* PlaceModificationBottomSheetViewModel.swift in Sources */,
 				EC7058A72DBFA570002D47DF /* HomeBottomSheetViewModel.swift in Sources */,
@@ -863,16 +870,17 @@
 				EC70587B2DB39629002D47DF /* MainViewController.swift in Sources */,
 				EC70589C2DBC7C4D002D47DF /* CircleButton.swift in Sources */,
 				EC77CE322DCF34110030DEF5 /* VersedItemCell.swift in Sources */,
+				EC64B96B2DDE05C900D3C8A7 /* UserUsecase.swift in Sources */,
 				EC7058882DB3CA5B002D47DF /* UIColor.swift in Sources */,
 				ECA94BE12D50A739005B0428 /* AuthData.swift in Sources */,
 				ECA94BCC2D508D1E005B0428 /* DefaultSession.swift in Sources */,
+				EC64B9642DDDC45500D3C8A7 /* UserApiService.swift in Sources */,
 				ECA94BD12D509377005B0428 /* NetworkError.swift in Sources */,
 				EC77CE3C2DD09AB10030DEF5 /* PlaceModificationBottomSheetViewController.swift in Sources */,
 				EC77CE342DCF348D0030DEF5 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				EC7058802DB3992D002D47DF /* BottomSheetType.swift in Sources */,
 				EC64B9582DD8482C00D3C8A7 /* AppStore.swift in Sources */,
 				ECA94BD72D50977A005B0428 /* AuthorizedApiClient.swift in Sources */,
-				EC77CE082DC5EB700030DEF5 /* PlaceType.swift in Sources */,
 				EC70588B2DB8BCCE002D47DF /* CollectionButton.swift in Sources */,
 				EC70589A2DBC7BE1002D47DF /* LoginBottomSheetViewController.swift in Sources */,
 				EC77CE462DD0E2540030DEF5 /* PlaceCharactersBottomSheetViewModel.swift in Sources */,

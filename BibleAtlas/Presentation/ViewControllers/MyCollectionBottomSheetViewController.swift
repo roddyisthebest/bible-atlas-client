@@ -132,6 +132,8 @@ final class MyCollectionBottomSheetViewController: UIViewController {
         setupStyle();
         bindViewModel();
     }
+    
+ 
 
 }
 

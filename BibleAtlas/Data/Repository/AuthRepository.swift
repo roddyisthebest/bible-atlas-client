@@ -10,10 +10,6 @@ import Foundation
 public struct AuthRepository:AuthRepositoryProtocol{
     let authApiService:AuthApiServiceProtocol;
     
-    init(authApiService: AuthApiServiceProtocol) {
-        self.authApiService = authApiService
-    }
-    
     func loginUser(body: AuthPayload) async -> Result<UserResponse, NetworkError> {
         return await authApiService.loginUser(body: body)
     }

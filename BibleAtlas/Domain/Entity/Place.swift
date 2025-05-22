@@ -7,9 +7,12 @@
 
 import Foundation
 
-enum PlaceStereo:Decodable {
-    case parent
-    case child
+
+
+
+enum PlaceStereo:String,Decodable {
+    case parent = "parent"
+    case child = "child"
 }
 
 struct Place:Decodable{
@@ -23,4 +26,13 @@ struct Place:Decodable{
     var likeCount:Int;
     var unknownPlacePossibility:Int?
     var types:[PlaceType]
+}
+
+
+
+
+
+struct PlaceType:Decodable {
+    var id:Int;
+    var name:String
 }

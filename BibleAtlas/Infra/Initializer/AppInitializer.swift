@@ -16,24 +16,25 @@ protocol AppInitializerProtocol {
 final class AppInitializer: AppInitializerProtocol {
     private let tokenProvider:TokenProviderProtocol
     private let appStore:AppStoreProtocol
-    private let authApiService:AuthApiServiceProtocol
+    private let userApiService:UserApiServiceProtocol
     
         
-    init(tokenProvider: TokenProviderProtocol, appStore: AppStoreProtocol, authApiService: AuthApiServiceProtocol) {
+    init(tokenProvider: TokenProviderProtocol, appStore: AppStoreProtocol, userApiService: UserApiServiceProtocol) {
         self.tokenProvider = tokenProvider
         self.appStore = appStore
-        self.authApiService = authApiService
+        self.userApiService = userApiService
     }
     
     func restoreSessionIfPossible() async {
         guard tokenProvider.hasToken else {return}
         
-        let result = await authApiService.getProfile();
+        let result = await userApiService.getProfile();
         
         switch(result){
             case .success(let profile):
                 appStore.dispatch(.login(profile))
             case .failure(let error):
+                
                 print(error.description)
         }
     }

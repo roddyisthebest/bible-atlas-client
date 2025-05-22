@@ -19,18 +19,27 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
     private let disposeBag = DisposeBag();
 
     private weak var navigator: BottomSheetNavigator?
+    private let userUsecase:UserUsecaseProtocol?
     private var appStore:AppStoreProtocol?
     
     private var isLoggedIn$ = BehaviorRelay<Bool>(value:false)
     private var profile$ = BehaviorRelay<User?>(value:nil)
+    
+    private var likePlacesCount$ = BehaviorRelay<Int>(value:0);
+    
 
-    init(navigator:BottomSheetNavigator?, appStore:AppStoreProtocol?){
+    init(navigator:BottomSheetNavigator?, appStore:AppStoreProtocol?,userUsecase:UserUsecaseProtocol?){
         self.navigator = navigator
         self.appStore = appStore
+        self.userUsecase = userUsecase
         bindAppStore();
     }
     
     func transform(input: Input) -> Output{
+        
+        
+        
+        
         
         Observable
             .combineLatest(input.avatarButtonTapped$, profile$)
@@ -61,7 +70,7 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
             self?.navigator?.present(.placeCharacters)
         }).disposed(by: disposeBag)
         
-        return Output(profile$: profile$.asObservable(), isLoggedIn$: isLoggedIn$.asObservable() )
+        return Output(profile$: profile$.asObservable(), isLoggedIn$: isLoggedIn$.asObservable(),likePlacesCount$: likePlacesCount$.asObservable() )
         
     }
     
@@ -70,7 +79,36 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
         appStore?.state$.subscribe(onNext: { appState in
             self.profile$.accept(appState.profile)
             self.isLoggedIn$.accept(appState.isLoggedIn)
+                
+            if(appState.isLoggedIn){
+                
+                Task{
+                    let result = await self.userUsecase?.getPlaces(limit:nil, page: nil, filter: .like)
+                        
+                    switch(result){
+                    case .success(let response):
+                        print(response,"response")
+                        self.likePlacesCount$.accept(response.total)
+                        break;
+                    case .failure(let error):
+                        print(error.description)
+                        break
+                    case .none:
+                        break
+                    }
+                    
+                            
+                }
+          
+                        
+                    
+                
+            }
+            
+            
         }).disposed(by: disposeBag)
+        
+        
     }
     
     public struct Input {
@@ -83,6 +121,7 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
     public struct Output{
         let profile$:Observable<User?>
         let isLoggedIn$:Observable<Bool>
+        let likePlacesCount$:Observable<Int>
     }
     
   
