@@ -164,7 +164,7 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
     
     public struct Input {
         let avatarButtonTapped$:Observable<Void>
-        let collectionButtonTapped$:Observable<MyCollectionType>
+        let collectionButtonTapped$:Observable<PlaceFilter>
         let placesByTypeButtonTapped$:Observable<Void>
         let placesByCharacterButtonTapped$:Observable<Void>
     }
@@ -176,7 +176,7 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
         let savePlacesCount$:Observable<Int>
         let memoPlacesCount$:Observable<Int>
         let loading$:Observable<Bool>
-
+        
     }
     
   

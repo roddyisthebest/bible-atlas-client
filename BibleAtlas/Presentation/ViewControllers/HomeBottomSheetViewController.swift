@@ -233,9 +233,9 @@ final class HomeBottomSheetViewController: UIViewController, UITableViewDelegate
     private func bindViewModel(){
         let avatarButtonTapped$ = userAvatarButton.rx.tap.asObservable();
         
-        let favoriteTapped$ = favoriteButton.rx.tap.map { MyCollectionType.favorite }
-        let bookmarkTapped$ = bookmarkButton.rx.tap.map { MyCollectionType.save }
-        let memoTapped$ = memoButton.rx.tap.map { MyCollectionType.memo }
+        let favoriteTapped$ = favoriteButton.rx.tap.map { PlaceFilter.like }
+        let bookmarkTapped$ = bookmarkButton.rx.tap.map { PlaceFilter.save }
+        let memoTapped$ = memoButton.rx.tap.map { PlaceFilter.memo }
 
         let collectionButtonTapped$ = Observable.merge(favoriteTapped$, bookmarkTapped$, memoTapped$)
         

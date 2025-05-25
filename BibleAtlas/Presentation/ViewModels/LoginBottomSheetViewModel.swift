@@ -66,7 +66,6 @@ final class LoginBottomSheetViewModel:LoginBottomSheetViewModelProtocol {
                     case .success(let userResponse):
                         self.appStore?.dispatch(.login(userResponse.user))
                         self.navigator?.dismiss(animated: true)
-                        print(userResponse)
                     case .failure(let networkError):
                         self.error$.accept(networkError)
                         print(networkError)

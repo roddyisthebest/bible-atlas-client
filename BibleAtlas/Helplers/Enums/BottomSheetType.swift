@@ -11,7 +11,7 @@ import MapKit
 enum BottomSheetType {
     case home
     case login
-    case myCollection(MyCollectionType)
+    case myCollection(PlaceFilter)
     case placeDetail(String)
     case memo(String)
     case placeModification(String)
@@ -21,8 +21,3 @@ enum BottomSheetType {
     case placesByCharacter(String)
 }
 
-enum MyCollectionType {
-    case favorite
-    case save
-    case memo
-}

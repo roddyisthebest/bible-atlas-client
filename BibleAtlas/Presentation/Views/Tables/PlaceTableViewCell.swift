@@ -30,9 +30,10 @@ class PlaceTableViewCell: UITableViewCell {
         return v;
     }()
     
-    private let placeIcon:UIImageView = {
-        let icon = UIImageView(image: UIImage(named: "ground"));
-        return icon;
+    private lazy var placeIcon: UIImageView = {
+        let icon = UIImageView()
+        icon.contentMode = .scaleAspectFit
+        return icon
     }()
     
     
@@ -80,7 +81,7 @@ class PlaceTableViewCell: UITableViewCell {
         
         placeIcon.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.width.height.equalTo(20)
+            make.width.height.equalTo(25)
         }
         
         backgroundColor = .mainItemBkg;
@@ -106,6 +107,24 @@ class PlaceTableViewCell: UITableViewCell {
     
     func setText(text: String) {
         descriptionLabel.text = text
+    }
+    
+    func setPlace(place:Place){
+        
+        titleLabel.text = place.name;
+        descriptionLabel.text = place.description;
+
+        let hasOneType = place.types.count == 1;
+        
+        if(hasOneType){
+            let placeType = place.types[0];
+            placeIcon.image = UIImage(named: placeType.name.rawValue)
+            
+            return;
+        }
+        
+        placeIcon.image = UIImage(named: "ground");
+
     }
 
 }
