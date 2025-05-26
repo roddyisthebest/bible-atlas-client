@@ -37,6 +37,9 @@ public enum NetworkError:Error {
         case .dataNil:
             return "데이터가 없습니다."
         case .serverError(let statusCode):
+            if(statusCode == 401){
+                return "다시 로그인해주세요."
+            }
             return "서버에러: \(statusCode)"
         case .serverErrorWithMessage(let errorResponse):
             return errorResponse.message

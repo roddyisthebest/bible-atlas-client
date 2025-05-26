@@ -38,8 +38,6 @@ final class MyCollectionBottomSheetViewModel:MyCollectionBottomSheetViewModelPro
         
         self.filter$ = BehaviorRelay(value: filter)
     }
-    
-
         
     func transform(input:Input) -> Output{
         

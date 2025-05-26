@@ -30,10 +30,14 @@ public final class AuthorizedApiClient:AuthorizedApiClientProtocol{
     
     private let session:SessionProtocol
     private let tokenProvider:TokenProviderProtocol
-    
-    init(session: SessionProtocol, tokenProvider: TokenProviderProtocol) {
+    private let tokenRefresher: TokenRefresherProtocol
+    private let errorHandlerService: ErrorHandlerServiceProtocol
+
+    init(session: SessionProtocol, tokenProvider: TokenProviderProtocol, tokenRefresher:TokenRefresherProtocol, errorHandlerService: ErrorHandlerServiceProtocol) {
         self.session = session
         self.tokenProvider = tokenProvider;
+        self.tokenRefresher = tokenRefresher;
+        self.errorHandlerService = errorHandlerService
     }
     
     
@@ -49,27 +53,51 @@ public final class AuthorizedApiClient:AuthorizedApiClientProtocol{
     
     /// ✅ API 요청을 수행하는 공통 메서드
     private func performRequest<T: Decodable>(
-        url: String,
-        method: HTTPMethod,
-        parameters: Parameters?,
-        body: Data?,
-        headers: HTTPHeaders? = nil
-    ) async -> Result<T, NetworkError> {
-           
+           url: String,
+           method: HTTPMethod,
+           parameters: Parameters?,
+           body: Data?,
+           headers: HTTPHeaders? = nil,
+           retrying: Bool = false
+       ) async -> Result<T, NetworkError> {
            guard let url = URL(string: url) else {
                return .failure(.urlError)
            }
-           
-           let result = await session.request(
+
+           let response = await session.request(
                url,
                method: method,
                parameters: parameters,
                headers: headers ?? tokenHeaders,
                body: body
            ).serializingData().response
-           
-           return handleResponse(result)
+
+           if response.response?.statusCode == 401, !retrying {
+               let refreshResult = await tokenRefresher.refresh()
+               
+               switch refreshResult {
+               case .success(let result):
+                   print("refresh!")
+                   tokenProvider.setAccessToken(accessToken: result.accessToken)
+
+                   return await performRequest(
+                       url: url.absoluteString,
+                       method: method,
+                       parameters: parameters,
+                       body: body,
+                       headers: headers ?? tokenHeaders,
+                       retrying: true
+                   )
+
+               case .failure:
+                   await errorHandlerService.logoutDueToExpiredSession()
+                   return .failure(.serverError(401))
+               }
+           }
+
+           return handleResponse(response)
        }
+
        
        /// ✅ 응답 처리 및 디코딩
        private func handleResponse<T: Decodable>(_ result: AFDataResponse<Data>) -> Result<T, NetworkError> {

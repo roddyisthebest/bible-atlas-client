@@ -21,8 +21,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         
         let session = DefaultSession();
+        let appStore = AppStore();
+
+        
         let tokenProvider = KeychainTokenProvider();
-        let apiClient = AuthorizedApiClient(session: session, tokenProvider: tokenProvider)
+        let tokenRefresher  = TokenRefresher(session: session, tokenProvider: tokenProvider, refreshURL: "\(Constants.shared.url)/auth/refresh-token")
+        let errorHandlerService = ErrorHandlerService(tokenProvider: tokenProvider, appStore: appStore)
+        
+        let apiClient = AuthorizedApiClient(session: session, tokenProvider: tokenProvider, tokenRefresher: tokenRefresher, errorHandlerService: errorHandlerService)
         
         let authApiService = AuthApiService(apiClient: apiClient, url: "\(Constants.shared.url)/auth")
         
@@ -30,7 +36,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         
         
-        let appStore = AppStore();
         
    
         

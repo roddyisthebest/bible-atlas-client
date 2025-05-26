@@ -20,9 +20,13 @@
 		EC64B96B2DDE05C900D3C8A7 /* UserUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B96A2DDE05C900D3C8A7 /* UserUsecase.swift */; };
 		EC64B96E2DE3401900D3C8A7 /* Pagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B96D2DE3401900D3C8A7 /* Pagination.swift */; };
 		EC64B9712DE3456900D3C8A7 /* PaginationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9702DE3456900D3C8A7 /* PaginationTests.swift */; };
+		EC64B9792DE44B6700D3C8A7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9782DE44B6700D3C8A7 /* Constants.swift */; };
+		EC64B97C2DE44E0D00D3C8A7 /* TokenRefresherProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B97B2DE44E0D00D3C8A7 /* TokenRefresherProtocol.swift */; };
+		EC64B97E2DE44F0400D3C8A7 /* TokenRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B97D2DE44F0400D3C8A7 /* TokenRefresher.swift */; };
+		EC64B9802DE45B4200D3C8A7 /* ErrorHandlerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B97F2DE45B4200D3C8A7 /* ErrorHandlerService.swift */; };
+		EC64B9822DE45C0300D3C8A7 /* ErrorHandlerServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9812DE45C0300D3C8A7 /* ErrorHandlerServiceProtocol.swift */; };
 		EC70587B2DB39629002D47DF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70587A2DB39629002D47DF /* MainViewController.swift */; };
 		EC70587E2DB397CF002D47DF /* BottomSheetCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70587D2DB397CF002D47DF /* BottomSheetCoordinator.swift */; };
-		EC7058802DB3992D002D47DF /* BottomSheetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70587F2DB3992D002D47DF /* BottomSheetType.swift */; };
 		EC7058842DB3BAE5002D47DF /* HomeBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7058832DB3BAE5002D47DF /* HomeBottomSheetViewController.swift */; };
 		EC7058882DB3CA5B002D47DF /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7058872DB3CA5B002D47DF /* UIColor.swift */; };
 		EC70588B2DB8BCCE002D47DF /* CollectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70588A2DB8BCCE002D47DF /* CollectionButton.swift */; };
@@ -83,7 +87,6 @@
 		ECA94BE82D50AF41005B0428 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BE72D50AF41005B0428 /* AuthRepository.swift */; };
 		ECA94BEB2D50B0B9005B0428 /* AuthUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BEA2D50B0B9005B0428 /* AuthUsecase.swift */; };
 		ECA94BEF2D50B492005B0428 /* MockingApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BEE2D50B492005B0428 /* MockingApi.swift */; };
-		ECA94C0B2D53494A005B0428 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94C0A2D53494A005B0428 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,9 +126,13 @@
 		EC64B96A2DDE05C900D3C8A7 /* UserUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUsecase.swift; sourceTree = "<group>"; };
 		EC64B96D2DE3401900D3C8A7 /* Pagination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pagination.swift; sourceTree = "<group>"; };
 		EC64B9702DE3456900D3C8A7 /* PaginationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationTests.swift; sourceTree = "<group>"; };
+		EC64B9782DE44B6700D3C8A7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		EC64B97B2DE44E0D00D3C8A7 /* TokenRefresherProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefresherProtocol.swift; sourceTree = "<group>"; };
+		EC64B97D2DE44F0400D3C8A7 /* TokenRefresher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefresher.swift; sourceTree = "<group>"; };
+		EC64B97F2DE45B4200D3C8A7 /* ErrorHandlerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandlerService.swift; sourceTree = "<group>"; };
+		EC64B9812DE45C0300D3C8A7 /* ErrorHandlerServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandlerServiceProtocol.swift; sourceTree = "<group>"; };
 		EC70587A2DB39629002D47DF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		EC70587D2DB397CF002D47DF /* BottomSheetCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetCoordinator.swift; sourceTree = "<group>"; };
-		EC70587F2DB3992D002D47DF /* BottomSheetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetType.swift; sourceTree = "<group>"; };
 		EC7058832DB3BAE5002D47DF /* HomeBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomSheetViewController.swift; sourceTree = "<group>"; };
 		EC7058872DB3CA5B002D47DF /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		EC70588A2DB8BCCE002D47DF /* CollectionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionButton.swift; sourceTree = "<group>"; };
@@ -188,7 +195,6 @@
 		ECA94BE72D50AF41005B0428 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		ECA94BEA2D50B0B9005B0428 /* AuthUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUsecase.swift; sourceTree = "<group>"; };
 		ECA94BEE2D50B492005B0428 /* MockingApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockingApi.swift; sourceTree = "<group>"; };
-		ECA94C0A2D53494A005B0428 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,80 +237,112 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		EC64B9502DD8388A00D3C8A7 /* ServiceProtocol */ = {
-			isa = PBXGroup;
-			children = (
-				EC64B9512DD838E300D3C8A7 /* TokenProviderProtocol.swift */,
-			);
-			path = ServiceProtocol;
-			sourceTree = "<group>";
-		};
-		EC64B9562DD8481000D3C8A7 /* Store */ = {
+		EC64B9562DD8481000D3C8A7 /* Stores */ = {
 			isa = PBXGroup;
 			children = (
 				EC64B9572DD8482C00D3C8A7 /* AppStore.swift */,
 			);
-			path = Store;
-			sourceTree = "<group>";
-		};
-		EC64B9592DD9A15B00D3C8A7 /* Infra */ = {
-			isa = PBXGroup;
-			children = (
-				EC64B95E2DDAEDD400D3C8A7 /* Initializer */,
-				EC64B95D2DDAEDC700D3C8A7 /* Token */,
-			);
-			path = Infra;
+			path = Stores;
 			sourceTree = "<group>";
 		};
 		EC64B95D2DDAEDC700D3C8A7 /* Token */ = {
 			isa = PBXGroup;
 			children = (
 				EC64B95B2DD9A18D00D3C8A7 /* KeychainTokenProvider.swift */,
+				EC64B97D2DE44F0400D3C8A7 /* TokenRefresher.swift */,
 			);
 			path = Token;
 			sourceTree = "<group>";
 		};
-		EC64B95E2DDAEDD400D3C8A7 /* Initializer */ = {
+		EC64B95E2DDAEDD400D3C8A7 /* Initializers */ = {
 			isa = PBXGroup;
 			children = (
 				EC64B95F2DDAEDFA00D3C8A7 /* AppInitializer.swift */,
 			);
-			path = Initializer;
+			path = Initializers;
 			sourceTree = "<group>";
 		};
-		EC64B9672DDE050600D3C8A7 /* Service */ = {
+		EC64B9672DDE050600D3C8A7 /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				ECA94BDC2D50A59E005B0428 /* AuthApiService.swift */,
 				EC64B9632DDDC45500D3C8A7 /* UserApiService.swift */,
 			);
-			path = Service;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		EC64B96C2DE3400800D3C8A7 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				ECA94BEE2D50B492005B0428 /* MockingApi.swift */,
 				EC64B96D2DE3401900D3C8A7 /* Pagination.swift */,
+				EC64B9782DE44B6700D3C8A7 /* Constants.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
 		};
-		EC70587C2DB397B1002D47DF /* Dependencies */ = {
+		EC64B9722DE448F100D3C8A7 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				EC70587D2DB397CF002D47DF /* BottomSheetCoordinator.swift */,
+				EC64B9512DD838E300D3C8A7 /* TokenProviderProtocol.swift */,
+				ECA94BE42D50AE92005B0428 /* AuthRepositoryProtocol.swift */,
+				EC64B9652DDE049500D3C8A7 /* UserRepositoryProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		EC64B9732DE449B800D3C8A7 /* DI */ = {
+			isa = PBXGroup;
+			children = (
+				EC64B9752DE44A1500D3C8A7 /* Coordinators */,
+				EC64B9742DE449C200D3C8A7 /* Factories */,
+			);
+			path = DI;
+			sourceTree = "<group>";
+		};
+		EC64B9742DE449C200D3C8A7 /* Factories */ = {
+			isa = PBXGroup;
+			children = (
 				EC7058A82DBFAEB5002D47DF /* VCFactory.swift */,
 				EC7058AA2DBFB072002D47DF /* VMFactory.swift */,
 			);
-			path = Dependencies;
+			path = Factories;
 			sourceTree = "<group>";
 		};
-		EC7058852DB3C97D002D47DF /* Enums */ = {
+		EC64B9752DE44A1500D3C8A7 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
-				EC70587F2DB3992D002D47DF /* BottomSheetType.swift */,
+				EC70587D2DB397CF002D47DF /* BottomSheetCoordinator.swift */,
 			);
-			path = Enums;
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		EC64B9762DE44AAB00D3C8A7 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				EC64B9772DE44B3000D3C8A7 /* Services */,
+				EC64B9562DD8481000D3C8A7 /* Stores */,
+				EC64B95E2DDAEDD400D3C8A7 /* Initializers */,
+				EC64B95D2DDAEDC700D3C8A7 /* Token */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		EC64B9772DE44B3000D3C8A7 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				EC64B97F2DE45B4200D3C8A7 /* ErrorHandlerService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		EC64B97A2DE44DF600D3C8A7 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				EC64B97B2DE44E0D00D3C8A7 /* TokenRefresherProtocol.swift */,
+				EC64B9812DE45C0300D3C8A7 /* ErrorHandlerServiceProtocol.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		EC7058862DB3CA48002D47DF /* Extensions */ = {
@@ -351,13 +389,6 @@
 			path = Tables;
 			sourceTree = "<group>";
 		};
-		EC7058A52DBF7FA8002D47DF /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Protocols;
-			sourceTree = "<group>";
-		};
 		ECA94B8A2D5082B9005B0428 = {
 			isa = PBXGroup;
 			children = (
@@ -383,13 +414,12 @@
 		ECA94B952D5082B9005B0428 /* BibleAtlas */ = {
 			isa = PBXGroup;
 			children = (
+				EC64B9762DE44AAB00D3C8A7 /* Core */,
+				EC64B9732DE449B800D3C8A7 /* DI */,
 				EC64B96C2DE3400800D3C8A7 /* Shared */,
-				EC64B9592DD9A15B00D3C8A7 /* Infra */,
-				EC64B9562DD8481000D3C8A7 /* Store */,
 				ECA94BF02D51AB3D005B0428 /* Presentation */,
 				ECA94BCD2D50931C005B0428 /* Domain */,
 				ECA94BC92D508BDF005B0428 /* Data */,
-				ECA94BEC2D50B464005B0428 /* Helplers */,
 				ECA94B962D5082B9005B0428 /* AppDelegate.swift */,
 				ECA94B982D5082B9005B0428 /* SceneDelegate.swift */,
 				ECA94B9A2D5082B9005B0428 /* ViewController.swift */,
@@ -421,8 +451,9 @@
 		ECA94BC92D508BDF005B0428 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				EC64B9672DDE050600D3C8A7 /* Service */,
-				ECA94BE62D50AF02005B0428 /* Repository */,
+				EC64B97A2DE44DF600D3C8A7 /* Protocols */,
+				EC64B9672DDE050600D3C8A7 /* Services */,
+				ECA94BE62D50AF02005B0428 /* Repositories */,
 				ECA94BCA2D508BEE005B0428 /* Network */,
 			);
 			path = Data;
@@ -440,21 +471,20 @@
 		ECA94BCD2D50931C005B0428 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				EC64B9502DD8388A00D3C8A7 /* ServiceProtocol */,
-				ECA94BE92D50B03C005B0428 /* Usecase */,
-				ECA94BE22D50ACC9005B0428 /* RepositoryProtocol */,
-				ECA94BCE2D509329005B0428 /* Entity */,
+				EC64B9722DE448F100D3C8A7 /* Protocols */,
+				ECA94BE92D50B03C005B0428 /* Usecases */,
+				ECA94BCE2D509329005B0428 /* Entities */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
 		};
-		ECA94BCE2D509329005B0428 /* Entity */ = {
+		ECA94BCE2D509329005B0428 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
 				ECA94BD22D50946A005B0428 /* Data */,
 				ECA94BCF2D509351005B0428 /* Error */,
 			);
-			path = Entity;
+			path = Entities;
 			sourceTree = "<group>";
 		};
 		ECA94BCF2D509351005B0428 /* Error */ = {
@@ -476,51 +506,22 @@
 			name = Data;
 			sourceTree = "<group>";
 		};
-		ECA94BE22D50ACC9005B0428 /* RepositoryProtocol */ = {
-			isa = PBXGroup;
-			children = (
-				ECA94BE42D50AE92005B0428 /* AuthRepositoryProtocol.swift */,
-				EC64B9652DDE049500D3C8A7 /* UserRepositoryProtocol.swift */,
-			);
-			path = RepositoryProtocol;
-			sourceTree = "<group>";
-		};
-		ECA94BE62D50AF02005B0428 /* Repository */ = {
+		ECA94BE62D50AF02005B0428 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
 				ECA94BE72D50AF41005B0428 /* AuthRepository.swift */,
 				EC64B9682DDE051D00D3C8A7 /* UserRepository.swift */,
 			);
-			path = Repository;
+			path = Repositories;
 			sourceTree = "<group>";
 		};
-		ECA94BE92D50B03C005B0428 /* Usecase */ = {
+		ECA94BE92D50B03C005B0428 /* Usecases */ = {
 			isa = PBXGroup;
 			children = (
 				ECA94BEA2D50B0B9005B0428 /* AuthUsecase.swift */,
 				EC64B96A2DDE05C900D3C8A7 /* UserUsecase.swift */,
 			);
-			path = Usecase;
-			sourceTree = "<group>";
-		};
-		ECA94BEC2D50B464005B0428 /* Helplers */ = {
-			isa = PBXGroup;
-			children = (
-				EC7058A52DBF7FA8002D47DF /* Protocols */,
-				EC7058852DB3C97D002D47DF /* Enums */,
-				EC70587C2DB397B1002D47DF /* Dependencies */,
-				ECA94C092D53488B005B0428 /* Const */,
-				ECA94BED2D50B47A005B0428 /* Utils */,
-			);
-			path = Helplers;
-			sourceTree = "<group>";
-		};
-		ECA94BED2D50B47A005B0428 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				ECA94BEE2D50B492005B0428 /* MockingApi.swift */,
-			);
-			path = Utils;
+			path = Usecases;
 			sourceTree = "<group>";
 		};
 		ECA94BF02D51AB3D005B0428 /* Presentation */ = {
@@ -577,14 +578,6 @@
 				EC7058892DB8BCA5002D47DF /* Buttons */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		ECA94C092D53488B005B0428 /* Const */ = {
-			isa = PBXGroup;
-			children = (
-				ECA94C0A2D53494A005B0428 /* Constants.swift */,
-			);
-			path = Const;
 			sourceTree = "<group>";
 		};
 		FA9885F27C7E364B662974A9 /* Pods */ = {
@@ -855,6 +848,7 @@
 				EC77CE032DC5E3460030DEF5 /* PlaceDetailViewModel.swift in Sources */,
 				EC77CE302DCF2D9C0030DEF5 /* RelatedVerseTableViewCell.swift in Sources */,
 				EC70589E2DBCA8B6002D47DF /* HeaderLabel.swift in Sources */,
+				EC64B9822DE45C0300D3C8A7 /* ErrorHandlerServiceProtocol.swift in Sources */,
 				EC70588E2DB8BEB1002D47DF /* MainLabel.swift in Sources */,
 				EC77CE442DD0AF630030DEF5 /* PlaceTypesBottomSheetViewModel.swift in Sources */,
 				EC64B9662DDE049500D3C8A7 /* UserRepositoryProtocol.swift in Sources */,
@@ -869,8 +863,11 @@
 				EC70587E2DB397CF002D47DF /* BottomSheetCoordinator.swift in Sources */,
 				EC64B9602DDAEDFA00D3C8A7 /* AppInitializer.swift in Sources */,
 				EC77CE3E2DD09AD30030DEF5 /* PlaceModificationBottomSheetViewModel.swift in Sources */,
+				EC64B9792DE44B6700D3C8A7 /* Constants.swift in Sources */,
 				EC7058A72DBFA570002D47DF /* HomeBottomSheetViewModel.swift in Sources */,
 				EC77CE382DCF79800030DEF5 /* IconTextButton.swift in Sources */,
+				EC64B9802DE45B4200D3C8A7 /* ErrorHandlerService.swift in Sources */,
+				EC64B97E2DE44F0400D3C8A7 /* TokenRefresher.swift in Sources */,
 				EC77CE502DD5C86A0030DEF5 /* PlacesByCharacterBottomSheetViewController.swift in Sources */,
 				ECA94B9B2D5082B9005B0428 /* ViewController.swift in Sources */,
 				ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */,
@@ -893,7 +890,6 @@
 				ECA94BD12D509377005B0428 /* NetworkError.swift in Sources */,
 				EC77CE3C2DD09AB10030DEF5 /* PlaceModificationBottomSheetViewController.swift in Sources */,
 				EC77CE342DCF348D0030DEF5 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
-				EC7058802DB3992D002D47DF /* BottomSheetType.swift in Sources */,
 				EC64B9582DD8482C00D3C8A7 /* AppStore.swift in Sources */,
 				ECA94BD72D50977A005B0428 /* AuthorizedApiClient.swift in Sources */,
 				EC70588B2DB8BCCE002D47DF /* CollectionButton.swift in Sources */,
@@ -902,6 +898,7 @@
 				ECA94BDD2D50A59E005B0428 /* AuthApiService.swift in Sources */,
 				ECA94BEB2D50B0B9005B0428 /* AuthUsecase.swift in Sources */,
 				EC77CE422DD0A8670030DEF5 /* PlaceTypeCell.swift in Sources */,
+				EC64B97C2DE44E0D00D3C8A7 /* TokenRefresherProtocol.swift in Sources */,
 				EC77CE3A2DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift in Sources */,
 				ECA94BE52D50AE92005B0428 /* AuthRepositoryProtocol.swift in Sources */,
 				ECA94BEF2D50B492005B0428 /* MockingApi.swift in Sources */,
@@ -912,7 +909,6 @@
 				EC77CE4A2DD0E4DC0030DEF5 /* PlaceCharacterCell.swift in Sources */,
 				ECA94BD52D5094F1005B0428 /* User.swift in Sources */,
 				EC7058942DB9D93D002D47DF /* RecentSearchTableViewCell.swift in Sources */,
-				ECA94C0B2D53494A005B0428 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,6 +7,10 @@
 
 import Foundation
 
+struct RefreshedData:Decodable, Hashable {
+    let accessToken:String;
+}
+
 struct AuthData:Decodable, Hashable{
     let refreshToken:String;
     let accessToken:String;
