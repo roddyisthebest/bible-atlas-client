@@ -106,7 +106,6 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
                 Task{
                     
                     self.loading$.accept(true)
-                    
                     defer {
                           self.loading$.accept(false)
                     }

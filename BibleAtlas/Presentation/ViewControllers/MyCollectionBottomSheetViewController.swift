@@ -29,7 +29,7 @@ final class MyCollectionBottomSheetViewController: UIViewController {
     private lazy var headerStackView = {
         let sv = UIStackView(arrangedSubviews: [headerLabel, closeButton]);
         sv.axis = .horizontal;
-        sv.distribution = .fillProportionally;
+        sv.distribution = .fill;
         sv.alignment = .center
         
         return sv;
@@ -81,11 +81,51 @@ final class MyCollectionBottomSheetViewController: UIViewController {
         return label
     }()
     
+    private lazy var errorStackView = {
+        let sv = UIStackView(arrangedSubviews: [errorLabel, refetchButton]);
+        sv.axis = .vertical;
+        sv.distribution = .equalSpacing;
+        sv.alignment = .center;
+        sv.spacing = 10;
+        sv.isHidden = true
+        return sv;
+    }()
+    
+    
+    private let errorLabel: UILabel = {
+        let label = UILabel()
+        label.text = "에러가 발생했습니다."
+        label.textColor = .mainLabelText
+        label.font = .systemFont(ofSize: 16)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private let refetchButton: UIButton = {
+        let button = UIButton(type: .system)
+        
+        // 아이콘: SF Symbols 기준
+        let icon = UIImage(systemName: "arrow.clockwise")
+        button.setImage(icon, for: .normal)
+        
+        // 텍스트 (원한다면)
+        button.setTitle("  다시 불러오기", for: .normal) // 아이콘 옆 텍스트
+        button.setTitleColor(.mainLabelText, for: .normal)
+
+        // 아이콘 + 텍스트 간격
+        button.titleLabel?.font = .boldSystemFont(ofSize: 14)
+        button.tintColor = .mainLabelText // 아이콘 색상
+        
+        return button
+    }()
+
+    
     private func setupUI(){
         view.addSubview(headerStackView);
         view.addSubview(tableView);
         view.addSubview(activityIndicator)
         view.addSubview(emptyLabel)
+        view.addSubview(errorStackView)
 
     }
     
@@ -98,7 +138,7 @@ final class MyCollectionBottomSheetViewController: UIViewController {
             make.top.equalToSuperview().offset(20);
             make.leading.equalToSuperview().offset(20);
             make.trailing.equalToSuperview().offset(-20);
-
+            make.height.equalTo(44)
         }
         
         tableView.snp.makeConstraints { make in
@@ -117,26 +157,23 @@ final class MyCollectionBottomSheetViewController: UIViewController {
             make.edges.equalToSuperview()
         }
         
+        errorStackView.snp.makeConstraints { make in
+            make.center.equalToSuperview();
+        }
+        
+       
     }
     
     private func bindViewModel(){
         let closeButtonTapped$ = closeButton.rx.tap.asObservable();
+        let refetchButtonTapped$ = refetchButton.rx.tap.asObservable();
         
-        
-        let output = myCollectionBottomSheetViewModel?.transform(input: MyCollectionBottomSheetViewModel.Input(myCollectionViewLoaded$: myCollectionViewLoaded$.asObservable(), closeButtonTapped$: closeButtonTapped$, placeTabelCellSelected$: placeTabelCellSelected$.asObservable(), bottomReached$: bottomReached$.asObservable()))
+        let output = myCollectionBottomSheetViewModel?.transform(input: MyCollectionBottomSheetViewModel.Input(myCollectionViewLoaded$: myCollectionViewLoaded$.asObservable(), closeButtonTapped$: closeButtonTapped$, placeTabelCellSelected$: placeTabelCellSelected$.asObservable(), bottomReached$: bottomReached$.asObservable(), refetchButtonTapped$: refetchButtonTapped$.asObservable()))
         
         output?.places$.observe(on: MainScheduler.instance).bind{
             [weak self] places in
             self?.places = places;
             self?.tableView.reloadData()
-        }.disposed(by: disposeBag)
-        
-        output?.error$.observe(on: MainScheduler.instance).bind{
-            [weak self] errorMsg in
-            let alert = UIAlertController(title: "에러", message: errorMsg, preferredStyle: .alert);
-            alert.addAction(.init(title:"확인", style:.default));
-            self?.present(alert,animated: true);
-
         }.disposed(by: disposeBag)
         
         output?.filter$.observe(on: MainScheduler.instance).bind{
@@ -154,15 +191,34 @@ final class MyCollectionBottomSheetViewController: UIViewController {
         }.disposed(by: disposeBag)
         
         Observable
-            .combineLatest(output!.isInitialLoading$, output!.places$)
+            .combineLatest(output!.isInitialLoading$, output!.places$, output!.error$)
             .observe(on: MainScheduler.instance)
-            .bind { [weak self] isLoading, places in
+            .bind { [weak self] isLoading, places, error in
                 guard let self = self else { return }
                 
+               
+                if let error = error {
+                    switch error {
+                
+                    default:
+                        self.errorLabel.text = error.description
+                        self.tableView.isHidden = true
+                        self.emptyLabel.isHidden = true
+                        self.activityIndicator.isHidden = true
+                        self.errorStackView.isHidden = false
+                        self.isBottomEmitted = false
+                    }
+                    return;
+                }
+                
+                
                 if isLoading {
+                    self.activityIndicator.isHidden = false
+
                     self.activityIndicator.startAnimating()
                     self.tableView.isHidden = true
                     self.emptyLabel.isHidden = true
+                    self.errorStackView.isHidden = true
                     return;
                 }
                 
