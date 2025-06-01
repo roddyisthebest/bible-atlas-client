@@ -32,6 +32,7 @@
 		EC64B98D2DEB3ADB00D3C8A7 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B98C2DEB3ADB00D3C8A7 /* LoadingView.swift */; };
 		EC64B9912DEC3D1A00D3C8A7 /* EmptyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9902DEC3D1A00D3C8A7 /* EmptyLabel.swift */; };
 		EC64B9932DEC3E1700D3C8A7 /* ErrorRetryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9922DEC3E1700D3C8A7 /* ErrorRetryView.swift */; };
+		EC64B9952DEC595900D3C8A7 /* FooterLoadingReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9942DEC595900D3C8A7 /* FooterLoadingReusableView.swift */; };
 		EC70587B2DB39629002D47DF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70587A2DB39629002D47DF /* MainViewController.swift */; };
 		EC70587E2DB397CF002D47DF /* BottomSheetCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70587D2DB397CF002D47DF /* BottomSheetCoordinator.swift */; };
 		EC7058842DB3BAE5002D47DF /* HomeBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7058832DB3BAE5002D47DF /* HomeBottomSheetViewController.swift */; };
@@ -145,6 +146,7 @@
 		EC64B98C2DEB3ADB00D3C8A7 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		EC64B9902DEC3D1A00D3C8A7 /* EmptyLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyLabel.swift; sourceTree = "<group>"; };
 		EC64B9922DEC3E1700D3C8A7 /* ErrorRetryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorRetryView.swift; sourceTree = "<group>"; };
+		EC64B9942DEC595900D3C8A7 /* FooterLoadingReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterLoadingReusableView.swift; sourceTree = "<group>"; };
 		EC70587A2DB39629002D47DF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		EC70587D2DB397CF002D47DF /* BottomSheetCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetCoordinator.swift; sourceTree = "<group>"; };
 		EC7058832DB3BAE5002D47DF /* HomeBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomSheetViewController.swift; sourceTree = "<group>"; };
@@ -366,6 +368,7 @@
 			children = (
 				EC64B98C2DEB3ADB00D3C8A7 /* LoadingView.swift */,
 				EC64B9922DEC3E1700D3C8A7 /* ErrorRetryView.swift */,
+				EC64B9942DEC595900D3C8A7 /* FooterLoadingReusableView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -907,6 +910,7 @@
 				EC77CDF42DC32C020030DEF5 /* UIViewController.swift in Sources */,
 				EC77CDF22DC318EB0030DEF5 /* LoginBottomSheetViewModel.swift in Sources */,
 				EC77CE4C2DD5AACA0030DEF5 /* PlacesByTypeBottomSheetViewController.swift in Sources */,
+				EC64B9952DEC595900D3C8A7 /* FooterLoadingReusableView.swift in Sources */,
 				EC64B9842DE72C4E00D3C8A7 /* PlaceApiService.swift in Sources */,
 				EC77CE522DD5C8950030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift in Sources */,
 				EC77CE2E2DCF193D0030DEF5 /* RelatedPlaceTableViewCell.swift in Sources */,

@@ -25,8 +25,10 @@ final class PlaceTypesBottomSheetViewModel:PlaceTypesBottomSheetViewModelProtoco
     private let isInitialLoading$ = BehaviorRelay<Bool>(value: true);
     private let isFetchingNext$ = BehaviorRelay<Bool>(value: false);
     
-    private var pagination = Pagination(pageSize: 15)
+    private var pagination = Pagination(pageSize: 18)
+    
 
+    
     
     init(navigator:BottomSheetNavigator?,placeUsecase:PlaceUsecaseProtocol?){
         self.navigator = navigator
@@ -54,6 +56,7 @@ final class PlaceTypesBottomSheetViewModel:PlaceTypesBottomSheetViewModelProtoco
                 
                 let response = await self.placeUsecase?.getPlaceTypes(limit: self.pagination.pageSize, page: self.pagination.page)
                 
+                
                 switch(response){
                 case .success(let response):
                     self.placeTypes$.accept(response.data)
@@ -70,7 +73,7 @@ final class PlaceTypesBottomSheetViewModel:PlaceTypesBottomSheetViewModelProtoco
             .debounce(.milliseconds(100), scheduler: MainScheduler.instance)
             .subscribe(onNext:{ [weak self] in
                 guard let self = self else { return }
-                
+
                 if self.isFetchingNext$.value || !self.pagination.hasMore { return }
                 
                 self.isFetchingNext$.accept(true)

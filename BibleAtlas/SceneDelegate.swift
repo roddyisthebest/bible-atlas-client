@@ -34,7 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let userApiService = UserApiService(apiClient: apiClient, url: "\(Constants.shared.url)/user")
         
-        let placeApiService = PlaceApiService(apiClient: apiClient, url: "\(Constants.shared.url)/place")
+        let placeApiService = PlaceApiService(apiClient: apiClient, url: "\(Constants.shared.url)")
         
         
    
