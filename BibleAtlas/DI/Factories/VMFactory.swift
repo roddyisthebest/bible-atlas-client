@@ -10,6 +10,7 @@ import UIKit
 struct UseCases {
     let auth: AuthUsecaseProtocol
     let user: UserUsecaseProtocol
+    let place: PlaceUsecaseProtocol
 }
 
 protocol VMFactoryProtocol {
@@ -37,7 +38,7 @@ protocol VMFactoryProtocol {
 
 final class VMFactory:VMFactoryProtocol{
     func makePlaceTypesBottomSheetVM() -> PlaceTypesBottomSheetViewModelProtocol {
-        let vm = PlaceTypesBottomSheetViewModel(navigator: navigator);
+        let vm = PlaceTypesBottomSheetViewModel(navigator: navigator, placeUsecase: usecases?.place);
         return vm
     }
     

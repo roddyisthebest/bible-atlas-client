@@ -46,6 +46,12 @@ struct PlaceType: Decodable {
     var name: PlaceName
 }
 
+struct PlaceTypeWithPlaceCount: Decodable{
+    var id: Int
+    var name:PlaceName
+    var placeCount: Int
+}
+
 struct Place: Decodable {
     var id: String
     var name: String
@@ -57,4 +63,10 @@ struct Place: Decodable {
     var likeCount: Int
     var unknownPlacePossibility: Int?
     var types: [PlaceType]
+}
+
+
+struct PlacePrefix:Decodable {
+    var prefix: String;
+    var placeCount: String;
 }

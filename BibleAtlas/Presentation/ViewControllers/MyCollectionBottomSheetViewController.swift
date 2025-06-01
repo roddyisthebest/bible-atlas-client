@@ -53,79 +53,27 @@ final class MyCollectionBottomSheetViewController: UIViewController {
         tv.layer.masksToBounds = true;
         tv.rowHeight = 80;
         
-        tv.tableFooterView = footerSpinnerView
-        footerSpinnerView.frame = CGRect(x: 0, y: 0, width: tv.bounds.width, height: 44)
+        tv.tableFooterView = footerLoadingView
+        footerLoadingView.frame = CGRect(x: 0, y: 0, width: tv.bounds.width, height: 44)
         
         return tv;
     }()
     
-    private let activityIndicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(style: .large)
-        indicator.hidesWhenStopped = true
-        return indicator
-    }()
+    private let loadingView = LoadingView();
     
-    private lazy var footerSpinnerView: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(style: .medium)
-        indicator.color = .gray
-        indicator.hidesWhenStopped = true
-        return indicator
-    }()
-
-    private let emptyLabel: UILabel = {
-        let label = UILabel()
-        label.text = "내 컬렉션이 없습니다."
-        label.textColor = .mainLabelText
-        label.font = .systemFont(ofSize: 16)
-        label.textAlignment = .center
-        return label
-    }()
+    private let footerLoadingView = LoadingView(style: .medium);
     
-    private lazy var errorStackView = {
-        let sv = UIStackView(arrangedSubviews: [errorLabel, refetchButton]);
-        sv.axis = .vertical;
-        sv.distribution = .equalSpacing;
-        sv.alignment = .center;
-        sv.spacing = 10;
-        sv.isHidden = true
-        return sv;
-    }()
+    private let emptyLabel = EmptyLabel();
     
-    
-    private let errorLabel: UILabel = {
-        let label = UILabel()
-        label.text = "에러가 발생했습니다."
-        label.textColor = .mainLabelText
-        label.font = .systemFont(ofSize: 16)
-        label.textAlignment = .center
-        return label
-    }()
-    
-    private let refetchButton: UIButton = {
-        let button = UIButton(type: .system)
-        
-        // 아이콘: SF Symbols 기준
-        let icon = UIImage(systemName: "arrow.clockwise")
-        button.setImage(icon, for: .normal)
-        
-        // 텍스트 (원한다면)
-        button.setTitle("  다시 불러오기", for: .normal) // 아이콘 옆 텍스트
-        button.setTitleColor(.mainLabelText, for: .normal)
-
-        // 아이콘 + 텍스트 간격
-        button.titleLabel?.font = .boldSystemFont(ofSize: 14)
-        button.tintColor = .mainLabelText // 아이콘 색상
-        
-        return button
-    }()
+    private let errorRetryView = ErrorRetryView();
 
     
     private func setupUI(){
         view.addSubview(headerStackView);
         view.addSubview(tableView);
-        view.addSubview(activityIndicator)
+        view.addSubview(loadingView)
         view.addSubview(emptyLabel)
-        view.addSubview(errorStackView)
+        view.addSubview(errorRetryView)
 
     }
     
@@ -149,7 +97,7 @@ final class MyCollectionBottomSheetViewController: UIViewController {
             
         }
         
-        activityIndicator.snp.makeConstraints { make in
+        loadingView.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
         
@@ -157,7 +105,7 @@ final class MyCollectionBottomSheetViewController: UIViewController {
             make.edges.equalToSuperview()
         }
         
-        errorStackView.snp.makeConstraints { make in
+        errorRetryView.snp.makeConstraints { make in
             make.center.equalToSuperview();
         }
         
@@ -166,7 +114,8 @@ final class MyCollectionBottomSheetViewController: UIViewController {
     
     private func bindViewModel(){
         let closeButtonTapped$ = closeButton.rx.tap.asObservable();
-        let refetchButtonTapped$ = refetchButton.rx.tap.asObservable();
+        
+        let refetchButtonTapped$ = errorRetryView.refetchTapped$.asObservable();
         
         let output = myCollectionBottomSheetViewModel?.transform(input: MyCollectionBottomSheetViewModel.Input(myCollectionViewLoaded$: myCollectionViewLoaded$.asObservable(), closeButtonTapped$: closeButtonTapped$, placeTabelCellSelected$: placeTabelCellSelected$.asObservable(), bottomReached$: bottomReached$.asObservable(), refetchButtonTapped$: refetchButtonTapped$.asObservable()))
         
@@ -201,11 +150,11 @@ final class MyCollectionBottomSheetViewController: UIViewController {
                     switch error {
                 
                     default:
-                        self.errorLabel.text = error.description
+                        self.errorRetryView.setMessage(error.description)
                         self.tableView.isHidden = true
                         self.emptyLabel.isHidden = true
-                        self.activityIndicator.isHidden = true
-                        self.errorStackView.isHidden = false
+                        self.loadingView.isHidden = true
+                        self.errorRetryView.isHidden = false
                         self.isBottomEmitted = false
                     }
                     return;
@@ -213,16 +162,14 @@ final class MyCollectionBottomSheetViewController: UIViewController {
                 
                 
                 if isLoading {
-                    self.activityIndicator.isHidden = false
-
-                    self.activityIndicator.startAnimating()
+                    self.loadingView.start();
                     self.tableView.isHidden = true
                     self.emptyLabel.isHidden = true
-                    self.errorStackView.isHidden = true
+                    self.errorRetryView.isHidden = true
                     return;
                 }
                 
-                self.activityIndicator.stopAnimating()
+                self.loadingView.stop()
 
                 let isEmpty = !isLoading && places.isEmpty
                 self.emptyLabel.isHidden = !isEmpty
@@ -238,11 +185,10 @@ final class MyCollectionBottomSheetViewController: UIViewController {
                 guard let self = self else { return }
 
                 if isFetching {
-                    self.footerSpinnerView.isHidden = false;
-                    self.footerSpinnerView.startAnimating()
+                    self.footerLoadingView.start()
+            
                 } else {
-                    self.footerSpinnerView.isHidden = true;
-                    self.footerSpinnerView.stopAnimating()
+                    self.footerLoadingView.stop()
                 }
             }
             .disposed(by: disposeBag)

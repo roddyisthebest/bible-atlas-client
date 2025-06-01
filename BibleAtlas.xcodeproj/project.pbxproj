@@ -25,6 +25,13 @@
 		EC64B97E2DE44F0400D3C8A7 /* TokenRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B97D2DE44F0400D3C8A7 /* TokenRefresher.swift */; };
 		EC64B9802DE45B4200D3C8A7 /* ErrorHandlerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B97F2DE45B4200D3C8A7 /* ErrorHandlerService.swift */; };
 		EC64B9822DE45C0300D3C8A7 /* ErrorHandlerServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9812DE45C0300D3C8A7 /* ErrorHandlerServiceProtocol.swift */; };
+		EC64B9842DE72C4E00D3C8A7 /* PlaceApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9832DE72C4E00D3C8A7 /* PlaceApiService.swift */; };
+		EC64B9862DE732CC00D3C8A7 /* PlaceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9852DE732CC00D3C8A7 /* PlaceRepository.swift */; };
+		EC64B9882DE7334500D3C8A7 /* PlaceRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9872DE7334500D3C8A7 /* PlaceRepositoryProtocol.swift */; };
+		EC64B98A2DE7344700D3C8A7 /* PlaceUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9892DE7344700D3C8A7 /* PlaceUsecase.swift */; };
+		EC64B98D2DEB3ADB00D3C8A7 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B98C2DEB3ADB00D3C8A7 /* LoadingView.swift */; };
+		EC64B9912DEC3D1A00D3C8A7 /* EmptyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9902DEC3D1A00D3C8A7 /* EmptyLabel.swift */; };
+		EC64B9932DEC3E1700D3C8A7 /* ErrorRetryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9922DEC3E1700D3C8A7 /* ErrorRetryView.swift */; };
 		EC70587B2DB39629002D47DF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70587A2DB39629002D47DF /* MainViewController.swift */; };
 		EC70587E2DB397CF002D47DF /* BottomSheetCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70587D2DB397CF002D47DF /* BottomSheetCoordinator.swift */; };
 		EC7058842DB3BAE5002D47DF /* HomeBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7058832DB3BAE5002D47DF /* HomeBottomSheetViewController.swift */; };
@@ -131,6 +138,13 @@
 		EC64B97D2DE44F0400D3C8A7 /* TokenRefresher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefresher.swift; sourceTree = "<group>"; };
 		EC64B97F2DE45B4200D3C8A7 /* ErrorHandlerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandlerService.swift; sourceTree = "<group>"; };
 		EC64B9812DE45C0300D3C8A7 /* ErrorHandlerServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandlerServiceProtocol.swift; sourceTree = "<group>"; };
+		EC64B9832DE72C4E00D3C8A7 /* PlaceApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceApiService.swift; sourceTree = "<group>"; };
+		EC64B9852DE732CC00D3C8A7 /* PlaceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceRepository.swift; sourceTree = "<group>"; };
+		EC64B9872DE7334500D3C8A7 /* PlaceRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceRepositoryProtocol.swift; sourceTree = "<group>"; };
+		EC64B9892DE7344700D3C8A7 /* PlaceUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceUsecase.swift; sourceTree = "<group>"; };
+		EC64B98C2DEB3ADB00D3C8A7 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		EC64B9902DEC3D1A00D3C8A7 /* EmptyLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyLabel.swift; sourceTree = "<group>"; };
+		EC64B9922DEC3E1700D3C8A7 /* ErrorRetryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorRetryView.swift; sourceTree = "<group>"; };
 		EC70587A2DB39629002D47DF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		EC70587D2DB397CF002D47DF /* BottomSheetCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetCoordinator.swift; sourceTree = "<group>"; };
 		EC7058832DB3BAE5002D47DF /* HomeBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomSheetViewController.swift; sourceTree = "<group>"; };
@@ -267,6 +281,7 @@
 			children = (
 				ECA94BDC2D50A59E005B0428 /* AuthApiService.swift */,
 				EC64B9632DDDC45500D3C8A7 /* UserApiService.swift */,
+				EC64B9832DE72C4E00D3C8A7 /* PlaceApiService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -287,6 +302,7 @@
 				EC64B9512DD838E300D3C8A7 /* TokenProviderProtocol.swift */,
 				ECA94BE42D50AE92005B0428 /* AuthRepositoryProtocol.swift */,
 				EC64B9652DDE049500D3C8A7 /* UserRepositoryProtocol.swift */,
+				EC64B9872DE7334500D3C8A7 /* PlaceRepositoryProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -345,6 +361,15 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		EC64B98B2DEB3A9E00D3C8A7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EC64B98C2DEB3ADB00D3C8A7 /* LoadingView.swift */,
+				EC64B9922DEC3E1700D3C8A7 /* ErrorRetryView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		EC7058862DB3CA48002D47DF /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -368,6 +393,7 @@
 		EC70588C2DB8BDB9002D47DF /* Labels */ = {
 			isa = PBXGroup;
 			children = (
+				EC64B9902DEC3D1A00D3C8A7 /* EmptyLabel.swift */,
 				EC70588D2DB8BEB1002D47DF /* MainLabel.swift */,
 				EC70589D2DBCA8B6002D47DF /* HeaderLabel.swift */,
 			);
@@ -511,6 +537,7 @@
 			children = (
 				ECA94BE72D50AF41005B0428 /* AuthRepository.swift */,
 				EC64B9682DDE051D00D3C8A7 /* UserRepository.swift */,
+				EC64B9852DE732CC00D3C8A7 /* PlaceRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -520,6 +547,7 @@
 			children = (
 				ECA94BEA2D50B0B9005B0428 /* AuthUsecase.swift */,
 				EC64B96A2DDE05C900D3C8A7 /* UserUsecase.swift */,
+				EC64B9892DE7344700D3C8A7 /* PlaceUsecase.swift */,
 			);
 			path = Usecases;
 			sourceTree = "<group>";
@@ -573,6 +601,7 @@
 		ECA94C062D53464D005B0428 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EC64B98B2DEB3A9E00D3C8A7 /* Views */,
 				EC70588F2DB9D8B9002D47DF /* Tables */,
 				EC70588C2DB8BDB9002D47DF /* Labels */,
 				EC7058892DB8BCA5002D47DF /* Buttons */,
@@ -860,6 +889,7 @@
 				EC77CE4E2DD5B3480030DEF5 /* PlacesByTypeBottomSheetViewModel.swift in Sources */,
 				EC77CE482DD0E3E70030DEF5 /* PlaceCharactersBottomSheetViewController.swift in Sources */,
 				EC7058982DBA772E002D47DF /* GuideButton.swift in Sources */,
+				EC64B9862DE732CC00D3C8A7 /* PlaceRepository.swift in Sources */,
 				EC70587E2DB397CF002D47DF /* BottomSheetCoordinator.swift in Sources */,
 				EC64B9602DDAEDFA00D3C8A7 /* AppInitializer.swift in Sources */,
 				EC77CE3E2DD09AD30030DEF5 /* PlaceModificationBottomSheetViewModel.swift in Sources */,
@@ -867,6 +897,7 @@
 				EC7058A72DBFA570002D47DF /* HomeBottomSheetViewModel.swift in Sources */,
 				EC77CE382DCF79800030DEF5 /* IconTextButton.swift in Sources */,
 				EC64B9802DE45B4200D3C8A7 /* ErrorHandlerService.swift in Sources */,
+				EC64B9882DE7334500D3C8A7 /* PlaceRepositoryProtocol.swift in Sources */,
 				EC64B97E2DE44F0400D3C8A7 /* TokenRefresher.swift in Sources */,
 				EC77CE502DD5C86A0030DEF5 /* PlacesByCharacterBottomSheetViewController.swift in Sources */,
 				ECA94B9B2D5082B9005B0428 /* ViewController.swift in Sources */,
@@ -876,8 +907,10 @@
 				EC77CDF42DC32C020030DEF5 /* UIViewController.swift in Sources */,
 				EC77CDF22DC318EB0030DEF5 /* LoginBottomSheetViewModel.swift in Sources */,
 				EC77CE4C2DD5AACA0030DEF5 /* PlacesByTypeBottomSheetViewController.swift in Sources */,
+				EC64B9842DE72C4E00D3C8A7 /* PlaceApiService.swift in Sources */,
 				EC77CE522DD5C8950030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift in Sources */,
 				EC77CE2E2DCF193D0030DEF5 /* RelatedPlaceTableViewCell.swift in Sources */,
+				EC64B9912DEC3D1A00D3C8A7 /* EmptyLabel.swift in Sources */,
 				EC70587B2DB39629002D47DF /* MainViewController.swift in Sources */,
 				EC70589C2DBC7C4D002D47DF /* CircleButton.swift in Sources */,
 				EC77CE322DCF34110030DEF5 /* VersedItemCell.swift in Sources */,
@@ -892,6 +925,7 @@
 				EC77CE342DCF348D0030DEF5 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				EC64B9582DD8482C00D3C8A7 /* AppStore.swift in Sources */,
 				ECA94BD72D50977A005B0428 /* AuthorizedApiClient.swift in Sources */,
+				EC64B9932DEC3E1700D3C8A7 /* ErrorRetryView.swift in Sources */,
 				EC70588B2DB8BCCE002D47DF /* CollectionButton.swift in Sources */,
 				EC70589A2DBC7BE1002D47DF /* LoginBottomSheetViewController.swift in Sources */,
 				EC77CE462DD0E2540030DEF5 /* PlaceCharactersBottomSheetViewModel.swift in Sources */,
@@ -904,11 +938,13 @@
 				ECA94BEF2D50B492005B0428 /* MockingApi.swift in Sources */,
 				EC7058842DB3BAE5002D47DF /* HomeBottomSheetViewController.swift in Sources */,
 				ECA94BA12D5082B9005B0428 /* BibleAtlas.xcdatamodeld in Sources */,
+				EC64B98D2DEB3ADB00D3C8A7 /* LoadingView.swift in Sources */,
 				EC64B95C2DD9A18D00D3C8A7 /* KeychainTokenProvider.swift in Sources */,
 				ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */,
 				EC77CE4A2DD0E4DC0030DEF5 /* PlaceCharacterCell.swift in Sources */,
 				ECA94BD52D5094F1005B0428 /* User.swift in Sources */,
 				EC7058942DB9D93D002D47DF /* RecentSearchTableViewCell.swift in Sources */,
+				EC64B98A2DE7344700D3C8A7 /* PlaceUsecase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -43,6 +43,9 @@ final class PlaceTypesBottomSheetViewController: UIViewController {
         return cv
     }()
     
+   
+    
+    
     private func setupUI(){
         view.addSubview(headerStackView)
         view.addSubview(collectionView)
@@ -73,7 +76,10 @@ final class PlaceTypesBottomSheetViewController: UIViewController {
         
         let closeButtonTapped$ = closeButton.rx.tap.asObservable()
         
-        placeTypesBottomSheetViewModel?.transform(input: PlaceTypesBottomSheetViewModel.Input(placeTypeCellTapped$: placeTypeCellTapped$.asObservable(),closeButtonTapped$: closeButtonTapped$))
+//        let refetchButtonTapped$ =
+//        
+//        
+//        placeTypesBottomSheetViewModel?.transform(input: PlaceTypesBottomSheetViewModel.Input(placeTypeCellTapped$: placeTypeCellTapped$.asObservable(),closeButtonTapped$: closeButtonTapped$))
     }
     
     

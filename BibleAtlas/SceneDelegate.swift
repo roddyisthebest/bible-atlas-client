@@ -34,7 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let userApiService = UserApiService(apiClient: apiClient, url: "\(Constants.shared.url)/user")
         
-        
+        let placeApiService = PlaceApiService(apiClient: apiClient, url: "\(Constants.shared.url)/place")
         
         
    
@@ -47,10 +47,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let authRepository = AuthRepository(authApiService: authApiService)
         let authUsecase = AuthUsecase(repository: authRepository, tokenProvider: tokenProvider)
         
+        
+        
         let userRepository = UserRepository(userApiService: userApiService)
         let userUsecase = UserUsecase(repository:userRepository)
         
-        let usecases = UseCases(auth: authUsecase, user: userUsecase)
+        
+        let placeRepository = PlaceRepository(placeApiService: placeApiService);
+        
+        let placeUsecase = PlaceUsecase(repository:placeRepository)
+        
+        
+        let usecases = UseCases(auth: authUsecase, user: userUsecase, place:placeUsecase)
         
         
         let vmFactory = VMFactory(appStore: appStore, usecases: usecases);
