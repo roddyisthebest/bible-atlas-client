@@ -10,12 +10,6 @@ import UIKit
 class PlaceTypeCell: UICollectionViewCell {
     static let identifier = "placeTypeCell"
     
-    private var nameText: String? {
-        didSet{
-            nameLabel.text = nameText
-        }
-    }
-    
     private lazy var containerStackView = {
         let sv = UIStackView(arrangedSubviews: [iconWrapper, nameLabel,  numberLabel]);
         sv.axis = .vertical;
@@ -61,8 +55,13 @@ class PlaceTypeCell: UICollectionViewCell {
         return label;
     }()
     
-    func configure(text: String) {
-        nameText = text;
+  
+    
+    
+    func setPlace(placeType:PlaceTypeWithPlaceCount){
+        nameLabel.text = placeType.name.rawValue;
+        placeIcon.image = UIImage(named: placeType.name.rawValue);
+        numberLabel.text =  "\(placeType.placeCount) Places"
     }
     
     

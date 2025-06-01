@@ -25,7 +25,6 @@ final class PlaceTypesBottomSheetViewController: UIViewController {
     
     private let bottomReached$ = PublishRelay<Void>();
     
-    private let dummyPlaces:[String] = ["water Of Body", "land", "land park", "ground" , "underground", "water Of Body", "land", "land park", "ground" , "underground", "water Of Body", "land", "land park", "ground" , "underground", "water Of Body", "land", "land park", "ground" , "underground"];
     
     private var isBottomEmitted = false
 
@@ -173,7 +172,7 @@ final class PlaceTypesBottomSheetViewController: UIViewController {
             .observe(on: MainScheduler.instance)
             .bind { [weak self] isFetching in
                 guard let self = self else { return }
-                print(isFetching,"realIsFetching")
+
                 self.isFetching = isFetching;
                 self.collectionView.reloadSections(IndexSet(integer: 0))
 
@@ -216,8 +215,8 @@ extension PlaceTypesBottomSheetViewController: UICollectionViewDelegate, UIColle
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceTypeCell.identifier, for: indexPath) as! PlaceTypeCell
         
             let placeType = placeTypes[indexPath.row]
-            
-            cell.configure(text: placeType.name.rawValue)
+            cell.setPlace(placeType: placeType)
+      
             
         return cell
     }
@@ -243,11 +242,8 @@ extension PlaceTypesBottomSheetViewController: UICollectionViewDelegate, UIColle
 
         
         if isFetching {
-            print("start")
             footer.start()
         } else {
-            print("stop")
-
             footer.stop()
         }
 
