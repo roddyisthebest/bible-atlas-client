@@ -54,10 +54,10 @@ class PlaceCharacterCell: UICollectionViewCell {
         return label;
     }()
     
-    func configure(text: String) {
-        characterText = text;
+    func setPlaceCharacter(placeCharacter:PlacePrefix){
+        characterLabel.text = placeCharacter.prefix.uppercased();
+        numberLabel.text = "\(placeCharacter.placeCount) Places"
     }
-    
     
 
     required init?(coder: NSCoder) {

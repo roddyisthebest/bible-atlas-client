@@ -10,10 +10,18 @@ import RxSwift
 import RxRelay
 
 final class PlaceCharactersBottomSheetViewController: UIViewController {
+    
+    private var placeCharacters:[PlacePrefix] = [];
 
     private var placeCharactersBottomSheetViewModel:PlaceCharactersBottomSheetViewModelProtocol?
     
     private let placeCharacterCellTapped$ = PublishRelay<String>()
+    
+    private let viewLoaded$ = PublishRelay<Void>();
+    
+    private var isFetching: Bool = false;
+    
+    private let disposeBag = DisposeBag();
     
     private let dummyCharacters:[String] = (65...90).map { String(UnicodeScalar($0)!) }
     
@@ -43,9 +51,20 @@ final class PlaceCharactersBottomSheetViewController: UIViewController {
         return cv
     }()
     
+    private let loadingView = LoadingView();
+    
+    private let emptyLabel = EmptyLabel();
+    
+    private let errorRetryView = ErrorRetryView();
+    
+    
+    
     private func setupUI(){
         view.addSubview(headerStackView)
         view.addSubview(collectionView)
+        view.addSubview(loadingView)
+        view.addSubview(emptyLabel);
+        view.addSubview(errorRetryView)
     }
     
     private func setupStyle(){
@@ -67,13 +86,73 @@ final class PlaceCharactersBottomSheetViewController: UIViewController {
             make.bottom.equalToSuperview().inset(20);
         }
         
+        loadingView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        
+        emptyLabel.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        errorRetryView.snp.makeConstraints { make in
+            make.center.equalToSuperview();
+        }
+        
     }
     
     private func bindViewModel(){
         
         let closeButtonTapped$ = closeButton.rx.tap.asObservable()
         
-        placeCharactersBottomSheetViewModel?.transform(input: PlaceCharactersBottomSheetViewModel.Input(placeCharacterCellTapped$: placeCharacterCellTapped$.asObservable(), closeButtonTapped$: closeButtonTapped$))
+        let refetchButtonTapped$ = errorRetryView.refetchTapped$;
+        
+        
+        
+        let output = placeCharactersBottomSheetViewModel?.transform(input:PlaceCharactersBottomSheetViewModel.Input(placeCharacterCellTapped$: placeCharacterCellTapped$.asObservable(), closeButtonTapped$: closeButtonTapped$, viewLoaded$: viewLoaded$.asObservable(), refetchButtonTapped$: refetchButtonTapped$.asObservable()))
+        
+        
+        
+        output?.placeCharacter$.observe(on: MainScheduler.instance).bind{[weak self] placeCharacters in
+            self?.placeCharacters = placeCharacters;
+            self?.collectionView.reloadData();
+        }.disposed(by: disposeBag)
+        
+        Observable.combineLatest(output!.isInitialLoading$, output!.placeCharacter$, output!.error$)
+            .observe(on: MainScheduler.instance)
+            .bind{[weak self] isLoading, placeCharacters, error in
+                guard let self = self else { return }
+                
+                if let error = error {
+                    switch(error){
+                    default:
+                        self.errorRetryView.setMessage(error.description)
+                        self.collectionView.isHidden = true;
+                        self.emptyLabel.isHidden = true;
+                        self.loadingView.isHidden = true;
+                        self.errorRetryView.isHidden = false;
+
+                    }
+                    return;
+                }
+                
+                if isLoading {
+                    self.loadingView.start();
+                    self.collectionView.isHidden = true;
+                    self.emptyLabel.isHidden = true;
+                    self.errorRetryView.isHidden = true;
+                    return;
+                }
+                
+                self.loadingView.stop();
+                
+                
+                let isEmpty = !isLoading && placeCharacters.isEmpty;
+                
+                self.emptyLabel.isHidden = !isEmpty;
+                self.collectionView.isHidden = isEmpty;
+
+                    
+            }.disposed(by: disposeBag)
     }
     
     
@@ -92,6 +171,7 @@ final class PlaceCharactersBottomSheetViewController: UIViewController {
         setupStyle()
         setupConstraints()
         bindViewModel()
+        viewLoaded$.accept(Void())
     }
     
 
@@ -101,20 +181,22 @@ final class PlaceCharactersBottomSheetViewController: UIViewController {
 extension PlaceCharactersBottomSheetViewController: UICollectionViewDelegate, UICollectionViewDataSource{
         
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dummyCharacters.count
+        return placeCharacters.count
     }
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceCharacterCell.identifier, for: indexPath) as! PlaceCharacterCell
-            cell.configure(text: dummyCharacters[indexPath.item])
+        
+            let placeCharacter = placeCharacters[indexPath.item];
+            cell.setPlaceCharacter(placeCharacter: placeCharacter)
 
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let character = dummyCharacters[indexPath.item]
-        placeCharacterCellTapped$.accept(character)
+        let character = placeCharacters[indexPath.item]
+        placeCharacterCellTapped$.accept(character.prefix.uppercased())
     }
     
     

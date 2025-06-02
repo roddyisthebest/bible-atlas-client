@@ -21,6 +21,7 @@ final class ErrorRetryView: UIStackView {
         label.textColor = .mainLabelText
         label.font = .systemFont(ofSize: 16)
         label.textAlignment = .center
+        label.numberOfLines = 3;
         return label
     }()
     

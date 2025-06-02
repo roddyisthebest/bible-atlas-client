@@ -11,8 +11,8 @@ import Alamofire
 
 struct ListResponse<T:Decodable>:Decodable{
     let total:Int
-    let page:Int
-    let limit:Int
+    let page:Int?
+    let limit:Int?
     let data:[T]
 }
 

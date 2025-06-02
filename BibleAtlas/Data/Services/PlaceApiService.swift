@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 protocol PlaceApiServiceProtocol {
-    func getPlaces(limit:Int?, page:Int?, placeTypeId:Int?, name:String?) async -> Result<ListResponse<Place>,NetworkError>
+    func getPlaces(limit:Int?, page:Int?, placeTypeId:Int?, name:String?, prefix:String?) async -> Result<ListResponse<Place>,NetworkError>
     
     func getPlaceTypes(limit:Int?, page:Int?) async -> Result<ListResponse<PlaceTypeWithPlaceCount>,NetworkError>
     
@@ -30,16 +30,23 @@ final public class PlaceApiService: PlaceApiServiceProtocol{
     }
     
     
-    func getPlaces(limit: Int?, page: Int?, placeTypeId: Int?, name: String?) async -> Result<ListResponse<Place>, NetworkError> {
+    func getPlaces(limit: Int?, page: Int?, placeTypeId: Int?, name: String?, prefix: String?) async -> Result<ListResponse<Place>, NetworkError> {
         let page = page ?? 0;
         let limit = limit ?? 1;
         
-        let params: Parameters = [
-               "limit": limit,
-               "page": page,
-               "name": name,
-               "placeTypeId": placeTypeId
-           ].compactMapValues { $0 }
+        let rawParams: [String: Any?] = [
+            "limit": limit,
+            "page": page,
+            "name": name,
+            "placeTypeId": placeTypeId,
+            "prefix": prefix
+        ]
+
+        let params: Parameters = rawParams.reduce(into: [:]) { result, pair in
+            if let value = pair.value {
+                result[pair.key] = value
+            }
+        }
         
         return await apiClient.getData(url:"\(url)/place",parameters: params)
     }

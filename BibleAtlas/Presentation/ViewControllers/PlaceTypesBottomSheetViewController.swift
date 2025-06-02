@@ -215,7 +215,7 @@ extension PlaceTypesBottomSheetViewController: UICollectionViewDelegate, UIColle
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceTypeCell.identifier, for: indexPath) as! PlaceTypeCell
         
             let placeType = placeTypes[indexPath.row]
-            cell.setPlace(placeType: placeType)
+        cell.setPlace(placeType: placeType)
       
             
         return cell

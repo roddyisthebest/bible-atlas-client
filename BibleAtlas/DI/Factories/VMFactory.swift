@@ -43,7 +43,7 @@ final class VMFactory:VMFactoryProtocol{
     }
     
     func makePlaceCharactersBottomSheetVM() -> PlaceCharactersBottomSheetViewModelProtocol {
-        let vm = PlaceCharactersBottomSheetViewModel(navigator: navigator);
+        let vm = PlaceCharactersBottomSheetViewModel(navigator: navigator,placeUsecase: usecases?.place);
         return vm;
     }
     
@@ -93,7 +93,7 @@ final class VMFactory:VMFactoryProtocol{
     }
     
     func makePlacesByCharacterBottomSheetVM(character: String) -> PlacesByCharacterBottomSheetViewModelProtocol {
-        let vm = PlacesByCharacterBottomSheetViewModel(navigator: navigator, character: character);
+        let vm = PlacesByCharacterBottomSheetViewModel(navigator: navigator, character: character,placeUsecase: usecases?.place);
         return vm;
     }
     
