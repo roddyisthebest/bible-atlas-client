@@ -20,6 +20,7 @@ struct ListResponse<T:Decodable>:Decodable{
 
 protocol AuthorizedApiClientProtocol{
     func getData<T: Decodable>(url:String, parameters:Parameters?) async -> Result<T,NetworkError>
+    func getRawData(url: String, parameters: Parameters?) async -> Result<Data, NetworkError>
     func postData<T: Decodable>(url:String, parameters:Parameters?, body:Data?, headers:HTTPHeaders?) async -> Result<T,NetworkError>
     func updateData<T: Decodable>(url:String, method: HTTPMethod, parameters:Parameters?, body:Data?) async -> Result<T,NetworkError>
     func deleteData<T: Decodable>(url:String, parameters:Parameters?) async -> Result<T,NetworkError>
@@ -27,7 +28,6 @@ protocol AuthorizedApiClientProtocol{
 
 
 public final class AuthorizedApiClient:AuthorizedApiClientProtocol{
-    
     private let session:SessionProtocol
     private let tokenProvider:TokenProviderProtocol
     private let tokenRefresher: TokenRefresherProtocol
@@ -63,12 +63,19 @@ public final class AuthorizedApiClient:AuthorizedApiClientProtocol{
            guard let url = URL(string: url) else {
                return .failure(.urlError)
            }
+           
+           
+
+           var finalHeaders = tokenHeaders
+           if let headers = headers {
+               headers.forEach { finalHeaders.update($0) }
+           }
 
            let response = await session.request(
                url,
                method: method,
                parameters: parameters,
-               headers: headers ?? tokenHeaders,
+               headers: finalHeaders,
                body: body
            ).serializingData().response
 
@@ -119,7 +126,13 @@ public final class AuthorizedApiClient:AuthorizedApiClientProtocol{
                do {
                    let decodedData = try JSONDecoder().decode(T.self, from: data)
                    return .success(decodedData)
-               } catch {
+               }
+               catch let decodingError as DecodingError {
+                      print(String(describing: decodingError))
+                       return .failure(.failToDecode(String(describing: decodingError)))
+            }
+               catch {
+                   
                    return .failure(.failToDecode(error.localizedDescription))
                }
            } else {
@@ -137,6 +150,34 @@ public final class AuthorizedApiClient:AuthorizedApiClientProtocol{
        }
     
     
+    /// ✅ 응답 처리 및 디코딩
+    private func handleRawResponse(_ result: AFDataResponse<Data>) -> Result<Data, NetworkError> {
+        if let error = result.error {
+            return .failure(.clientError(error.localizedDescription))
+        }
+        
+        guard let data = result.data else {
+            return .failure(.dataNil)
+        }
+        
+        guard let response = result.response else {
+            return .failure(.invalid)
+        }
+        
+
+        
+        if (200..<400).contains(response.statusCode) {
+            return .success(data)
+        } else {
+            if let jsonString = String(data: data, encoding: .utf8) {
+                 print("📦 서버 에러 원본 데이터:\n\(jsonString)")
+            }
+             return .failure(.serverError(response.statusCode))
+        }
+    }
+ 
+    
+    
        // MARK: - API 호출 메서드
     
     
@@ -148,29 +189,6 @@ public final class AuthorizedApiClient:AuthorizedApiClientProtocol{
             return await performRequest(url: url, method: .post, parameters: parameters, body: body, headers:headers)
        }
     
-//        func postWithBasicAuth<T: Decodable>(
-//            url: String,
-//            parameters: Parameters?,
-//            username: String,
-//            password: String
-//        ) async -> Result<T, NetworkError> {
-//            let credential = "\(username):\(password)"
-//            guard let base64 = credential.data(using: .utf8)?.base64EncodedString() else {
-//                return .failure(.clientError("Invalid credentials"))
-//            }
-//
-//            let headers: HTTPHeaders = [
-//                "Authorization": "Basic \(base64)"
-//            ]
-//
-//            return await performRequest(
-//                url: url,
-//                method: .post,
-//                parameters: parameters,
-//                body: nil,
-//                headers: headers
-//            )
-//    }
        
        func updateData<T: Decodable>(url: String, method: HTTPMethod, parameters: Parameters?, body: Data?) async -> Result<T, NetworkError> {
            return await performRequest(url: url, method: method, parameters: parameters, body: body)
@@ -178,6 +196,20 @@ public final class AuthorizedApiClient:AuthorizedApiClientProtocol{
        
        func deleteData<T: Decodable>(url: String, parameters: Parameters?) async -> Result<T, NetworkError> {
            return await performRequest(url: url, method: .delete, parameters: parameters, body: nil)
+       }
+    
+    
+       func getRawData(url: String, parameters: Parameters?) async -> Result<Data, NetworkError> {
+           guard let url = URL(string: url) else {
+               return .failure(.urlError)
+           }
+           
+           let response = await session.request(url, method: .get, parameters: nil, headers: nil, body: nil).serializingData().response
+            
+           
+           return handleRawResponse(response)
+           
+           
        }
     
 }

@@ -22,6 +22,7 @@ public enum NetworkError:Error {
     case serverErrorWithMessage(ErrorResponse)
     case serverError(Int)
     case clientError(String)
+    case failToJSONSerialize(String)
     
     
     public var description: String {
@@ -45,7 +46,8 @@ public enum NetworkError:Error {
             return errorResponse.message
         case .clientError(let msg):
             return "클라이언트에서 서버 요청 실패 \(msg)"
-        
+        case .failToJSONSerialize(let desc):
+                return "json 직렬화에러: \(desc)"
         }
     }
 }

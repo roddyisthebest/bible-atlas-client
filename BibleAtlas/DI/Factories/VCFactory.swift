@@ -6,7 +6,7 @@
 //
 
 import UIKit
-protocol VCFactoryProtocol {
+protocol VCFactoryProtocol:AnyObject {
     //TODO: VC 직접 타입 리턴 프로토콜로 변경 필요
     func makeHomeBottomSheetVC(vm:HomeBottomSheetViewModelProtocol) -> HomeBottomSheetViewController
     func makeLoginBottomSheetVC(vm:LoginBottomSheetViewModelProtocol) -> LoginBottomSheetViewController
@@ -23,6 +23,9 @@ protocol VCFactoryProtocol {
     func makePlacesByTypeBottomSheetVC(vm:PlacesByTypeBottomSheetViewModelProtocol, placeTypeId:Int) -> PlacesByTypeBottomSheetViewController
     
     func makePlacesByCharacterBottomSheetVC(vm:PlacesByCharacterBottomSheetViewModelProtocol, character:String) -> PlacesByCharacterBottomSheetViewController
+    
+    func makeBibleVerseDetailBottomSheetVC(vm:BibleVerseDetailBottomSheetViewModelProtocol, keyword:String) -> BibleVerseDetailBottomSheetViewController
+    
     
     func setupVC(type: BottomSheetType, sheet: UIViewController) -> Void
 }
@@ -61,7 +64,7 @@ final class VCFactory:VCFactoryProtocol {
     
     func makePlaceDetailBottomSheetVC(vm: PlaceDetailViewModelProtocol) -> PlaceDetailViewController {
         let vc = PlaceDetailViewController(placeDetailViewModel: vm);
-        setupVC(type: .placeDetail("123"), sheet: vc);
+        setupVC(type: .placeDetail("123" , nil), sheet: vc);
         return vc;
     }
     
@@ -100,6 +103,12 @@ final class VCFactory:VCFactoryProtocol {
     func makePlacesByCharacterBottomSheetVC(vm: PlacesByCharacterBottomSheetViewModelProtocol, character:String) -> PlacesByCharacterBottomSheetViewController {
         let vc = PlacesByCharacterBottomSheetViewController(vm: vm);
         setupVC(type: .placesByCharacter(character), sheet: vc);
+        return vc;
+    }
+    
+    func makeBibleVerseDetailBottomSheetVC(vm: BibleVerseDetailBottomSheetViewModelProtocol, keyword:String) -> BibleVerseDetailBottomSheetViewController {
+        let vc = BibleVerseDetailBottomSheetViewController(bibleVerseDetailBottomSheetViewModel: vm);
+        setupVC(type: .bibleVerseDetail(keyword),sheet: vc);
         return vc;
     }
 
@@ -151,7 +160,7 @@ final class VCFactory:VCFactoryProtocol {
                 sheet.prefersGrabberVisible = false // 위쪽 핸들 표시
             }
 
-        case .myCollection, .placeTypes, .placeCharacters, .placesByType, .placesByCharacter:
+        case .myCollection, .placeTypes, .placeCharacters, .placesByType, .placesByCharacter, .bibleVerseDetail:
             if let sheet = sheet.sheetPresentationController {
                 sheet.detents = [.large()] // 높이 조절 가능 (중간, 전체 화면)
                 sheet.prefersScrollingExpandsWhenScrolledToEdge = false // 스크롤 시 확장 가능

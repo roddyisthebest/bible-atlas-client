@@ -21,16 +21,19 @@ final class LoginBottomSheetViewModel:LoginBottomSheetViewModelProtocol {
     private let disposeBag = DisposeBag();
     private weak var navigator: BottomSheetNavigator?
     private var authUsecase:AuthUsecaseProtocol?
+    private weak var notificationService: RxNotificationServiceProtocol?
+
     private var appStore:AppStoreProtocol?
     
 
     private let error$ = PublishRelay<NetworkError>()
     private let loading$ = BehaviorRelay<Bool>(value:false);
     
-    init(navigator:BottomSheetNavigator?, usecase:AuthUsecaseProtocol?, appStore: AppStoreProtocol?){
+    init(navigator:BottomSheetNavigator?, usecase:AuthUsecaseProtocol?, appStore: AppStoreProtocol?, notificationService:RxNotificationServiceProtocol?){
         self.navigator = navigator
         self.authUsecase = usecase;
         self.appStore = appStore;
+        self.notificationService = notificationService
     }
     
     func transform(input: Input) -> Output {
@@ -64,8 +67,11 @@ final class LoginBottomSheetViewModel:LoginBottomSheetViewModelProtocol {
 
                 switch(result){
                     case .success(let userResponse):
+                        self.notificationService?.post(.refetchRequired, object: nil)
+
                         self.appStore?.dispatch(.login(userResponse.user))
                         self.navigator?.dismiss(animated: true)
+
                     case .failure(let networkError):
                         self.error$.accept(networkError)
                         print(networkError)

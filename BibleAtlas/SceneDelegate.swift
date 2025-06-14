@@ -60,15 +60,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let usecases = UseCases(auth: authUsecase, user: userUsecase, place:placeUsecase)
         
+        let notificationService = RxNotificationService();
         
-        let vmFactory = VMFactory(appStore: appStore, usecases: usecases);
+        let vmFactory = VMFactory(appStore: appStore, usecases: usecases, notificationService: notificationService);
         let vcFactory = VCFactory();
             
         let bottomSheetCoordinator = BottomSheetCoordinator(vcFactory: vcFactory, vmFactory: vmFactory);
         
         vmFactory.configure(navigator: bottomSheetCoordinator)
         
-        let mainVC = MainViewController(navigator: bottomSheetCoordinator);
+        
+        let mapApiService = MapApiService(apiClient: apiClient, baseURL: "\(Constants.shared.geoJsonUrl)")
+        let mapRepository = MapRepository(mapApiService: mapApiService)
+        
+        let mapUsecase = MapUsecase(repository: mapRepository);
+        
+        let mainVM = MainViewModel(mapUseCase: mapUsecase, notificationService: notificationService)
+        let mainVC = MainViewController(navigator: bottomSheetCoordinator, vm:mainVM);
 
         mainVC.modalPresentationStyle = .custom
         bottomSheetCoordinator.setPresenter(mainVC)

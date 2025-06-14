@@ -197,7 +197,9 @@ final class MyCollectionBottomSheetViewController: UIViewController {
     }
     
 
-    
+    deinit {
+        print("🔥 MyCollectionBottomSheetVC deinit")
+    }
     
     init(myCollectionBottomSheetViewModel:MyCollectionBottomSheetViewModelProtocol) {
         self.myCollectionBottomSheetViewModel = myCollectionBottomSheetViewModel

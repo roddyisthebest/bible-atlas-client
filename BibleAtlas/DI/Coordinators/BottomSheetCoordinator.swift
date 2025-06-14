@@ -13,13 +13,14 @@ enum BottomSheetType {
     case home
     case login
     case myCollection(PlaceFilter)
-    case placeDetail(String)
+    case placeDetail(String, String?)
     case memo(String)
     case placeModification(String)
     case placeTypes
     case placeCharacters
     case placesByType(Int)
     case placesByCharacter(String)
+    case bibleVerseDetail(String)
 }
 
 
@@ -102,10 +103,13 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
                 }
           
                         
-                vc.sheetPresentationController?.animateChanges {
-                    vc.sheetPresentationController?.detents = [.medium()]
-                    vc.sheetPresentationController?.largestUndimmedDetentIdentifier = .medium;
-                    vc.sheetPresentationController?.selectedDetentIdentifier = .medium
+                weak var weakVC = vc
+
+                
+                weakVC?.sheetPresentationController?.animateChanges {
+                    weakVC?.sheetPresentationController?.detents = [.medium()]
+                    weakVC?.sheetPresentationController?.largestUndimmedDetentIdentifier = .medium;
+                    weakVC?.sheetPresentationController?.selectedDetentIdentifier = .medium
                 }
              
             }
@@ -126,7 +130,6 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
         DispatchQueue.main.async {
             let stack = self.presentedVCStack(from: baseVC)
             let isLast =  stack.filter { $0 is PlaceDetailViewController }.count == 1;
-            print(isLast,"isLast")
             if(!isLast){
             
                 self.dismiss(animated: animated)
@@ -150,6 +153,7 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             }
             
             self.dismiss(animated: animated)
+            
 
         }
         
@@ -174,8 +178,8 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             let vc = vcFactory.makeMyCollectionBottomSheetVC(vm: vm);
             presentFromTopVC(vc)
             
-        case .placeDetail(let placeId):
-            let vm = vmFactory.makePlaceDetailBottomSheetVM(placeId: placeId);
+        case .placeDetail(let placeId, let parentPlaceId):
+            let vm = vmFactory.makePlaceDetailBottomSheetVM(placeId: placeId, parentPlaceId: parentPlaceId);
             let vc = vcFactory.makePlaceDetailBottomSheetVC(vm: vm);
             presentDetail(vc)
             
@@ -213,6 +217,10 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             let vc = vcFactory.makePlacesByCharacterBottomSheetVC(vm: vm, character: character);
             presentFromTopVC(vc)
             
+        case .bibleVerseDetail(let keyword):
+            let vm = vmFactory.makeBibleVerseDetailBottomSheetVM(keyword: keyword);
+            let vc = vcFactory.makeBibleVerseDetailBottomSheetVC(vm: vm, keyword: keyword);
+            presentFromTopVC(vc)
         }
     }
 

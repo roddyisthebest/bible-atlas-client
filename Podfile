@@ -16,6 +16,7 @@ target 'BibleAtlas' do
     pod "MarkdownView"
     pod "UBottomSheet"
     pod "KeychainAccess"
+    pod "Kingfisher"
 
   target 'BibleAtlasTests' do
     inherit! :search_paths

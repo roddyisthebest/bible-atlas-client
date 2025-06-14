@@ -52,6 +52,12 @@ struct PlaceTypeWithPlaceCount: Decodable{
     var placeCount: Int
 }
 
+struct PlaceMemo:Decodable{
+    let user: Int;
+    let place: String;
+    let text: String;
+}
+
 struct Place: Decodable {
     var id: String
     var name: String
@@ -59,14 +65,75 @@ struct Place: Decodable {
     var description: String
     var koreanDescription: String
     var stereo: PlaceStereo
-    var verse: String
+    var verse: String?
     var likeCount: Int
     var unknownPlacePossibility: Int?
     var types: [PlaceType]
+    var childRelations: [ChildPlaceRelation]?
+    var parentRelations: [ParentPlaceRelation]?
+    var isLiked: Bool?
+    var isSaved: Bool?
+    var memo: PlaceMemo?
+    var imageTitle:String?
 }
 
 
 struct PlacePrefix:Decodable {
     var prefix: String;
     var placeCount: String;
+}
+
+struct ChildPlaceRelation:Decodable{
+    var id:Int;
+    var child:Place;
+    var possibility:Int
+}
+
+
+struct ParentPlaceRelation:Decodable{
+    var id:Int;
+    var parent:Place;
+    var possibility:Int
+}
+
+
+struct TogglePlaceSaveResponse:Decodable{
+    var saved:Bool
+}
+
+struct TogglePlaceLikeResponse:Decodable{
+    var liked:Bool
+}
+
+struct BibleVerseResponse:Decodable{
+    var text:String
+}
+
+struct PlaceMemoResponse:Decodable{
+    var text:String
+}
+
+struct PlaceMemoDeleteResponse:Decodable{
+    var memo:String
+}
+
+struct PlaceProposalResponse:Decodable{
+    var createdAt:String
+    var id: Int
+    var type: Int
+    var comment: String
+}
+
+enum BibleVersion: String, Decodable {
+    case kor
+    case niv
+    case bbe
+    case asv
+}
+
+
+
+struct GeoJsonFeatureProperties: Codable {
+    let id: String?
+    let role: String?
 }

@@ -19,7 +19,7 @@ class PlacesByCharacterBottomSheetViewController: UIViewController {
     
     private let viewLoaded$ = PublishRelay<Void>();
     
-    private let placeCellTapped$ = PublishRelay<String>()
+    private let placeCellTapped$ = PublishRelay<(String)>()
 
     private let disposeBag = DisposeBag();
 
@@ -206,6 +206,10 @@ class PlacesByCharacterBottomSheetViewController: UIViewController {
     init(vm:PlacesByCharacterBottomSheetViewModelProtocol){
         self.placesByCharacterBottomSheetViewModel = vm
         super.init(nibName: nil, bundle: nil)
+    }
+    
+    deinit {
+        print("🔥 PlacesByCharacterVC deinit")
     }
     
     required init?(coder: NSCoder) {

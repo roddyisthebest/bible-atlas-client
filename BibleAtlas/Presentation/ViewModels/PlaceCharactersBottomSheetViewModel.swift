@@ -63,39 +63,41 @@ final class PlaceCharactersBottomSheetViewModel:PlaceCharactersBottomSheetViewMo
                 }
             }
             
-            input.refetchButtonTapped$.subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
-                
-                self.placeCharacters$.accept([]);
-                self.isInitialLoading$.accept(true);
-                self.error$.accept(nil);
-                
-                Task{
-                    defer{
-                        self.isInitialLoading$.accept(false)
-                    }
-                    
-                    let response = await self.placeUsecase?.getPrefixs();
-                    
-                    switch(response){
-                        case .success(let response):
-                            self.placeCharacters$.accept(response.data)
-                            self.error$.accept(nil)
-                        case .failure(let error):
-                            self.error$.accept(error)
-                        case .none:
-                            print("none")
-                    }
-                    
-                    
-                }
-                
-                
-                
-            }).disposed(by: disposeBag)
+           
             
         }).disposed(by: disposeBag)
         
+        
+        input.refetchButtonTapped$.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            
+            self.placeCharacters$.accept([]);
+            self.isInitialLoading$.accept(true);
+            self.error$.accept(nil);
+            
+            Task{
+                defer{
+                    self.isInitialLoading$.accept(false)
+                }
+                
+                let response = await self.placeUsecase?.getPrefixs();
+                
+                switch(response){
+                    case .success(let response):
+                        self.placeCharacters$.accept(response.data)
+                        self.error$.accept(nil)
+                    case .failure(let error):
+                        self.error$.accept(error)
+                    case .none:
+                        print("none")
+                }
+                
+                
+            }
+            
+            
+            
+        }).disposed(by: disposeBag)
         
         return Output(placeCharacter$: placeCharacters$.asObservable(), error$: error$.asObservable(), isInitialLoading$: isInitialLoading$.asObservable())
 

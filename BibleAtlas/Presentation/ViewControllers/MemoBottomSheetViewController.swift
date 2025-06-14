@@ -6,13 +6,20 @@
 //
 
 import UIKit
+import RxSwift
+import RxRelay
+
 
 final class MemoBottomSheetViewController: UIViewController {
     
     private var memoBottomSheetViewModel:MemoBottomSheetViewModelProtocol?
     
+    private let disposeBag = DisposeBag();
+    
+    private let viewLoaded$ = PublishRelay<Void>();
+    
     private lazy var headerStackView = {
-        let sv = UIStackView(arrangedSubviews: [cancelButton, headerLabel, confirmButton]);
+        let sv = UIStackView(arrangedSubviews: [cancelButton, headerLabel, confirmButton, confirmLoadingView]);
         sv.axis = .horizontal;
         sv.distribution = .equalSpacing;
         sv.alignment = .center;
@@ -33,13 +40,17 @@ final class MemoBottomSheetViewController: UIViewController {
         return label;
     }()
     
-    private let confirmButton = {
+    private lazy var confirmButton = {
         let button = UIButton(type: .system);
         button.setTitle("완료", for: .normal)
         button.setTitleColor(.primaryBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
+
         return button;
     }()
+    
+    private let confirmLoadingView = LoadingView(style: .medium);
+    
     
     private let descriptionTextView: UITextView = {
         let tv = UITextView()
@@ -50,22 +61,33 @@ final class MemoBottomSheetViewController: UIViewController {
         tv.isEditable = true
         tv.layer.cornerRadius = 8;
         tv.layer.masksToBounds = true;
-        tv.text = "인사까지 연습했는데 거기까지 문제 없었는데 왜 니 앞에서면 바보처럼 웃게되 평소처럼만 하면 돼 음 자연스러웟어 우워 안녕안녕"
+        tv.text = ""
         tv.textContainerInset = UIEdgeInsets(top: 15, left: 10, bottom: 15, right: 10) // ✅ 내부 여백 추가
+        tv.autocorrectionType = .no
+        tv.spellCheckingType = .no
+     
         return tv
     }()
     
     
     private lazy var deleteMemoButton = {
         let button = IconTextButton(iconSystemName: "trash.fill", color: .primaryRed, labelText: "Delete Memo");
+        button.isEnabled = true
         return button;
     }()
+    
+    private let loadingView = LoadingView();
+
+    private let errorRetryView = ErrorRetryView();
     
     
     private func setupUI(){
         view.addSubview(headerStackView);
         view.addSubview(descriptionTextView)
         view.addSubview(deleteMemoButton)
+        view.addSubview(loadingView)
+        view.addSubview(errorRetryView)
+        
     }
     
     private func setupConstraints(){
@@ -87,6 +109,15 @@ final class MemoBottomSheetViewController: UIViewController {
             make.leading.equalToSuperview().offset(20);
             make.trailing.equalToSuperview().inset(20);
         }
+        
+        loadingView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        
+        errorRetryView.snp.makeConstraints { make in
+            make.center.equalToSuperview();
+        }
+        
     }
     
     private func setupStyle(){
@@ -100,12 +131,117 @@ final class MemoBottomSheetViewController: UIViewController {
             
         let confirmTappedWithText$ = confirmButtonTapped$
             .withLatestFrom(descriptionTextView.rx.text.orEmpty)
+        
  
         
         let deleteButtonTapped$ = deleteMemoButton.rx.tap.asObservable();
         
+        let refetchButtonTapped$ = errorRetryView.refetchTapped$
         
-        memoBottomSheetViewModel?.transform(input: MemoBottomSheetViewModel.Input(cancelButtonTapped$: cancelButtonTapped$, confirmButtonTapped$: confirmTappedWithText$, deleteButtonTapped$:deleteButtonTapped$))
+        let output = memoBottomSheetViewModel?.transform(input: MemoBottomSheetViewModel.Input(viewLoaded$: viewLoaded$.asObservable(), refetchButtonTapped$: refetchButtonTapped$.asObservable(), cancelButtonTapped$: cancelButtonTapped$.asObservable(), confirmButtonTapped$: confirmTappedWithText$.asObservable(), deleteButtonTapped$: deleteButtonTapped$.asObservable()))
+        
+        
+        output?.isCreatingOrUpdating$.observe(on: MainScheduler.instance).bind{ [ weak self ] isCreatingOrUpdating in
+            
+            if(isCreatingOrUpdating){
+                self?.confirmButton.isHidden = true;
+                self?.confirmLoadingView.start()
+                self?.deleteMemoButton.isEnabled = false;
+                
+                self?.confirmButton.setTitle(nil, for: .normal)
+
+            }
+            else{
+                self?.confirmButton.isHidden = false;
+                self?.confirmLoadingView.stop()
+                self?.confirmButton.setTitle("완료", for: .normal)
+                self?.deleteMemoButton.isEnabled = true;
+
+
+            }
+            
+            
+        }.disposed(by: disposeBag)
+        
+        output?.isDeleting$.observe(on: MainScheduler.instance).bind{
+            [weak self] isDeleting in
+            self?.deleteMemoButton.setLoading(isDeleting)
+            self?.confirmButton.isEnabled = !isDeleting
+            
+            
+        }.disposed(by: disposeBag)
+        
+
+        
+        
+        
+        output?.interactionError$
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {[weak self] error in
+                guard let error = error else {return}
+                self?.showAlert(message: error.description)
+            })
+            .disposed(by: disposeBag)
+        
+        
+        Observable.combineLatest(output!.isLoading$, output!.loadError$ , output!.memo$)
+            .observe(on: MainScheduler.instance)
+            .bind{ [weak self]
+                 isLoading, error, memo in
+                guard let self = self else { return }
+                
+                if let error = error {
+                    switch(error){
+                        default:
+                        self.errorRetryView.setMessage(error.description);
+                        self.descriptionTextView.isHidden = true;
+                        self.deleteMemoButton.isHidden = true;
+                        self.loadingView.isHidden = true;
+                        self.errorRetryView.isHidden = false;
+                        self.confirmButton.isEnabled = false;
+                    }
+                    return
+                }
+                
+                if isLoading{
+                    self.loadingView.start();
+                    self.descriptionTextView.isHidden = true;
+                    self.deleteMemoButton.isHidden = true;             
+                    self.errorRetryView.isHidden = true;
+                    return;
+                }
+                
+                self.loadingView.stop();
+                
+                self.descriptionTextView.isHidden = false;
+                
+                if(memo.isEmpty){
+                    self.deleteMemoButton.isHidden = true
+                    self.headerLabel.text = "Add Memo"
+                }
+                else{
+                    self.descriptionTextView.text = memo
+                    self.headerLabel.text = "Update Memo"
+                    self.deleteMemoButton.isHidden = false
+                    
+                }
+
+                
+            }
+            .disposed(by: disposeBag)
+        
+    }
+    
+    private func showAlert(message: String?) {
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self, self.view.window != nil else { return }
+            
+            let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+            alert.addAction(okAction)
+            self.present(alert, animated: true)
+        }
         
     }
     
@@ -114,7 +250,9 @@ final class MemoBottomSheetViewController: UIViewController {
         setupUI();
         setupConstraints();
         setupStyle();
+        setupDismissKeyboardOnTap()
         bindViewModel();
+        viewLoaded$.accept(Void())
     }
     
     init(memoBottomSheetViewModel:MemoBottomSheetViewModelProtocol){

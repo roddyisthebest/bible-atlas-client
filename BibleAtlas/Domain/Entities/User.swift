@@ -31,3 +31,12 @@ struct UserResponse: Decodable {
     let user: User
     let authData: AuthData
 }
+
+
+
+struct RelatedUserInfo:Decodable{
+    let isLiked: Bool
+    let isSaved: Bool
+    let memo: PlaceMemo?
+    
+}

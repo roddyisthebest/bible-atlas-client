@@ -15,4 +15,15 @@ extension UIViewController {
             return self
         }
     }
+    
+    func setupDismissKeyboardOnTap() {
+        let tapGesture = UITapGestureRecognizer(target: self, action:#selector(dismissKeyboardGlobally))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+
+    @objc private func dismissKeyboardGlobally() {
+        view.endEditing(true)
+    }
+    
 }

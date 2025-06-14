@@ -53,6 +53,7 @@ extension UIColor {
         return traitCollection.userInterfaceStyle == .dark ? UIColor(hex: "#37393C") : UIColor(hex: "#E7E7E7")
     }
     
+    static let primaryViolet = UIColor(hex: "#8144FC")
     
     static let oneHunnitPercentBadgeBkg = UIColor(hex: "#8144FC")
     

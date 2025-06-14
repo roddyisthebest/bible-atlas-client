@@ -77,6 +77,16 @@
 		EC77CE502DD5C86A0030DEF5 /* PlacesByCharacterBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE4F2DD5C86A0030DEF5 /* PlacesByCharacterBottomSheetViewController.swift */; };
 		EC77CE522DD5C8950030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE512DD5C8950030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift */; };
 		EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF92D75923C00AEC01B /* DiffCode.swift */; };
+		EC940E9B2DEF25E300406944 /* ToggleCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940E9A2DEF25E300406944 /* ToggleCircleButton.swift */; };
+		EC940E9D2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940E9C2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift */; };
+		EC940E9F2DF0828200406944 /* BibleVerseDetailBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940E9E2DF0828200406944 /* BibleVerseDetailBottomSheetViewModel.swift */; };
+		EC940EA12DF1756C00406944 /* RxNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940EA02DF1756C00406944 /* RxNotificationService.swift */; };
+		EC940EA42DF175AB00406944 /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940EA32DF175AB00406944 /* NotificationName.swift */; };
+		EC940EA62DF6E56500406944 /* MapApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940EA52DF6E56500406944 /* MapApiService.swift */; };
+		EC940EA82DF7196A00406944 /* MapRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940EA72DF7196A00406944 /* MapRepository.swift */; };
+		EC940EAA2DF7198C00406944 /* MapRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940EA92DF7198C00406944 /* MapRepositoryProtocol.swift */; };
+		EC940EAC2DF71A8100406944 /* MapUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940EAB2DF71A8100406944 /* MapUsecase.swift */; };
+		EC940EAE2DF7229800406944 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940EAD2DF7229800406944 /* MainViewModel.swift */; };
 		ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B962D5082B9005B0428 /* AppDelegate.swift */; };
 		ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B982D5082B9005B0428 /* SceneDelegate.swift */; };
 		ECA94B9B2D5082B9005B0428 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B9A2D5082B9005B0428 /* ViewController.swift */; };
@@ -189,6 +199,16 @@
 		EC77CE4F2DD5C86A0030DEF5 /* PlacesByCharacterBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesByCharacterBottomSheetViewController.swift; sourceTree = "<group>"; };
 		EC77CE512DD5C8950030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesByCharacterBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		EC8ABAF92D75923C00AEC01B /* DiffCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffCode.swift; sourceTree = "<group>"; };
+		EC940E9A2DEF25E300406944 /* ToggleCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleCircleButton.swift; sourceTree = "<group>"; };
+		EC940E9C2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleVerseDetailBottomSheetViewController.swift; sourceTree = "<group>"; };
+		EC940E9E2DF0828200406944 /* BibleVerseDetailBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleVerseDetailBottomSheetViewModel.swift; sourceTree = "<group>"; };
+		EC940EA02DF1756C00406944 /* RxNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxNotificationService.swift; sourceTree = "<group>"; };
+		EC940EA32DF175AB00406944 /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
+		EC940EA52DF6E56500406944 /* MapApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapApiService.swift; sourceTree = "<group>"; };
+		EC940EA72DF7196A00406944 /* MapRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRepository.swift; sourceTree = "<group>"; };
+		EC940EA92DF7198C00406944 /* MapRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRepositoryProtocol.swift; sourceTree = "<group>"; };
+		EC940EAB2DF71A8100406944 /* MapUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapUsecase.swift; sourceTree = "<group>"; };
+		EC940EAD2DF7229800406944 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		ECA94B932D5082B9005B0428 /* BibleAtlas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BibleAtlas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECA94B962D5082B9005B0428 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ECA94B982D5082B9005B0428 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -284,6 +304,7 @@
 				ECA94BDC2D50A59E005B0428 /* AuthApiService.swift */,
 				EC64B9632DDDC45500D3C8A7 /* UserApiService.swift */,
 				EC64B9832DE72C4E00D3C8A7 /* PlaceApiService.swift */,
+				EC940EA52DF6E56500406944 /* MapApiService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -305,6 +326,7 @@
 				ECA94BE42D50AE92005B0428 /* AuthRepositoryProtocol.swift */,
 				EC64B9652DDE049500D3C8A7 /* UserRepositoryProtocol.swift */,
 				EC64B9872DE7334500D3C8A7 /* PlaceRepositoryProtocol.swift */,
+				EC940EA92DF7198C00406944 /* MapRepositoryProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -338,6 +360,7 @@
 		EC64B9762DE44AAB00D3C8A7 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				EC940EA22DF1759300406944 /* Extensions */,
 				EC64B9772DE44B3000D3C8A7 /* Services */,
 				EC64B9562DD8481000D3C8A7 /* Stores */,
 				EC64B95E2DDAEDD400D3C8A7 /* Initializers */,
@@ -350,6 +373,7 @@
 			isa = PBXGroup;
 			children = (
 				EC64B97F2DE45B4200D3C8A7 /* ErrorHandlerService.swift */,
+				EC940EA02DF1756C00406944 /* RxNotificationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -389,6 +413,7 @@
 				EC7058972DBA772E002D47DF /* GuideButton.swift */,
 				EC70589B2DBC7C4D002D47DF /* CircleButton.swift */,
 				EC77CE372DCF79800030DEF5 /* IconTextButton.swift */,
+				EC940E9A2DEF25E300406944 /* ToggleCircleButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -416,6 +441,14 @@
 				EC77CE492DD0E4DC0030DEF5 /* PlaceCharacterCell.swift */,
 			);
 			path = Tables;
+			sourceTree = "<group>";
+		};
+		EC940EA22DF1759300406944 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				EC940EA32DF175AB00406944 /* NotificationName.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		ECA94B8A2D5082B9005B0428 = {
@@ -541,6 +574,7 @@
 				ECA94BE72D50AF41005B0428 /* AuthRepository.swift */,
 				EC64B9682DDE051D00D3C8A7 /* UserRepository.swift */,
 				EC64B9852DE732CC00D3C8A7 /* PlaceRepository.swift */,
+				EC940EA72DF7196A00406944 /* MapRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -551,6 +585,7 @@
 				ECA94BEA2D50B0B9005B0428 /* AuthUsecase.swift */,
 				EC64B96A2DDE05C900D3C8A7 /* UserUsecase.swift */,
 				EC64B9892DE7344700D3C8A7 /* PlaceUsecase.swift */,
+				EC940EAB2DF71A8100406944 /* MapUsecase.swift */,
 			);
 			path = Usecases;
 			sourceTree = "<group>";
@@ -580,6 +615,7 @@
 				EC77CE472DD0E3E70030DEF5 /* PlaceCharactersBottomSheetViewController.swift */,
 				EC77CE4B2DD5AACA0030DEF5 /* PlacesByTypeBottomSheetViewController.swift */,
 				EC77CE4F2DD5C86A0030DEF5 /* PlacesByCharacterBottomSheetViewController.swift */,
+				EC940E9C2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -597,6 +633,8 @@
 				EC77CE452DD0E2540030DEF5 /* PlaceCharactersBottomSheetViewModel.swift */,
 				EC77CE4D2DD5B3480030DEF5 /* PlacesByTypeBottomSheetViewModel.swift */,
 				EC77CE512DD5C8950030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift */,
+				EC940E9E2DF0828200406944 /* BibleVerseDetailBottomSheetViewModel.swift */,
+				EC940EAD2DF7229800406944 /* MainViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -871,27 +909,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC940E9F2DF0828200406944 /* BibleVerseDetailBottomSheetViewModel.swift in Sources */,
 				EC77CE402DD0A7E90030DEF5 /* PlaceTypesBottomSheetViewController.swift in Sources */,
 				EC7058A22DBCCA9D002D47DF /* PlaceTableViewCell.swift in Sources */,
 				EC77CDF62DC337FC0030DEF5 /* MyCollectionBottomSheetViewModel.swift in Sources */,
 				EC7058AB2DBFB072002D47DF /* VMFactory.swift in Sources */,
 				EC64B9522DD838E300D3C8A7 /* TokenProviderProtocol.swift in Sources */,
 				EC7058A02DBCC6FE002D47DF /* MyCollectionBottomSheetViewController.swift in Sources */,
+				EC940EAC2DF71A8100406944 /* MapUsecase.swift in Sources */,
 				EC77CE032DC5E3460030DEF5 /* PlaceDetailViewModel.swift in Sources */,
 				EC77CE302DCF2D9C0030DEF5 /* RelatedVerseTableViewCell.swift in Sources */,
 				EC70589E2DBCA8B6002D47DF /* HeaderLabel.swift in Sources */,
 				EC64B9822DE45C0300D3C8A7 /* ErrorHandlerServiceProtocol.swift in Sources */,
 				EC70588E2DB8BEB1002D47DF /* MainLabel.swift in Sources */,
+				EC940EA12DF1756C00406944 /* RxNotificationService.swift in Sources */,
+				EC940EAA2DF7198C00406944 /* MapRepositoryProtocol.swift in Sources */,
 				EC77CE442DD0AF630030DEF5 /* PlaceTypesBottomSheetViewModel.swift in Sources */,
 				EC64B9662DDE049500D3C8A7 /* UserRepositoryProtocol.swift in Sources */,
 				EC77CE062DC5E9910030DEF5 /* Place.swift in Sources */,
 				EC64B9692DDE051D00D3C8A7 /* UserRepository.swift in Sources */,
 				EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */,
+				EC940EA82DF7196A00406944 /* MapRepository.swift in Sources */,
 				ECA94BE82D50AF41005B0428 /* AuthRepository.swift in Sources */,
 				EC77CE012DC5DA8D0030DEF5 /* PlaceDetailViewController.swift in Sources */,
 				EC77CE4E2DD5B3480030DEF5 /* PlacesByTypeBottomSheetViewModel.swift in Sources */,
 				EC77CE482DD0E3E70030DEF5 /* PlaceCharactersBottomSheetViewController.swift in Sources */,
 				EC7058982DBA772E002D47DF /* GuideButton.swift in Sources */,
+				EC940EA42DF175AB00406944 /* NotificationName.swift in Sources */,
 				EC64B9862DE732CC00D3C8A7 /* PlaceRepository.swift in Sources */,
 				EC70587E2DB397CF002D47DF /* BottomSheetCoordinator.swift in Sources */,
 				EC64B9602DDAEDFA00D3C8A7 /* AppInitializer.swift in Sources */,
@@ -907,8 +951,10 @@
 				ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */,
 				EC77CE362DCF630E0030DEF5 /* MemoBottomSheetViewController.swift in Sources */,
 				EC7058A92DBFAEB5002D47DF /* VCFactory.swift in Sources */,
+				EC940E9D2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift in Sources */,
 				EC77CDF42DC32C020030DEF5 /* UIViewController.swift in Sources */,
 				EC77CDF22DC318EB0030DEF5 /* LoginBottomSheetViewModel.swift in Sources */,
+				EC940EA62DF6E56500406944 /* MapApiService.swift in Sources */,
 				EC77CE4C2DD5AACA0030DEF5 /* PlacesByTypeBottomSheetViewController.swift in Sources */,
 				EC64B9952DEC595900D3C8A7 /* FooterLoadingReusableView.swift in Sources */,
 				EC64B9842DE72C4E00D3C8A7 /* PlaceApiService.swift in Sources */,
@@ -944,11 +990,13 @@
 				ECA94BA12D5082B9005B0428 /* BibleAtlas.xcdatamodeld in Sources */,
 				EC64B98D2DEB3ADB00D3C8A7 /* LoadingView.swift in Sources */,
 				EC64B95C2DD9A18D00D3C8A7 /* KeychainTokenProvider.swift in Sources */,
+				EC940E9B2DEF25E300406944 /* ToggleCircleButton.swift in Sources */,
 				ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */,
 				EC77CE4A2DD0E4DC0030DEF5 /* PlaceCharacterCell.swift in Sources */,
 				ECA94BD52D5094F1005B0428 /* User.swift in Sources */,
 				EC7058942DB9D93D002D47DF /* RecentSearchTableViewCell.swift in Sources */,
 				EC64B98A2DE7344700D3C8A7 /* PlaceUsecase.swift in Sources */,
+				EC940EAE2DF7229800406944 /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

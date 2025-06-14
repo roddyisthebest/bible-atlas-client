@@ -18,7 +18,7 @@ protocol VMFactoryProtocol {
     func makeLoginBottomSheetVM() -> LoginBottomSheetViewModelProtocol
     func makeMyCollectionBottomSheetVM(filter:PlaceFilter) -> MyCollectionBottomSheetViewModelProtocol
     
-    func makePlaceDetailBottomSheetVM(placeId:String) -> PlaceDetailViewModelProtocol
+    func makePlaceDetailBottomSheetVM(placeId:String, parentPlaceId:String?) -> PlaceDetailViewModelProtocol
     
     func makeMemoBottomSheetVM(placeId:String) -> MemoBottomSheetViewModelProtocol
     
@@ -33,10 +33,18 @@ protocol VMFactoryProtocol {
     func makePlacesByCharacterBottomSheetVM(character:String) ->
         PlacesByCharacterBottomSheetViewModelProtocol
     
+    func makeBibleVerseDetailBottomSheetVM(keyword:String) ->
+        BibleVerseDetailBottomSheetViewModelProtocol
+    
     func configure(navigator:BottomSheetNavigator)
 }
 
 final class VMFactory:VMFactoryProtocol{
+    func makeBibleVerseDetailBottomSheetVM(keyword: String) -> BibleVerseDetailBottomSheetViewModelProtocol {
+        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, keyword: keyword, placeUsecase: usecases?.place)
+        return vm
+    }
+    
     func makePlaceTypesBottomSheetVM() -> PlaceTypesBottomSheetViewModelProtocol {
         let vm = PlaceTypesBottomSheetViewModel(navigator: navigator, placeUsecase: usecases?.place);
         return vm
@@ -51,10 +59,13 @@ final class VMFactory:VMFactoryProtocol{
     private weak var navigator:BottomSheetNavigator?;
     private var appStore:AppStoreProtocol?
     private var usecases:UseCases?
+    private var notificationService: RxNotificationServiceProtocol?
+
     
-    init(appStore: AppStoreProtocol? = nil, usecases:UseCases? = nil) {
+    init(appStore: AppStoreProtocol? = nil, usecases:UseCases? = nil, notificationService: RxNotificationServiceProtocol?) {
         self.appStore = appStore
         self.usecases = usecases
+        self.notificationService = notificationService
     }
     
     func makeHomeBottomSheetVM() -> HomeBottomSheetViewModelProtocol {
@@ -63,7 +74,7 @@ final class VMFactory:VMFactoryProtocol{
     }
     
     func makeLoginBottomSheetVM() -> LoginBottomSheetViewModelProtocol {
-        let vm = LoginBottomSheetViewModel(navigator: navigator,usecase: usecases?.auth, appStore: appStore);
+        let vm = LoginBottomSheetViewModel(navigator: navigator,usecase: usecases?.auth, appStore: appStore , notificationService: notificationService);
         return vm;
     }
     
@@ -72,18 +83,18 @@ final class VMFactory:VMFactoryProtocol{
         return vm;
     }
     
-    func makePlaceDetailBottomSheetVM(placeId: String) -> PlaceDetailViewModelProtocol {
-        let vm = PlaceDetailViewModel(navigator: navigator, placeId:placeId);
+    func makePlaceDetailBottomSheetVM(placeId: String, parentPlaceId: String?) -> PlaceDetailViewModelProtocol {
+        let vm = PlaceDetailViewModel(navigator: navigator, placeId:placeId, parentPlaceId: parentPlaceId, placeUsecase: usecases?.place,  appStore:appStore, notificationService: notificationService );
         return vm;
     }
     
     func makeMemoBottomSheetVM(placeId: String) -> MemoBottomSheetViewModelProtocol {
-        let vm = MemoBottomSheetViewModel(navigator: navigator, placeId: placeId)
+        let vm = MemoBottomSheetViewModel(navigator: navigator, placeId: placeId,placeUsecase: usecases?.place, notificationService: notificationService)
         return vm;
     }
     
     func makePlaceModificationBottomSheerVM(placeId: String) -> PlaceModificationBottomSheetViewModelProtocol {
-        let vm = PlaceModificationBottomSheetViewModel(navigator: navigator, placeId: placeId);
+        let vm = PlaceModificationBottomSheetViewModel(navigator: navigator, placeId: placeId, placeUsecase: usecases?.place);
         return vm
     }
     
