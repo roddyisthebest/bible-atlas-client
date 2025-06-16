@@ -26,6 +26,8 @@ final class MainViewController: UIViewController, Presentable  {
     private var selectedPlaceId:String? = nil;
     
     private let placeAnnotationTapped$ = PublishRelay<String>();
+    
+    private let isPainting$ = BehaviorRelay<Bool>(value: false);
 
     
     private let mapView = {
@@ -44,7 +46,8 @@ final class MainViewController: UIViewController, Presentable  {
         }
         
         loadingView.snp.makeConstraints { make in
-            make.center.equalToSuperview();
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().offset(view.bounds.height * 0.25)
         }
 
     }
@@ -68,6 +71,7 @@ final class MainViewController: UIViewController, Presentable  {
         setupUI();
         setupConstaints();
         bindViewModel();
+        bindObservable();
         setFirstRegion();
         viewLoaded$.accept(Void())
 
@@ -106,8 +110,10 @@ final class MainViewController: UIViewController, Presentable  {
                     self?.loadingView.start();
                 }
                 else{
+                    
                     self?.mapView.isUserInteractionEnabled = true;
                     self?.loadingView.stop()
+
                 }
                 
             })
@@ -130,6 +136,22 @@ final class MainViewController: UIViewController, Presentable  {
             .disposed(by: disposeBag)
     }
     
+    private func bindObservable(){
+        isPainting$.asObservable()
+            .subscribe(onNext: {[weak self] isPainting in
+                if(isPainting){
+                    self?.mapView.isUserInteractionEnabled = false
+                    self?.loadingView.start();
+                }
+                else{
+                    
+                    self?.mapView.isUserInteractionEnabled = true;
+                    self?.loadingView.stop()
+
+                }
+        }).disposed(by: disposeBag)
+    }
+    
     private func clearMapView(){
         mapView.removeOverlays(mapView.overlays)
         mapView.removeAnnotations(mapView.annotations)
@@ -149,7 +171,7 @@ final class MainViewController: UIViewController, Presentable  {
     }
     
     private func renderPlaces(places:[Place]){
-        
+        isPainting$.accept(true)
         var annotations: [MKAnnotation] = places.map{
             let annotation = CustomPointAnnotation()
   
@@ -164,17 +186,20 @@ final class MainViewController: UIViewController, Presentable  {
             return annotation
         }
         mapView.addAnnotations(annotations);
-
+        isPainting$.accept(false)
 
     }
     
     private func renderGeoJson(features: [MKGeoJSONFeature]) {
-       clearMapView();
+        clearMapView();
 
         var overlays: [MKOverlay] = []
         var annotations: [MKAnnotation] = []
         var boundingMapRect = MKMapRect.null
-
+        
+        isPainting$.accept(true)
+            
+        
         for feature in features {
             for geometry in feature.geometry {
                 var id: String?
@@ -228,6 +253,11 @@ final class MainViewController: UIViewController, Presentable  {
 
             mapView.setRegion(region, animated: true)
         }
+        
+        
+        
+        isPainting$.accept(false)
+
     }
 
     

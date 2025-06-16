@@ -66,10 +66,16 @@ final class MainViewModel: MainViewModelProtocol {
 
     
     private func getPlacesWithRepresentativePoint(){
-        
+            
+        isLoading$.accept(true)
         
         Task{
+            defer{
+                isLoading$.accept(false)
+            }
+            
             let result = await self.placeUsecase?.getPlacesWithRepresentativePoint();
+                
             
             
             switch(result){
