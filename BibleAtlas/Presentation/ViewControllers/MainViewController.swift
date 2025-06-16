@@ -25,6 +25,8 @@ final class MainViewController: UIViewController, Presentable  {
     
     private var selectedPlaceId:String? = nil;
     
+    private let placeAnnotationTapped$ = PublishRelay<String>();
+
     
     private let mapView = {
         let mv = MKMapView();
@@ -65,12 +67,14 @@ final class MainViewController: UIViewController, Presentable  {
         super.viewDidLoad()
         setupUI();
         setupConstaints();
-        viewLoaded$.accept(Void())
         bindViewModel();
+        setFirstRegion();
+        viewLoaded$.accept(Void())
+
     }
     
     func present(vc: ViewController, animated: Bool) {
-               super.present(vc, animated: animated)
+        super.present(vc, animated: animated)
     }
 
     func dismiss(animated: Bool) {
@@ -78,7 +82,14 @@ final class MainViewController: UIViewController, Presentable  {
     }
     
     private func bindViewModel(){
-        let output = mainViewModel?.transform(input: MainViewModel.Input(viewLoaded$: viewLoaded$.asObservable()))
+        let output = mainViewModel?.transform(input: MainViewModel.Input(viewLoaded$: viewLoaded$.asObservable(), placeAnnotationTapped$: placeAnnotationTapped$.asObservable()))
+        
+        output?.placesWithRepresentativePoint$
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {[weak self] places in
+                self?.renderPlaces(places: places)
+            })
+            .disposed(by:disposeBag)
         
         
         output?.selectedPlaceId$
@@ -111,7 +122,7 @@ final class MainViewController: UIViewController, Presentable  {
             .disposed(by: disposeBag)
         
         
-        output?.clearMapView$
+        output?.resetMapView$
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self]  in
                 self?.clearMapView();
@@ -122,6 +133,39 @@ final class MainViewController: UIViewController, Presentable  {
     private func clearMapView(){
         mapView.removeOverlays(mapView.overlays)
         mapView.removeAnnotations(mapView.annotations)
+    }
+    
+    private func setFirstRegion() {
+        let initialCenter = CLLocationCoordinate2D(latitude: 31.7683, longitude: 35.2137)
+        let initialSpan = MKCoordinateSpan(latitudeDelta: 2.0, longitudeDelta: 2.0)
+        
+        let shiftRatio: CLLocationDegrees = 0.5  // 위로 50% 이동
+        let shiftedLatitude = initialCenter.latitude - initialSpan.latitudeDelta * shiftRatio
+        
+        let adjustedCenter = CLLocationCoordinate2D(latitude: shiftedLatitude, longitude: initialCenter.longitude)
+        let region = MKCoordinateRegion(center: adjustedCenter, span: initialSpan)
+        
+        mapView.setRegion(region, animated: false)
+    }
+    
+    private func renderPlaces(places:[Place]){
+        
+        var annotations: [MKAnnotation] = places.map{
+            let annotation = CustomPointAnnotation()
+  
+            annotation.coordinate = CLLocationCoordinate2D(latitude: $0.latitude ?? 0, longitude: $0.longitude ?? 0)
+            annotation.placeId = $0.id
+            if let placeType = $0.types.first{
+                annotation.placeTypeName = placeType.name
+            }
+
+            annotation.title = $0.name
+
+            return annotation
+        }
+        mapView.addAnnotations(annotations);
+
+
     }
     
     private func renderGeoJson(features: [MKGeoJSONFeature]) {
@@ -230,7 +274,11 @@ extension MainViewController: MKMapViewDelegate {
         // ✅ cast to our custom annotation
         let config = UIImage.SymbolConfiguration(pointSize: 15, weight: .medium)
 
+
+        
         if let customAnnotation = annotation as? CustomPointAnnotation {
+            let placeType = customAnnotation.placeTypeName
+
             if let placeId = customAnnotation.placeId {
                 
                 if(selectedPlaceId == placeId){
@@ -238,11 +286,19 @@ extension MainViewController: MKMapViewDelegate {
                 }
                 
                 else{
-                    annotationView?.glyphImage = UIImage(systemName: "questionmark.circle", withConfiguration: config)
+                    if let placeTypeName = customAnnotation.placeTypeName?.rawValue {
+                        annotationView?.glyphImage = UIImage(named:placeTypeName)
+                    }
+                    else{
+                        annotationView?.glyphImage = UIImage(systemName: "questionmark.circle", withConfiguration: config)
+                    }
+                   
 
                 }
-            } else {
+            }   else {
+
                 annotationView?.glyphImage = UIImage(systemName: "record.circle", withConfiguration: config)
+
             }
         }
 
@@ -256,9 +312,7 @@ extension MainViewController: MKMapViewDelegate {
         guard let annotation = view.annotation as? CustomPointAnnotation else { return }
 
         if let placeId = annotation.placeId {
-            print("✅ 선택된 placeId:", placeId)
-
-        
+            placeAnnotationTapped$.accept(placeId)
         } else {
             print("❓ placeId가 없음 (아마도 일반 참고용 위치)")
         }
@@ -268,6 +322,8 @@ extension MainViewController: MKMapViewDelegate {
 
 final class CustomPointAnnotation: MKPointAnnotation {
     var placeId: String?
+    var placeTypeName: PlaceName?
+
 }
 
 

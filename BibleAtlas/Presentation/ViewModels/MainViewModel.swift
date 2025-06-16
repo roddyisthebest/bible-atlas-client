@@ -19,32 +19,69 @@ final class MainViewModel: MainViewModelProtocol {
     private let geoJsonRender$ = PublishRelay<[MKGeoJSONFeature]>()
     private let error$ = BehaviorRelay<NetworkError?>(value: nil)
     private let isLoading$ = BehaviorRelay<Bool>(value: false);
+        
+    private weak var navigator:BottomSheetNavigator?
+    
+    private let isFirstFetching$ = BehaviorRelay<Bool>(value:false);
+    
     private let selectedPlaceId$ = BehaviorRelay<String?>(value: nil);
     
-    private let clearMapView$ = PublishRelay<Void>()
-
+    private let resetMapView$ = PublishRelay<Void>()
+    
+    
+    private var placesWithRepresentativePoint$ = BehaviorRelay<[Place]>(value: []);
     
     
     private let mapUseCase:MapUsecaseProtocol?
+    private let placeUsecase:PlaceUsecaseProtocol?
     
     private let notificationService: RxNotificationServiceProtocol?
 
-    init(mapUseCase: MapUsecaseProtocol?, notificationService:RxNotificationServiceProtocol) {
+    init(bottomSheetCoordinator:BottomSheetNavigator? ,mapUseCase: MapUsecaseProtocol?,placeUsecase: PlaceUsecaseProtocol? ,notificationService:RxNotificationServiceProtocol) {
         self.mapUseCase = mapUseCase
+        self.placeUsecase = placeUsecase
         self.notificationService = notificationService
-        
+        self.navigator = bottomSheetCoordinator
         bindNotificationService();
     }
     
     func transform(input:Input) -> Output {
         
         input.viewLoaded$.subscribe(onNext: { [weak self] in
-            
-            
+            self?.getPlacesWithRepresentativePoint();
         }).disposed(by: disposeBag)
         
+        input.placeAnnotationTapped$.subscribe(onNext:{
+            [weak self] placeId in
+            
+            let selectedPlaceId = self?.selectedPlaceId$.value;
+            if(selectedPlaceId != placeId){
+                self?.navigator?.present(.placeDetail(placeId, nil))
+            }
+
+        }).disposed(by: disposeBag)
         
-        return Output(error$: error$.asObservable(), isLoading$: isLoading$.asObservable(), geoJsonRender$: geoJsonRender$.asObservable(), clearMapView$: clearMapView$.asObservable(), selectedPlaceId$: selectedPlaceId$.asObservable())
+        return Output(error$: error$.asObservable(), isLoading$: isLoading$.asObservable(), geoJsonRender$: geoJsonRender$.asObservable(), resetMapView$: resetMapView$.asObservable(), selectedPlaceId$: selectedPlaceId$.asObservable(), placesWithRepresentativePoint$: placesWithRepresentativePoint$.asObservable())
+    }
+
+    
+    private func getPlacesWithRepresentativePoint(){
+        
+        
+        Task{
+            let result = await self.placeUsecase?.getPlacesWithRepresentativePoint();
+            
+            
+            switch(result){
+            case.success(let response):
+                self.placesWithRepresentativePoint$.accept(response.data);
+            case .failure(let error):
+                print(error)
+            case.none:
+                print("none")
+            }
+        }
+        
     }
     
     
@@ -60,7 +97,12 @@ final class MainViewModel: MainViewModelProtocol {
         self.notificationService?.observe(.resetGeoJson)
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
-                self?.clearMapView$.accept(Void())
+                self?.resetMapView$.accept(Void())
+                self?.selectedPlaceId$.accept(nil)
+                if let places = self?.placesWithRepresentativePoint$.value {
+                    self?.placesWithRepresentativePoint$.accept(places)
+                }
+                
             })
             .disposed(by: disposeBag)
         
@@ -92,17 +134,20 @@ final class MainViewModel: MainViewModelProtocol {
         
     }
     
+    
+    
     public struct Input {
         let viewLoaded$:Observable<Void>
-
+        let placeAnnotationTapped$:Observable<String>
     }
     
     public struct Output{
         let error$:Observable<NetworkError?>
         let isLoading$:Observable<Bool>
         let geoJsonRender$:Observable<[MKGeoJSONFeature]>
-        let clearMapView$:Observable<Void>
+        let resetMapView$:Observable<Void>
         let selectedPlaceId$:Observable<String?>
+        let placesWithRepresentativePoint$:Observable<[Place]>
     }
     
 }

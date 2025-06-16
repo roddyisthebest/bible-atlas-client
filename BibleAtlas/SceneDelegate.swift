@@ -75,7 +75,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let mapUsecase = MapUsecase(repository: mapRepository);
         
-        let mainVM = MainViewModel(mapUseCase: mapUsecase, notificationService: notificationService)
+        let mainVM = MainViewModel(bottomSheetCoordinator: bottomSheetCoordinator, mapUseCase: mapUsecase, placeUsecase: placeUsecase, notificationService: notificationService)
         let mainVC = MainViewController(navigator: bottomSheetCoordinator, vm:mainVM);
 
         mainVC.modalPresentationStyle = .custom

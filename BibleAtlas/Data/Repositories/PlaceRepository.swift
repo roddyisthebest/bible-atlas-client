@@ -15,6 +15,10 @@ public struct PlaceRepository:PlaceRepositoryProtocol{
         return await placeApiService.getPlaces(limit: limit, page: page, placeTypeId: placeTypeId, name: name, prefix: prefix)
     }
     
+    func getPlacesWithRepresentativePoint() async -> Result<ListResponse<Place>, NetworkError> {
+        return await placeApiService.getPlacesWithRepresentativePoint()
+    }
+    
     func getPlaceTypes(limit: Int?, page: Int?) async -> Result<ListResponse<PlaceTypeWithPlaceCount>, NetworkError> {
         return await placeApiService.getPlaceTypes(limit: limit, page: page)
     }

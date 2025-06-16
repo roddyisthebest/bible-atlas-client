@@ -75,6 +75,8 @@ struct Place: Decodable {
     var isSaved: Bool?
     var memo: PlaceMemo?
     var imageTitle:String?
+    var longitude:Double?
+    var latitude:Double?
 }
 
 

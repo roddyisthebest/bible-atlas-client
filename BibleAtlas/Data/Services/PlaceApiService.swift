@@ -10,6 +10,8 @@ import Alamofire
 
 protocol PlaceApiServiceProtocol {
     func getPlaces(limit:Int?, page:Int?, placeTypeId:Int?, name:String?, prefix:String?) async -> Result<ListResponse<Place>,NetworkError>
+    
+    func getPlacesWithRepresentativePoint() async -> Result<ListResponse<Place>, NetworkError>
     func getPlaceTypes(limit:Int?, page:Int?) async -> Result<ListResponse<PlaceTypeWithPlaceCount>,NetworkError>
     func getPrefixs() async -> Result<ListResponse<PlacePrefix>,NetworkError>
     func getPlace(placeId:String) async -> Result<Place,NetworkError>
@@ -61,6 +63,11 @@ final public class PlaceApiService: PlaceApiServiceProtocol{
         }
         
         return await apiClient.getData(url:"\(url)/place",parameters: params)
+    }
+    
+    
+    func getPlacesWithRepresentativePoint() async -> Result<ListResponse<Place>, NetworkError> {
+        return await apiClient.getData(url: "\(url)/place/with-representative-point", parameters: nil)
     }
     
     func getPlaceTypes(limit: Int?, page: Int?) async -> Result<ListResponse<PlaceTypeWithPlaceCount>, NetworkError> {

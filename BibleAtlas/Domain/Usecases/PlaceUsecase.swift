@@ -10,6 +10,8 @@ import Foundation
 protocol PlaceUsecaseProtocol {
     func getPlaces(limit:Int?, page:Int?, placeTypeId:Int?, name:String?, prefix:String?) async -> Result<ListResponse<Place>,NetworkError>
     
+    func getPlacesWithRepresentativePoint() async -> Result<ListResponse<Place>, NetworkError>
+
     func getPlaceTypes(limit:Int?, page:Int?) async -> Result<ListResponse<PlaceTypeWithPlaceCount>,NetworkError>
     
     func getPrefixs() async -> Result<ListResponse<PlacePrefix>,NetworkError>
@@ -47,6 +49,10 @@ public struct PlaceUsecase:PlaceUsecaseProtocol{
     
     func getPlaces(limit: Int?, page: Int?, placeTypeId: Int?, name: String?, prefix:String?) async -> Result<ListResponse<Place>, NetworkError> {
         return await repository.getPlaces(limit: limit, page: page, placeTypeId: placeTypeId, name: name, prefix: prefix)
+    }
+    
+    func getPlacesWithRepresentativePoint() async -> Result<ListResponse<Place>, NetworkError> {
+        return await repository.getPlacesWithRepresentativePoint();
     }
     
     func getPlaceTypes(limit: Int?, page: Int?) async -> Result<ListResponse<PlaceTypeWithPlaceCount>, NetworkError> {
