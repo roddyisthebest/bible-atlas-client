@@ -163,8 +163,10 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
     func present(_ type: BottomSheetType) {
         switch(type){
         case .home:
-            let vm = vmFactory.makeHomeBottomSheetVM();
-            let vc = vcFactory.makeHomeBottomSheetVC(vm: vm);
+            let homeVM = vmFactory.makeHomeBottomSheetVM();
+            let searchVM = vmFactory.makeSearchBottomSheetVM();
+            
+            let vc = vcFactory.makeHomeBottomSheetVC(homeVM: homeVM, searchVM: searchVM);
             
             presentFromTopVC(vc);
             

@@ -8,25 +8,68 @@
 import UIKit
 import RxSwift
 import RxCocoa
-final class HomeBottomSheetViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+
+final class HomeBottomSheetViewController: UIViewController{
     
     private var homeBottomSheetViewModel:HomeBottomSheetViewModelProtocol?
+    private var searchBottomSheetViewModel:SearchBottomSheetViewModelProtocol?
     
     private let placesByTypeButtonTapped$ = PublishRelay<Void>();
     private let placesByCharacterButtonTapped$ = PublishRelay<Void>();
+        
+    private let bottomReached$ = PublishRelay<Void>();
+
+    private let placeCellSelected$ = PublishRelay<String>();
     
     private let disposeBag = DisposeBag()
     
     private lazy var bodyView = {
         let v = UIView();
         v.addSubview(headerStackView);
-        v.addSubview(scrollView);
-        view.addSubview(v);
+        v.addSubview(homeScrollView);
+        v.addSubview(searchReadyView);
+        v.addSubview(searchTableView);
+        
+            
+        v.addSubview(searchingView);
+        
+        return v;
+    }()
+    
+    private lazy var searchTableView = {
+        let tv = UITableView();
+        tv.register(PlaceTableViewCell.self, forCellReuseIdentifier: PlaceTableViewCell.identifier)
+        
+        tv.delegate = self;
+        tv.dataSource = self;
+        
+        tv.backgroundColor = .mainItemBkg
+        
+        tv.layer.cornerRadius = 10;
+        tv.layer.masksToBounds = true;
+        tv.rowHeight = 80;
+        
+        tv.tableFooterView = footerLoadingView
+        tv.isHidden = true;
+        footerLoadingView.frame = CGRect(x: 0, y: 0, width: tv.bounds.width, height: 44)
+        
+        return tv;
+    }()
+    
+    
+    private let searchingView = LoadingView();
+    private let footerLoadingView = LoadingView(style: .medium);
+
+    
+    private let searchReadyView = {
+        let v = UIView();
+        v.isHidden = true;
+        v.backgroundColor = .yellow;
         return v;
     }()
     
     
-    private lazy var scrollView = {
+    private lazy var homeScrollView = {
         let sv = UIScrollView();
         sv.isScrollEnabled = false
         sv.addSubview(contentView)
@@ -43,7 +86,7 @@ final class HomeBottomSheetViewController: UIViewController, UITableViewDelegate
     
     
     private lazy var headerStackView = {
-        let sv = UIStackView(arrangedSubviews: [searchTextField, userAvatarButton]);
+        let sv = UIStackView(arrangedSubviews: [searchTextField, userAvatarButton, cancelButton]);
         
         sv.axis = .horizontal;
         sv.spacing = 10;
@@ -56,13 +99,16 @@ final class HomeBottomSheetViewController: UIViewController, UITableViewDelegate
     private lazy var searchTextField: UISearchTextField = {
         let input = UISearchTextField()
         
-        
+        input.delegate = self;
         input.placeholder = "search places..."
         
         input.font = .systemFont(ofSize: 16)
         
-        input.returnKeyType = .search
+        input.returnKeyType =  .done
         
+        input.autocorrectionType = .no
+        input.spellCheckingType = .no
+        input.translatesAutoresizingMaskIntoConstraints = false
         
         return input
     }()
@@ -81,6 +127,17 @@ final class HomeBottomSheetViewController: UIViewController, UITableViewDelegate
         button.titleLabel?.font = .systemFont(ofSize: 12, weight: .medium)
  
         
+        return button;
+    }()
+    
+    private let cancelButton = {
+        let button =  UIButton(type: .system)
+            
+        button.setTitle("Cancel", for: .normal)
+        button.setTitleColor(.primaryBlue, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
+
+        button.isHidden = true
         return button;
     }()
     
@@ -218,19 +275,143 @@ final class HomeBottomSheetViewController: UIViewController, UITableViewDelegate
         return button;
     }()
     
-
+    
+    private var places: [Place] = [];
     
     private let dummySearches:[String] = ["onasdasdasdasdasddfasdfdfasdfasdfasdfasdfasdfe", "sdfasdfadsfasdfasdffsdsadf"];
+    
+    
+    private let lowDetent = UISheetPresentationController.Detent.custom { context in
+        return UIScreen.main.bounds.height * 0.2;
+    }
+    
     
     init(){
         super.init(nibName: nil, bundle: nil)
     }
     
+    private func setupUI(){
+        view.addSubview(bodyView);
+    }
     
- 
+    
+    
+    private func bindSearchViewModel(){
+        let cancelButtonTapped$ = cancelButton.rx.tap.asObservable();
+        let editingDidBegin$ = searchTextField.rx.controlEvent(.editingDidBegin).asObservable()
+
+        let output = searchBottomSheetViewModel?.transform(input: SearchBottomSheetViewModel.Input( cancelButtonTapped$: cancelButtonTapped$, editingDidBegin$: editingDidBegin$, bottomReached$: bottomReached$.asObservable(), placeCellSelected$: placeCellSelected$.asObservable()))
+        
+        
+        searchTextField.rx.text.orEmpty
+            .subscribe(onNext: { output!.keywordRelay$.accept($0) })
+            .disposed(by: disposeBag)
+        
+        
+        output?.places$
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {[weak self] places in
+                self?.places = places
+                self?.searchTableView.reloadData()
+            })
+            .disposed(by: disposeBag)
+        
+        
+        output!.keywordText$
+            .drive(searchTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        
+        output?.isSearchingMode$
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {[weak self] isSearchingMode in
+                guard let self = self, let sheet = self.sheetPresentationController else { return }
+                     if isSearchingMode {
+                         UIView.animate(withDuration: 0.3) {
+                             sheet.animateChanges {
+                                 sheet.selectedDetentIdentifier = .large
+                             }
+                            
+                         }
+                  
+                         
+                         sheet.detents = [.large()]
+       
+                         
+                     } else {
+
+                         sheet.detents = [.large(), .medium(), lowDetent]
+                         
+                         
+                         self.searchTextField.resignFirstResponder()
+                         UIView.animate(withDuration: 0.3) {
+                             sheet.animateChanges {
+                                 sheet.selectedDetentIdentifier = .medium
+                             }
+                         }
+                         
+                     }
+                
+            })
+            .disposed(by: disposeBag)
+        
+        
+        output?.screenMode$
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] mode in
+                self?.homeScrollView.isHidden = (mode != .home)
+                self?.searchReadyView.isHidden = (mode != .searchReady)
+                self?.searchTableView.isHidden = (mode != .searching)
+                
+                if(mode == .home){
+                    self?.userAvatarButton.isHidden = false;
+                    self?.cancelButton.isHidden = true
+                }
+                else{
+                    self?.userAvatarButton.isHidden = true;
+                    self?.cancelButton.isHidden = false;
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        output?.isFetchingNext$
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {[weak self] isFetchingNext in
+                    
+                if(isFetchingNext){
+                    self?.footerLoadingView.start();
+                }
+                else{
+                    self?.footerLoadingView.stop();
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        Observable.combineLatest(output!.isSearching$, output!.screenMode$)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isSearching, screenMode  in
+                if(screenMode == .home || screenMode == .searchReady){
+                    self?.searchTableView.isHidden = true;
+                    self?.searchingView.stop()
+                    return
+                }
+                
+                
+                if(isSearching){
+                    self?.searchTableView.isHidden = true;
+                    self?.searchingView.start()
+                }
+                else{
+                    self?.searchTableView.isHidden = false;
+                    self?.searchingView.stop()
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
 
    
-    private func bindViewModel(){
+    private func bindHomeViewModel(){
         let avatarButtonTapped$ = userAvatarButton.rx.tap.asObservable();
         
         let favoriteTapped$ = favoriteButton.rx.tap.map { PlaceFilter.like }
@@ -273,7 +454,7 @@ final class HomeBottomSheetViewController: UIViewController, UITableViewDelegate
             .subscribe(onNext: { loading in
                 self.showLoadingView(loading)
             }).disposed(by: disposeBag)
-   
+    
         
         
     }
@@ -331,8 +512,9 @@ final class HomeBottomSheetViewController: UIViewController, UITableViewDelegate
     }
     
     
-    init(homeBottomSheetViewModel:HomeBottomSheetViewModelProtocol) {
+    init(homeBottomSheetViewModel: HomeBottomSheetViewModelProtocol, searchBottomSheetViewModel: SearchBottomSheetViewModelProtocol) {
         self.homeBottomSheetViewModel = homeBottomSheetViewModel
+        self.searchBottomSheetViewModel = searchBottomSheetViewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -356,11 +538,13 @@ final class HomeBottomSheetViewController: UIViewController, UITableViewDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI();
         setupStyle();
         setupConstraints();
         setupSheet();
-        bindViewModel();
-        
+        bindHomeViewModel();
+        bindSearchViewModel();
+        setupDismissKeyboardOnTap();
     }
     
 
@@ -402,15 +586,35 @@ final class HomeBottomSheetViewController: UIViewController, UITableViewDelegate
             make.width.equalTo(40);
         }
         
-        scrollView.snp.makeConstraints { make in
+        
+        
+        
+        searchReadyView.snp.makeConstraints { make in
+            make.top.equalTo(headerStackView.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        searchingView.snp.makeConstraints { make in
+            make.top.equalTo(headerStackView.snp.bottom).offset(20);
+            make.leading.equalToSuperview().offset(20)
+            make.trailing.bottom.equalToSuperview().inset(20);
+        }
+        
+        searchTableView.snp.makeConstraints { make in
+            make.top.equalTo(headerStackView.snp.bottom).offset(20);
+            make.leading.equalToSuperview().offset(20)
+            make.trailing.bottom.equalToSuperview().inset(20);
+        }
+        
+        homeScrollView.snp.makeConstraints { make in
             make.top.equalTo(headerStackView.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
         }
         
         
         contentView.snp.makeConstraints { make in
-            make.edges.equalTo(scrollView.contentLayoutGuide)
-            make.width.equalTo(scrollView.frameLayoutGuide)
+            make.edges.equalTo(homeScrollView.contentLayoutGuide)
+            make.width.equalTo(homeScrollView.frameLayoutGuide)
         }
         
         
@@ -450,36 +654,121 @@ final class HomeBottomSheetViewController: UIViewController, UITableViewDelegate
 
     
     
+    
+    
+
+}
+
+
+extension HomeBottomSheetViewController:UITableViewDelegate, UITableViewDataSource{
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dummySearches.count;
+        
+            
+        
+        if tableView == recentSearchTableView {
+            return dummySearches.count
+        }
+
+        return places.count
     }
     
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: RecentSearchTableViewCell.identifier, for: indexPath) as? RecentSearchTableViewCell else {
+        if tableView == recentSearchTableView {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: RecentSearchTableViewCell.identifier, for: indexPath) as? RecentSearchTableViewCell else {
+                return UITableViewCell()
+            }
+
+            cell.setText(text: dummySearches[indexPath.row])
+            
+            if indexPath.row == dummySearches.count - 1 {
+                cell.separatorInset = UIEdgeInsets(top: 0, left: tableView.bounds.width, bottom: 0, right: 0)
+            } else {
+                cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
+            }
+            return cell
+        }
+
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PlaceTableViewCell.identifier, for: indexPath) as? PlaceTableViewCell else {
             return UITableViewCell()
         }
 
-        cell.setText(text: dummySearches[indexPath.row])
         
-        if indexPath.row == dummySearches.count - 1 {
-               cell.separatorInset = UIEdgeInsets(top: 0, left: tableView.bounds.width, bottom: 0, right: 0)
-           } else {
-               cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
+        cell.setPlace(place: places[indexPath.row])
+        
+        if indexPath.row == places.count - 1 {
+            cell.separatorInset = UIEdgeInsets(top: 0, left: tableView.bounds.width, bottom: 0, right: 0)
+        } else {
+            cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
         }
-        
-        
+
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if tableView == recentSearchTableView {
+            return 80;
+        }
+        
         return 80;
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        if tableView == searchTableView {
+            
+            placeCellSelected$.accept(places[indexPath.row].id)
+            
+            return
+        }
+        
+        
+        
+    }
+    
 }
-
 
 extension HomeBottomSheetViewController:UISheetPresentationControllerDelegate{
     func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
           let isLarge = sheetPresentationController.selectedDetentIdentifier == .large
-          scrollView.isScrollEnabled = isLarge
+        homeScrollView.isScrollEnabled = isLarge
       }
+}
+
+
+extension HomeBottomSheetViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
+
+
+
+extension HomeBottomSheetViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+
+        guard scrollView == searchTableView else { return }
+        
+        
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+        
+        let isAtBottom = (offsetY + 140) >= contentHeight - height
+        
+        if isAtBottom {
+            bottomReached$.accept(Void())
+        }
+    }
+    
+   
+    
 }

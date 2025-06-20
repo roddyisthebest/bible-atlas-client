@@ -15,6 +15,7 @@ struct UseCases {
 
 protocol VMFactoryProtocol {
     func makeHomeBottomSheetVM() -> HomeBottomSheetViewModelProtocol;
+    func makeSearchBottomSheetVM() -> SearchBottomSheetViewModelProtocol;
     func makeLoginBottomSheetVM() -> LoginBottomSheetViewModelProtocol
     func makeMyCollectionBottomSheetVM(filter:PlaceFilter) -> MyCollectionBottomSheetViewModelProtocol
     
@@ -40,6 +41,13 @@ protocol VMFactoryProtocol {
 }
 
 final class VMFactory:VMFactoryProtocol{
+    func makeSearchBottomSheetVM() -> SearchBottomSheetViewModelProtocol {
+        let vm = SearchBottomSheetViewModel(navigator: navigator, placeUsecase: usecases?.place)
+        return vm
+    }
+    
+    
+    
     func makeBibleVerseDetailBottomSheetVM(keyword: String) -> BibleVerseDetailBottomSheetViewModelProtocol {
         let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, keyword: keyword, placeUsecase: usecases?.place)
         return vm

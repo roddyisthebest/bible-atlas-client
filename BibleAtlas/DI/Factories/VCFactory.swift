@@ -8,7 +8,7 @@
 import UIKit
 protocol VCFactoryProtocol:AnyObject {
     //TODO: VC 직접 타입 리턴 프로토콜로 변경 필요
-    func makeHomeBottomSheetVC(vm:HomeBottomSheetViewModelProtocol) -> HomeBottomSheetViewController
+    func makeHomeBottomSheetVC(homeVM:HomeBottomSheetViewModelProtocol,  searchVM:SearchBottomSheetViewModelProtocol) -> HomeBottomSheetViewController
     func makeLoginBottomSheetVC(vm:LoginBottomSheetViewModelProtocol) -> LoginBottomSheetViewController
     func makeMyCollectionBottomSheetVC(vm:MyCollectionBottomSheetViewModelProtocol) -> MyCollectionBottomSheetViewController;
     func makePlaceDetailBottomSheetVC(vm:PlaceDetailViewModelProtocol) -> PlaceDetailViewController
@@ -44,8 +44,8 @@ final class VCFactory:VCFactoryProtocol {
         return UIScreen.main.bounds.height * 0.5;
     }
     
-    func makeHomeBottomSheetVC(vm:HomeBottomSheetViewModelProtocol) -> HomeBottomSheetViewController {
-        let vc = HomeBottomSheetViewController(homeBottomSheetViewModel: vm);
+    func makeHomeBottomSheetVC(homeVM:HomeBottomSheetViewModelProtocol,  searchVM:SearchBottomSheetViewModelProtocol) -> HomeBottomSheetViewController {
+        let vc = HomeBottomSheetViewController(homeBottomSheetViewModel: homeVM, searchBottomSheetViewModel: searchVM);
         setupVC(type:.home, sheet: vc)
         return vc;
     }

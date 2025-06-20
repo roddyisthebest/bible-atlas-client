@@ -23,7 +23,9 @@ extension UIViewController {
     }
 
     @objc private func dismissKeyboardGlobally() {
-        view.endEditing(true)
+        DispatchQueue.main.async {
+            self.view.endEditing(true)
+        }
     }
     
 }

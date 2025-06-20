@@ -87,6 +87,7 @@
 		EC940EAA2DF7198C00406944 /* MapRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940EA92DF7198C00406944 /* MapRepositoryProtocol.swift */; };
 		EC940EAC2DF71A8100406944 /* MapUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940EAB2DF71A8100406944 /* MapUsecase.swift */; };
 		EC940EAE2DF7229800406944 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940EAD2DF7229800406944 /* MainViewModel.swift */; };
+		EC940EB02E01950D00406944 /* SearchBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940EAF2E01950D00406944 /* SearchBottomSheetViewModel.swift */; };
 		ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B962D5082B9005B0428 /* AppDelegate.swift */; };
 		ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B982D5082B9005B0428 /* SceneDelegate.swift */; };
 		ECA94B9B2D5082B9005B0428 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B9A2D5082B9005B0428 /* ViewController.swift */; };
@@ -209,6 +210,7 @@
 		EC940EA92DF7198C00406944 /* MapRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRepositoryProtocol.swift; sourceTree = "<group>"; };
 		EC940EAB2DF71A8100406944 /* MapUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapUsecase.swift; sourceTree = "<group>"; };
 		EC940EAD2DF7229800406944 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		EC940EAF2E01950D00406944 /* SearchBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		ECA94B932D5082B9005B0428 /* BibleAtlas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BibleAtlas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECA94B962D5082B9005B0428 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ECA94B982D5082B9005B0428 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -635,6 +637,7 @@
 				EC77CE512DD5C8950030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift */,
 				EC940E9E2DF0828200406944 /* BibleVerseDetailBottomSheetViewModel.swift */,
 				EC940EAD2DF7229800406944 /* MainViewModel.swift */,
+				EC940EAF2E01950D00406944 /* SearchBottomSheetViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -941,6 +944,7 @@
 				EC64B9602DDAEDFA00D3C8A7 /* AppInitializer.swift in Sources */,
 				EC77CE3E2DD09AD30030DEF5 /* PlaceModificationBottomSheetViewModel.swift in Sources */,
 				EC64B9792DE44B6700D3C8A7 /* Constants.swift in Sources */,
+				EC940EB02E01950D00406944 /* SearchBottomSheetViewModel.swift in Sources */,
 				EC7058A72DBFA570002D47DF /* HomeBottomSheetViewModel.swift in Sources */,
 				EC77CE382DCF79800030DEF5 /* IconTextButton.swift in Sources */,
 				EC64B9802DE45B4200D3C8A7 /* ErrorHandlerService.swift in Sources */,
