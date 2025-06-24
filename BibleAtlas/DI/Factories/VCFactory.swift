@@ -8,7 +8,12 @@
 import UIKit
 protocol VCFactoryProtocol:AnyObject {
     //TODO: VC 직접 타입 리턴 프로토콜로 변경 필요
-    func makeHomeBottomSheetVC(homeVM:HomeBottomSheetViewModelProtocol,  searchVM:SearchBottomSheetViewModelProtocol) -> HomeBottomSheetViewController
+    func makeHomeBottomSheetVC(
+        homeVM: HomeBottomSheetViewModelProtocol,
+        homeContentVM:HomeContentViewModelProtocol,
+        searchResultVM:SearchResultViewModelProtocol,
+        searchReadyVM:SearchReadyViewModelProtocol) -> HomeBottomSheetViewController
+    
     func makeLoginBottomSheetVC(vm:LoginBottomSheetViewModelProtocol) -> LoginBottomSheetViewController
     func makeMyCollectionBottomSheetVC(vm:MyCollectionBottomSheetViewModelProtocol) -> MyCollectionBottomSheetViewController;
     func makePlaceDetailBottomSheetVC(vm:PlaceDetailViewModelProtocol) -> PlaceDetailViewController
@@ -33,6 +38,8 @@ protocol VCFactoryProtocol:AnyObject {
 
 final class VCFactory:VCFactoryProtocol {
 
+    
+
     private let highDetent = UISheetPresentationController.Detent.custom { context in
         return UIScreen.main.bounds.height * 1;
     }
@@ -44,11 +51,19 @@ final class VCFactory:VCFactoryProtocol {
         return UIScreen.main.bounds.height * 0.5;
     }
     
-    func makeHomeBottomSheetVC(homeVM:HomeBottomSheetViewModelProtocol,  searchVM:SearchBottomSheetViewModelProtocol) -> HomeBottomSheetViewController {
-        let vc = HomeBottomSheetViewController(homeBottomSheetViewModel: homeVM, searchBottomSheetViewModel: searchVM);
-        setupVC(type:.home, sheet: vc)
+
+    func makeHomeBottomSheetVC(homeVM: HomeBottomSheetViewModelProtocol, homeContentVM: HomeContentViewModelProtocol, searchResultVM: SearchResultViewModelProtocol, searchReadyVM: SearchReadyViewModelProtocol) -> HomeBottomSheetViewController {
+        
+        let homeContentVC = HomeContentViewController(homeContentViewModel: homeContentVM);
+        let searchResultVC = SearchResultViewController(searchResultViewModel: searchResultVM);
+        let searchReadyVC = SearchReadyViewController(searchReadyViewModel: searchReadyVM);
+        
+        
+        let vc = HomeBottomSheetViewController(homeBottomSheetViewModel: homeVM, homeContentViewController: homeContentVC, searchReadyViewController: searchReadyVC, searchResultViewController: searchResultVC)
+        setupVC(type: .home, sheet:vc)
         return vc;
     }
+    
     
     func makeLoginBottomSheetVC(vm: LoginBottomSheetViewModelProtocol) -> LoginBottomSheetViewController {
         let vc = LoginBottomSheetViewController(loginBottomSheetViewModel: vm);

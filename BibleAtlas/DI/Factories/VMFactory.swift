@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 
 struct UseCases {
     let auth: AuthUsecaseProtocol
@@ -15,6 +16,13 @@ struct UseCases {
 
 protocol VMFactoryProtocol {
     func makeHomeBottomSheetVM() -> HomeBottomSheetViewModelProtocol;
+        
+    func makeHomeContentVM() -> HomeContentViewModelProtocol;
+    
+    func makeSearchResultVM(keyword$: Observable<String>, isSearchingMode$: Observable<Bool>, cancelButtonTapped$: Observable<Void>) -> SearchResultViewModelProtocol
+    
+    func makeSearchReadyVM() -> SearchReadyViewModelProtocol
+    
     func makeSearchBottomSheetVM() -> SearchBottomSheetViewModelProtocol;
     func makeLoginBottomSheetVM() -> LoginBottomSheetViewModelProtocol
     func makeMyCollectionBottomSheetVM(filter:PlaceFilter) -> MyCollectionBottomSheetViewModelProtocol
@@ -41,6 +49,21 @@ protocol VMFactoryProtocol {
 }
 
 final class VMFactory:VMFactoryProtocol{
+    func makeHomeContentVM() -> HomeContentViewModelProtocol {
+        let vm = HomeContentViewModel(navigator: navigator, appStore: appStore, userUsecase: usecases?.user, authUseCase: usecases?.auth)
+        return vm;
+    }
+    
+    func makeSearchResultVM(keyword$: Observable<String>, isSearchingMode$: Observable<Bool>, cancelButtonTapped$: Observable<Void>) -> SearchResultViewModelProtocol {
+        let vm = SearchResultViewModel(navigator: navigator, placeUsecase: usecases?.place, isSearchingMode$: isSearchingMode$, keyword$: keyword$, cancelButtonTapped$: cancelButtonTapped$)
+        return vm;
+    }
+    
+    func makeSearchReadyVM() -> SearchReadyViewModelProtocol {
+        let vm = SearchReadyViewModel()
+        return vm
+    }
+    
     func makeSearchBottomSheetVM() -> SearchBottomSheetViewModelProtocol {
         let vm = SearchBottomSheetViewModel(navigator: navigator, placeUsecase: usecases?.place)
         return vm
@@ -77,7 +100,7 @@ final class VMFactory:VMFactoryProtocol{
     }
     
     func makeHomeBottomSheetVM() -> HomeBottomSheetViewModelProtocol {
-        let vm = HomeBottomSheetViewModel(navigator: navigator,appStore: appStore,userUsecase: usecases?.user, authUseCase: usecases?.auth)
+        let vm = HomeBottomSheetViewModel(navigator: navigator, appStore: appStore, authUseCase: usecases?.auth)
         return vm;
     }
     

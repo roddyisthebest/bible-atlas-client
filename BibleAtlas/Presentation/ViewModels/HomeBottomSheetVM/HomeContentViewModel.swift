@@ -1,38 +1,39 @@
 //
-//  HomeBottomSheetViewModel.swift
+//  HomeContentViewModel.swift
 //  BibleAtlas
 //
-//  Created by 배성연 on 4/28/25.
+//  Created by 배성연 on 6/21/25.
 //
 
 import Foundation
 import RxSwift
 import RxRelay
 
-protocol HomeBottomSheetViewModelProtocol {
-    func transform(input:HomeBottomSheetViewModel.Input) -> HomeBottomSheetViewModel.Output
-    
+protocol HomeContentViewModelProtocol {
+    func transform(input:HomeContentViewModel.Input) -> HomeContentViewModel.Output
 }
 
-final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
-        
-    private let disposeBag = DisposeBag();
 
+final class HomeContentViewModel: HomeContentViewModelProtocol{
+    
+    private let disposeBag = DisposeBag();
     private weak var navigator: BottomSheetNavigator?
     private let userUsecase:UserUsecaseProtocol?
     private let authUsecase:AuthUsecaseProtocol?
-
-    private var appStore:AppStoreProtocol?
     
+    private var appStore:AppStoreProtocol?
+
     private var isLoggedIn$ = BehaviorRelay<Bool>(value:false)
     private var profile$ = BehaviorRelay<User?>(value:nil)
+
     
     private var likePlacesCount$ = BehaviorRelay<Int>(value:0);
     private var savePlacesCount$ = BehaviorRelay<Int>(value:0);
     private var memoPlacesCount$ = BehaviorRelay<Int>(value:0);
     
     private let loading$ = BehaviorRelay<Bool>(value:false);
-
+    
+    
     init(navigator:BottomSheetNavigator?, appStore:AppStoreProtocol?,userUsecase:UserUsecaseProtocol?, authUseCase:AuthUsecaseProtocol?){
         self.navigator = navigator
         self.appStore = appStore
@@ -40,62 +41,6 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
         self.authUsecase = authUseCase
         bindAppStore();
     }
-    
-    func transform(input: Input) -> Output{
-
-        input.avatarButtonTapped$
-            .withLatestFrom(profile$)
-            .observe(on: MainScheduler.asyncInstance)
-            .subscribe(onNext: { [weak self] profile in
-                guard let self = self else { return }
-                
-                if (profile != nil) {
-                    // TODO: implement mypage
-                    print("logout!")
-                    let result = self.authUsecase?.logout()
-                    switch result {
-                        case .success:
-                            self.appStore?.dispatch(.logout)
-                        case .failure(let error):
-                            print(error.localizedDescription)
-                        case .none:
-                            print("none")
-                    }
-                } else {
-                    self.navigator?.present(.login)
-                }
-            })
-            .disposed(by: disposeBag)
-            
- 
-        
-        input.collectionButtonTapped$
-            .withLatestFrom(isLoggedIn$, resultSelector: { collectionType, isLoggedIn in
-                return (collectionType, isLoggedIn)
-            })
-            .observe(on: MainScheduler.asyncInstance)
-            .subscribe(onNext: { [weak self] collectionType, isLoggedIn in
-                if(isLoggedIn){
-                    self?.navigator?.present(.myCollection(collectionType))
-                }
-                else{
-                    self?.navigator?.present(.login)
-                }
-                
-        }).disposed(by: disposeBag)
-        
-        input.placesByTypeButtonTapped$.subscribe(onNext:{[weak self] in
-            self?.navigator?.present(.placeTypes)
-        }).disposed(by: disposeBag)
-        
-        input.placesByCharacterButtonTapped$.subscribe(onNext: {[weak self] in
-            self?.navigator?.present(.placeCharacters)
-        }).disposed(by: disposeBag)
-        
-        return Output(profile$: profile$.asObservable(), isLoggedIn$: isLoggedIn$.asObservable(),likePlacesCount$: likePlacesCount$.asObservable(),savePlacesCount$: savePlacesCount$.asObservable(),memoPlacesCount$: memoPlacesCount$.asObservable(),loading$: loading$.asObservable() )
-        
-    }
-    
     
     func bindAppStore(){
         appStore?.state$.subscribe(onNext: { appState in
@@ -145,10 +90,7 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
                     
                             
                 }
-        
-                        
-                    
-                
+
             }
             else{
                 self.likePlacesCount$.accept(0)
@@ -162,7 +104,6 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
     }
     
     public struct Input {
-        let avatarButtonTapped$:Observable<Void>
         let collectionButtonTapped$:Observable<PlaceFilter>
         let placesByTypeButtonTapped$:Observable<Void>
         let placesByCharacterButtonTapped$:Observable<Void>
@@ -178,7 +119,33 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
         
     }
     
-  
     
+    func transform(input:Input) -> Output {
+
+        input.collectionButtonTapped$
+            .withLatestFrom(isLoggedIn$, resultSelector: { collectionType, isLoggedIn in
+                return (collectionType, isLoggedIn)
+            })
+            .observe(on: MainScheduler.asyncInstance)
+            .subscribe(onNext: { [weak self] collectionType, isLoggedIn in
+                if(isLoggedIn){
+                    self?.navigator?.present(.myCollection(collectionType))
+                }
+                else{
+                    self?.navigator?.present(.login)
+                }
+                
+        }).disposed(by: disposeBag)
+        
+        input.placesByTypeButtonTapped$.subscribe(onNext:{[weak self] in
+            self?.navigator?.present(.placeTypes)
+        }).disposed(by: disposeBag)
+        
+        input.placesByCharacterButtonTapped$.subscribe(onNext: {[weak self] in
+            self?.navigator?.present(.placeCharacters)
+        }).disposed(by: disposeBag)
+        
+        return Output(profile$: profile$.asObservable(), isLoggedIn$: isLoggedIn$.asObservable(),likePlacesCount$: likePlacesCount$.asObservable(),savePlacesCount$: savePlacesCount$.asObservable(),memoPlacesCount$: memoPlacesCount$.asObservable(),loading$: loading$.asObservable() )
+    }
     
 }

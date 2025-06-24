@@ -164,9 +164,13 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
         switch(type){
         case .home:
             let homeVM = vmFactory.makeHomeBottomSheetVM();
-            let searchVM = vmFactory.makeSearchBottomSheetVM();
             
-            let vc = vcFactory.makeHomeBottomSheetVC(homeVM: homeVM, searchVM: searchVM);
+            let homeContentVM = vmFactory.makeHomeContentVM();
+            let searchResultVM = vmFactory.makeSearchResultVM(keyword$: homeVM.keyword$.asObservable(), isSearchingMode$: homeVM.isSearchingMode$.asObservable(), cancelButtonTapped$: homeVM.cancelButtonTapped$.asObservable());
+            let searchReadyVM = vmFactory.makeSearchReadyVM();
+         
+            
+            let vc = vcFactory.makeHomeBottomSheetVC(homeVM: homeVM, homeContentVM: homeContentVM, searchResultVM: searchResultVM, searchReadyVM: searchReadyVM);
             
             presentFromTopVC(vc);
             

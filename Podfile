@@ -17,6 +17,8 @@ target 'BibleAtlas' do
     pod "UBottomSheet"
     pod "KeychainAccess"
     pod "Kingfisher"
+    pod "GoogleSignIn" 
+    pod "FirebaseCore" 
 
   target 'BibleAtlasTests' do
     inherit! :search_paths

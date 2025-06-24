@@ -10,6 +10,7 @@ import Foundation
 protocol UserUsecaseProtocol{
     func getPlaces(limit:Int?, page:Int?, filter:PlaceFilter? ) async -> Result<ListResponse<Place>,NetworkError>
     func getProfile() async -> Result<User,NetworkError>
+    
 }
 
 

@@ -8,6 +8,9 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import FirebaseCore
+import GoogleSignIn
+
 final class LoginBottomSheetViewController: UIViewController {
     
     private var loginBottomSheetViewModel:LoginBottomSheetViewModelProtocol?;
@@ -26,6 +29,7 @@ final class LoginBottomSheetViewController: UIViewController {
     private let headerLabel = HeaderLabel(text: "Login");
     private let closeButton = CircleButton(iconSystemName: "xmark" );
     
+    private let googleLoginSuccessed$ = BehaviorRelay<String?>(value: nil);
     
     private lazy var buttonsStackView = {
         let sv = UIStackView(arrangedSubviews: [localButton, googleButton, kakaoButton]);
@@ -37,7 +41,11 @@ final class LoginBottomSheetViewController: UIViewController {
     }()
     
     private let localButton = GuideButton(titleText: "Local");
-    private let googleButton = GuideButton(titleText: "Google");
+    private let googleButton = {
+        let button = GuideButton(titleText: "Google");
+        button.addTarget(self, action: #selector(googleLoginButtontapped), for: .touchUpInside)
+        return button;
+    }()
     private let kakaoButton = GuideButton(titleText: "Kakao");
     
     
@@ -55,12 +63,11 @@ final class LoginBottomSheetViewController: UIViewController {
     }
     
     private func bindViewModel(){
-        let googleButtonTapped$ = googleButton.rx.tap.asObservable();
         let kakaoButtonTapped$ = kakaoButton.rx.tap.asObservable();
         let closeButtonTapped$ = closeButton.rx.tap.asObservable();
         let localButtonTapped$ = localButton.rx.tap.asObservable();
         
-        let output = loginBottomSheetViewModel?.transform(input: LoginBottomSheetViewModel.Input(localButtonTapped$: localButtonTapped$.asObservable(), googleButtonTapped$: googleButtonTapped$, kakaoButtonTapped$: kakaoButtonTapped$, closeButtonTapped$:closeButtonTapped$))
+        let output = loginBottomSheetViewModel?.transform(input: LoginBottomSheetViewModel.Input(localButtonTapped$: localButtonTapped$.asObservable(), googleLoginSuccessed$: googleLoginSuccessed$.asObservable(), kakaoButtonTapped$: kakaoButtonTapped$, closeButtonTapped$:closeButtonTapped$))
         
         output?.error$.subscribe(onNext: { [weak self] error in
             switch(error){
@@ -72,11 +79,31 @@ final class LoginBottomSheetViewController: UIViewController {
         }).disposed(by: disposeBag)
         
         
-        output?.loading$.subscribe(onNext: { [weak self] loading in
+        output?.localLoading$.subscribe(onNext: { [weak self] loading in
             DispatchQueue.main.async {
                 self?.localButton.setLoading(loading)
             }
         }).disposed(by: disposeBag)
+        
+        output?.googleLoading$.subscribe(onNext:{ [weak self] loading in
+            DispatchQueue.main.async{
+                self?.googleButton.setLoading(loading)
+            }
+        }).disposed(by: disposeBag)
+    }
+    
+    @objc private func googleLoginButtontapped(){
+        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+        
+        let config = GIDConfiguration(clientID: clientID)
+        GIDSignIn.sharedInstance.configuration = config
+
+        GIDSignIn.sharedInstance.signIn(withPresenting: self){ [weak self] result, error in
+            guard let idToken = result?.user.idToken else { return }
+            self?.googleLoginSuccessed$.accept(idToken.tokenString)
+        }
+        
+        
     }
     
     private func setupStyle(){

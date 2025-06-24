@@ -27,7 +27,8 @@ final class LoginBottomSheetViewModel:LoginBottomSheetViewModelProtocol {
     
 
     private let error$ = PublishRelay<NetworkError>()
-    private let loading$ = BehaviorRelay<Bool>(value:false);
+    private let localLoading$ = BehaviorRelay<Bool>(value:false);
+    private let googleLoading$ = BehaviorRelay<Bool>(value:false);
     
     init(navigator:BottomSheetNavigator?, usecase:AuthUsecaseProtocol?, appStore: AppStoreProtocol?, notificationService:RxNotificationServiceProtocol?){
         self.navigator = navigator
@@ -37,15 +38,43 @@ final class LoginBottomSheetViewModel:LoginBottomSheetViewModelProtocol {
     }
     
     func transform(input: Input) -> Output {
-        input.googleButtonTapped$.subscribe(onNext: {
-            [weak self] in
+        input.googleLoginSuccessed$.subscribe(onNext: {
+            [weak self] idToken in
+            guard let self = self, let idToken = idToken else { return }
+            
+            Task{
+                self.googleLoading$.accept(true)
+                
+                defer{
+                    self.googleLoading$.accept(false)
+                }
+                
+                let result = await self.authUsecase?.loginGoogleUser(idToken: idToken);
+                
+                switch(result){
+                    case .success(let response):
+                        print(response)
+                        self.notificationService?.post(.refetchRequired, object: nil)
+                        self.appStore?.dispatch(.login(response.user))
+                        
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            self.navigator?.dismiss(animated: true)
+                        }
+
+                    case .failure(let networkError):
+                        self.error$.accept(networkError)
+                        print(networkError)
+                    case .none:
+                        print("none")
+                }
+                
+            }
             
         }).disposed(by: disposeBag)
         
-        input.kakaoButtonTapped$.subscribe(onNext: {
-            [weak self] in
-            
-        }).disposed(by: disposeBag)
+  
+        
         
         input.closeButtonTapped$.subscribe(onNext: {
             [weak self] in
@@ -59,16 +88,18 @@ final class LoginBottomSheetViewModel:LoginBottomSheetViewModelProtocol {
             let localPW = self.localPw
             
             Task {
-                self.loading$.accept(true)
+                self.localLoading$.accept(true)
 
+                defer{
+                    self.localLoading$.accept(false)
+                }
                 let result = await self.authUsecase?.loginUser(body: AuthPayload(userId: localID, password: localPW))
                     
-                self.loading$.accept(false)
 
                 switch(result){
                     case .success(let userResponse):
+                        print(userResponse)
                         self.notificationService?.post(.refetchRequired, object: nil)
-
                         self.appStore?.dispatch(.login(userResponse.user))
                         self.navigator?.dismiss(animated: true)
 
@@ -83,13 +114,15 @@ final class LoginBottomSheetViewModel:LoginBottomSheetViewModelProtocol {
             
         }).disposed(by: disposeBag)
         
-        return Output(error$: error$.asObservable(), loading$: loading$.asObservable())
+        
+        
+        return Output(error$: error$.asObservable(), localLoading$: localLoading$.asObservable(), googleLoading$: googleLoading$.asObservable())
         
     }
     
     public struct Input {
         let localButtonTapped$:Observable<Void>
-        let googleButtonTapped$:Observable<Void>
+        let googleLoginSuccessed$:Observable<String?>
         let kakaoButtonTapped$:Observable<Void>
         let closeButtonTapped$:Observable<Void>
     }
@@ -97,6 +130,7 @@ final class LoginBottomSheetViewModel:LoginBottomSheetViewModelProtocol {
     
     public struct Output {
         let error$:Observable<NetworkError>
-        let loading$:Observable<Bool>
+        let localLoading$:Observable<Bool>
+        let googleLoading$:Observable<Bool>
     }
 }

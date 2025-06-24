@@ -11,11 +11,13 @@ import Foundation
 protocol AuthUsecaseProtocol{
     func loginUser(body:AuthPayload) async -> Result<UserResponse,NetworkError>
     func logout() -> Result<Bool, Error>
+    
+    func loginGoogleUser(idToken: String) async -> Result<UserResponse,NetworkError>
 }
 
 
 public struct AuthUsecase:AuthUsecaseProtocol{
-    
+
     private let repository:AuthRepositoryProtocol;
     private let tokenProvider: TokenProviderProtocol
 
@@ -37,6 +39,20 @@ public struct AuthUsecase:AuthUsecaseProtocol{
         
         return result;
     }
+    
+    func loginGoogleUser(idToken: String) async -> Result<UserResponse, NetworkError> {
+        let result = await repository.loginGoogleUser(idToken: idToken);
+        
+        if case let .success(response) = result {
+            tokenProvider.save(
+                accessToken: response.authData.accessToken,
+                refreshToken: response.authData.refreshToken
+            )
+        }
+        
+        return result;
+    }
+    
     
     func logout() -> Result<Bool, Error>{
         return tokenProvider.clear()

@@ -10,6 +10,13 @@
 		1AA065047DE92DF69959A910 /* Pods_BibleAtlas_BibleAtlasUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA55ABE10F06790553768BDF /* Pods_BibleAtlas_BibleAtlasUITests.framework */; };
 		296CB238BA49943CA6B4BDF2 /* Pods_BibleAtlasTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EA6D60ADC15852CAC915A09 /* Pods_BibleAtlasTests.framework */; };
 		39B9D8CDDF5E2F1957E7A42C /* Pods_BibleAtlas.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC275028A6E0F37DC7A90D5 /* Pods_BibleAtlas.framework */; };
+		EC386DF42E06C4A700251FC6 /* HomeContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF32E06C4A700251FC6 /* HomeContentViewModel.swift */; };
+		EC386DF62E06C60600251FC6 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF52E06C60600251FC6 /* SearchResultViewModel.swift */; };
+		EC386DF92E06C77A00251FC6 /* HomeContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF82E06C77A00251FC6 /* HomeContentViewController.swift */; };
+		EC386DFB2E06C7B900251FC6 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DFA2E06C7B900251FC6 /* SearchResultViewController.swift */; };
+		EC386DFD2E06F90B00251FC6 /* SearchReadyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DFC2E06F90B00251FC6 /* SearchReadyViewModel.swift */; };
+		EC386DFF2E06F95900251FC6 /* SearchReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DFE2E06F95900251FC6 /* SearchReadyViewController.swift */; };
+		EC386E062E0AD31900251FC6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC386E052E0AD31900251FC6 /* GoogleService-Info.plist */; };
 		EC64B9522DD838E300D3C8A7 /* TokenProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9512DD838E300D3C8A7 /* TokenProviderProtocol.swift */; };
 		EC64B9582DD8482C00D3C8A7 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9572DD8482C00D3C8A7 /* AppStore.swift */; };
 		EC64B95C2DD9A18D00D3C8A7 /* KeychainTokenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B95B2DD9A18D00D3C8A7 /* KeychainTokenProvider.swift */; };
@@ -135,6 +142,13 @@
 		B99651049227BE5701E9D126 /* Pods-BibleAtlasTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlasTests.debug.xcconfig"; path = "Target Support Files/Pods-BibleAtlasTests/Pods-BibleAtlasTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CCF5D5F9277B71DAA500A8F2 /* Pods-BibleAtlas-BibleAtlasUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlas-BibleAtlasUITests.release.xcconfig"; path = "Target Support Files/Pods-BibleAtlas-BibleAtlasUITests/Pods-BibleAtlas-BibleAtlasUITests.release.xcconfig"; sourceTree = "<group>"; };
 		DA55ABE10F06790553768BDF /* Pods_BibleAtlas_BibleAtlasUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BibleAtlas_BibleAtlasUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC386DF32E06C4A700251FC6 /* HomeContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewModel.swift; sourceTree = "<group>"; };
+		EC386DF52E06C60600251FC6 /* SearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModel.swift; sourceTree = "<group>"; };
+		EC386DF82E06C77A00251FC6 /* HomeContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewController.swift; sourceTree = "<group>"; };
+		EC386DFA2E06C7B900251FC6 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
+		EC386DFC2E06F90B00251FC6 /* SearchReadyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReadyViewModel.swift; sourceTree = "<group>"; };
+		EC386DFE2E06F95900251FC6 /* SearchReadyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReadyViewController.swift; sourceTree = "<group>"; };
+		EC386E052E0AD31900251FC6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EC64B9512DD838E300D3C8A7 /* TokenProviderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProviderProtocol.swift; sourceTree = "<group>"; };
 		EC64B9572DD8482C00D3C8A7 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		EC64B95B2DD9A18D00D3C8A7 /* KeychainTokenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainTokenProvider.swift; sourceTree = "<group>"; };
@@ -273,6 +287,28 @@
 				8EA6D60ADC15852CAC915A09 /* Pods_BibleAtlasTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EC386DF72E06C74000251FC6 /* HomeBottomSheetVC */ = {
+			isa = PBXGroup;
+			children = (
+				EC7058832DB3BAE5002D47DF /* HomeBottomSheetViewController.swift */,
+				EC386DF82E06C77A00251FC6 /* HomeContentViewController.swift */,
+				EC386DFA2E06C7B900251FC6 /* SearchResultViewController.swift */,
+				EC386DFE2E06F95900251FC6 /* SearchReadyViewController.swift */,
+			);
+			path = HomeBottomSheetVC;
+			sourceTree = "<group>";
+		};
+		EC386E002E08430F00251FC6 /* HomeBottomSheetVM */ = {
+			isa = PBXGroup;
+			children = (
+				EC7058A62DBFA570002D47DF /* HomeBottomSheetViewModel.swift */,
+				EC386DF32E06C4A700251FC6 /* HomeContentViewModel.swift */,
+				EC386DF52E06C60600251FC6 /* SearchResultViewModel.swift */,
+				EC386DFC2E06F90B00251FC6 /* SearchReadyViewModel.swift */,
+			);
+			path = HomeBottomSheetVM;
 			sourceTree = "<group>";
 		};
 		EC64B9562DD8481000D3C8A7 /* Stores */ = {
@@ -490,6 +526,7 @@
 				ECA94BA22D5082BA005B0428 /* Assets.xcassets */,
 				ECA94BA72D5082BA005B0428 /* Info.plist */,
 				ECA94B9F2D5082B9005B0428 /* BibleAtlas.xcdatamodeld */,
+				EC386E052E0AD31900251FC6 /* GoogleService-Info.plist */,
 			);
 			path = BibleAtlas;
 			sourceTree = "<group>";
@@ -606,8 +643,8 @@
 		ECA94BF12D51AD7F005B0428 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				EC386DF72E06C74000251FC6 /* HomeBottomSheetVC */,
 				EC70587A2DB39629002D47DF /* MainViewController.swift */,
-				EC7058832DB3BAE5002D47DF /* HomeBottomSheetViewController.swift */,
 				EC7058992DBC7BE1002D47DF /* LoginBottomSheetViewController.swift */,
 				EC70589F2DBCC6FE002D47DF /* MyCollectionBottomSheetViewController.swift */,
 				EC77CE002DC5DA8D0030DEF5 /* PlaceDetailViewController.swift */,
@@ -625,7 +662,7 @@
 		ECA94BF22D51AD94005B0428 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				EC7058A62DBFA570002D47DF /* HomeBottomSheetViewModel.swift */,
+				EC386E002E08430F00251FC6 /* HomeBottomSheetVM */,
 				EC77CDF12DC318EB0030DEF5 /* LoginBottomSheetViewModel.swift */,
 				EC77CDF52DC337FC0030DEF5 /* MyCollectionBottomSheetViewModel.swift */,
 				EC77CE022DC5E3460030DEF5 /* PlaceDetailViewModel.swift */,
@@ -785,6 +822,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ECA94BA32D5082BA005B0428 /* Assets.xcassets in Resources */,
+				EC386E062E0AD31900251FC6 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -946,8 +984,10 @@
 				EC64B9792DE44B6700D3C8A7 /* Constants.swift in Sources */,
 				EC940EB02E01950D00406944 /* SearchBottomSheetViewModel.swift in Sources */,
 				EC7058A72DBFA570002D47DF /* HomeBottomSheetViewModel.swift in Sources */,
+				EC386DF62E06C60600251FC6 /* SearchResultViewModel.swift in Sources */,
 				EC77CE382DCF79800030DEF5 /* IconTextButton.swift in Sources */,
 				EC64B9802DE45B4200D3C8A7 /* ErrorHandlerService.swift in Sources */,
+				EC386DFB2E06C7B900251FC6 /* SearchResultViewController.swift in Sources */,
 				EC64B9882DE7334500D3C8A7 /* PlaceRepositoryProtocol.swift in Sources */,
 				EC64B97E2DE44F0400D3C8A7 /* TokenRefresher.swift in Sources */,
 				EC77CE502DD5C86A0030DEF5 /* PlacesByCharacterBottomSheetViewController.swift in Sources */,
@@ -962,10 +1002,12 @@
 				EC77CE4C2DD5AACA0030DEF5 /* PlacesByTypeBottomSheetViewController.swift in Sources */,
 				EC64B9952DEC595900D3C8A7 /* FooterLoadingReusableView.swift in Sources */,
 				EC64B9842DE72C4E00D3C8A7 /* PlaceApiService.swift in Sources */,
+				EC386DFD2E06F90B00251FC6 /* SearchReadyViewModel.swift in Sources */,
 				EC77CE522DD5C8950030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift in Sources */,
 				EC77CE2E2DCF193D0030DEF5 /* RelatedPlaceTableViewCell.swift in Sources */,
 				EC64B9912DEC3D1A00D3C8A7 /* EmptyLabel.swift in Sources */,
 				EC70587B2DB39629002D47DF /* MainViewController.swift in Sources */,
+				EC386DF42E06C4A700251FC6 /* HomeContentViewModel.swift in Sources */,
 				EC70589C2DBC7C4D002D47DF /* CircleButton.swift in Sources */,
 				EC77CE322DCF34110030DEF5 /* VersedItemCell.swift in Sources */,
 				EC64B96B2DDE05C900D3C8A7 /* UserUsecase.swift in Sources */,
@@ -978,6 +1020,7 @@
 				EC77CE3C2DD09AB10030DEF5 /* PlaceModificationBottomSheetViewController.swift in Sources */,
 				EC77CE342DCF348D0030DEF5 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				EC64B9582DD8482C00D3C8A7 /* AppStore.swift in Sources */,
+				EC386DF92E06C77A00251FC6 /* HomeContentViewController.swift in Sources */,
 				ECA94BD72D50977A005B0428 /* AuthorizedApiClient.swift in Sources */,
 				EC64B9932DEC3E1700D3C8A7 /* ErrorRetryView.swift in Sources */,
 				EC70588B2DB8BCCE002D47DF /* CollectionButton.swift in Sources */,
@@ -989,6 +1032,7 @@
 				EC64B97C2DE44E0D00D3C8A7 /* TokenRefresherProtocol.swift in Sources */,
 				EC77CE3A2DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift in Sources */,
 				ECA94BE52D50AE92005B0428 /* AuthRepositoryProtocol.swift in Sources */,
+				EC386DFF2E06F95900251FC6 /* SearchReadyViewController.swift in Sources */,
 				ECA94BEF2D50B492005B0428 /* MockingApi.swift in Sources */,
 				EC7058842DB3BAE5002D47DF /* HomeBottomSheetViewController.swift in Sources */,
 				ECA94BA12D5082B9005B0428 /* BibleAtlas.xcdatamodeld in Sources */,

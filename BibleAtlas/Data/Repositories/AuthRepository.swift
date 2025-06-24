@@ -13,5 +13,9 @@ public struct AuthRepository:AuthRepositoryProtocol{
     func loginUser(body: AuthPayload) async -> Result<UserResponse, NetworkError> {
         return await authApiService.loginUser(body: body)
     }
-
+    
+    func loginGoogleUser(idToken: String) async -> Result<UserResponse,NetworkError>{
+        return await authApiService.loginGoogleUser(idToken: idToken)
+    }
+    
 }
