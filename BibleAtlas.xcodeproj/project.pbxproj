@@ -247,6 +247,7 @@
 		ECA94BE72D50AF41005B0428 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		ECA94BEA2D50B0B9005B0428 /* AuthUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUsecase.swift; sourceTree = "<group>"; };
 		ECA94BEE2D50B492005B0428 /* MockingApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockingApi.swift; sourceTree = "<group>"; };
+		ECCB51D02E0AE473007E4AB7 /* BibleAtlas.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BibleAtlas.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -514,6 +515,7 @@
 		ECA94B952D5082B9005B0428 /* BibleAtlas */ = {
 			isa = PBXGroup;
 			children = (
+				ECCB51D02E0AE473007E4AB7 /* BibleAtlas.entitlements */,
 				EC64B9762DE44AAB00D3C8A7 /* Core */,
 				EC64B9732DE449B800D3C8A7 /* DI */,
 				EC64B96C2DE3400800D3C8A7 /* Shared */,
@@ -1207,6 +1209,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BibleAtlas/BibleAtlas.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T76LKQ7QGR;
@@ -1237,6 +1240,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BibleAtlas/BibleAtlas.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T76LKQ7QGR;

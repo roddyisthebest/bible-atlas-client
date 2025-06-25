@@ -182,7 +182,7 @@ final class HomeBottomSheetViewController: UIViewController{
                     guard let profile = profile else {
                         return
                     }
-                    self?.userAvatarButton.setTitle(profile.name ?? "shy", for: .normal)
+                    self?.userAvatarButton.setTitle(profile.name ?? "아무개", for: .normal)
                     return
                 }
                 

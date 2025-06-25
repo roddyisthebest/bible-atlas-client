@@ -11,5 +11,6 @@ protocol AuthRepositoryProtocol {
     func loginUser(body:AuthPayload) async -> Result<UserResponse,NetworkError>
     
     func loginGoogleUser(idToken: String) async -> Result<UserResponse,NetworkError>
-    
+    func loginAppleUser(idToken: String) async -> Result<UserResponse,NetworkError>
+
 }

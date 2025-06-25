@@ -13,6 +13,7 @@ protocol AuthUsecaseProtocol{
     func logout() -> Result<Bool, Error>
     
     func loginGoogleUser(idToken: String) async -> Result<UserResponse,NetworkError>
+    func loginAppleUser(idToken: String) async -> Result<UserResponse,NetworkError>
 }
 
 
@@ -52,6 +53,22 @@ public struct AuthUsecase:AuthUsecaseProtocol{
         
         return result;
     }
+    
+    
+    func loginAppleUser(idToken: String) async -> Result<UserResponse, NetworkError> {
+        let result = await repository.loginAppleUser(idToken: idToken);
+        
+        if case let .success(response) = result {
+            tokenProvider.save(
+                accessToken: response.authData.accessToken,
+                refreshToken: response.authData.refreshToken
+            )
+        }
+        
+        return result;
+    }
+    
+    
     
     
     func logout() -> Result<Bool, Error>{
