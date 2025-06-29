@@ -46,11 +46,13 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
     
     
     func transform(input: Input) -> Output {
-        input.viewLoaded$.subscribe(onNext:{
+        Observable.merge(input.viewLoaded$, input.refetchButtonTapped$).subscribe(onNext:{
             [weak self] in
             guard let self = self else { return }
             
             self.notificationService?.post(.fetchGeoJsonRequired, object: self.placeId)
+            self.loadError$.accept(nil)
+            self.isLoading$.accept(true)
             Task{
                 defer {
                     self.isLoading$.accept(false)
@@ -75,6 +77,8 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
             
             
         }).disposed(by: disposeBag)
+        
+
         
         input.closeButtonTapped$.subscribe(onNext: {[weak self] in
             self?.navigator?.dismissFromDetail(animated: true )

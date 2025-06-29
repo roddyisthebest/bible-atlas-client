@@ -85,6 +85,12 @@ extension UIColor {
         return traitCollection.userInterfaceStyle == .dark ? UIColor(hex: "#FFFFFF") : UIColor(hex: "#000000")
     }
     
+    static let invertedMainText = UIColor { traitCollection in
+        return traitCollection.userInterfaceStyle == .dark
+            ? UIColor(hex: "#000000")
+            : UIColor(hex: "#FFFFFF")
+    }
+    
     static let collectionSubText = UIColor(hex: "#868782")
     
     static let placeDescriptionText = UIColor(hex: "#868782")

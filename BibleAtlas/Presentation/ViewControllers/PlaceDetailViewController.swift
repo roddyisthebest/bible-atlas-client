@@ -636,7 +636,8 @@ final class PlaceDetailViewController: UIViewController {
         }
         
         errorRetryView.snp.makeConstraints { make in
-            make.center.equalToSuperview();
+            make.centerY.equalToSuperview();
+            make.trailing.leading.equalToSuperview()
         }
         
         relatedPlaceEmptyView.snp.makeConstraints { make in
@@ -671,12 +672,17 @@ final class PlaceDetailViewController: UIViewController {
         
         let saveButtonTapped$ = saveButton.rx.tap.asObservable();
         let shareButtonTapped$ = shareButton.rx.tap.asObservable();
-        let closeButtonTapped$ = closeButton.rx.tap.asObservable();
     
+        let closeButtonTapped$ = Observable.merge(
+            closeButton.rx.tap.asObservable(),
+            errorRetryView.closeTapped$.asObservable()
+          );
+        
         let likeButtonTapped$ = likeButton.rx.tap.asObservable();
         
         let refetchButtonTapped$ = errorRetryView.refetchTapped$;
-    
+        
+        
         memoButton.rx.tap.subscribe(onNext: {[weak self] in
             self?.memoButtonTapped$.accept(Void())})
         .disposed(by: disposeBag)
