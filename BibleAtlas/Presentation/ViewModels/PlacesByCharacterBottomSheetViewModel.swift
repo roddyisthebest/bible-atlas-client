@@ -101,7 +101,7 @@ final class PlacesByCharacterBottomSheetViewModel:PlacesByCharacterBottomSheetVi
             .disposed(by: disposeBag)
         
         input.placeCellTapped$.subscribe(onNext: { [weak self] placeId in
-            self?.navigator?.present(.placeDetail(placeId, nil))
+            self?.navigator?.present(.placeDetail(placeId))
         }).disposed(by: disposeBag)
         
 

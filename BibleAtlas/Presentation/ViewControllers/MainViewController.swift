@@ -128,6 +128,8 @@ final class MainViewController: UIViewController, Presentable  {
             .disposed(by: disposeBag)
         
         
+        
+        
         output?.resetMapView$
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self]  in

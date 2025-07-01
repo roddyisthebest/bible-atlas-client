@@ -144,17 +144,17 @@ class RelatedPlaceTableViewCell: UITableViewCell {
         titleLabel.text = text
     }
     
-    func setRelation(relation:ChildPlaceRelation){
+    func setRelation(relation:PlaceRelation){
         
-        titleLabel.text = relation.child.name;
-        descriptionLabel.text = relation.child.description;
+        titleLabel.text = relation.place.name;
+        descriptionLabel.text = relation.place.description;
         
         percentBadge.setTitle("\(relation.possibility)%", for: .normal)
         
-        let hasOneType = relation.child.types.count == 1;
+        let hasOneType = relation.place.types.count == 1;
 
         if(hasOneType){
-            let placeType = relation.child.types[0];
+            let placeType = relation.place.types[0];
             placeIcon.image = UIImage(named: placeType.name.rawValue)
             
             return;

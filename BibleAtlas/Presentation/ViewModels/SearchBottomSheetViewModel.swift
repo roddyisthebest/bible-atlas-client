@@ -131,7 +131,7 @@ final class SearchBottomSheetViewModel:SearchBottomSheetViewModelProtocol {
             .subscribe(onNext:{ [weak self] placeId in
                 guard let self = self else { return }
              
-                self.navigator?.present(.placeDetail(placeId, nil))
+                self.navigator?.present(.placeDetail(placeId))
                 
             })
             .disposed(by: disposeBag)

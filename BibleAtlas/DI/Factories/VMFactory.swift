@@ -27,7 +27,7 @@ protocol VMFactoryProtocol {
     func makeLoginBottomSheetVM() -> LoginBottomSheetViewModelProtocol
     func makeMyCollectionBottomSheetVM(filter:PlaceFilter) -> MyCollectionBottomSheetViewModelProtocol
     
-    func makePlaceDetailBottomSheetVM(placeId:String, parentPlaceId:String?) -> PlaceDetailViewModelProtocol
+    func makePlaceDetailBottomSheetVM(placeId:String) -> PlaceDetailViewModelProtocol
     
     func makeMemoBottomSheetVM(placeId:String) -> MemoBottomSheetViewModelProtocol
     
@@ -114,8 +114,8 @@ final class VMFactory:VMFactoryProtocol{
         return vm;
     }
     
-    func makePlaceDetailBottomSheetVM(placeId: String, parentPlaceId: String?) -> PlaceDetailViewModelProtocol {
-        let vm = PlaceDetailViewModel(navigator: navigator, placeId:placeId, parentPlaceId: parentPlaceId, placeUsecase: usecases?.place,  appStore:appStore, notificationService: notificationService );
+    func makePlaceDetailBottomSheetVM(placeId: String) -> PlaceDetailViewModelProtocol {
+        let vm = PlaceDetailViewModel(navigator: navigator, placeId:placeId, placeUsecase: usecases?.place,  appStore:appStore, notificationService: notificationService );
         return vm;
     }
     

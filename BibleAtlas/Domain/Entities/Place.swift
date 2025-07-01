@@ -69,8 +69,8 @@ struct Place: Decodable {
     var likeCount: Int
     var unknownPlacePossibility: Int?
     var types: [PlaceType]
-    var childRelations: [ChildPlaceRelation]?
-    var parentRelations: [ParentPlaceRelation]?
+    var childRelations: [PlaceRelation]?
+    var parentRelations: [PlaceRelation]?
     var isLiked: Bool?
     var isSaved: Bool?
     var memo: PlaceMemo?
@@ -85,18 +85,18 @@ struct PlacePrefix:Decodable {
     var placeCount: String;
 }
 
-struct ChildPlaceRelation:Decodable{
+struct PlaceRelation:Decodable{
     var id:Int;
-    var child:Place;
+    var place:Place;
     var possibility:Int
 }
 
 
-struct ParentPlaceRelation:Decodable{
-    var id:Int;
-    var parent:Place;
-    var possibility:Int
-}
+//struct ParentPlaceRelation:Decodable{
+//    var id:Int;
+//    var parent:Place;
+//    var possibility:Int
+//}
 
 
 struct TogglePlaceSaveResponse:Decodable{

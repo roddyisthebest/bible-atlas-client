@@ -56,7 +56,7 @@ final class MainViewModel: MainViewModelProtocol {
             
             let selectedPlaceId = self?.selectedPlaceId$.value;
             if(selectedPlaceId != placeId){
-                self?.navigator?.present(.placeDetail(placeId, nil))
+                self?.navigator?.present(.placeDetail(placeId))
             }
 
         }).disposed(by: disposeBag)
@@ -127,11 +127,11 @@ final class MainViewModel: MainViewModelProtocol {
             }
             
             let result = await mapUseCase?.getGeoJson(placeId: placeId);
-            
             switch result {
             case .success(let response):
                 geoJsonRender$.accept(response)
             case .failure(let error):
+                
                 error$.accept(error)
             case .none:
                 print("none")

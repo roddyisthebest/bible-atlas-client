@@ -107,7 +107,7 @@ final class MyCollectionBottomSheetViewModel:MyCollectionBottomSheetViewModelPro
         }).disposed(by: disposeBag)
         
         input.placeTabelCellSelected$.subscribe(onNext:{ [weak self] placeId in
-            self?.navigator?.present(.placeDetail(placeId, nil))
+            self?.navigator?.present(.placeDetail(placeId))
             
         }).disposed(by:disposeBag)
         

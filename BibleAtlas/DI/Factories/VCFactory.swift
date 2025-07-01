@@ -16,7 +16,7 @@ protocol VCFactoryProtocol:AnyObject {
     
     func makeLoginBottomSheetVC(vm:LoginBottomSheetViewModelProtocol) -> LoginBottomSheetViewController
     func makeMyCollectionBottomSheetVC(vm:MyCollectionBottomSheetViewModelProtocol) -> MyCollectionBottomSheetViewController;
-    func makePlaceDetailBottomSheetVC(vm:PlaceDetailViewModelProtocol) -> PlaceDetailViewController
+    func makePlaceDetailBottomSheetVC(vm:PlaceDetailViewModelProtocol, placeId:String) -> PlaceDetailViewController
     func makeMemoBottomSheetVC(vm:MemoBottomSheetViewModelProtocol) -> MemoBottomSheetViewController
     
     func makePlaceModificationBottomSheetVC(vm:PlaceModificationBottomSheetViewModelProtocol) -> PlaceModificationBottomSheetViewController
@@ -77,9 +77,9 @@ final class VCFactory:VCFactoryProtocol {
     }
 
     
-    func makePlaceDetailBottomSheetVC(vm: PlaceDetailViewModelProtocol) -> PlaceDetailViewController {
-        let vc = PlaceDetailViewController(placeDetailViewModel: vm);
-        setupVC(type: .placeDetail("123" , nil), sheet: vc);
+    func makePlaceDetailBottomSheetVC(vm: PlaceDetailViewModelProtocol, placeId:String) -> PlaceDetailViewController {
+        let vc = PlaceDetailViewController(placeDetailViewModel: vm, placeId: placeId);
+        setupVC(type: .placeDetail(placeId), sheet: vc);
         return vc;
     }
     

@@ -36,7 +36,7 @@ final class PlacesByTypeBottomSheetViewModel:PlacesByTypeBottomSheetViewModelPro
         
         
         input.placeCellTapped$.subscribe(onNext: { [weak self] placeId in
-            self?.navigator?.present(.placeDetail(placeId, nil))
+            self?.navigator?.present(.placeDetail(placeId))
         }).disposed(by: disposeBag)
         
         input.bottomReached$.subscribe(onNext: {

@@ -23,8 +23,7 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
     private let place$ = BehaviorRelay<Place?>(value: nil);
     private let bibles$ = BehaviorRelay<[Bible]>(value:[]);
     
-    private let placeId:String
-    private let parentPlaceId:String?
+    private var placeId:String
     
     private let loadError$ = BehaviorRelay<NetworkError?>(value: nil)
     
@@ -46,11 +45,11 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
     
     
     func transform(input: Input) -> Output {
+        
         Observable.merge(input.viewLoaded$, input.refetchButtonTapped$).subscribe(onNext:{
             [weak self] in
             guard let self = self else { return }
             
-            self.notificationService?.post(.fetchGeoJsonRequired, object: self.placeId)
             self.loadError$.accept(nil)
             self.isLoading$.accept(true)
             Task{
@@ -81,12 +80,13 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
 
         
         input.closeButtonTapped$.subscribe(onNext: {[weak self] in
-            self?.navigator?.dismissFromDetail(animated: true )
-            if let parentPlaceId = self?.parentPlaceId {
-                self?.notificationService?.post(.fetchGeoJsonRequired, object: parentPlaceId)
-            } else {
-                self?.notificationService?.post(.resetGeoJson, object: nil)
+            
+            guard let self = self else {
+                return;
             }
+        
+            self.navigator?.dismissFromDetail(animated: true)
+            
         }).disposed(by: disposeBag)
         
         input.likeButtonTapped$.subscribe(onNext: {[weak self] in
@@ -182,7 +182,7 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
         }).disposed(by: disposeBag)
         
         input.placeCellTapped$.subscribe(onNext: {[weak self] (placeId) in
-            self?.navigator?.present(.placeDetail(placeId, self?.placeId))
+            self?.navigator?.present(.placeDetail(placeId))
         }).disposed(by: disposeBag)
         
         input.verseCellTapped$.subscribe(onNext: {[weak self] keyword in self?.navigator?.present(.bibleVerseDetail(keyword))
@@ -199,6 +199,9 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
                 self?.profile$.accept(appState.profile)
             })
             .disposed(by: disposeBag)
+        
+        
+    
     }
     
     
@@ -208,10 +211,19 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
             .subscribe(onNext: { [weak self] _ in
                 self?.refetch()
             }).disposed(by: disposeBag)
+        
+        
+        self.notificationService?.observe(.fetchPlaceRequired)
+            .observe(on: MainScheduler.instance)
+            .compactMap { $0.object as? String }
+            .subscribe(onNext: { [weak self] placeId in
+                self?.placeId = placeId
+                self?.refetch()
+
+            }).disposed(by: disposeBag)
     }
     
     private func refetch() {
-        print("refetch")
         isLoading$.accept(true)
         loadError$.accept(nil)
 
@@ -235,10 +247,9 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
     
     
     
-    init(navigator:BottomSheetNavigator?, placeId:String, parentPlaceId: String?, placeUsecase:PlaceUsecaseProtocol?, appStore:AppStoreProtocol?, notificationService:RxNotificationServiceProtocol?  ){
+    init(navigator:BottomSheetNavigator?, placeId:String, placeUsecase:PlaceUsecaseProtocol?, appStore:AppStoreProtocol?, notificationService:RxNotificationServiceProtocol?){
         self.navigator = navigator
         self.placeId = placeId;
-        self.parentPlaceId = parentPlaceId;
         
         self.placeUsecase = placeUsecase
         self.appStore = appStore

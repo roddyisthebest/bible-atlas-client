@@ -18,6 +18,13 @@ final class Bible {
         self.verses = verses;
     }
 }
+    
+
+protocol IdentifiableBottomSheet: AnyObject {
+    var bottomSheetIdentity: BottomSheetType { get }
+}
+
+
 
 final class PlaceDetailViewController: UIViewController {
     
@@ -31,7 +38,7 @@ final class PlaceDetailViewController: UIViewController {
     private let placeCellTapped$ = PublishRelay<String>();
     private let verseCellTapped$ = PublishRelay<String>();
     
-    private var childRelations:[ChildPlaceRelation] = [];
+    private var relations:[PlaceRelation] = [];
     
     private var bibles:[Bible] = []
     
@@ -40,6 +47,8 @@ final class PlaceDetailViewController: UIViewController {
     private let dummyVerse:[Bible] = [ Bible(bookName:"창세기", verses: ["12:23","12:24"]), Bible(bookName:"출애굽기", verses: ["11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24"])]
     
     private let placeDetailViewLoaded$ = PublishRelay<Void>();
+        
+    private let placeId:String
     
     private lazy var bodyView = {
         let v = UIView();
@@ -412,7 +421,8 @@ final class PlaceDetailViewController: UIViewController {
     private let errorRetryView = ErrorRetryView();
 
     
-    init(placeDetailViewModel:PlaceDetailViewModelProtocol) {
+    init(placeDetailViewModel:PlaceDetailViewModelProtocol,placeId:String) {
+        self.placeId = placeId;
         self.placeDetailViewModel = placeDetailViewModel;
         super.init(nibName: nil, bundle: nil)
         
@@ -755,15 +765,22 @@ final class PlaceDetailViewController: UIViewController {
             
             guard let place = place else { return }
             
+            self.sheetPresentationController?.animateChanges {
+                self.sheetPresentationController?.selectedDetentIdentifier = .medium
+            }
+            
             self.titleLabel.text = place.name
             self.descriptionTextView.text = place.koreanDescription
             
                 
             self.generationLabel.text = place.isModern ? "modern" : "ancient"
             
-            self.childRelations = place.childRelations ?? []
+            let childRelations = place.childRelations ?? []
+            let parentRelations = place.parentRelations ?? []
+
+            self.relations = childRelations + parentRelations;
             
-            if(self.childRelations.count == 0) {
+            if(self.relations.count == 0) {
                 self.relatedPlaceTable.isHidden = true;
                 self.relatedPlaceEmptyView.isHidden = false;
             }
@@ -771,7 +788,8 @@ final class PlaceDetailViewController: UIViewController {
             self.setPlaceImage(imageTitle: place.imageTitle)
             
             self.saveButton.setActive(isActive: place.isSaved ?? false)
-       
+            
+            
       
             
             guard let placeType = place.types.first else { return }
@@ -839,7 +857,10 @@ final class PlaceDetailViewController: UIViewController {
         output?.interactionError$
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {[weak self] error in
-                self?.showAlert(message: error?.description)
+                guard let error = error else{
+                    return;
+                }
+                self?.showAlert(message: error.description)
             })
             .disposed(by: disposeBag)
         
@@ -934,7 +955,7 @@ extension PlaceDetailViewController:UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if tableView == relatedPlaceTable {
-              return childRelations.count
+              return relations.count
           } else if tableView == relatedVerseTable {
               return bibles.count
           }
@@ -948,9 +969,9 @@ extension PlaceDetailViewController:UITableViewDelegate, UITableViewDataSource {
                 return UITableViewCell()
             }
             
-            cell.setRelation(relation: childRelations[indexPath.row])
+            cell.setRelation(relation: relations[indexPath.row])
 
-            if indexPath.row == childRelations.count - 1 {
+            if indexPath.row == relations.count - 1 {
                    cell.separatorInset = UIEdgeInsets(top: 0, left: tableView.bounds.width, bottom: 0, right: 0)
                } else {
                    cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
@@ -989,8 +1010,8 @@ extension PlaceDetailViewController:UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             if tableView == relatedPlaceTable {
-                let selectedRelation = childRelations[indexPath.row]
-                placeCellTapped$.accept(selectedRelation.child.id)
+                let selectedRelation = relations[indexPath.row]
+                placeCellTapped$.accept(selectedRelation.place.id)
                 scrollView.isScrollEnabled = false;
                 scrollUp();
                 
@@ -1005,5 +1026,12 @@ extension PlaceDetailViewController:UITableViewDelegate, UITableViewDataSource {
 extension PlaceDetailViewController: RelatedVerseTableViewCellDelegate {
     func didTapVerse(_ verse: String, in cell: RelatedVerseTableViewCell) {
         verseCellTapped$.accept(verse)
+    }
+}
+
+
+extension PlaceDetailViewController: IdentifiableBottomSheet {
+    var bottomSheetIdentity: BottomSheetType {
+        .placeDetail(self.placeId)
     }
 }

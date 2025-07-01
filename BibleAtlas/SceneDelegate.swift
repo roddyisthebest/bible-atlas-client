@@ -65,7 +65,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let vmFactory = VMFactory(appStore: appStore, usecases: usecases, notificationService: notificationService);
         let vcFactory = VCFactory();
             
-        let bottomSheetCoordinator = BottomSheetCoordinator(vcFactory: vcFactory, vmFactory: vmFactory);
+        let bottomSheetCoordinator = BottomSheetCoordinator(vcFactory: vcFactory, vmFactory: vmFactory, notificationService: notificationService);
         
         vmFactory.configure(navigator: bottomSheetCoordinator)
         
