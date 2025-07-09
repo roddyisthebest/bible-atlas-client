@@ -28,6 +28,7 @@ final class SearchReadyViewModel: SearchReadyViewModelProtocol {
     private let recentSearches$ = BehaviorRelay<[RecentSearchItem]>(value: []);
 
     private let errorToFetchPlaces$ = BehaviorRelay<NetworkError?>(value: nil)
+    private let errorToFetchRecentSearches$ = BehaviorRelay<RecentSearchError?>(value: nil)
     
     private let isFetching$ = BehaviorRelay<Bool>(value: false)
     
@@ -65,7 +66,7 @@ final class SearchReadyViewModel: SearchReadyViewModelProtocol {
         
 
         
-        return Output(popularPlaces$: popularPlaces$.asObservable(), recentSearches$: recentSearches$.asObservable(), errorToFetchPlaces$: errorToFetchPlaces$.asObservable(), isFetching$: isFetching$.asObservable())
+        return Output(popularPlaces$: popularPlaces$.asObservable(), recentSearches$: recentSearches$.asObservable(), errorToFetchPlaces$: errorToFetchPlaces$.asObservable(), errorToFetchRecentSearches$: errorToFetchRecentSearches$.asObservable(), isFetching$: isFetching$.asObservable())
 
     }
     
@@ -113,7 +114,7 @@ final class SearchReadyViewModel: SearchReadyViewModelProtocol {
             self.recentSearches$.accept(response.items)
             print(response)
         case .failure(let error):
-            print(error.description)
+            self.errorToFetchRecentSearches$.accept(error)
         default:
             print("wo")
         }
@@ -132,6 +133,7 @@ final class SearchReadyViewModel: SearchReadyViewModelProtocol {
         let popularPlaces$:Observable<[Place]>
         let recentSearches$:Observable<[RecentSearchItem]>
         let errorToFetchPlaces$:Observable<NetworkError?>
+        let errorToFetchRecentSearches$:Observable<RecentSearchError?>
         let isFetching$:Observable<Bool>
     }
     

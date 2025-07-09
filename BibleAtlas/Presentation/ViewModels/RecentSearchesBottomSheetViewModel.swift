@@ -22,8 +22,9 @@ final class RecentSearchesBottomSheetViewModel:RecentSearchesBottomSheetViewMode
         
     private let recentSearches$ = BehaviorRelay<[RecentSearchItem]>(value: []);
     
-    private let error$ = BehaviorRelay<RecentSearchError?>(value: nil)
-    
+    private let errorToFetch$ = BehaviorRelay<RecentSearchError?>(value: nil)
+    private let errorToInteract$ = BehaviorRelay<RecentSearchError?>(value: nil)
+
     
     private let isInitialLoading$ = BehaviorRelay<Bool>(value: true);
     private let isFetchingNext$ = BehaviorRelay<Bool>(value: false);
@@ -44,7 +45,7 @@ final class RecentSearchesBottomSheetViewModel:RecentSearchesBottomSheetViewMode
             guard let self = self else { return }
             
             self.isInitialLoading$.accept(true)
-            self.error$.accept(nil)
+            self.errorToFetch$.accept(nil)
             self.recentSearches$.accept([])
             self.pagination.reset()
             
@@ -57,7 +58,7 @@ final class RecentSearchesBottomSheetViewModel:RecentSearchesBottomSheetViewMode
                     self.pagination.update(total: response.total)
 
                 case .failure(let error):
-                    self.error$.accept(error)
+                    self.errorToFetch$.accept(error)
                 default:
                     print("none")
             }
@@ -83,7 +84,7 @@ final class RecentSearchesBottomSheetViewModel:RecentSearchesBottomSheetViewMode
                 self.recentSearches$.accept(current + response.items)
                 self.pagination.update(total: response.total)
             case .failure(let error):
-                self.error$.accept(error)
+                self.errorToFetch$.accept(error)
             case .none:
                 print("none")
             }
@@ -107,7 +108,7 @@ final class RecentSearchesBottomSheetViewModel:RecentSearchesBottomSheetViewMode
             case .success():
                 self?.recentSearches$.accept([])
             case .failure(let error):
-                self?.error$.accept(error)
+                self?.errorToInteract$.accept(error)
             default:
                 print("none")
             }
@@ -115,7 +116,7 @@ final class RecentSearchesBottomSheetViewModel:RecentSearchesBottomSheetViewMode
             
         }).disposed(by:disposeBag)
         
-        return Output(recentSearches$: recentSearches$.asObservable(), error$: error$.asObservable(), isInitialLoading$: isInitialLoading$.asObservable(), isFetchingNext$: isFetchingNext$.asObservable())
+        return Output(recentSearches$: recentSearches$.asObservable(), errorToFetch$: errorToFetch$.asObservable(), errorToInteract$: errorToInteract$.asObservable(), isInitialLoading$: isInitialLoading$.asObservable(), isFetchingNext$: isFetchingNext$.asObservable())
     }
 
     public struct Input {
@@ -129,7 +130,8 @@ final class RecentSearchesBottomSheetViewModel:RecentSearchesBottomSheetViewMode
     
     public struct Output{
         let recentSearches$:Observable<[RecentSearchItem]>
-        let error$:Observable<RecentSearchError?>
+        let errorToFetch$:Observable<RecentSearchError?>
+        let errorToInteract$:Observable<RecentSearchError?>
         let isInitialLoading$:Observable<Bool>
         let isFetchingNext$:Observable<Bool>
     }

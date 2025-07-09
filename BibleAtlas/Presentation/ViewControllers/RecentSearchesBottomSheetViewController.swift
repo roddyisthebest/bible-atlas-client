@@ -126,6 +126,9 @@ class RecentSearchesBottomSheetViewController: UIViewController {
        
     }
     
+
+    
+    
     private func bindViewModel(){
         let closeButtonTapped$ = closeButton.rx.tap.asObservable();
 
@@ -134,10 +137,17 @@ class RecentSearchesBottomSheetViewController: UIViewController {
         
         let output = recentSearchesBottomSheetViewModel?.transform(input: RecentSearchesBottomSheetViewModel.Input(viewLoaded$: viewLoaded$.asObservable(), closeButtonTapped$: closeButtonTapped$, cellSelected$: cellSelected$.asObservable(), bottomReached$: bottomReached$.asObservable(), retryButtonTapped$: retryButtonTapped$, allClearButtonTapped$: allClearButtonTapped$))
         
+        output?.errorToInteract$
+            .compactMap { $0 }
+            .observe(on: MainScheduler.instance)
+            .bind{ [weak self] error in
+                
+                self?.showErrorAlert(message: error?.description ?? "unknown error")
+            }
+            .disposed(by: disposeBag)
         
         
-        
-        Observable.combineLatest(output!.isInitialLoading$, output!.error$, output!.recentSearches$)
+        Observable.combineLatest(output!.isInitialLoading$, output!.errorToFetch$, output!.recentSearches$)
             .observe(on: MainScheduler.instance)
             .bind{
                 [weak self] isLoading, error, recentSearches in

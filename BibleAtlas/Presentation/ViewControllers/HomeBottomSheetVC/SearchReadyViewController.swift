@@ -272,15 +272,19 @@ final class SearchReadyViewController: UIViewController {
         
         let output = searchReadyViewModel.transform(input: SearchReadyViewModel.Input(refetchButtonTapped$: errorRetryView.refetchTapped$.asObservable(), popularPlaceCellTapped$: popularPlaceCellTapped$.asObservable(), recentSearchCellTapped$: recentSearchCellTapped$.asObservable(), viewLoaded$: viewLoaded$.asObservable(), moreRecentSearchesButtonTapped$: moreRecentSearchesButtonTapped$))
         
-        output.recentSearches$
+        Observable.combineLatest(output.recentSearches$, output.errorToFetchRecentSearches$)
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext:{[weak self] recentSearches in
+            .subscribe(onNext:{[weak self] recentSearches, error in
                 
                 guard let self = self else {
                     return
                 }
                 
-                if(recentSearches.isEmpty){
+                
+                
+                
+                if(recentSearches.isEmpty || error != nil){
+                    
                     self.recentSearchStackView.isHidden = true
                 
                     self.popularPlaceStackView.snp.remakeConstraints { make in
@@ -289,6 +293,11 @@ final class SearchReadyViewController: UIViewController {
                         make.trailing.equalToSuperview().offset(-20)
                         make.bottom.equalToSuperview().inset(30)
                     }
+                    guard let error = error else {
+                        return
+                    }
+                    
+                    self.showErrorAlert(message: error.description)
                     
                     return
                 }
@@ -355,6 +364,7 @@ final class SearchReadyViewController: UIViewController {
             self?.errorRetryView.isHidden = false;
                 print(error.description)
             self?.errorRetryView.setMessage(error.description)
+            self?.emptyView.isHidden = true
 
             
             

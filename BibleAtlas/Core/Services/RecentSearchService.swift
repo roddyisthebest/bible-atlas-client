@@ -97,6 +97,7 @@ final class RecentSearchService: RecentSearchServiceProtocol{
     }
     
     func save(_ place: Place) -> Result<Void, RecentSearchError> {
+        
         let fetchRequest: NSFetchRequest<RecentSearchEntity> = RecentSearchEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", place.id)
         
@@ -135,7 +136,7 @@ final class RecentSearchService: RecentSearchServiceProtocol{
     func clearAll() -> Result<Void, RecentSearchError> {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = RecentSearchEntity.fetchRequest()
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-        
+
         do{
             try context.execute(deleteRequest)
             try context.save()

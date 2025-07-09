@@ -25,7 +25,9 @@ final class SearchResultViewModel:SearchResultViewModelProtocol {
 
     
     private let places$ = BehaviorRelay<[Place]>(value: []);
-    private let error$ = BehaviorRelay<NetworkError?>(value: nil)
+    private let errorToFetchPlaces$ = BehaviorRelay<NetworkError?>(value: nil)
+    
+    private let errorToSaveRecentSearch$ = BehaviorRelay<RecentSearchError?>(value: nil)
     
     private let isSearching$ = BehaviorRelay<Bool>(value: false)
     private let isFetchingNext$ = BehaviorRelay<Bool>(value: false);
@@ -66,7 +68,7 @@ final class SearchResultViewModel:SearchResultViewModelProtocol {
                 
                 if keyword.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                     self.places$.accept([])
-                    self.error$.accept(nil)
+                    self.errorToFetchPlaces$.accept(nil)
                     self.isSearching$.accept(false)
                     return
                 }
@@ -104,10 +106,9 @@ final class SearchResultViewModel:SearchResultViewModelProtocol {
                 
                 switch(result){
                 case .success():
-                    print("success")
                     self.navigator?.present(.placeDetail(place.id))
                 case .failure(let error):
-                    print(error.description)
+                    self.errorToSaveRecentSearch$.accept(error)
                 default:
                     print("none")
                 }
@@ -115,7 +116,7 @@ final class SearchResultViewModel:SearchResultViewModelProtocol {
             })
             .disposed(by: disposeBag)
         
-        return Output(places$: places$.asObservable(), error$: error$.asObservable(), isSearching$: isSearching$.asObservable(), isFetchingNext$: isFetchingNext$.asObservable(), isSearchingMode$: isSearchingMode$.asObservable())
+        return Output(places$: places$.asObservable(), errorToFetchPlaces$: errorToFetchPlaces$.asObservable(), errorToSaveRecentSearch$: errorToSaveRecentSearch$.asObservable(), isSearching$: isSearching$.asObservable(), isFetchingNext$: isFetchingNext$.asObservable(), isSearchingMode$: isSearchingMode$.asObservable())
     }
     
     
@@ -134,9 +135,9 @@ final class SearchResultViewModel:SearchResultViewModelProtocol {
             case .success(let response):
                 self.places$.accept(response.data)
                 self.pagination.update(total: response.total)
-                self.error$.accept(nil)
+                self.errorToFetchPlaces$.accept(nil)
             case .failure(let error):
-                error$.accept(error)
+                errorToFetchPlaces$.accept(error)
             default:
                 print("none")
             }
@@ -165,7 +166,7 @@ final class SearchResultViewModel:SearchResultViewModelProtocol {
                 self.places$.accept(current + response.data)
                 self.pagination.update(total: response.total)
             case .failure(let error):
-                self.error$.accept(error)
+                self.errorToFetchPlaces$.accept(error)
             case .none:
                 print("none")
             }
@@ -186,7 +187,8 @@ final class SearchResultViewModel:SearchResultViewModelProtocol {
     
     public struct Output {
         let places$:Observable<[Place]>
-        let error$:Observable<NetworkError?>
+        let errorToFetchPlaces$:Observable<NetworkError?>
+        let errorToSaveRecentSearch$:Observable<RecentSearchError?>
         let isSearching$:Observable<Bool>
         let isFetchingNext$:Observable<Bool>
         let isSearchingMode$:Observable<Bool>
