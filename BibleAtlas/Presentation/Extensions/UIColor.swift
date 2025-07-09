@@ -53,6 +53,7 @@ extension UIColor {
         return traitCollection.userInterfaceStyle == .dark ? UIColor(hex: "#37393C") : UIColor(hex: "#E7E7E7")
     }
     
+    static let primaryViolet = UIColor(hex: "#8144FC")
     
     static let oneHunnitPercentBadgeBkg = UIColor(hex: "#8144FC")
     
@@ -80,8 +81,18 @@ extension UIColor {
         return traitCollection.userInterfaceStyle == .dark ? UIColor(hex: "#9A9DA0") : UIColor(hex: "#868782")
     }
     
+    static let mainLabelLine = UIColor { traitCollection in
+        return traitCollection.userInterfaceStyle == .dark ? UIColor(hex: "#37393C") : UIColor(hex: "#E9E9E9")
+    }
+    
     static let mainText = UIColor { traitCollection in
         return traitCollection.userInterfaceStyle == .dark ? UIColor(hex: "#FFFFFF") : UIColor(hex: "#000000")
+    }
+    
+    static let invertedMainText = UIColor { traitCollection in
+        return traitCollection.userInterfaceStyle == .dark
+            ? UIColor(hex: "#000000")
+            : UIColor(hex: "#FFFFFF")
     }
     
     static let collectionSubText = UIColor(hex: "#868782")
@@ -93,6 +104,9 @@ extension UIColor {
     static let circleIcon = UIColor { traitCollection in
         return traitCollection.userInterfaceStyle == .dark ? UIColor(hex: "#9B9C9E") : UIColor(hex: "#6C6C6C")
     }
+    
+   
+    
     
     
     

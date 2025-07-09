@@ -11,21 +11,25 @@ import RxRelay
 import PanModal
 final class MyCollectionBottomSheetViewController: UIViewController {
     
+    private var isBottomEmitted = false
+
     private var myCollectionBottomSheetViewModel:MyCollectionBottomSheetViewModelProtocol?;
     
     private let disposeBag = DisposeBag();
 
     private let bottomReached$ = PublishRelay<Void>();
+    private let myCollectionViewLoaded$ = PublishRelay<Void>();
+
     private let placeTabelCellSelected$ = PublishRelay<String>();
     
-    private let dummyPlaces:[String] = ["onasdasdasdasdasddfasdfdfasdfasdfasdfasdfasdfe", "sdfasdfadsfasdfasdffsdsadf"];
+    private var places:[Place] = [];
     
     
     
     private lazy var headerStackView = {
         let sv = UIStackView(arrangedSubviews: [headerLabel, closeButton]);
         sv.axis = .horizontal;
-        sv.distribution = .fillProportionally;
+        sv.distribution = .fill;
         sv.alignment = .center
         
         return sv;
@@ -48,12 +52,29 @@ final class MyCollectionBottomSheetViewController: UIViewController {
         tv.layer.cornerRadius = 10;
         tv.layer.masksToBounds = true;
         tv.rowHeight = 80;
+        
+        tv.tableFooterView = footerLoadingView
+        footerLoadingView.frame = CGRect(x: 0, y: 0, width: tv.bounds.width, height: 44)
+        
         return tv;
     }()
+    
+    private let loadingView = LoadingView();
+    
+    private let footerLoadingView = LoadingView(style: .medium);
+    
+    private let emptyLabel = EmptyLabel();
+    
+    private let errorRetryView = ErrorRetryView();
+
     
     private func setupUI(){
         view.addSubview(headerStackView);
         view.addSubview(tableView);
+        view.addSubview(loadingView)
+        view.addSubview(emptyLabel)
+        view.addSubview(errorRetryView)
+
     }
     
     private func setupStyle(){
@@ -65,7 +86,7 @@ final class MyCollectionBottomSheetViewController: UIViewController {
             make.top.equalToSuperview().offset(20);
             make.leading.equalToSuperview().offset(20);
             make.trailing.equalToSuperview().offset(-20);
-
+            make.height.equalTo(44)
         }
         
         tableView.snp.makeConstraints { make in
@@ -76,31 +97,38 @@ final class MyCollectionBottomSheetViewController: UIViewController {
             
         }
         
+        loadingView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        
+        emptyLabel.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        errorRetryView.snp.makeConstraints { make in
+            make.center.equalToSuperview();
+        }
+        
+       
     }
     
     private func bindViewModel(){
         let closeButtonTapped$ = closeButton.rx.tap.asObservable();
         
+        let refetchButtonTapped$ = errorRetryView.refetchTapped$.asObservable();
         
-        let output = myCollectionBottomSheetViewModel?.transform(input: MyCollectionBottomSheetViewModel.Input(closeButtonTapped$: closeButtonTapped$, placeTabelCellSelected$: placeTabelCellSelected$.asObservable(), bottomReached$: bottomReached$.asObservable()))
+        let output = myCollectionBottomSheetViewModel?.transform(input: MyCollectionBottomSheetViewModel.Input(myCollectionViewLoaded$: myCollectionViewLoaded$.asObservable(), closeButtonTapped$: closeButtonTapped$, placeTabelCellSelected$: placeTabelCellSelected$.asObservable(), bottomReached$: bottomReached$.asObservable(), refetchButtonTapped$: refetchButtonTapped$.asObservable()))
         
-        output?.placesResponse$.observe(on: MainScheduler.instance).bind{
-            [weak self] response in
-            print(response,"response")
+        output?.places$.observe(on: MainScheduler.instance).bind{
+            [weak self] places in
+            self?.places = places;
+            self?.tableView.reloadData()
         }.disposed(by: disposeBag)
         
-        output?.error$.observe(on: MainScheduler.instance).bind{
-            [weak self] errorMsg in
-            let alert = UIAlertController(title: "에러", message: errorMsg, preferredStyle: .alert);
-            alert.addAction(.init(title:"확인", style:.default));
-            self?.present(alert,animated: true);
-
-        }.disposed(by: disposeBag)
-        
-        output?.type$.observe(on: MainScheduler.instance).bind{
-            [weak self] type in           
-                switch(type){
-                case .favorite:
+        output?.filter$.observe(on: MainScheduler.instance).bind{
+            [weak self] filter in
+                switch(filter){
+                case .like:
                     self?.headerLabel.text = "Favorite"
                 case .memo:
                     self?.headerLabel.text = "Memo"
@@ -111,10 +139,67 @@ final class MyCollectionBottomSheetViewController: UIViewController {
           
         }.disposed(by: disposeBag)
         
+        Observable
+            .combineLatest(output!.isInitialLoading$, output!.places$, output!.error$)
+            .observe(on: MainScheduler.instance)
+            .bind { [weak self] isLoading, places, error in
+                guard let self = self else { return }
+                
+               
+                if let error = error {
+                    switch error {
+                
+                    default:
+                        self.errorRetryView.setMessage(error.description)
+                        self.tableView.isHidden = true
+                        self.emptyLabel.isHidden = true
+                        self.loadingView.isHidden = true
+                        self.errorRetryView.isHidden = false
+                        self.isBottomEmitted = false
+                    }
+                    return;
+                }
+                
+                
+                if isLoading {
+                    self.loadingView.start();
+                    self.tableView.isHidden = true
+                    self.emptyLabel.isHidden = true
+                    self.errorRetryView.isHidden = true
+                    return;
+                }
+                
+                self.loadingView.stop()
+
+                let isEmpty = !isLoading && places.isEmpty
+                self.emptyLabel.isHidden = !isEmpty
+                self.tableView.isHidden = isEmpty
+            }
+            .disposed(by: disposeBag)
+        
+
+        
+        
+        output?.isFetchingNext$.observe(on: MainScheduler.instance)
+            .bind { [weak self] isFetching in
+                guard let self = self else { return }
+
+                if isFetching {
+                    self.footerLoadingView.start()
+            
+                } else {
+                    self.footerLoadingView.stop()
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        
     }
     
 
-    
+    deinit {
+        print("🔥 MyCollectionBottomSheetVC deinit")
+    }
     
     init(myCollectionBottomSheetViewModel:MyCollectionBottomSheetViewModelProtocol) {
         self.myCollectionBottomSheetViewModel = myCollectionBottomSheetViewModel
@@ -131,7 +216,11 @@ final class MyCollectionBottomSheetViewController: UIViewController {
         setupConstraints();
         setupStyle();
         bindViewModel();
+        
+        myCollectionViewLoaded$.accept(Void())
     }
+    
+ 
 
 }
 
@@ -141,10 +230,9 @@ extension MyCollectionBottomSheetViewController:UITableViewDelegate, UITableView
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PlaceTableViewCell.identifier, for: indexPath) as? PlaceTableViewCell else {
             return UITableViewCell()
         }
+        cell.setPlace(place: places[indexPath.row])
 
-        cell.setText(text: dummyPlaces[indexPath.row])
-
-        if indexPath.row == dummyPlaces.count - 1 {
+        if indexPath.row == places.count - 1 {
                cell.separatorInset = UIEdgeInsets(top: 0, left: tableView.bounds.width, bottom: 0, right: 0)
            } else {
                cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
@@ -156,17 +244,42 @@ extension MyCollectionBottomSheetViewController:UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        placeTabelCellSelected$.accept(dummyPlaces[indexPath.row])
+        
+        
     }
     
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dummyPlaces.count;
+        return places.count;
     }
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80;
     }
+}
+
+
+extension MyCollectionBottomSheetViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+        
+        let isAtBottom = offsetY >= contentHeight - height
+        
+        if isAtBottom {
+            if !isBottomEmitted {
+                bottomReached$.accept(())
+                isBottomEmitted = true
+            }
+        } else {
+            isBottomEmitted = false
+        }
+    }
+    
+   
+    
 }

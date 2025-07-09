@@ -15,7 +15,7 @@ final class MainLabel: UILabel {
         
         self.text = text
         self.textColor = .mainLabelText
-        self.font = .boldSystemFont(ofSize: 14);
+        self.font = .boldSystemFont(ofSize: 16);
 
     }
     

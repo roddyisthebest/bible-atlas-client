@@ -42,7 +42,6 @@ class ActivityCell: UITableViewCell {
         let v = UIView();
         v.layer.cornerRadius = 25;
         v.layer.masksToBounds = true;
-        v.backgroundColor = .activityCreationBGColor
         v.addSubview(statusLabel)
         return v;
     }()
@@ -50,7 +49,6 @@ class ActivityCell: UITableViewCell {
     private let statusLabel = {
         let label = UILabel();
         label.font = UIFont.boldSystemFont(ofSize: 20);
-        label.textColor = .activityCreationTextColor;
         label.text = "생성"
         return label;
     }()
@@ -111,7 +109,6 @@ class ActivityCell: UITableViewCell {
     private let voteUpResultIcon = {
         let image = UIImage(systemName: "arrow.up")
         let icon = UIImageView(image:image)
-        icon.tintColor = .upIconColor
         return icon;
     }()
     
@@ -139,7 +136,6 @@ class ActivityCell: UITableViewCell {
     private let voteDownResultIcon = {
         let image = UIImage(systemName: "arrow.down")
         let icon = UIImageView(image:image)
-        icon.tintColor = .downIconColor
         return icon;
     }()
     

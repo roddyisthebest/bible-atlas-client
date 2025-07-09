@@ -74,7 +74,8 @@ final class RelatedVerseTableViewCell: UITableViewCell {
     
     private func setupConstraints(){
         containerStackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(20)
+            make.top.leading.trailing.equalToSuperview().inset(20)
+            make.bottom.equalToSuperview().inset(20).priority(.low)
         }
         
         collectionView.snp.makeConstraints { make in
@@ -104,18 +105,24 @@ final class RelatedVerseTableViewCell: UITableViewCell {
 
     func configure(with verses: [String], title: String) {
         self.verses = verses
-        self.title = title;
+         self.title = title
+         collectionView.reloadData()
+         collectionView.collectionViewLayout.invalidateLayout()
+         collectionView.layoutIfNeeded()
+
+         let height = collectionView.collectionViewLayout.collectionViewContentSize.height
+         collectionViewHeightConstraint?.update(offset: height)
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        collectionView.collectionViewLayout.invalidateLayout()
-        collectionView.layoutIfNeeded()
-
-        let height = collectionView.collectionViewLayout.collectionViewContentSize.height
-        collectionViewHeightConstraint?.update(offset: height)
-    }
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//
+//        collectionView.collectionViewLayout.invalidateLayout()
+//        collectionView.layoutIfNeeded()
+//
+//        let height = collectionView.collectionViewLayout.collectionViewContentSize.height
+//        collectionViewHeightConstraint?.update(offset: height)
+//    }
 
 }
 
@@ -127,6 +134,7 @@ extension RelatedVerseTableViewCell: UICollectionViewDelegate, UICollectionViewD
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VersedItemCell.identifier, for: indexPath) as! VersedItemCell
+        
         cell.configure(text: verses[indexPath.item])
         
         cell.verseTappedHandler = { [weak self] tappedVerse in

@@ -8,63 +8,87 @@
 import UIKit
 
 class IconTextButton: UIButton {
-    
-    init(iconSystemName:String, color:UIColor, labelText:String){
+
+    private let icon = UIView()
+    private let customImageView = UIImageView()
+    private let label = UILabel()
+    private let stackView = UIStackView()
+    private var activityIndicator: UIActivityIndicatorView?
+
+    init(iconSystemName: String, color: UIColor, labelText: String) {
         super.init(frame: .zero)
-        
-        let icon = UIView()
+
+        // 아이콘 뷰
         icon.backgroundColor = .collectionCircle
         icon.layer.cornerRadius = 15
         icon.layer.masksToBounds = true
 
-        let imageView = UIImageView()
-        
-        imageView.image = UIImage(systemName: iconSystemName)
-        imageView.tintColor = color
-        imageView.contentMode = .scaleAspectFit
-        
-        
-        icon.addSubview(imageView);
+        customImageView.image = UIImage(systemName: iconSystemName)
+        customImageView.tintColor = color
+        customImageView.contentMode = .scaleAspectFit
 
+        icon.addSubview(customImageView)
         icon.snp.makeConstraints { make in
-            make.width.height.equalTo(30) // 아이콘 사이즈
+            make.width.height.equalTo(30)
         }
-        
-        imageView.snp.makeConstraints { make in
+        customImageView.snp.makeConstraints { make in
             make.width.height.equalTo(15)
             make.center.equalToSuperview()
         }
-        
-        
-        let label = UILabel();
+
+        // 라벨
         label.text = labelText
-        label.font = .systemFont(ofSize: 15, weight: .semibold);
-        label.textColor = color;
+        label.font = .systemFont(ofSize: 15, weight: .semibold)
+        label.textColor = color
 
-        
-        let stackView = UIStackView(arrangedSubviews: [icon, label]);
+        // 스택뷰
         stackView.axis = .horizontal
-        stackView.distribution = .fill;
-        stackView.alignment = .center;
-        stackView.spacing = 10;
-        
-        self.addSubview(stackView);
+        stackView.distribution = .fill
+        stackView.alignment = .center
+        stackView.spacing = 10
+        stackView.addArrangedSubview(icon)
+        stackView.addArrangedSubview(label)
 
+        stackView.isUserInteractionEnabled = false
+        self.addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(15);
-            make.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().inset(20);
-            make.bottom.equalToSuperview().inset(15);
+            make.top.equalToSuperview().offset(15)
+            make.leading.equalToSuperview().offset(20)
+            make.trailing.equalToSuperview().inset(20)
+            make.bottom.equalToSuperview().inset(15)
         }
-
-
         
+        
+
         self.backgroundColor = .mainItemBkg
-        self.layer.cornerRadius = 8;
-        self.layer.masksToBounds = true;
+        self.layer.cornerRadius = 8
+        self.layer.masksToBounds = true
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func setLoading(_ isLoading: Bool) {
+        if isLoading {
+            stackView.isHidden = true
+            isEnabled = false
+
+            let spinner = UIActivityIndicatorView(style: .medium)
+            self.addSubview(spinner)
+            spinner.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+            }
+
+            spinner.startAnimating()
+            activityIndicator = spinner
+        } else {
+            activityIndicator?.stopAnimating()
+            activityIndicator?.removeFromSuperview()
+            activityIndicator = nil
+
+            stackView.isHidden = false
+            isEnabled = true
+        }
     }
 }

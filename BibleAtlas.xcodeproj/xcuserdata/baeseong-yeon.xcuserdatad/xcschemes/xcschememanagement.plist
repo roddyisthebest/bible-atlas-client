@@ -7,7 +7,25 @@
 		<key>BibleAtlas.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>17</integer>
+			<integer>23</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>ECA94B922D5082B9005B0428</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>ECA94BAB2D5082BA005B0428</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>ECA94BB52D5082BA005B0428</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

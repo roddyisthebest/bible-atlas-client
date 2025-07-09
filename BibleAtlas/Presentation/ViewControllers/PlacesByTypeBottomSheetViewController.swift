@@ -122,7 +122,7 @@ class PlacesByTypeBottomSheetViewController: UIViewController {
         
         output?.type$.observe(on:MainScheduler.instance).bind{
             [weak self] type in
-            self?.headerLabel.text = type.name;
+            self?.headerLabel.text = type.name.rawValue;
         }.disposed(by: disposeBag)
         
         

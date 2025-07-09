@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxRelay
+import Kingfisher
 
 final class Bible {
     var verses:[String] = []
@@ -17,6 +18,13 @@ final class Bible {
         self.verses = verses;
     }
 }
+    
+
+protocol IdentifiableBottomSheet: AnyObject {
+    var bottomSheetIdentity: BottomSheetType { get }
+}
+
+
 
 final class PlaceDetailViewController: UIViewController {
     
@@ -28,15 +36,23 @@ final class PlaceDetailViewController: UIViewController {
     private let placeModificationButtonTapped$ = PublishRelay<Void>();
         
     private let placeCellTapped$ = PublishRelay<String>();
+    private let verseCellTapped$ = PublishRelay<String>();
+    
+    private var relations:[PlaceRelation] = [];
+    
+    private var bibles:[Bible] = []
     
     private let dummyPlaces:[String] = ["onasf", "sdfasdfadsfasdfasddasdasdsadasdasdadsffsdsadf","ffeqfdasdsqssdqwddsas"];
         
     private let dummyVerse:[Bible] = [ Bible(bookName:"창세기", verses: ["12:23","12:24"]), Bible(bookName:"출애굽기", verses: ["11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24"])]
     
     private let placeDetailViewLoaded$ = PublishRelay<Void>();
+        
+    private let placeId:String
     
     private lazy var bodyView = {
         let v = UIView();
+        v.isHidden = true
         v.addSubview(scrollView);
         return v;
     }()
@@ -87,7 +103,7 @@ final class PlaceDetailViewController: UIViewController {
         return sv;
     }()
     
-    private let saveButton = CircleButton(iconSystemName:"bookmark")
+    private let saveButton = ToggleCircleButton(activeIconSystemName: "bookmark.fill", inActiveIconSystemName: "bookmark")
     
     private let shareButton = CircleButton(iconSystemName: "square.and.arrow.up")
     
@@ -137,15 +153,18 @@ final class PlaceDetailViewController: UIViewController {
         sv.spacing = 10;
         return sv;
     }()
+    
+    private let likeLoadingView = LoadingView(style: .medium);
+    
    
-    private let likeButton = {
+    private lazy var likeButton = {
         let button = UIButton(type: .system)
         let image = UIImage(systemName: "hand.thumbsup.fill")
         
         button.setImage(image, for: .normal)
         button.setTitle("7 Likes", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.tintColor = .white
+        button.setTitleColor(.mainText, for: .normal)
+        button.tintColor = .mainText
         button.backgroundColor = .primaryBlue
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
         button.imageView?.contentMode = .scaleAspectFit
@@ -153,6 +172,7 @@ final class PlaceDetailViewController: UIViewController {
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)
         button.layer.cornerRadius = 8;
         button.layer.masksToBounds = true;
+        button.addSubview(likeLoadingView)
         return button
     }()
     
@@ -170,11 +190,18 @@ final class PlaceDetailViewController: UIViewController {
         return button
     }()
     
-    private let imageButton = {
-        let button = UIButton(type:.system);
-        let image = UIImage()
+    
+    private let placeImageView = {
+        let iv = UIImageView();
         
-        button.setImage(image, for: .normal);
+        iv.contentMode = .scaleAspectFill;
+        iv.clipsToBounds = true;
+        return iv;
+    }()
+    
+    private lazy var imageButton = {
+        let button = UIButton(type:.system);
+        button.addSubview(placeImageView)
         button.backgroundColor = .gray;
         button.layer.cornerRadius = 8;
         button.layer.masksToBounds = true
@@ -221,7 +248,7 @@ final class PlaceDetailViewController: UIViewController {
     }()
     
     private lazy var relatedLocationStackView = {
-        let sv = UIStackView(arrangedSubviews: [relatedLocationLabel, relatedPlaceTable]);
+        let sv = UIStackView(arrangedSubviews: [relatedLocationLabel, relatedPlaceTable, relatedPlaceEmptyView]);
         sv.axis = .vertical;
         sv.distribution = .fill
         sv.alignment = .fill;
@@ -252,6 +279,21 @@ final class PlaceDetailViewController: UIViewController {
         return tv;
     }()
     
+    private lazy var relatedPlaceEmptyView:UIView = {
+        let v = UIView();
+        v.addSubview(relatedPlaceEmptyLabel)
+        v.backgroundColor = .mainItemBkg
+        v.layer.cornerRadius = 10;
+        v.layer.masksToBounds = true;
+        v.isHidden = true;
+        return v;
+    }()
+    
+    private let relatedPlaceEmptyLabel = EmptyLabel(text:"연관된 장소가 없습니다.")
+    
+    
+
+    
     private lazy var memoButton:UIButton = {
         let button = UIButton(type:.system);
         button.backgroundColor = .mainItemBkg
@@ -262,35 +304,46 @@ final class PlaceDetailViewController: UIViewController {
     }()
     
     private lazy var memoStackView:UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [userAvatarView, memoTextView] );
+        let sv = UIStackView(arrangedSubviews: [userAvatarView, memoLabel] );
         sv.axis = .horizontal
         sv.distribution = .fill;
         sv.alignment = .center;
         sv.spacing = 10;
+        sv.isUserInteractionEnabled = false
         return sv;
     }()
     
-    private let userAvatarView = {
+    private let avatarImageView = {
+        let iv = UIImageView();
+        
+        iv.contentMode = .scaleAspectFill;
+        iv.clipsToBounds = true;
+        return iv;
+    }()
+    
+    private lazy var userAvatarView = {
         let v = UIView()
         
         v.backgroundColor = .userAvatarBkg;
         v.layer.cornerRadius = 20;
         v.layer.masksToBounds = true;
-        
+        v.addSubview(avatarImageView)
+
         return v
     }()
     
-    private let memoTextView: UITextView = {
-        let tv = UITextView()
-        tv.backgroundColor = .clear // ✅ 배경 투명 (필요에 따라 변경 가능)
-        tv.textColor = .mainText
-        tv.font = UIFont.systemFont(ofSize: 16)
-        tv.isScrollEnabled = false
-        tv.isEditable = false
-        tv.isSelectable = false
-        tv.text = "인사까지 연습했는데 거기까진 문제없었는데 니 앞에서면"
+    private let memoLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .clear // ✅ 배경 투명 (필요에 따라 변경 가능)
+        label.textColor = .mainText
+        label.font = UIFont.systemFont(ofSize: 16)
 
-        return tv
+        label.numberOfLines = 2
+        label.lineBreakMode = .byTruncatingTail
+
+        label.text = "인사까지 연습했는데 거기까진 문제없었는데 니 앞에서면"
+
+        return label
     }()
     
     private lazy var detailStackView:UIStackView = {
@@ -317,7 +370,7 @@ final class PlaceDetailViewController: UIViewController {
     }()
     
     private lazy var relatedVerseStackView = {
-        let sv = UIStackView(arrangedSubviews: [relatedVerseLabel, relatedVerseTable]);
+        let sv = UIStackView(arrangedSubviews: [relatedVerseLabel, relatedVerseTable, relatedVerseEmptyView]);
         sv.axis = .vertical;
         sv.distribution = .fill
         sv.alignment = .fill;
@@ -330,6 +383,19 @@ final class PlaceDetailViewController: UIViewController {
         label.font = .systemFont(ofSize: 20, weight: .semibold)
         return label
     }()
+    
+    
+    private lazy var relatedVerseEmptyView:UIView = {
+        let v = UIView();
+        v.addSubview(relatedVerseEmptyLabel)
+        v.backgroundColor = .mainItemBkg
+        v.layer.cornerRadius = 10;
+        v.layer.masksToBounds = true;
+        v.isHidden = true;
+        return v;
+    }()
+    
+    private let relatedVerseEmptyLabel = EmptyLabel(text:"언급된 성경말씀이 없습니다.")
     
     
     private lazy var relatedVerseTable:UITableView = {
@@ -350,9 +416,16 @@ final class PlaceDetailViewController: UIViewController {
         return tv;
     }()
     
-    init(placeDetailViewModel:PlaceDetailViewModelProtocol) {
+    private let loadingView = LoadingView();
+
+    private let errorRetryView = ErrorRetryView();
+
+    
+    init(placeDetailViewModel:PlaceDetailViewModelProtocol,placeId:String) {
+        self.placeId = placeId;
         self.placeDetailViewModel = placeDetailViewModel;
         super.init(nibName: nil, bundle: nil)
+        
     }
 
     required init?(coder: NSCoder) {
@@ -365,11 +438,50 @@ final class PlaceDetailViewController: UIViewController {
         }
     }
     
-    func scrollUp(){
+    private func scrollUp(){
         self.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
     }
     
+    private func setAvatarImage(urlString: String) {
+        let replaced = urlString.replacingOccurrences(of: "svg", with: "png")
+
+        guard let url = URL(string: replaced) else { return }
+        
+        avatarImageView.kf.setImage(
+            with: url,
+            options: [
+                .transition(.fade(0.2))
+            ],
+            completionHandler: { result in
+//                switch result {
+//                case .success(let value):
+//                    print("✅ Avatar image loaded: \(value.source.url?.absoluteString ?? "")")
+//                case .failure(let error):
+//                    print("❌ Avatar image load failed: \(error.localizedDescription)")
+//                }
+            }
+        )
+
+    }
     
+    private func setPlaceImage(imageTitle:String?){
+        let imageEndpoint = "https://a.openbible.info/geo/images/512"
+        guard let imageTitle = imageTitle else {return}
+        guard let url = URL(string: "\(imageEndpoint)/\(imageTitle)") else {return}
+        
+        placeImageView.kf.setImage(with: url, options: [
+            .transition(.fade(0.01))
+        ],
+        completionHandler: { result in
+//                switch result {
+//                case .success(let value):
+//                    print("✅ Place image loaded: \(value.source.url?.absoluteString ?? "")")
+//                case .failure(let error):
+//                    print("❌ Place image load failed: \(error.localizedDescription)")
+//                }
+        })
+        
+    }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
@@ -394,6 +506,12 @@ final class PlaceDetailViewController: UIViewController {
     }
     
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.sheetPresentationController?.delegate = nil
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI();
@@ -401,19 +519,25 @@ final class PlaceDetailViewController: UIViewController {
         setupConstraints()
         setupSheet()
         bindViewModel();
+        
+        
         placeDetailViewLoaded$.accept(Void())
+    }
+    
+    deinit {
+        print("🔥 PlaceDetailVC deinit")
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
         scrollUp();
-        
     }
 
     
     private func setupUI(){
         view.addSubview(bodyView)
+        view.addSubview(loadingView)
+        view.addSubview(errorRetryView)
     }
     
     private func setupConstraints(){
@@ -434,6 +558,9 @@ final class PlaceDetailViewController: UIViewController {
             make.height.equalTo(40)
         }
         
+        
+        avatarImageView.snp.makeConstraints { $0.edges.equalToSuperview() }
+        placeImageView.snp.makeConstraints { $0.edges.equalToSuperview() }
         
         memoButton.snp.makeConstraints { make in
             make.top.equalTo(likeAndMoreButtonsStackView.snp.bottom).offset(20);
@@ -510,40 +637,251 @@ final class PlaceDetailViewController: UIViewController {
             make.bottom.equalToSuperview().offset(-20)
             
         }
+        
+        
 
         
+        loadingView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
         
+        errorRetryView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview();
+            make.trailing.leading.equalToSuperview()
+        }
+        
+        relatedPlaceEmptyView.snp.makeConstraints { make in
+            make.height.equalTo(80);
+        }
+        
+        relatedPlaceEmptyLabel.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        
+        relatedVerseEmptyView.snp.makeConstraints { make in
+            make.height.equalTo(80)
+        }
+        
+        relatedVerseEmptyLabel.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        
+        likeLoadingView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
     }
     
     private func setupStyle(){
         view.backgroundColor = .mainBkg;
     }
     
+
+    
+    
     private func bindViewModel(){
         
         let saveButtonTapped$ = saveButton.rx.tap.asObservable();
         let shareButtonTapped$ = shareButton.rx.tap.asObservable();
-        let closeButtonTapped$ = closeButton.rx.tap.asObservable();
+    
+        let closeButtonTapped$ = Observable.merge(
+            closeButton.rx.tap.asObservable(),
+            errorRetryView.closeTapped$.asObservable()
+          );
         
         let likeButtonTapped$ = likeButton.rx.tap.asObservable();
         
+        let refetchButtonTapped$ = errorRetryView.refetchTapped$;
+        
+        
+        memoButton.rx.tap.subscribe(onNext: {[weak self] in
+            self?.memoButtonTapped$.accept(Void())})
+        .disposed(by: disposeBag)
+        
+        
+        
+        let output = placeDetailViewModel?.transform(input: PlaceDetailViewModel.Input(viewLoaded$: placeDetailViewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$, shareButtonTapped$: shareButtonTapped$, closeButtonTapped$: closeButtonTapped$, likeButtonTapped$: likeButtonTapped$, placeModificationButtonTapped$: placeModificationButtonTapped$.asObservable(), verseButtonTapped$: verseCellTapped$.asObservable(), memoButtonTapped$: memoButtonTapped$.asObservable(), placeCellTapped$: placeCellTapped$.asObservable(), refetchButtonTapped$: refetchButtonTapped$.asObservable(), verseCellTapped$: verseCellTapped$.asObservable()))
+        
+        output?.isSaving$.observe(on: MainScheduler.instance).bind{
+            [weak self] isSaving in
+            if(isSaving){
+                self?.saveButton.startLoading()
+            }
+            else{
+                self?.saveButton.stopLoading()
+            }
+        }.disposed(by: disposeBag)
+        
+        
+        Observable.combineLatest(output!.isLiking$, output!.place$)
+            .observe(on: MainScheduler.instance)
+            .bind{
+                [weak self] isLiking, place in
+                guard let place = place else {
+                    return;
+                }
+                
+                if(place.isLiked ?? false){
+                    self?.likeButton.backgroundColor = .primaryBlue
+                    self?.likeButton.setTitleColor(.white, for: .normal)
+                    self?.likeButton.tintColor = .white
+                }
+                else{
+                    self?.likeButton.backgroundColor = .circleButtonBkg
+                    self?.likeButton.setTitleColor(.mainText, for: .normal)
+                    self?.likeButton.tintColor = .mainText
+                }
+                
+                
+                if(isLiking){
+                    self?.likeButton.setTitle(nil, for: .normal)
+                    self?.likeButton.isEnabled = false;
+                    self?.likeLoadingView.start()
+                    self?.likeButton.setImage(nil, for: .normal)
+                    
+                }
+                else{
+                    self?.likeButton.setTitle("\(place.likeCount) Likes", for: .normal)
+                    self?.likeButton.isEnabled = true;
+                    self?.likeLoadingView.stop()
+                    let image = UIImage(systemName: "hand.thumbsup.fill")
+                    self?.likeButton.setImage(image, for: .normal)
+                }
+
+                
+                
+            }.disposed(by: disposeBag)
+        
+        output?.profile$.observe(on: MainScheduler.instance).bind{
+            [weak self] profile in
+            guard let profile = profile else { return }
+            self?.setAvatarImage(urlString: profile.avatar)
+        }.disposed(by: disposeBag)
+
     
-        let output = placeDetailViewModel?.transform(input: PlaceDetailViewModel.Input(placeDetailViewLoaded$: placeDetailViewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$, shareButtonTapped$: shareButtonTapped$, closeButtonTapped$: closeButtonTapped$, likeButtonTapped$: likeButtonTapped$, placeModificationButtonTapped$: placeModificationButtonTapped$.asObservable(),memoButtonTapped$: memoButtonTapped$.asObservable(), placeCellTapped$: placeCellTapped$.asObservable()));
-    
-        output?.placeData$.observe(on: MainScheduler.instance).bind{
-            [weak self] data in
+        output?.place$.observe(on: MainScheduler.instance).bind{
+            [weak self] place in
+            
+            guard let self = self else { return }
+            
+            guard let place = place else { return }
+            
+            self.sheetPresentationController?.animateChanges {
+                self.sheetPresentationController?.selectedDetentIdentifier = .medium
+            }
+            
+            self.titleLabel.text = place.name
+            self.descriptionTextView.text = place.koreanDescription
+            
+                
+            self.generationLabel.text = place.isModern ? "modern" : "ancient"
+            
+            let childRelations = place.childRelations ?? []
+            let parentRelations = place.parentRelations ?? []
+
+            self.relations = childRelations + parentRelations;
+            
+            if(self.relations.count == 0) {
+                self.relatedPlaceTable.isHidden = true;
+                self.relatedPlaceEmptyView.isHidden = false;
+            }
+            
+            self.setPlaceImage(imageTitle: place.imageTitle)
+            
+            self.saveButton.setActive(isActive: place.isSaved ?? false)
+            
+            
+      
+            
+            guard let placeType = place.types.first else { return }
+         
+            self.placeTypeButton.setTitle("\(placeType.name.rawValue)", for: .normal)
+            
         }.disposed(by:disposeBag)
-                                                    
+        
+        
+        output?.bibles$.observe(on: MainScheduler.instance).bind{
+            [weak self] bibles in
+            self?.bibles = bibles;
+            self?.relatedVerseTable.isHidden = bibles.isEmpty;
+            self?.relatedVerseEmptyView.isHidden = !bibles.isEmpty;
+            
+            
+            
+        }.disposed(by: disposeBag)
+        
+        Observable.combineLatest(output!.isLoggedIn$ , output!.place$)
+            .observe(on: MainScheduler.instance).bind{
+            [weak self] isLoggedIn, place in
+            guard let place = place else {return}
+
+            if(isLoggedIn && place.memo != nil){
+                self?.memoLabel.text = place.memo?.text
+                self?.showMemoButton()
+            }
+            else{
+                self?.hideMemoButton()
+            }
+            
+        }.disposed(by: disposeBag)
+                                 
+        Observable.combineLatest(output!.isLoading$, output!.loadError$)
+            .observe(on: MainScheduler.instance)
+            .bind{ [weak self] isLoading, error in
+                guard let self = self else { return }
+            
+                
+                if let error = error {
+                    switch(error){
+                        default:
+                        self.errorRetryView.setMessage(error.description);
+                        self.bodyView.isHidden = true;
+                        self.loadingView.isHidden = true;
+                        self.errorRetryView.isHidden = false;
+                    }
+                    return
+                }
+                if isLoading{
+                    self.loadingView.start();
+                    self.bodyView.isHidden = true;
+                    self.errorRetryView.isHidden = true;
+                    return;
+                }
+                
+                
+                self.loadingView.stop();
+                self.bodyView.isHidden = false;
+            }
+            .disposed(by: disposeBag)
+        
+        
+        output?.interactionError$
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {[weak self] error in
+                guard let error = error else{
+                    return;
+                }
+                self?.showAlert(message: error.description)
+            })
+            .disposed(by: disposeBag)
         
     }
     
+    
+    private func showAlert(message: String?) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
+    
     private func buildMoreMenu() -> UIMenu {
-        let action1 = UIAction(title: "Add Memo", image: UIImage(systemName: "note.text.badge.plus")) { _ in
-            self.memoButtonTapped$.accept(Void())
+        let action1 = UIAction(title: "Add Memo", image: UIImage(systemName: "note.text.badge.plus")) { [weak self] _ in
+            
+            self?.memoButtonTapped$.accept(Void())
         }
 
-        let action2 = UIAction(title: "Request Modification", image: UIImage(systemName: "pencil.and.scribble")) { _ in
-            self.placeModificationButtonTapped$.accept(Void())
+        let action2 = UIAction(title: "Request Modification", image: UIImage(systemName: "pencil.and.scribble")) { [weak self ]_ in
+            self?.placeModificationButtonTapped$.accept(Void())
         }
 
         // 신고 타입별 submenu actions
@@ -577,6 +915,30 @@ final class PlaceDetailViewController: UIViewController {
         return UIMenu(title: "", children: reportActions)
 
     }
+    
+    private func hideMemoButton(){
+        memoButton.isHidden = true;
+        imageButton.snp.remakeConstraints { make in
+            make.top.equalTo(likeAndMoreButtonsStackView.snp.bottom).offset(20)
+            make.leading.equalToSuperview().offset(20);
+            make.trailing.equalToSuperview().offset(-150);
+            make.height.equalTo(300)
+        }
+    }
+    
+    private func showMemoButton(){
+        memoButton.isHidden = false;
+        imageButton.snp.remakeConstraints { make in
+            make.top.equalTo(memoButton.snp.bottom).offset(20)
+            make.leading.equalToSuperview().offset(20);
+            make.trailing.equalToSuperview().offset(-150);
+            make.height.equalTo(300)
+        }
+        
+    }
+    
+    
+    
 }
 
 
@@ -593,9 +955,9 @@ extension PlaceDetailViewController:UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if tableView == relatedPlaceTable {
-              return dummyPlaces.count
+              return relations.count
           } else if tableView == relatedVerseTable {
-              return dummyVerse.count
+              return bibles.count
           }
           return 0
     }
@@ -606,10 +968,10 @@ extension PlaceDetailViewController:UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: RelatedPlaceTableViewCell.identifier, for: indexPath) as? RelatedPlaceTableViewCell else {
                 return UITableViewCell()
             }
+            
+            cell.setRelation(relation: relations[indexPath.row])
 
-            cell.setText(text: dummyPlaces[indexPath.row])
-
-            if indexPath.row == dummyPlaces.count - 1 {
+            if indexPath.row == relations.count - 1 {
                    cell.separatorInset = UIEdgeInsets(top: 0, left: tableView.bounds.width, bottom: 0, right: 0)
                } else {
                    cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
@@ -625,13 +987,13 @@ extension PlaceDetailViewController:UITableViewDelegate, UITableViewDataSource {
                 return UITableViewCell()
             }
             
-            let bible = dummyVerse[indexPath.row];
+            let bible = bibles[indexPath.row];
             
             
             cell.configure(with: bible.verses, title: bible.bookName)
 
             cell.delegate = self;
-            if indexPath.row == dummyVerse.count - 1 {
+            if indexPath.row == bibles.count - 1 {
                    cell.separatorInset = UIEdgeInsets(top: 0, left: tableView.bounds.width, bottom: 0, right: 0)
                } else {
                    cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
@@ -648,8 +1010,8 @@ extension PlaceDetailViewController:UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             if tableView == relatedPlaceTable {
-                let selectedPlace = dummyPlaces[indexPath.row]
-                placeCellTapped$.accept(selectedPlace)
+                let selectedRelation = relations[indexPath.row]
+                placeCellTapped$.accept(selectedRelation.place.id)
                 scrollView.isScrollEnabled = false;
                 scrollUp();
                 
@@ -663,6 +1025,13 @@ extension PlaceDetailViewController:UITableViewDelegate, UITableViewDataSource {
 
 extension PlaceDetailViewController: RelatedVerseTableViewCellDelegate {
     func didTapVerse(_ verse: String, in cell: RelatedVerseTableViewCell) {
-        print("Tapped verse:", verse)
+        verseCellTapped$.accept(verse)
+    }
+}
+
+
+extension PlaceDetailViewController: IdentifiableBottomSheet {
+    var bottomSheetIdentity: BottomSheetType {
+        .placeDetail(self.placeId)
     }
 }

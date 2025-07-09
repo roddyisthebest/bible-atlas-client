@@ -20,16 +20,20 @@ class DefaultSession: SessionProtocol {
     
     init(){
         let config = URLSessionConfiguration.default;
-        config.requestCachePolicy = .returnCacheDataElseLoad
+        config.requestCachePolicy = .reloadIgnoringLocalCacheData
         session = Session(configuration: config);
     }
     
     
     func request(_ convertible: URLConvertible,method:HTTPMethod = .get, parameters:Parameters? = nil, headers:HTTPHeaders? = nil, body:Data? = nil) -> DataRequest{
         var urlRequest = try! URLRequest(url: convertible, method: method, headers: headers)
-        
+
         if let parameters = parameters {
-                   urlRequest = try! JSONEncoding.default.encode(urlRequest, with: parameters)
+            if method == .get {
+                urlRequest = try! URLEncoding.default.encode(urlRequest, with: parameters)
+            } else {
+                  urlRequest = try! JSONEncoding.default.encode(urlRequest, with: parameters)
+            }
         }
         
         if let body = body {
@@ -39,7 +43,6 @@ class DefaultSession: SessionProtocol {
         
         return session.request(urlRequest)
     }
-    
 }
 
 

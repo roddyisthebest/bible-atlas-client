@@ -6,12 +6,11 @@
 //
 
 import UIKit
-import UBottomSheet
-import PanModal
+import GoogleSignIn
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    var appCoordinator: AppCoordinatorProtocol?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -20,14 +19,69 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        let vmFactory = VMFactory();
+        
+        let session = DefaultSession();
+        let appStore = AppStore();
+
+        
+        let tokenProvider = KeychainTokenProvider();
+        let tokenRefresher  = TokenRefresher(session: session, tokenProvider: tokenProvider, refreshURL: "\(Constants.shared.url)/auth/refresh-token")
+        let errorHandlerService = ErrorHandlerService(tokenProvider: tokenProvider, appStore: appStore)
+        
+        let apiClient = AuthorizedApiClient(session: session, tokenProvider: tokenProvider, tokenRefresher: tokenRefresher, errorHandlerService: errorHandlerService)
+        
+        let authApiService = AuthApiService(apiClient: apiClient, url: "\(Constants.shared.url)/auth")
+        
+        let userApiService = UserApiService(apiClient: apiClient, url: "\(Constants.shared.url)/user")
+        
+        let placeApiService = PlaceApiService(apiClient: apiClient, url: "\(Constants.shared.url)")
+        
+        
+   
+        
+        Task{
+            let appInitializer = AppInitializer(tokenProvider: tokenProvider, appStore: appStore, userApiService: userApiService);
+            await appInitializer.restoreSessionIfPossible()
+        }
+        
+        let authRepository = AuthRepository(authApiService: authApiService)
+        let authUsecase = AuthUsecase(repository: authRepository, tokenProvider: tokenProvider)
+        
+        
+        
+        let userRepository = UserRepository(userApiService: userApiService)
+        let userUsecase = UserUsecase(repository:userRepository)
+        
+        
+        let placeRepository = PlaceRepository(placeApiService: placeApiService);
+        
+        let placeUsecase = PlaceUsecase(repository:placeRepository)
+        
+        
+        let usecases = UseCases(auth: authUsecase, user: userUsecase, place:placeUsecase)
+        
+        let notificationService = RxNotificationService();
+        
+        let context = PersistenceController.shared.container.viewContext
+        
+        let recentSearchService = RecentSearchService(context: context)
+        
+        
+        let vmFactory = VMFactory(appStore: appStore, usecases: usecases, notificationService: notificationService, recentSearchService: recentSearchService);
         let vcFactory = VCFactory();
             
-        let bottomSheetCoordinator = BottomSheetCoordinator(vcFactory: vcFactory, vmFactory: vmFactory);
+        let bottomSheetCoordinator = BottomSheetCoordinator(vcFactory: vcFactory, vmFactory: vmFactory, notificationService: notificationService);
         
         vmFactory.configure(navigator: bottomSheetCoordinator)
         
-        let mainVC = MainViewController(navigator: bottomSheetCoordinator);
+        
+        let mapApiService = MapApiService(apiClient: apiClient, baseURL: "\(Constants.shared.geoJsonUrl)")
+        let mapRepository = MapRepository(mapApiService: mapApiService)
+        
+        let mapUsecase = MapUsecase(repository: mapRepository);
+        
+        let mainVM = MainViewModel(bottomSheetCoordinator: bottomSheetCoordinator, mapUseCase: mapUsecase, placeUsecase: placeUsecase, notificationService: notificationService)
+        let mainVC = MainViewController(navigator: bottomSheetCoordinator, vm:mainVM);
 
         mainVC.modalPresentationStyle = .custom
         bottomSheetCoordinator.setPresenter(mainVC)
@@ -41,9 +95,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
        
     }
+    
+    func scene(_ scene: UIScene,
+               openURLContexts URLContexts: Set<UIOpenURLContext>) {
+
+        guard let url = URLContexts.first?.url else { return }
+        GIDSignIn.sharedInstance.handle(url)
+    }
+    
 
     func sceneDidDisconnect(_ scene: UIScene) {
-        appCoordinator = nil
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {

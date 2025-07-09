@@ -15,7 +15,6 @@ class SearchCell: UITableViewCell {
     private let globalIcon = {
         let imageView = UIImageView(image:UIImage(systemName: "globe.asia.australia.fill"));
         imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = .primaryViolet;
         return imageView;
     }()
     
@@ -52,7 +51,6 @@ class SearchCell: UITableViewCell {
     
     
     private func setupUI(){
-        contentView.backgroundColor = .backgroundDark
         contentView.addSubview(globalIcon);
         contentView.addSubview(keywordLabel)
     }
