@@ -28,6 +28,7 @@ final class SearchReadyViewModel: SearchReadyViewModelProtocol {
     private let recentSearches$ = BehaviorRelay<[RecentSearchItem]>(value: []);
 
     private let errorToFetchPlaces$ = BehaviorRelay<NetworkError?>(value: nil)
+    private let errorToFetchRecentSearches$ = BehaviorRelay<RecentSearchError?>(value: nil)
     
     private let isFetching$ = BehaviorRelay<Bool>(value: false)
     
@@ -49,19 +50,23 @@ final class SearchReadyViewModel: SearchReadyViewModelProtocol {
             })
         .disposed(by: disposeBag)
         
-        input.viewLoaded$.subscribe(onNext: { [weak self] in
-            self?.getPlaces();
-            
-        }).disposed(by: disposeBag)
-        
-        input.refetchButtonTapped$.subscribe(onNext: { [weak self] in
+        Observable.merge(input.viewLoaded$, input.refetchButtonTapped$).subscribe(onNext: { [weak self] in
             self?.getPlaces();
             
         }).disposed(by: disposeBag)
         
 
         
-        return Output(popularPlaces$: popularPlaces$.asObservable(), recentSearches$: recentSearches$.asObservable(), errorToFetchPlaces$: errorToFetchPlaces$.asObservable(), isFetching$: isFetching$.asObservable())
+        input.moreRecentSearchesButtonTapped$
+            .subscribe(onNext:{[weak self] in
+                self?.navigator?.present(.recentSearches)
+            })
+            .disposed(by: disposeBag)
+    
+        
+
+        
+        return Output(popularPlaces$: popularPlaces$.asObservable(), recentSearches$: recentSearches$.asObservable(), errorToFetchPlaces$: errorToFetchPlaces$.asObservable(), errorToFetchRecentSearches$: errorToFetchRecentSearches$.asObservable(), isFetching$: isFetching$.asObservable())
 
     }
     
@@ -95,23 +100,21 @@ final class SearchReadyViewModel: SearchReadyViewModelProtocol {
         self.recentSearchService?.didChanged$.subscribe(onNext:{[weak self] in
             self?.getRecentSearchItems()
         }).disposed(by: disposeBag)
-        
-        
+
     }
         
     
-    private func removeAllRecentSearchItems(){
-        self.recentSearchService?.clearAll();
-    }
+ 
+    
     
     private func getRecentSearchItems(){
-        let result = self.recentSearchService?.fetch(limit: 5)
+        let result = self.recentSearchService?.fetch(limit: 5, page:nil)
         switch(result){
         case .success(let response):
             self.recentSearches$.accept(response.items)
             print(response)
         case .failure(let error):
-            print(error.description)
+            self.errorToFetchRecentSearches$.accept(error)
         default:
             print("wo")
         }
@@ -123,12 +126,14 @@ final class SearchReadyViewModel: SearchReadyViewModelProtocol {
         let popularPlaceCellTapped$:Observable<String>
         let recentSearchCellTapped$:Observable<String>
         let viewLoaded$:Observable<Void>
+        let moreRecentSearchesButtonTapped$:Observable<Void>
     }
     
     public struct Output{
         let popularPlaces$:Observable<[Place]>
         let recentSearches$:Observable<[RecentSearchItem]>
         let errorToFetchPlaces$:Observable<NetworkError?>
+        let errorToFetchRecentSearches$:Observable<RecentSearchError?>
         let isFetching$:Observable<Bool>
     }
     

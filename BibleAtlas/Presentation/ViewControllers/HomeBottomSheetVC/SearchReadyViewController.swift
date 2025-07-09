@@ -50,7 +50,7 @@ final class SearchReadyViewController: UIViewController {
     
     
     private lazy var recentSearchHeaderStackView = {
-        let sv = UIStackView(arrangedSubviews: [recentSearchLabel, recentSearchMoreButton])
+        let sv = UIStackView(arrangedSubviews: [recentSearchLabel, moreRecentSearchButton])
         sv.axis = .horizontal;
         sv.distribution = .equalSpacing;
         sv.alignment = .fill;
@@ -58,7 +58,7 @@ final class SearchReadyViewController: UIViewController {
         return sv;
     }()
     
-    private let recentSearchMoreButton = {
+    private let moreRecentSearchButton = {
         let button = UIButton();
         button.setTitle("More", for: .normal)
         button.setTitleColor(.primaryBlue, for: .normal)
@@ -267,17 +267,24 @@ final class SearchReadyViewController: UIViewController {
     
     private func bindViewModel(){
         
-        let output = searchReadyViewModel.transform(input: SearchReadyViewModel.Input(refetchButtonTapped$: errorRetryView.refetchTapped$.asObservable(), popularPlaceCellTapped$: popularPlaceCellTapped$.asObservable(), recentSearchCellTapped$: recentSearchCellTapped$.asObservable(), viewLoaded$: viewLoaded$.asObservable()))
         
-        output.recentSearches$
+        let moreRecentSearchesButtonTapped$ = moreRecentSearchButton.rx.tap.asObservable();
+        
+        let output = searchReadyViewModel.transform(input: SearchReadyViewModel.Input(refetchButtonTapped$: errorRetryView.refetchTapped$.asObservable(), popularPlaceCellTapped$: popularPlaceCellTapped$.asObservable(), recentSearchCellTapped$: recentSearchCellTapped$.asObservable(), viewLoaded$: viewLoaded$.asObservable(), moreRecentSearchesButtonTapped$: moreRecentSearchesButtonTapped$))
+        
+        Observable.combineLatest(output.recentSearches$, output.errorToFetchRecentSearches$)
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext:{[weak self] recentSearches in
+            .subscribe(onNext:{[weak self] recentSearches, error in
                 
                 guard let self = self else {
                     return
                 }
                 
-                if(recentSearches.isEmpty){
+                
+                
+                
+                if(recentSearches.isEmpty || error != nil){
+                    
                     self.recentSearchStackView.isHidden = true
                 
                     self.popularPlaceStackView.snp.remakeConstraints { make in
@@ -286,6 +293,11 @@ final class SearchReadyViewController: UIViewController {
                         make.trailing.equalToSuperview().offset(-20)
                         make.bottom.equalToSuperview().inset(30)
                     }
+                    guard let error = error else {
+                        return
+                    }
+                    
+                    self.showErrorAlert(message: error.description)
                     
                     return
                 }
@@ -352,6 +364,7 @@ final class SearchReadyViewController: UIViewController {
             self?.errorRetryView.isHidden = false;
                 print(error.description)
             self?.errorRetryView.setMessage(error.description)
+            self?.emptyView.isHidden = true
 
             
             

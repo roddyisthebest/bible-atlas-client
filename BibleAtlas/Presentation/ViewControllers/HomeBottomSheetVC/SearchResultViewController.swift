@@ -104,6 +104,14 @@ class SearchResultViewController: UIViewController {
         let output = searchResultViewModel?.transform(input: SearchResultViewModel.Input(
             bottomReached$: bottomReached$.asObservable(), placeCellSelected$: placeCellSelected$.asObservable()))
         
+        output?.errorToSaveRecentSearch$
+            .compactMap{ $0 }
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {[weak self] error in
+                self?.showErrorAlert(message: error.description)
+            })
+            .disposed(by: disposeBag)
+        
         output?.places$
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {[weak self] places in

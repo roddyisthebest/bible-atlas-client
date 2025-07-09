@@ -45,10 +45,17 @@ protocol VMFactoryProtocol {
     func makeBibleVerseDetailBottomSheetVM(keyword:String) ->
         BibleVerseDetailBottomSheetViewModelProtocol
     
+    func makeRecentSearchesBottomSheetVM() -> RecentSearchesBottomSheetViewModelProtocol
+    
     func configure(navigator:BottomSheetNavigator)
 }
 
 final class VMFactory:VMFactoryProtocol{
+    func makeRecentSearchesBottomSheetVM() -> RecentSearchesBottomSheetViewModelProtocol {
+        let vm = RecentSearchesBottomSheetViewModel(navigator: navigator, recentSearchService: recentSearchService)
+        return vm
+    }
+    
     func makeHomeContentVM() -> HomeContentViewModelProtocol {
         let vm = HomeContentViewModel(navigator: navigator, appStore: appStore, userUsecase: usecases?.user, authUseCase: usecases?.auth)
         return vm;

@@ -21,6 +21,7 @@ enum BottomSheetType {
     case placesByType(Int)
     case placesByCharacter(String)
     case bibleVerseDetail(String)
+    case recentSearches
 }
 
 
@@ -226,6 +227,10 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             let vc = vcFactory.makeBibleVerseDetailBottomSheetVC(vm: vm, keyword: keyword);
             presentFromTopVC(vc)
 
+        case .recentSearches:
+            let vm = vmFactory.makeRecentSearchesBottomSheetVM();
+            let vc = vcFactory.makeRecentSearchesBottomSheetVC(vm: vm);
+            presentFromTopVC(vc)
         }
 
         

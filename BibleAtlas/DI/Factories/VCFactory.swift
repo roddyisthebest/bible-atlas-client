@@ -31,12 +31,17 @@ protocol VCFactoryProtocol:AnyObject {
     
     func makeBibleVerseDetailBottomSheetVC(vm:BibleVerseDetailBottomSheetViewModelProtocol, keyword:String) -> BibleVerseDetailBottomSheetViewController
     
+    func makeRecentSearchesBottomSheetVC(vm:RecentSearchesBottomSheetViewModelProtocol) -> RecentSearchesBottomSheetViewController
+    
     
     func setupVC(type: BottomSheetType, sheet: UIViewController) -> Void
 }
 
 
 final class VCFactory:VCFactoryProtocol {
+
+    
+    
 
     
 
@@ -126,6 +131,12 @@ final class VCFactory:VCFactoryProtocol {
         setupVC(type: .bibleVerseDetail(keyword),sheet: vc);
         return vc;
     }
+    
+    func makeRecentSearchesBottomSheetVC(vm: RecentSearchesBottomSheetViewModelProtocol) -> RecentSearchesBottomSheetViewController {
+        let vc = RecentSearchesBottomSheetViewController(recentSearchesBottomSheetViewModel: vm);
+        setupVC(type: .recentSearches,sheet: vc);
+        return vc;
+    }
 
     func setupVC(type: BottomSheetType, sheet: UIViewController) {
         switch(type){
@@ -175,7 +186,7 @@ final class VCFactory:VCFactoryProtocol {
                 sheet.prefersGrabberVisible = false // 위쪽 핸들 표시
             }
 
-        case .myCollection, .placeTypes, .placeCharacters, .placesByType, .placesByCharacter, .bibleVerseDetail:
+        case .myCollection, .placeTypes, .placeCharacters, .placesByType, .placesByCharacter, .bibleVerseDetail, .recentSearches:
             if let sheet = sheet.sheetPresentationController {
                 sheet.detents = [.large()] // 높이 조절 가능 (중간, 전체 화면)
                 sheet.prefersScrollingExpandsWhenScrolledToEdge = false // 스크롤 시 확장 가능
