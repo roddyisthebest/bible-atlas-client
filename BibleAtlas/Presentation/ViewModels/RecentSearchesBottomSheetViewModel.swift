@@ -100,6 +100,21 @@ final class RecentSearchesBottomSheetViewModel:RecentSearchesBottomSheetViewMode
             self?.navigator?.present(.placeDetail(placeId))
         }).disposed(by:disposeBag)
         
+        input.allClearButtonTapped$.subscribe(onNext:{ [weak self] in
+            let result = self?.recentSearchService?.clearAll();
+            
+            switch(result){
+            case .success():
+                self?.recentSearches$.accept([])
+            case .failure(let error):
+                self?.error$.accept(error)
+            default:
+                print("none")
+            }
+            
+            
+        }).disposed(by:disposeBag)
+        
         return Output(recentSearches$: recentSearches$.asObservable(), error$: error$.asObservable(), isInitialLoading$: isInitialLoading$.asObservable(), isFetchingNext$: isFetchingNext$.asObservable())
     }
 
@@ -109,6 +124,7 @@ final class RecentSearchesBottomSheetViewModel:RecentSearchesBottomSheetViewMode
         let cellSelected$:Observable<String>
         let bottomReached$:Observable<Void>
         let retryButtonTapped$:Observable<Void>
+        let allClearButtonTapped$:Observable<Void>
     }
     
     public struct Output{

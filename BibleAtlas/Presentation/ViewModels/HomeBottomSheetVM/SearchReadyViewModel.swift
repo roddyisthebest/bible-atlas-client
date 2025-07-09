@@ -99,14 +99,12 @@ final class SearchReadyViewModel: SearchReadyViewModelProtocol {
         self.recentSearchService?.didChanged$.subscribe(onNext:{[weak self] in
             self?.getRecentSearchItems()
         }).disposed(by: disposeBag)
-        
-        
+
     }
         
     
-    private func removeAllRecentSearchItems(){
-        self.recentSearchService?.clearAll();
-    }
+ 
+    
     
     private func getRecentSearchItems(){
         let result = self.recentSearchService?.fetch(limit: 5, page:nil)

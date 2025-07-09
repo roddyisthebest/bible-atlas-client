@@ -25,7 +25,7 @@ class RecentSearchesBottomSheetViewController: UIViewController {
     
     
     private lazy var headerStackView = {
-        let sv = UIStackView(arrangedSubviews: [headerLabel, closeButton]);
+        let sv = UIStackView(arrangedSubviews: [headerLabel, buttonStackView]);
         sv.axis = .horizontal;
         sv.distribution = .fill;
         sv.alignment = .center
@@ -33,9 +33,25 @@ class RecentSearchesBottomSheetViewController: UIViewController {
         return sv;
     }()
     
+    private lazy var buttonStackView = {
+        let sv = UIStackView(arrangedSubviews: [allClearButton, closeButton]);
+        sv.axis = .horizontal;
+        sv.distribution = .fill;
+        sv.alignment = .center
+        sv.spacing = 10;
+        return sv;
+    }()
+    
     
     private let headerLabel = HeaderLabel(text: "Recent Search");
     
+    private let allClearButton = {
+        let button = UIButton();
+        button.setTitle("Clear All", for: .normal)
+        button.setTitleColor(.primaryBlue, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 15);
+        return button;
+    }()
     private let closeButton = CircleButton(iconSystemName: "xmark")
     
     private lazy var tableView = {
@@ -114,8 +130,9 @@ class RecentSearchesBottomSheetViewController: UIViewController {
         let closeButtonTapped$ = closeButton.rx.tap.asObservable();
 
         let retryButtonTapped$ = errorRetryView.refetchTapped$.asObservable();
+        let allClearButtonTapped$ = allClearButton.rx.tap.asObservable();
         
-        let output = recentSearchesBottomSheetViewModel?.transform(input: RecentSearchesBottomSheetViewModel.Input(viewLoaded$: viewLoaded$.asObservable(), closeButtonTapped$: closeButtonTapped$.asObservable(), cellSelected$: cellSelected$.asObservable(), bottomReached$: bottomReached$.asObservable(), retryButtonTapped$: retryButtonTapped$.asObservable()))
+        let output = recentSearchesBottomSheetViewModel?.transform(input: RecentSearchesBottomSheetViewModel.Input(viewLoaded$: viewLoaded$.asObservable(), closeButtonTapped$: closeButtonTapped$, cellSelected$: cellSelected$.asObservable(), bottomReached$: bottomReached$.asObservable(), retryButtonTapped$: retryButtonTapped$, allClearButtonTapped$: allClearButtonTapped$))
         
         
         
@@ -158,6 +175,9 @@ class RecentSearchesBottomSheetViewController: UIViewController {
                 if(!isEmpty){
                     self.recentSearches = recentSearches
                     self.tableView.reloadData()
+                    self.allClearButton.isHidden = false
+                }else{
+                    self.allClearButton.isHidden = true
                 }
                 
                 
