@@ -81,11 +81,19 @@ final class ErrorRetryView: UIStackView {
     
     private let disposeBag = DisposeBag()
     
+
+    
     // MARK: - Init
-    override init(frame: CGRect) {
+    init(frame: CGRect = .zero, closable: Bool = false) {
         super.init(frame: frame)
         setup()
+        setupConstraints()
         bind()
+        
+        if(!closable){
+            self.closeButton.isHidden = true
+        }
+        
     }
     
     required init(coder: NSCoder) {

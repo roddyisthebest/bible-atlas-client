@@ -50,7 +50,8 @@ final class PlacesByCharacterBottomSheetViewModel:PlacesByCharacterBottomSheetVi
                     self.isInitialLoading$.accept(false)
                 }
                 
-                let response = await self.placeUsecase?.getPlaces(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeId: nil, name: nil, prefix: self.character$.value);
+                
+                let response = await self.placeUsecase?.getPlaces(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeId: nil, name: nil, prefix: self.character$.value, sort:nil);
                 
                 switch(response){
                 case.success(let response):
@@ -83,8 +84,7 @@ final class PlacesByCharacterBottomSheetViewModel:PlacesByCharacterBottomSheetVi
                     guard self.pagination.advanceIfPossible() else { return }
                     
                     
-                    let response = await self.placeUsecase?.getPlaces(limit: self.pagination.pageSize , page: self.pagination.page, placeTypeId: nil, name: nil, prefix: self.character$.value)
-                    
+                    let response = await self.placeUsecase?.getPlaces(limit: self.pagination.pageSize , page: self.pagination.page, placeTypeId: nil, name: nil, prefix: self.character$.value, sort:nil)
                     switch(response){
                     case.success(let response):
                         let current = self.places$.value
@@ -119,7 +119,7 @@ final class PlacesByCharacterBottomSheetViewModel:PlacesByCharacterBottomSheetVi
                     self.isInitialLoading$.accept(false)
                 }
                 
-                let response = await self.placeUsecase?.getPlaces(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeId: nil, name: nil, prefix: self.character$.value);
+                let response = await self.placeUsecase?.getPlaces(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeId: nil, name: nil, prefix: self.character$.value, sort: nil);
                 
                 switch(response){
                 case.success(let response):

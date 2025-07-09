@@ -201,6 +201,7 @@ class PlacesByCharacterBottomSheetViewController: UIViewController {
         setupConstraints()
         bindViewModel();
         viewLoaded$.accept(Void())
+        
     }
     
     init(vm:PlacesByCharacterBottomSheetViewModelProtocol){

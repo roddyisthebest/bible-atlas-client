@@ -62,7 +62,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let notificationService = RxNotificationService();
         
-        let vmFactory = VMFactory(appStore: appStore, usecases: usecases, notificationService: notificationService);
+        let context = PersistenceController.shared.container.viewContext
+        
+        let recentSearchService = RecentSearchService(context: context)
+        
+        
+        let vmFactory = VMFactory(appStore: appStore, usecases: usecases, notificationService: notificationService, recentSearchService: recentSearchService);
         let vcFactory = VCFactory();
             
         let bottomSheetCoordinator = BottomSheetCoordinator(vcFactory: vcFactory, vmFactory: vmFactory, notificationService: notificationService);

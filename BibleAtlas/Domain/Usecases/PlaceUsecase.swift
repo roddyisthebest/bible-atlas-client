@@ -8,7 +8,7 @@
 import Foundation
 
 protocol PlaceUsecaseProtocol {
-    func getPlaces(limit:Int?, page:Int?, placeTypeId:Int?, name:String?, prefix:String?) async -> Result<ListResponse<Place>,NetworkError>
+    func getPlaces(limit:Int?, page:Int?, placeTypeId:Int?, name:String?, prefix:String?, sort:PlaceSort?) async -> Result<ListResponse<Place>,NetworkError>
     
     func getPlacesWithRepresentativePoint() async -> Result<ListResponse<Place>, NetworkError>
 
@@ -47,8 +47,8 @@ public struct PlaceUsecase:PlaceUsecaseProtocol{
     }
     
     
-    func getPlaces(limit: Int?, page: Int?, placeTypeId: Int?, name: String?, prefix:String?) async -> Result<ListResponse<Place>, NetworkError> {
-        return await repository.getPlaces(limit: limit, page: page, placeTypeId: placeTypeId, name: name, prefix: prefix)
+    func getPlaces(limit: Int?, page: Int?, placeTypeId: Int?, name: String?, prefix:String?, sort:PlaceSort?) async -> Result<ListResponse<Place>, NetworkError> {
+        return await repository.getPlaces(limit: limit, page: page, placeTypeId: placeTypeId, name: name, prefix: prefix, sort: sort)
     }
     
     func getPlacesWithRepresentativePoint() async -> Result<ListResponse<Place>, NetworkError> {

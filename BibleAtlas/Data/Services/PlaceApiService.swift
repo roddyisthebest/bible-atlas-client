@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 protocol PlaceApiServiceProtocol {
-    func getPlaces(limit:Int?, page:Int?, placeTypeId:Int?, name:String?, prefix:String?) async -> Result<ListResponse<Place>,NetworkError>
+    func getPlaces(limit:Int?, page:Int?, placeTypeId:Int?, name:String?, prefix:String?, sort:PlaceSort?) async -> Result<ListResponse<Place>,NetworkError>
     
     func getPlacesWithRepresentativePoint() async -> Result<ListResponse<Place>, NetworkError>
     func getPlaceTypes(limit:Int?, page:Int?) async -> Result<ListResponse<PlaceTypeWithPlaceCount>,NetworkError>
@@ -44,7 +44,7 @@ final public class PlaceApiService: PlaceApiServiceProtocol{
     }
     
     
-    func getPlaces(limit: Int?, page: Int?, placeTypeId: Int?, name: String?, prefix: String?) async -> Result<ListResponse<Place>, NetworkError> {
+    func getPlaces(limit: Int?, page: Int?, placeTypeId: Int?, name: String?, prefix: String?, sort:PlaceSort?) async -> Result<ListResponse<Place>, NetworkError> {
         let page = page ?? 0;
         let limit = limit ?? 1;
         
@@ -53,14 +53,18 @@ final public class PlaceApiService: PlaceApiServiceProtocol{
             "page": page,
             "name": name,
             "placeTypeId": placeTypeId,
-            "prefix": prefix
+            "prefix": prefix,
+            "sort": sort
         ]
+        
+        
 
         let params: Parameters = rawParams.reduce(into: [:]) { result, pair in
             if let value = pair.value {
                 result[pair.key] = value
             }
         }
+        
         
         return await apiClient.getData(url:"\(url)/place",parameters: params)
     }

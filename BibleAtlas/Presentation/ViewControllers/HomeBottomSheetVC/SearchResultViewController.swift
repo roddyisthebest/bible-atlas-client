@@ -15,7 +15,7 @@ class SearchResultViewController: UIViewController {
     
     private let bottomReached$ = PublishRelay<Void>();
     
-    private let placeCellSelected$ = PublishRelay<String>();
+    private let placeCellSelected$ = PublishRelay<Place>();
     
     private let disposeBag = DisposeBag()
     
@@ -176,7 +176,7 @@ extension SearchResultViewController:UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        placeCellSelected$.accept(places[indexPath.row].id)
+        placeCellSelected$.accept(places[indexPath.row])
         
     }
 }

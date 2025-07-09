@@ -36,6 +36,8 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
 
     private var appStore:AppStoreProtocol?
     
+    private var recentSearchService: RecentSearchServiceProtocol?
+    
     private var isLoggedIn$ = BehaviorRelay<Bool>(value:false)
     
     private var profile$ = BehaviorRelay<User?>(value:nil)
@@ -47,10 +49,11 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
     public let cancelButtonTapped$ = PublishRelay<Void>();
     
 
-    init(navigator:BottomSheetNavigator?, appStore:AppStoreProtocol?, authUseCase:AuthUsecaseProtocol?){
+    init(navigator:BottomSheetNavigator?, appStore:AppStoreProtocol?, authUseCase:AuthUsecaseProtocol?, recentSearchService:RecentSearchServiceProtocol?){
         self.navigator = navigator
         self.appStore = appStore
         self.authUsecase = authUseCase
+        self.recentSearchService = recentSearchService;
         bindAppStore();
     }
     
@@ -110,6 +113,7 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
             .disposed(by: disposeBag)
         
         input.editingDidBegin$
+            .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] in
                 self?.isSearchingMode$.accept(true);
             })

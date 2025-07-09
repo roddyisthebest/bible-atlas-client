@@ -6,8 +6,6 @@
 //
 
 import Foundation
-
-import Foundation
 import RxSwift
 import RxRelay
 import RxCocoa
@@ -36,15 +34,16 @@ final class SearchResultViewModel:SearchResultViewModelProtocol {
     private let keyword$:Observable<String>
     private let cancelButtonTapped$:Observable<Void>
     
+    private let recentSearchService: RecentSearchServiceProtocol?
     
     
-    init(navigator: BottomSheetNavigator? = nil, placeUsecase: PlaceUsecaseProtocol?, isSearchingMode$:Observable<Bool>, keyword$:Observable<String>, cancelButtonTapped$:Observable<Void> ) {
+    init(navigator: BottomSheetNavigator? = nil, placeUsecase: PlaceUsecaseProtocol?, isSearchingMode$:Observable<Bool>, keyword$:Observable<String>, cancelButtonTapped$:Observable<Void>, recentSearchService:RecentSearchServiceProtocol? ) {
         self.navigator = navigator
         self.placeUsecase = placeUsecase
         self.isSearchingMode$ = isSearchingMode$
         self.keyword$ = keyword$
         self.cancelButtonTapped$ = cancelButtonTapped$
-        
+        self.recentSearchService = recentSearchService
     }
         
     
@@ -98,11 +97,21 @@ final class SearchResultViewModel:SearchResultViewModelProtocol {
         
         
         input.placeCellSelected$
-            .subscribe(onNext:{ [weak self] placeId in
+            .subscribe(onNext:{ [weak self] place in
                 guard let self = self else { return }
-             
-                self.navigator?.present(.placeDetail(placeId))
                 
+                let result = self.recentSearchService?.save(place)
+                
+                switch(result){
+                case .success():
+                    print("success")
+                    self.navigator?.present(.placeDetail(place.id))
+                case .failure(let error):
+                    print(error.description)
+                default:
+                    print("none")
+                }
+
             })
             .disposed(by: disposeBag)
         
@@ -118,7 +127,7 @@ final class SearchResultViewModel:SearchResultViewModelProtocol {
             defer{
                 isSearching$.accept(false)
             }
-            let result = await self.placeUsecase?.getPlaces(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeId: nil, name: keyword, prefix: nil)
+            let result = await self.placeUsecase?.getPlaces(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeId: nil, name: keyword, prefix: nil, sort: nil)
             
             
             switch(result){
@@ -147,7 +156,7 @@ final class SearchResultViewModel:SearchResultViewModelProtocol {
             
             guard self.pagination.advanceIfPossible() else { return }
             
-            let result = await self.placeUsecase?.getPlaces(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeId: nil, name: keyword, prefix: nil)
+            let result = await self.placeUsecase?.getPlaces(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeId: nil, name: keyword, prefix: nil, sort: nil)
             
             
             switch(result){
@@ -171,7 +180,7 @@ final class SearchResultViewModel:SearchResultViewModelProtocol {
     public struct Input{
 //        let refetchButtonTapped$:Observable<Void>
         let bottomReached$:Observable<Void>
-        let placeCellSelected$:Observable<String>
+        let placeCellSelected$:Observable<Place>
     }
     
     

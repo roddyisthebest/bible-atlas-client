@@ -41,6 +41,12 @@ enum PlaceName: String, Decodable {
     case gate
 }
 
+enum PlaceSort: String, Decodable {
+    case desc = "desc"
+    case asc  = "asc"
+    case like = "like"
+}
+
 struct PlaceType: Decodable {
     var id: Int
     var name: PlaceName
@@ -90,7 +96,6 @@ struct PlaceRelation:Decodable{
     var place:Place;
     var possibility:Int
 }
-
 
 //struct ParentPlaceRelation:Decodable{
 //    var id:Int;

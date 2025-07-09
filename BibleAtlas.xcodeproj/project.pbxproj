@@ -113,6 +113,10 @@
 		ECA94BE82D50AF41005B0428 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BE72D50AF41005B0428 /* AuthRepository.swift */; };
 		ECA94BEB2D50B0B9005B0428 /* AuthUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BEA2D50B0B9005B0428 /* AuthUsecase.swift */; };
 		ECA94BEF2D50B492005B0428 /* MockingApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BEE2D50B492005B0428 /* MockingApi.swift */; };
+		ECCB51D22E140AC1007E4AB7 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB51D12E140AC1007E4AB7 /* SearchTableViewCell.swift */; };
+		ECCB51D42E18F4D7007E4AB7 /* PopularPlaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB51D32E18F4D7007E4AB7 /* PopularPlaceTableViewCell.swift */; };
+		ECCB51D62E1A95F9007E4AB7 /* RecentSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB51D52E1A95F9007E4AB7 /* RecentSearchService.swift */; };
+		ECCB51DA2E1AB31A007E4AB7 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB51D92E1AB31A007E4AB7 /* PersistenceController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -248,6 +252,10 @@
 		ECA94BEA2D50B0B9005B0428 /* AuthUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUsecase.swift; sourceTree = "<group>"; };
 		ECA94BEE2D50B492005B0428 /* MockingApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockingApi.swift; sourceTree = "<group>"; };
 		ECCB51D02E0AE473007E4AB7 /* BibleAtlas.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BibleAtlas.entitlements; sourceTree = "<group>"; };
+		ECCB51D12E140AC1007E4AB7 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
+		ECCB51D32E18F4D7007E4AB7 /* PopularPlaceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularPlaceTableViewCell.swift; sourceTree = "<group>"; };
+		ECCB51D52E1A95F9007E4AB7 /* RecentSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchService.swift; sourceTree = "<group>"; };
+		ECCB51D92E1AB31A007E4AB7 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -413,6 +421,7 @@
 			children = (
 				EC64B97F2DE45B4200D3C8A7 /* ErrorHandlerService.swift */,
 				EC940EA02DF1756C00406944 /* RxNotificationService.swift */,
+				ECCB51D52E1A95F9007E4AB7 /* RecentSearchService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -478,6 +487,8 @@
 				EC77CE332DCF348D0030DEF5 /* LeftAlignedCollectionViewFlowLayout.swift */,
 				EC77CE412DD0A8670030DEF5 /* PlaceTypeCell.swift */,
 				EC77CE492DD0E4DC0030DEF5 /* PlaceCharacterCell.swift */,
+				ECCB51D12E140AC1007E4AB7 /* SearchTableViewCell.swift */,
+				ECCB51D32E18F4D7007E4AB7 /* PopularPlaceTableViewCell.swift */,
 			);
 			path = Tables;
 			sourceTree = "<group>";
@@ -529,6 +540,7 @@
 				ECA94BA72D5082BA005B0428 /* Info.plist */,
 				ECA94B9F2D5082B9005B0428 /* BibleAtlas.xcdatamodeld */,
 				EC386E052E0AD31900251FC6 /* GoogleService-Info.plist */,
+				ECCB51D92E1AB31A007E4AB7 /* PersistenceController.swift */,
 			);
 			path = BibleAtlas;
 			sourceTree = "<group>";
@@ -973,6 +985,7 @@
 				EC64B9692DDE051D00D3C8A7 /* UserRepository.swift in Sources */,
 				EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */,
 				EC940EA82DF7196A00406944 /* MapRepository.swift in Sources */,
+				ECCB51D42E18F4D7007E4AB7 /* PopularPlaceTableViewCell.swift in Sources */,
 				ECA94BE82D50AF41005B0428 /* AuthRepository.swift in Sources */,
 				EC77CE012DC5DA8D0030DEF5 /* PlaceDetailViewController.swift in Sources */,
 				EC77CE4E2DD5B3480030DEF5 /* PlacesByTypeBottomSheetViewModel.swift in Sources */,
@@ -997,6 +1010,7 @@
 				ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */,
 				EC77CE362DCF630E0030DEF5 /* MemoBottomSheetViewController.swift in Sources */,
 				EC7058A92DBFAEB5002D47DF /* VCFactory.swift in Sources */,
+				ECCB51D22E140AC1007E4AB7 /* SearchTableViewCell.swift in Sources */,
 				EC940E9D2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift in Sources */,
 				EC77CDF42DC32C020030DEF5 /* UIViewController.swift in Sources */,
 				EC77CDF22DC318EB0030DEF5 /* LoginBottomSheetViewModel.swift in Sources */,
@@ -1016,6 +1030,7 @@
 				EC7058882DB3CA5B002D47DF /* UIColor.swift in Sources */,
 				ECA94BE12D50A739005B0428 /* AuthData.swift in Sources */,
 				EC64B96E2DE3401900D3C8A7 /* Pagination.swift in Sources */,
+				ECCB51D62E1A95F9007E4AB7 /* RecentSearchService.swift in Sources */,
 				ECA94BCC2D508D1E005B0428 /* DefaultSession.swift in Sources */,
 				EC64B9642DDDC45500D3C8A7 /* UserApiService.swift in Sources */,
 				ECA94BD12D509377005B0428 /* NetworkError.swift in Sources */,
@@ -1030,6 +1045,7 @@
 				EC77CE462DD0E2540030DEF5 /* PlaceCharactersBottomSheetViewModel.swift in Sources */,
 				ECA94BDD2D50A59E005B0428 /* AuthApiService.swift in Sources */,
 				ECA94BEB2D50B0B9005B0428 /* AuthUsecase.swift in Sources */,
+				ECCB51DA2E1AB31A007E4AB7 /* PersistenceController.swift in Sources */,
 				EC77CE422DD0A8670030DEF5 /* PlaceTypeCell.swift in Sources */,
 				EC64B97C2DE44E0D00D3C8A7 /* TokenRefresherProtocol.swift in Sources */,
 				EC77CE3A2DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift in Sources */,

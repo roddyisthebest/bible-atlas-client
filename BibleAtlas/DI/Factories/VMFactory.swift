@@ -55,12 +55,12 @@ final class VMFactory:VMFactoryProtocol{
     }
     
     func makeSearchResultVM(keyword$: Observable<String>, isSearchingMode$: Observable<Bool>, cancelButtonTapped$: Observable<Void>) -> SearchResultViewModelProtocol {
-        let vm = SearchResultViewModel(navigator: navigator, placeUsecase: usecases?.place, isSearchingMode$: isSearchingMode$, keyword$: keyword$, cancelButtonTapped$: cancelButtonTapped$)
+        let vm = SearchResultViewModel(navigator: navigator, placeUsecase: usecases?.place, isSearchingMode$: isSearchingMode$, keyword$: keyword$, cancelButtonTapped$: cancelButtonTapped$, recentSearchService: recentSearchService)
         return vm;
     }
     
     func makeSearchReadyVM() -> SearchReadyViewModelProtocol {
-        let vm = SearchReadyViewModel()
+        let vm = SearchReadyViewModel(navigator: navigator, placeUsecase: usecases?.place, recentSearchService: recentSearchService)
         return vm
     }
     
@@ -91,16 +91,17 @@ final class VMFactory:VMFactoryProtocol{
     private var appStore:AppStoreProtocol?
     private var usecases:UseCases?
     private var notificationService: RxNotificationServiceProtocol?
-
+    private var recentSearchService: RecentSearchServiceProtocol?
     
-    init(appStore: AppStoreProtocol? = nil, usecases:UseCases? = nil, notificationService: RxNotificationServiceProtocol?) {
+    init(appStore: AppStoreProtocol? = nil, usecases:UseCases? = nil, notificationService: RxNotificationServiceProtocol?, recentSearchService:RecentSearchServiceProtocol?) {
         self.appStore = appStore
         self.usecases = usecases
         self.notificationService = notificationService
+        self.recentSearchService = recentSearchService
     }
     
     func makeHomeBottomSheetVM() -> HomeBottomSheetViewModelProtocol {
-        let vm = HomeBottomSheetViewModel(navigator: navigator, appStore: appStore, authUseCase: usecases?.auth)
+        let vm = HomeBottomSheetViewModel(navigator: navigator, appStore: appStore, authUseCase: usecases?.auth, recentSearchService: recentSearchService)
         return vm;
     }
     
