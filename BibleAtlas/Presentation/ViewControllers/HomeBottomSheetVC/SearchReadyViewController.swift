@@ -50,7 +50,7 @@ final class SearchReadyViewController: UIViewController {
     
     
     private lazy var recentSearchHeaderStackView = {
-        let sv = UIStackView(arrangedSubviews: [recentSearchLabel, recentSearchMoreButton])
+        let sv = UIStackView(arrangedSubviews: [recentSearchLabel, moreRecentSearchButton])
         sv.axis = .horizontal;
         sv.distribution = .equalSpacing;
         sv.alignment = .fill;
@@ -58,7 +58,7 @@ final class SearchReadyViewController: UIViewController {
         return sv;
     }()
     
-    private let recentSearchMoreButton = {
+    private let moreRecentSearchButton = {
         let button = UIButton();
         button.setTitle("More", for: .normal)
         button.setTitleColor(.primaryBlue, for: .normal)
@@ -267,7 +267,10 @@ final class SearchReadyViewController: UIViewController {
     
     private func bindViewModel(){
         
-        let output = searchReadyViewModel.transform(input: SearchReadyViewModel.Input(refetchButtonTapped$: errorRetryView.refetchTapped$.asObservable(), popularPlaceCellTapped$: popularPlaceCellTapped$.asObservable(), recentSearchCellTapped$: recentSearchCellTapped$.asObservable(), viewLoaded$: viewLoaded$.asObservable()))
+        
+        let moreRecentSearchesButtonTapped$ = moreRecentSearchButton.rx.tap.asObservable();
+        
+        let output = searchReadyViewModel.transform(input: SearchReadyViewModel.Input(refetchButtonTapped$: errorRetryView.refetchTapped$.asObservable(), popularPlaceCellTapped$: popularPlaceCellTapped$.asObservable(), recentSearchCellTapped$: recentSearchCellTapped$.asObservable(), viewLoaded$: viewLoaded$.asObservable(), moreRecentSearchesButtonTapped$: moreRecentSearchesButtonTapped$))
         
         output.recentSearches$
             .observe(on: MainScheduler.instance)

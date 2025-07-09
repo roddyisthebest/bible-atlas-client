@@ -44,10 +44,11 @@ enum RecentSearchError: LocalizedError {
 struct RecentSearchFetchResult {
     let items: [RecentSearchItem]
     let total: Int
+    let page:Int
 }
 
 protocol RecentSearchServiceProtocol{
-    func fetch(limit: Int) -> Result<RecentSearchFetchResult, RecentSearchError>
+    func fetch(limit: Int, page: Int?) -> Result<RecentSearchFetchResult, RecentSearchError>
     func save(_ place:Place) -> Result<Void, RecentSearchError>
     func delete(id: String) -> Result<Void, RecentSearchError>
     func clearAll() -> Result<Void, RecentSearchError>
@@ -65,12 +66,16 @@ final class RecentSearchService: RecentSearchServiceProtocol{
         didChangeSubject$.asObservable()
     }
     
-    func fetch(limit: Int) -> Result<RecentSearchFetchResult, RecentSearchError> {
+    func fetch(limit: Int, page: Int?) -> Result<RecentSearchFetchResult, RecentSearchError> {
         let fetchRequest: NSFetchRequest<RecentSearchEntity> = RecentSearchEntity.fetchRequest()
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: false)]
-        fetchRequest.fetchLimit = limit
         
+        let page = page ?? 0;
+        
+        fetchRequest.fetchLimit = limit
+        fetchRequest.fetchOffset = limit * page
+
         
         do{
             let total = try context.count(for: RecentSearchEntity.fetchRequest())
@@ -83,7 +88,7 @@ final class RecentSearchService: RecentSearchServiceProtocol{
                 )
             }
             
-            return .success(RecentSearchFetchResult(items: items, total: total))
+            return .success(RecentSearchFetchResult(items: items, total: total, page: page))
             
         } catch{
             return .failure(.fetchFailed(error))

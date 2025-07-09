@@ -49,15 +49,19 @@ final class SearchReadyViewModel: SearchReadyViewModelProtocol {
             })
         .disposed(by: disposeBag)
         
-        input.viewLoaded$.subscribe(onNext: { [weak self] in
+        Observable.merge(input.viewLoaded$, input.refetchButtonTapped$).subscribe(onNext: { [weak self] in
             self?.getPlaces();
             
         }).disposed(by: disposeBag)
         
-        input.refetchButtonTapped$.subscribe(onNext: { [weak self] in
-            self?.getPlaces();
-            
-        }).disposed(by: disposeBag)
+
+        
+        input.moreRecentSearchesButtonTapped$
+            .subscribe(onNext:{[weak self] in
+                self?.navigator?.present(.recentSearches)
+            })
+            .disposed(by: disposeBag)
+    
         
 
         
@@ -105,7 +109,7 @@ final class SearchReadyViewModel: SearchReadyViewModelProtocol {
     }
     
     private func getRecentSearchItems(){
-        let result = self.recentSearchService?.fetch(limit: 5)
+        let result = self.recentSearchService?.fetch(limit: 5, page:nil)
         switch(result){
         case .success(let response):
             self.recentSearches$.accept(response.items)
@@ -123,6 +127,7 @@ final class SearchReadyViewModel: SearchReadyViewModelProtocol {
         let popularPlaceCellTapped$:Observable<String>
         let recentSearchCellTapped$:Observable<String>
         let viewLoaded$:Observable<Void>
+        let moreRecentSearchesButtonTapped$:Observable<Void>
     }
     
     public struct Output{

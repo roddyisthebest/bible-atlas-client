@@ -117,6 +117,8 @@
 		ECCB51D42E18F4D7007E4AB7 /* PopularPlaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB51D32E18F4D7007E4AB7 /* PopularPlaceTableViewCell.swift */; };
 		ECCB51D62E1A95F9007E4AB7 /* RecentSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB51D52E1A95F9007E4AB7 /* RecentSearchService.swift */; };
 		ECCB51DA2E1AB31A007E4AB7 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB51D92E1AB31A007E4AB7 /* PersistenceController.swift */; };
+		ECCB51DC2E1E4B04007E4AB7 /* RecentSearchesBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB51DB2E1E4B04007E4AB7 /* RecentSearchesBottomSheetViewModel.swift */; };
+		ECCB51DE2E1E53E1007E4AB7 /* RecentSearchesBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB51DD2E1E53E1007E4AB7 /* RecentSearchesBottomSheetViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -256,6 +258,8 @@
 		ECCB51D32E18F4D7007E4AB7 /* PopularPlaceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularPlaceTableViewCell.swift; sourceTree = "<group>"; };
 		ECCB51D52E1A95F9007E4AB7 /* RecentSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchService.swift; sourceTree = "<group>"; };
 		ECCB51D92E1AB31A007E4AB7 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		ECCB51DB2E1E4B04007E4AB7 /* RecentSearchesBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchesBottomSheetViewModel.swift; sourceTree = "<group>"; };
+		ECCB51DD2E1E53E1007E4AB7 /* RecentSearchesBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchesBottomSheetViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -669,6 +673,7 @@
 				EC77CE4B2DD5AACA0030DEF5 /* PlacesByTypeBottomSheetViewController.swift */,
 				EC77CE4F2DD5C86A0030DEF5 /* PlacesByCharacterBottomSheetViewController.swift */,
 				EC940E9C2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift */,
+				ECCB51DD2E1E53E1007E4AB7 /* RecentSearchesBottomSheetViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -689,6 +694,7 @@
 				EC940E9E2DF0828200406944 /* BibleVerseDetailBottomSheetViewModel.swift */,
 				EC940EAD2DF7229800406944 /* MainViewModel.swift */,
 				EC940EAF2E01950D00406944 /* SearchBottomSheetViewModel.swift */,
+				ECCB51DB2E1E4B04007E4AB7 /* RecentSearchesBottomSheetViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -965,6 +971,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EC940E9F2DF0828200406944 /* BibleVerseDetailBottomSheetViewModel.swift in Sources */,
+				ECCB51DE2E1E53E1007E4AB7 /* RecentSearchesBottomSheetViewController.swift in Sources */,
 				EC77CE402DD0A7E90030DEF5 /* PlaceTypesBottomSheetViewController.swift in Sources */,
 				EC7058A22DBCCA9D002D47DF /* PlaceTableViewCell.swift in Sources */,
 				EC77CDF62DC337FC0030DEF5 /* MyCollectionBottomSheetViewModel.swift in Sources */,
@@ -984,6 +991,7 @@
 				EC77CE062DC5E9910030DEF5 /* Place.swift in Sources */,
 				EC64B9692DDE051D00D3C8A7 /* UserRepository.swift in Sources */,
 				EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */,
+				ECCB51DC2E1E4B04007E4AB7 /* RecentSearchesBottomSheetViewModel.swift in Sources */,
 				EC940EA82DF7196A00406944 /* MapRepository.swift in Sources */,
 				ECCB51D42E18F4D7007E4AB7 /* PopularPlaceTableViewCell.swift in Sources */,
 				ECA94BE82D50AF41005B0428 /* AuthRepository.swift in Sources */,

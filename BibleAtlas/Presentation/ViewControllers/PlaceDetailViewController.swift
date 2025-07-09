@@ -418,7 +418,7 @@ final class PlaceDetailViewController: UIViewController {
     
     private let loadingView = LoadingView();
 
-    private let errorRetryView = ErrorRetryView();
+    private let errorRetryView = ErrorRetryView(closable: true);
 
     
     init(placeDetailViewModel:PlaceDetailViewModelProtocol,placeId:String) {
