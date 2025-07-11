@@ -119,6 +119,8 @@
 		ECCB51DA2E1AB31A007E4AB7 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB51D92E1AB31A007E4AB7 /* PersistenceController.swift */; };
 		ECCB51DC2E1E4B04007E4AB7 /* RecentSearchesBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB51DB2E1E4B04007E4AB7 /* RecentSearchesBottomSheetViewModel.swift */; };
 		ECCB51DE2E1E53E1007E4AB7 /* RecentSearchesBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB51DD2E1E53E1007E4AB7 /* RecentSearchesBottomSheetViewController.swift */; };
+		ECD972502E21040000D94767 /* PopularPlacesBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9724F2E21040000D94767 /* PopularPlacesBottomSheetViewModel.swift */; };
+		ECD972522E210DF700D94767 /* PopularPlacesBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972512E210DF700D94767 /* PopularPlacesBottomSheetViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -260,6 +262,8 @@
 		ECCB51D92E1AB31A007E4AB7 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		ECCB51DB2E1E4B04007E4AB7 /* RecentSearchesBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchesBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		ECCB51DD2E1E53E1007E4AB7 /* RecentSearchesBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchesBottomSheetViewController.swift; sourceTree = "<group>"; };
+		ECD9724F2E21040000D94767 /* PopularPlacesBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularPlacesBottomSheetViewModel.swift; sourceTree = "<group>"; };
+		ECD972512E210DF700D94767 /* PopularPlacesBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularPlacesBottomSheetViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -674,6 +678,7 @@
 				EC77CE4F2DD5C86A0030DEF5 /* PlacesByCharacterBottomSheetViewController.swift */,
 				EC940E9C2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift */,
 				ECCB51DD2E1E53E1007E4AB7 /* RecentSearchesBottomSheetViewController.swift */,
+				ECD972512E210DF700D94767 /* PopularPlacesBottomSheetViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -695,6 +700,7 @@
 				EC940EAD2DF7229800406944 /* MainViewModel.swift */,
 				EC940EAF2E01950D00406944 /* SearchBottomSheetViewModel.swift */,
 				ECCB51DB2E1E4B04007E4AB7 /* RecentSearchesBottomSheetViewModel.swift */,
+				ECD9724F2E21040000D94767 /* PopularPlacesBottomSheetViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -971,6 +977,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EC940E9F2DF0828200406944 /* BibleVerseDetailBottomSheetViewModel.swift in Sources */,
+				ECD972502E21040000D94767 /* PopularPlacesBottomSheetViewModel.swift in Sources */,
 				ECCB51DE2E1E53E1007E4AB7 /* RecentSearchesBottomSheetViewController.swift in Sources */,
 				EC77CE402DD0A7E90030DEF5 /* PlaceTypesBottomSheetViewController.swift in Sources */,
 				EC7058A22DBCCA9D002D47DF /* PlaceTableViewCell.swift in Sources */,
@@ -987,6 +994,7 @@
 				EC940EA12DF1756C00406944 /* RxNotificationService.swift in Sources */,
 				EC940EAA2DF7198C00406944 /* MapRepositoryProtocol.swift in Sources */,
 				EC77CE442DD0AF630030DEF5 /* PlaceTypesBottomSheetViewModel.swift in Sources */,
+				ECD972522E210DF700D94767 /* PopularPlacesBottomSheetViewController.swift in Sources */,
 				EC64B9662DDE049500D3C8A7 /* UserRepositoryProtocol.swift in Sources */,
 				EC77CE062DC5E9910030DEF5 /* Place.swift in Sources */,
 				EC64B9692DDE051D00D3C8A7 /* UserRepository.swift in Sources */,

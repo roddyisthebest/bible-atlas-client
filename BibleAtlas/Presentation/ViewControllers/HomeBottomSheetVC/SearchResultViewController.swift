@@ -74,7 +74,6 @@ class SearchResultViewController: UIViewController {
         setupUI();
         setupConstraints();
         bindViewModel();
-        print("search result vc")
     }
     
     private func setupUI(){

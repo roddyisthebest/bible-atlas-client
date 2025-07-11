@@ -47,6 +47,9 @@ protocol VMFactoryProtocol {
     
     func makeRecentSearchesBottomSheetVM() -> RecentSearchesBottomSheetViewModelProtocol
     
+    func makePopularPlacesBottomSheetVM() -> PopularPlacesBottomSheetViewModelProtocol
+    
+    
     func configure(navigator:BottomSheetNavigator)
 }
 
@@ -90,6 +93,11 @@ final class VMFactory:VMFactoryProtocol{
     
     func makePlaceCharactersBottomSheetVM() -> PlaceCharactersBottomSheetViewModelProtocol {
         let vm = PlaceCharactersBottomSheetViewModel(navigator: navigator,placeUsecase: usecases?.place);
+        return vm;
+    }
+    
+    func makePopularPlacesBottomSheetVM() -> PopularPlacesBottomSheetViewModelProtocol {
+        let vm = PopularPlacesBottomSheetViewModel(navigator: navigator, placeUsecase: usecases?.place)
         return vm;
     }
     

@@ -22,6 +22,7 @@ enum BottomSheetType {
     case placesByCharacter(String)
     case bibleVerseDetail(String)
     case recentSearches
+    case popularPlaces
 }
 
 
@@ -166,7 +167,7 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             let homeContentVM = vmFactory.makeHomeContentVM();
             let searchResultVM = vmFactory.makeSearchResultVM(keyword$: homeVM.keyword$.asObservable(), isSearchingMode$: homeVM.isSearchingMode$.asObservable(), cancelButtonTapped$: homeVM.cancelButtonTapped$.asObservable());
             let searchReadyVM = vmFactory.makeSearchReadyVM();
-         
+            
             
             let vc = vcFactory.makeHomeBottomSheetVC(homeVM: homeVM, homeContentVM: homeContentVM, searchResultVM: searchResultVM, searchReadyVM: searchReadyVM);
             
@@ -226,15 +227,19 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             let vm = vmFactory.makeBibleVerseDetailBottomSheetVM(keyword: keyword);
             let vc = vcFactory.makeBibleVerseDetailBottomSheetVC(vm: vm, keyword: keyword);
             presentFromTopVC(vc)
-
+            
         case .recentSearches:
             let vm = vmFactory.makeRecentSearchesBottomSheetVM();
             let vc = vcFactory.makeRecentSearchesBottomSheetVC(vm: vm);
             presentFromTopVC(vc)
+            
+        case .popularPlaces:
+            let vm = vmFactory.makePopularPlacesBottomSheetVM();
+            let vc = vcFactory.makePopularPlacesBottomSheetVC(vm: vm);
+            presentFromTopVC(vc)
+            
         }
-
-        
-        
+    
     }
 
     func dismiss(animated:Bool) {

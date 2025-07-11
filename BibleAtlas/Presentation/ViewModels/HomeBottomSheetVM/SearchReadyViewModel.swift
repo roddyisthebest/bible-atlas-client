@@ -63,7 +63,10 @@ final class SearchReadyViewModel: SearchReadyViewModelProtocol {
             })
             .disposed(by: disposeBag)
     
-        
+        input.morePopularPlacesButtonTapped$.subscribe(onNext:{[weak self] in
+            self?.navigator?.present(.popularPlaces)
+        })
+        .disposed(by: disposeBag)
 
         
         return Output(popularPlaces$: popularPlaces$.asObservable(), recentSearches$: recentSearches$.asObservable(), errorToFetchPlaces$: errorToFetchPlaces$.asObservable(), errorToFetchRecentSearches$: errorToFetchRecentSearches$.asObservable(), isFetching$: isFetching$.asObservable())
@@ -127,6 +130,8 @@ final class SearchReadyViewModel: SearchReadyViewModelProtocol {
         let recentSearchCellTapped$:Observable<String>
         let viewLoaded$:Observable<Void>
         let moreRecentSearchesButtonTapped$:Observable<Void>
+        let morePopularPlacesButtonTapped$:Observable<Void>
+
     }
     
     public struct Output{
