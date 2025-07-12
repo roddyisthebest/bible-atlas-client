@@ -102,7 +102,7 @@ final class SearchReadyViewController: UIViewController {
     
     
     private lazy var popularPlaceHeaderStackView = {
-        let sv = UIStackView(arrangedSubviews: [popularPlaceLabel, popularPlaceMoreButton])
+        let sv = UIStackView(arrangedSubviews: [popularPlaceLabel, morePopularPlacesButton])
         sv.axis = .horizontal;
         sv.distribution = .equalSpacing;
         sv.alignment = .fill;
@@ -110,7 +110,7 @@ final class SearchReadyViewController: UIViewController {
         return sv;
     }()
     
-    private let popularPlaceMoreButton = {
+    private let morePopularPlacesButton = {
         let button = UIButton();
         button.setTitle("More", for: .normal)
         button.setTitleColor(.primaryBlue, for: .normal)
@@ -269,8 +269,9 @@ final class SearchReadyViewController: UIViewController {
         
         
         let moreRecentSearchesButtonTapped$ = moreRecentSearchButton.rx.tap.asObservable();
-        
-        let output = searchReadyViewModel.transform(input: SearchReadyViewModel.Input(refetchButtonTapped$: errorRetryView.refetchTapped$.asObservable(), popularPlaceCellTapped$: popularPlaceCellTapped$.asObservable(), recentSearchCellTapped$: recentSearchCellTapped$.asObservable(), viewLoaded$: viewLoaded$.asObservable(), moreRecentSearchesButtonTapped$: moreRecentSearchesButtonTapped$))
+        let morePopularPlacesButtonTapped$ = morePopularPlacesButton.rx.tap.asObservable();
+
+        let output = searchReadyViewModel.transform(input: SearchReadyViewModel.Input(refetchButtonTapped$: errorRetryView.refetchTapped$.asObservable(), popularPlaceCellTapped$: popularPlaceCellTapped$.asObservable(), recentSearchCellTapped$: recentSearchCellTapped$.asObservable(), viewLoaded$: viewLoaded$.asObservable(), moreRecentSearchesButtonTapped$: moreRecentSearchesButtonTapped$, morePopularPlacesButtonTapped$: morePopularPlacesButtonTapped$.asObservable()))
         
         Observable.combineLatest(output.recentSearches$, output.errorToFetchRecentSearches$)
             .observe(on: MainScheduler.instance)
@@ -335,11 +336,11 @@ final class SearchReadyViewController: UIViewController {
                         
                         self?.popularPlaceTableView.isHidden = true
                         self?.emptyView.isHidden = false;
-                        self?.popularPlaceMoreButton.isHidden = true
+                        self?.morePopularPlacesButton.isHidden = true
                         return;
                     }
                     
-                    self?.popularPlaceMoreButton.isHidden = false
+                    self?.morePopularPlacesButton.isHidden = false
                     self?.popularPlaceTableView.isHidden = false
                     self?.emptyView.isHidden = true;
                     
