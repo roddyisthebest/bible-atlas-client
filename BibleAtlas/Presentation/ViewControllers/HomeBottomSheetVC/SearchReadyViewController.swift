@@ -187,23 +187,9 @@ final class SearchReadyViewController: UIViewController {
         viewLoaded$.accept(Void())
     }
     
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        recentSearchTableView.snp.updateConstraints { make in
-//            make.height.equalTo(recentSearchTableView.contentSize.height)
-//        }
-//        
-//        popularPlaceTableView.snp.updateConstraints{ make in
-//            make.height.equalTo(popularPlaceTableView.contentSize.height)
-//        }
-//    
-//    }
-    
 
     private func setupUI() {
         view.addSubview(bodyView)
-        recentSearchTableView.reloadData()
-//        popularPlaceTableView.reloadData()
     }
     
     private func setupStyle(){
