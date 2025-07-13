@@ -29,7 +29,7 @@ final class SearchResultViewModel:SearchResultViewModelProtocol {
     
     private let errorToSaveRecentSearch$ = BehaviorRelay<RecentSearchError?>(value: nil)
     
-    private let isSearching$ = BehaviorRelay<Bool>(value: false)
+    private let isSearching$ = BehaviorRelay<Bool>(value: true)
     private let isFetchingNext$ = BehaviorRelay<Bool>(value: false);
 
     private let isSearchingMode$:Observable<Bool>
@@ -55,6 +55,11 @@ final class SearchResultViewModel:SearchResultViewModelProtocol {
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
             .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
+   
+        
+        
+    
+        
         
         Observable.combineLatest(debouncedKeyword$, isSearchingMode$)
             .subscribe(onNext: {[weak self] keyword, isSearchingMode in
@@ -116,7 +121,21 @@ final class SearchResultViewModel:SearchResultViewModelProtocol {
             })
             .disposed(by: disposeBag)
         
-        return Output(places$: places$.asObservable(), errorToFetchPlaces$: errorToFetchPlaces$.asObservable(), errorToSaveRecentSearch$: errorToSaveRecentSearch$.asObservable(), isSearching$: isSearching$.asObservable(), isFetchingNext$: isFetchingNext$.asObservable(), isSearchingMode$: isSearchingMode$.asObservable())
+        
+        input.refetchButtonTapped$
+            .withLatestFrom(keyword$)
+            .subscribe(onNext: { [weak self] keyword in
+                guard let self = self else { return }
+
+                let trimmed = keyword.trimmingCharacters(in: .whitespacesAndNewlines)
+                if !trimmed.isEmpty {
+                    self.pagination.reset()
+                    self.getPlaces(keyword: trimmed)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        return Output(places$: places$.asObservable(), errorToFetchPlaces$: errorToFetchPlaces$.asObservable(), errorToSaveRecentSearch$: errorToSaveRecentSearch$.asObservable(), isSearching$: isSearching$.asObservable(), isFetchingNext$: isFetchingNext$.asObservable(), isSearchingMode$: isSearchingMode$.asObservable(), debouncedKeyword$: debouncedKeyword$.asObservable())
     }
     
     
@@ -179,7 +198,7 @@ final class SearchResultViewModel:SearchResultViewModelProtocol {
     
     
     public struct Input{
-//        let refetchButtonTapped$:Observable<Void>
+        let refetchButtonTapped$:Observable<Void>
         let bottomReached$:Observable<Void>
         let placeCellSelected$:Observable<Place>
     }
@@ -192,6 +211,7 @@ final class SearchResultViewModel:SearchResultViewModelProtocol {
         let isSearching$:Observable<Bool>
         let isFetchingNext$:Observable<Bool>
         let isSearchingMode$:Observable<Bool>
+        let debouncedKeyword$:Observable<String>
     }
     
 }

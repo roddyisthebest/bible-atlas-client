@@ -27,7 +27,8 @@ class SearchResultViewController: UIViewController {
         
         v.addSubview(searchTableView);
         v.addSubview(searchingView);
-        
+        v.addSubview(errorRetryView)
+        v.addSubview(emptyLabel)
         return v;
     }()
     
@@ -49,6 +50,18 @@ class SearchResultViewController: UIViewController {
         
         return tv;
     }()
+    
+    
+    private let emptyLabel = {
+        let label = UILabel();
+        label.text = "장소가 없습니다."
+        label.textColor = .mainLabelText
+        label.font = .boldSystemFont(ofSize: 15)
+        label.isHidden = true
+        return label;
+    }()
+    
+    private let errorRetryView = ErrorRetryView();
     
     private let searchingView = LoadingView();
     
@@ -95,13 +108,24 @@ class SearchResultViewController: UIViewController {
         searchingView.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
+        
+        errorRetryView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        
+        emptyLabel.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
     }
     
     
     
     private func bindViewModel(){
+        let refetchTapped$ = errorRetryView.refetchTapped$;
+        
         let output = searchResultViewModel?.transform(input: SearchResultViewModel.Input(
-            bottomReached$: bottomReached$.asObservable(), placeCellSelected$: placeCellSelected$.asObservable()))
+            refetchButtonTapped$: refetchTapped$.asObservable(), bottomReached$: bottomReached$.asObservable(), placeCellSelected$: placeCellSelected$.asObservable()))
+        
         
         output?.errorToSaveRecentSearch$
             .compactMap{ $0 }
@@ -111,41 +135,64 @@ class SearchResultViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        output?.places$
+    
+        Observable.combineLatest(output!.isSearching$, output!.isFetchingNext$, output!.errorToFetchPlaces$, output!.places$, output!.debouncedKeyword$)
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: {[weak self] places in
-                self?.places = places
-                self?.searchTableView.reloadData()
-            })
-            .disposed(by: disposeBag)
-        
-        output?.isFetchingNext$
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: {[weak self] isFetchingNext in
-                    
-                if(isFetchingNext){
-                    self?.footerLoadingView.start();
-                }
-                else{
-                    self?.footerLoadingView.stop();
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        output?.isSearching$
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] isSearching in
-                
-                if(isSearching){
-                    self?.searchTableView.isUserInteractionEnabled = false;
-                    self?.searchingView.start()
-                }
-                else{
+            .subscribe(onNext:{[weak self] isSearching, isFetchingNext, error, places, debouncedKeyword in
+                guard let error = error else{
+                    self?.errorRetryView.isHidden = true;
+                    self?.searchTableView.isHidden = false
+                    if(isSearching){
+                        self?.searchTableView.isUserInteractionEnabled = false;
+                        self?.searchingView.start()
+                        self?.emptyLabel.isHidden = true
+                        return
+                    }
                     self?.searchTableView.isUserInteractionEnabled = true;
                     self?.searchingView.stop()
+                    
+                    let trimmed = debouncedKeyword.trimmingCharacters(in: .whitespacesAndNewlines)
+
+                    if(trimmed.isEmpty){
+                        self?.emptyLabel.isHidden = true
+                        
+                        
+                    } else{
+                        self?.emptyLabel.isHidden = !places.isEmpty
+                        self?.places = places
+                        self?.searchTableView.reloadData()
+                    }
+                    
+                    
+                    if(isFetchingNext){
+                        self?.footerLoadingView.start();
+                    }
+                    else{
+                        self?.footerLoadingView.stop();
+                    }
+                    
+                    return;
                 }
-            })
-            .disposed(by: disposeBag)
+                
+                self?.searchTableView.isHidden = true;
+                self?.errorRetryView.isHidden = false
+                self?.errorRetryView.setMessage(error.description)
+                self?.searchingView.isHidden = true
+                
+            }).disposed(by: disposeBag)
+        
+        
+//        output?.places$
+//            .observe(on: MainScheduler.instance)
+//            .subscribe(onNext: {[weak self] places in
+//                self?.emptyLabel.isHidden = !places.isEmpty
+//                
+//                self?.places = places
+//                self?.searchTableView.reloadData()
+//            })
+//            .disposed(by: disposeBag)
+        
+        
     }
 
 }
