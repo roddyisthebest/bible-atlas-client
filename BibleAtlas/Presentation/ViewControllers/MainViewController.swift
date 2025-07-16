@@ -224,7 +224,7 @@ final class MainViewController: UIViewController, Presentable  {
 
                     annotations.append(annotation)
 
-                    let pointRect = MKMapRect(origin: MKMapPoint(annotation.coordinate), size: MKMapSize(width: 1000, height: 1000))
+                    let pointRect = MKMapRect(origin: MKMapPoint(annotation.coordinate), size: MKMapSize(width: 10, height: 10))
                     boundingMapRect = boundingMapRect.union(pointRect)
                 } else if let polyline = geometry as? MKPolyline {
                     overlays.append(polyline)
@@ -240,20 +240,43 @@ final class MainViewController: UIViewController, Presentable  {
         mapView.addAnnotations(annotations)
 
         if !boundingMapRect.isNull {
-            var region = MKCoordinateRegion(boundingMapRect)
 
-            // ✅ 최소 줌 보정 (너무 좁은 경우 대비)
-            let minSpan: CLLocationDegrees = 1 // 100km
-            region.span.latitudeDelta = max(region.span.latitudeDelta, minSpan)
-            region.span.longitudeDelta = max(region.span.longitudeDelta, minSpan)
+            let mapViewHeight = mapView.bounds.height
+            let bottomSheetHeight = mapViewHeight * 0.5
+            let paddingValue:CGFloat = 20;
+            let edgePadding = UIEdgeInsets(
+                top: paddingValue,
+                left: paddingValue,
+                bottom: bottomSheetHeight + paddingValue,
+                right: paddingValue
+            )
+            
+            let minWidth: Double = 10000    // 최소 가로 10km
+            let minHeight: Double = 10000   // 최소 세로 10km
 
-            // ✅ 중심 좌표 보정: 위에서 75% 지점으로 이동
-            let latitudeShiftRatio: CLLocationDegrees = 0.5  // 위로 50% 이동 == 아래쪽 50%
-            let shiftedLatitude = region.center.latitude - region.span.latitudeDelta * latitudeShiftRatio
-            let adjustedCenter = CLLocationCoordinate2D(latitude: shiftedLatitude, longitude: region.center.longitude)
-            region.center = adjustedCenter
+            var safeRect = boundingMapRect
 
-            mapView.setRegion(region, animated: true)
+            if boundingMapRect.size.width < minWidth || boundingMapRect.size.height < minHeight {
+                let center = MKMapPoint(x: boundingMapRect.midX, y: boundingMapRect.midY)
+
+                let newWidth = max(boundingMapRect.size.width, minWidth)
+                let newHeight = max(boundingMapRect.size.height, minHeight)
+
+                safeRect = MKMapRect(
+                    origin: MKMapPoint(
+                        x: center.x - newWidth / 2,
+                        y: center.y - newHeight / 2
+                    ),
+                    size: MKMapSize(width: newWidth, height: newHeight)
+                )
+            }
+            
+            
+            mapView.setVisibleMapRect(safeRect, edgePadding: edgePadding, animated: true)
+
+            
+      
+
         }
         
         
