@@ -23,6 +23,7 @@ enum BottomSheetType {
     case bibleVerseDetail(String)
     case recentSearches
     case popularPlaces
+    case myPage
 }
 
 
@@ -237,7 +238,11 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             let vm = vmFactory.makePopularPlacesBottomSheetVM();
             let vc = vcFactory.makePopularPlacesBottomSheetVC(vm: vm);
             presentFromTopVC(vc)
-            
+        
+        case .myPage:
+            let vm = vmFactory.makeMyPageBottomSheetVM();
+            let vc = vcFactory.makeMyPageBottomSheetVC(vm: vm);
+            presentFromTopVC(vc)
         }
     
     }

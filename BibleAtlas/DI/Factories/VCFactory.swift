@@ -36,6 +36,8 @@ protocol VCFactoryProtocol:AnyObject {
     func makePopularPlacesBottomSheetVC(vm:PopularPlacesBottomSheetViewModelProtocol) ->
         PopularPlacesBottomSheetViewController
     
+    func makeMyPageBottomSheetVC(vm:MyPageBottomSheetViewModelProtocol) -> MyPageBottomSheetViewController
+    
     
     func setupVC(type: BottomSheetType, sheet: UIViewController) -> Void
 }
@@ -146,6 +148,12 @@ final class VCFactory:VCFactoryProtocol {
         setupVC(type: .popularPlaces, sheet: vc)
         return vc;
     }
+    
+    func makeMyPageBottomSheetVC(vm: MyPageBottomSheetViewModelProtocol) -> MyPageBottomSheetViewController {
+        let vc = MyPageBottomSheetViewController(myPageBottomSheetViewModel: vm)
+        setupVC(type: .myPage, sheet: vc)
+        return vc;
+    }
 
     func setupVC(type: BottomSheetType, sheet: UIViewController) {
         switch(type){
@@ -193,6 +201,12 @@ final class VCFactory:VCFactoryProtocol {
                 sheet.detents = [.large()] // 높이 조절 가능 (중간, 전체 화면)
                 sheet.prefersScrollingExpandsWhenScrolledToEdge = false // 스크롤 시 확장 가능
                 sheet.prefersGrabberVisible = false // 위쪽 핸들 표시
+            }
+        case .myPage:
+            if let sheet = sheet.sheetPresentationController {
+                sheet.detents = [.large(),.medium()]
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = true
+                sheet.prefersGrabberVisible = true
             }
 
         default:

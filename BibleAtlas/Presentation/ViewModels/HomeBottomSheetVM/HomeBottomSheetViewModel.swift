@@ -67,16 +67,16 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
             .subscribe(onNext: { [weak self] profile in
                 guard let self = self else { return }
                 if (profile != nil) {
-                    // TODO: implement mypage
-                    let result = self.authUsecase?.logout()
-                    switch result {
-                        case .success:
-                            self.appStore?.dispatch(.logout)
-                        case .failure(let error):
-                            print(error.localizedDescription)
-                        case .none:
-                            print("none")
-                    }
+                        self.navigator?.present(.myPage)
+//                    let result = self.authUsecase?.logout()
+//                    switch result {
+//                        case .success:
+//                            self.appStore?.dispatch(.logout)
+//                        case .failure(let error):
+//                            print(error.localizedDescription)
+//                        case .none:
+//                            print("none")
+//                    }
                 } else {
                     self.navigator?.present(.login)
                 }

@@ -121,6 +121,8 @@
 		ECCB51DE2E1E53E1007E4AB7 /* RecentSearchesBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB51DD2E1E53E1007E4AB7 /* RecentSearchesBottomSheetViewController.swift */; };
 		ECD972502E21040000D94767 /* PopularPlacesBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9724F2E21040000D94767 /* PopularPlacesBottomSheetViewModel.swift */; };
 		ECD972522E210DF700D94767 /* PopularPlacesBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972512E210DF700D94767 /* PopularPlacesBottomSheetViewController.swift */; };
+		ECD972562E27E14500D94767 /* MyPageBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972552E27E14500D94767 /* MyPageBottomSheetViewController.swift */; };
+		ECD972582E27E8B800D94767 /* MyPageBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972572E27E8B800D94767 /* MyPageBottomSheetViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -264,6 +266,8 @@
 		ECCB51DD2E1E53E1007E4AB7 /* RecentSearchesBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchesBottomSheetViewController.swift; sourceTree = "<group>"; };
 		ECD9724F2E21040000D94767 /* PopularPlacesBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularPlacesBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		ECD972512E210DF700D94767 /* PopularPlacesBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularPlacesBottomSheetViewController.swift; sourceTree = "<group>"; };
+		ECD972552E27E14500D94767 /* MyPageBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageBottomSheetViewController.swift; sourceTree = "<group>"; };
+		ECD972572E27E8B800D94767 /* MyPageBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageBottomSheetViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -679,6 +683,7 @@
 				EC940E9C2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift */,
 				ECCB51DD2E1E53E1007E4AB7 /* RecentSearchesBottomSheetViewController.swift */,
 				ECD972512E210DF700D94767 /* PopularPlacesBottomSheetViewController.swift */,
+				ECD972552E27E14500D94767 /* MyPageBottomSheetViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -701,6 +706,7 @@
 				EC940EAF2E01950D00406944 /* SearchBottomSheetViewModel.swift */,
 				ECCB51DB2E1E4B04007E4AB7 /* RecentSearchesBottomSheetViewModel.swift */,
 				ECD9724F2E21040000D94767 /* PopularPlacesBottomSheetViewModel.swift */,
+				ECD972572E27E8B800D94767 /* MyPageBottomSheetViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1039,6 +1045,7 @@
 				EC77CE2E2DCF193D0030DEF5 /* RelatedPlaceTableViewCell.swift in Sources */,
 				EC64B9912DEC3D1A00D3C8A7 /* EmptyLabel.swift in Sources */,
 				EC70587B2DB39629002D47DF /* MainViewController.swift in Sources */,
+				ECD972582E27E8B800D94767 /* MyPageBottomSheetViewModel.swift in Sources */,
 				EC386DF42E06C4A700251FC6 /* HomeContentViewModel.swift in Sources */,
 				EC70589C2DBC7C4D002D47DF /* CircleButton.swift in Sources */,
 				EC77CE322DCF34110030DEF5 /* VersedItemCell.swift in Sources */,
@@ -1064,6 +1071,7 @@
 				ECCB51DA2E1AB31A007E4AB7 /* PersistenceController.swift in Sources */,
 				EC77CE422DD0A8670030DEF5 /* PlaceTypeCell.swift in Sources */,
 				EC64B97C2DE44E0D00D3C8A7 /* TokenRefresherProtocol.swift in Sources */,
+				ECD972562E27E14500D94767 /* MyPageBottomSheetViewController.swift in Sources */,
 				EC77CE3A2DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift in Sources */,
 				ECA94BE52D50AE92005B0428 /* AuthRepositoryProtocol.swift in Sources */,
 				EC386DFF2E06F95900251FC6 /* SearchReadyViewController.swift in Sources */,

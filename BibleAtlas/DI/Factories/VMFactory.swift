@@ -49,6 +49,7 @@ protocol VMFactoryProtocol {
     
     func makePopularPlacesBottomSheetVM() -> PopularPlacesBottomSheetViewModelProtocol
     
+    func makeMyPageBottomSheetVM() -> MyPageBottomSheetViewModelProtocol
     
     func configure(navigator:BottomSheetNavigator)
 }
@@ -152,6 +153,11 @@ final class VMFactory:VMFactoryProtocol{
     
     func makePlacesByCharacterBottomSheetVM(character: String) -> PlacesByCharacterBottomSheetViewModelProtocol {
         let vm = PlacesByCharacterBottomSheetViewModel(navigator: navigator, character: character,placeUsecase: usecases?.place);
+        return vm;
+    }
+    
+    func makeMyPageBottomSheetVM() -> MyPageBottomSheetViewModelProtocol {
+        let vm = MyPageBottomSheetViewModel(navigator: navigator, appStore: appStore)
         return vm;
     }
     
