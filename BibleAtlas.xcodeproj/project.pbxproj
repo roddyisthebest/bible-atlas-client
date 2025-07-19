@@ -123,6 +123,10 @@
 		ECD972522E210DF700D94767 /* PopularPlacesBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972512E210DF700D94767 /* PopularPlacesBottomSheetViewController.swift */; };
 		ECD972562E27E14500D94767 /* MyPageBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972552E27E14500D94767 /* MyPageBottomSheetViewController.swift */; };
 		ECD972582E27E8B800D94767 /* MyPageBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972572E27E8B800D94767 /* MyPageBottomSheetViewModel.swift */; };
+		ECD9725A2E29154900D94767 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972592E29154900D94767 /* MenuTableViewCell.swift */; };
+		ECD9725C2E2A353300D94767 /* AccountManagementBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9725B2E2A353300D94767 /* AccountManagementBottomSheetViewModel.swift */; };
+		ECD9725E2E2A3DD000D94767 /* SimpleMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9725D2E2A3DD000D94767 /* SimpleMenuTableViewCell.swift */; };
+		ECD972602E2BA44400D94767 /* AccountManagementBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9725F2E2BA44400D94767 /* AccountManagementBottomSheetViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -268,6 +272,10 @@
 		ECD972512E210DF700D94767 /* PopularPlacesBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularPlacesBottomSheetViewController.swift; sourceTree = "<group>"; };
 		ECD972552E27E14500D94767 /* MyPageBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageBottomSheetViewController.swift; sourceTree = "<group>"; };
 		ECD972572E27E8B800D94767 /* MyPageBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageBottomSheetViewModel.swift; sourceTree = "<group>"; };
+		ECD972592E29154900D94767 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
+		ECD9725B2E2A353300D94767 /* AccountManagementBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManagementBottomSheetViewModel.swift; sourceTree = "<group>"; };
+		ECD9725D2E2A3DD000D94767 /* SimpleMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleMenuTableViewCell.swift; sourceTree = "<group>"; };
+		ECD9725F2E2BA44400D94767 /* AccountManagementBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManagementBottomSheetViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -501,6 +509,8 @@
 				EC77CE492DD0E4DC0030DEF5 /* PlaceCharacterCell.swift */,
 				ECCB51D12E140AC1007E4AB7 /* SearchTableViewCell.swift */,
 				ECCB51D32E18F4D7007E4AB7 /* PopularPlaceTableViewCell.swift */,
+				ECD972592E29154900D94767 /* MenuTableViewCell.swift */,
+				ECD9725D2E2A3DD000D94767 /* SimpleMenuTableViewCell.swift */,
 			);
 			path = Tables;
 			sourceTree = "<group>";
@@ -684,6 +694,7 @@
 				ECCB51DD2E1E53E1007E4AB7 /* RecentSearchesBottomSheetViewController.swift */,
 				ECD972512E210DF700D94767 /* PopularPlacesBottomSheetViewController.swift */,
 				ECD972552E27E14500D94767 /* MyPageBottomSheetViewController.swift */,
+				ECD9725F2E2BA44400D94767 /* AccountManagementBottomSheetViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -707,6 +718,7 @@
 				ECCB51DB2E1E4B04007E4AB7 /* RecentSearchesBottomSheetViewModel.swift */,
 				ECD9724F2E21040000D94767 /* PopularPlacesBottomSheetViewModel.swift */,
 				ECD972572E27E8B800D94767 /* MyPageBottomSheetViewModel.swift */,
+				ECD9725B2E2A353300D94767 /* AccountManagementBottomSheetViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1010,6 +1022,7 @@
 				ECCB51D42E18F4D7007E4AB7 /* PopularPlaceTableViewCell.swift in Sources */,
 				ECA94BE82D50AF41005B0428 /* AuthRepository.swift in Sources */,
 				EC77CE012DC5DA8D0030DEF5 /* PlaceDetailViewController.swift in Sources */,
+				ECD9725A2E29154900D94767 /* MenuTableViewCell.swift in Sources */,
 				EC77CE4E2DD5B3480030DEF5 /* PlacesByTypeBottomSheetViewModel.swift in Sources */,
 				EC77CE482DD0E3E70030DEF5 /* PlaceCharactersBottomSheetViewController.swift in Sources */,
 				EC7058982DBA772E002D47DF /* GuideButton.swift in Sources */,
@@ -1039,6 +1052,7 @@
 				EC940EA62DF6E56500406944 /* MapApiService.swift in Sources */,
 				EC77CE4C2DD5AACA0030DEF5 /* PlacesByTypeBottomSheetViewController.swift in Sources */,
 				EC64B9952DEC595900D3C8A7 /* FooterLoadingReusableView.swift in Sources */,
+				ECD972602E2BA44400D94767 /* AccountManagementBottomSheetViewController.swift in Sources */,
 				EC64B9842DE72C4E00D3C8A7 /* PlaceApiService.swift in Sources */,
 				EC386DFD2E06F90B00251FC6 /* SearchReadyViewModel.swift in Sources */,
 				EC77CE522DD5C8950030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift in Sources */,
@@ -1049,6 +1063,7 @@
 				EC386DF42E06C4A700251FC6 /* HomeContentViewModel.swift in Sources */,
 				EC70589C2DBC7C4D002D47DF /* CircleButton.swift in Sources */,
 				EC77CE322DCF34110030DEF5 /* VersedItemCell.swift in Sources */,
+				ECD9725C2E2A353300D94767 /* AccountManagementBottomSheetViewModel.swift in Sources */,
 				EC64B96B2DDE05C900D3C8A7 /* UserUsecase.swift in Sources */,
 				EC7058882DB3CA5B002D47DF /* UIColor.swift in Sources */,
 				ECA94BE12D50A739005B0428 /* AuthData.swift in Sources */,
@@ -1062,6 +1077,7 @@
 				EC64B9582DD8482C00D3C8A7 /* AppStore.swift in Sources */,
 				EC386DF92E06C77A00251FC6 /* HomeContentViewController.swift in Sources */,
 				ECA94BD72D50977A005B0428 /* AuthorizedApiClient.swift in Sources */,
+				ECD9725E2E2A3DD000D94767 /* SimpleMenuTableViewCell.swift in Sources */,
 				EC64B9932DEC3E1700D3C8A7 /* ErrorRetryView.swift in Sources */,
 				EC70588B2DB8BCCE002D47DF /* CollectionButton.swift in Sources */,
 				EC70589A2DBC7BE1002D47DF /* LoginBottomSheetViewController.swift in Sources */,

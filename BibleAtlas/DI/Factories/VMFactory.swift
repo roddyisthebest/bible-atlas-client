@@ -51,6 +51,8 @@ protocol VMFactoryProtocol {
     
     func makeMyPageBottomSheetVM() -> MyPageBottomSheetViewModelProtocol
     
+    func makeAccountManagementBottomSheetVM() -> AccountManagementBottomSheetViewModelProtocol
+    
     func configure(navigator:BottomSheetNavigator)
 }
 
@@ -159,6 +161,11 @@ final class VMFactory:VMFactoryProtocol{
     func makeMyPageBottomSheetVM() -> MyPageBottomSheetViewModelProtocol {
         let vm = MyPageBottomSheetViewModel(navigator: navigator, appStore: appStore)
         return vm;
+    }
+    
+    func makeAccountManagementBottomSheetVM() -> AccountManagementBottomSheetViewModelProtocol {
+        let vm = AccountManagementBottomSheetViewModel(navigator: navigator, appStore: appStore)
+        return vm
     }
     
     func configure(navigator: BottomSheetNavigator) {

@@ -37,7 +37,8 @@ protocol VCFactoryProtocol:AnyObject {
         PopularPlacesBottomSheetViewController
     
     func makeMyPageBottomSheetVC(vm:MyPageBottomSheetViewModelProtocol) -> MyPageBottomSheetViewController
-    
+        
+    func makeAccountManagementBottomSheetVC(vm:AccountManagementBottomSheetViewModelProtocol) -> AccountManagementBottomSheetViewController
     
     func setupVC(type: BottomSheetType, sheet: UIViewController) -> Void
 }
@@ -45,16 +46,15 @@ protocol VCFactoryProtocol:AnyObject {
 
 final class VCFactory:VCFactoryProtocol {
 
-    
-    
-
-    
-
     private let highDetent = UISheetPresentationController.Detent.custom { context in
         return UIScreen.main.bounds.height * 1;
     }
-    private let lowDetent = UISheetPresentationController.Detent.custom { context in
+    private let lowestDetent = UISheetPresentationController.Detent.custom { context in
         return UIScreen.main.bounds.height * 0.2;
+    }
+    
+    private let lowDetent = UISheetPresentationController.Detent.custom { context in
+        return UIScreen.main.bounds.height * 0.35;
     }
     
     private let centerDetent = UISheetPresentationController.Detent.custom { context in
@@ -154,12 +154,18 @@ final class VCFactory:VCFactoryProtocol {
         setupVC(type: .myPage, sheet: vc)
         return vc;
     }
+    
+    func makeAccountManagementBottomSheetVC(vm:AccountManagementBottomSheetViewModelProtocol) -> AccountManagementBottomSheetViewController{
+        let vc = AccountManagementBottomSheetViewController(accountManagementBottomSheetViewModel: vm);
+        setupVC(type: .accountManagement, sheet: vc)
+        return vc;
+    }
 
     func setupVC(type: BottomSheetType, sheet: UIViewController) {
         switch(type){
         case .home:
             if let sheet = sheet.sheetPresentationController {
-                sheet.detents = [.large(), .medium(), lowDetent]
+                sheet.detents = [.large(), .medium(), lowestDetent]
                 sheet.largestUndimmedDetentIdentifier = .medium;
                 sheet.selectedDetentIdentifier = .medium
                 sheet.prefersGrabberVisible = true // 위쪽 핸들 표시
@@ -202,11 +208,17 @@ final class VCFactory:VCFactoryProtocol {
                 sheet.prefersScrollingExpandsWhenScrolledToEdge = false // 스크롤 시 확장 가능
                 sheet.prefersGrabberVisible = false // 위쪽 핸들 표시
             }
+        case .accountManagement:
+            if let sheet = sheet.sheetPresentationController {
+                sheet.detents = [.large()]
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = true
+                sheet.prefersGrabberVisible = false
+            }
         case .myPage:
             if let sheet = sheet.sheetPresentationController {
-                sheet.detents = [.large(),.medium()]
+                sheet.detents = [lowDetent]
                 sheet.prefersScrollingExpandsWhenScrolledToEdge = true
-                sheet.prefersGrabberVisible = true
+                sheet.prefersGrabberVisible = false
             }
 
         default:

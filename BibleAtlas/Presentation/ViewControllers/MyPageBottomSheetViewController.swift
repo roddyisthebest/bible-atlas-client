@@ -11,9 +11,13 @@ import RxRelay
 
 final class MyPageBottomSheetViewController: UIViewController {
     
+    private var menuHeight = 60;
+    
     private let disposeBag = DisposeBag();
     
     private let avatarImageLength = 50;
+    
+    private let menuItemCellTapped$ = PublishRelay<MenuItem>();
     
     private lazy var headerStackView = {
         let sv = UIStackView(arrangedSubviews: [userStackView, closeButton]);
@@ -29,7 +33,7 @@ final class MyPageBottomSheetViewController: UIViewController {
         sv.axis = .horizontal;
         sv.distribution = .fill
         sv.alignment = .fill
-        sv.spacing = 8
+        sv.spacing = 14
         return sv;
     }()
     
@@ -77,7 +81,7 @@ final class MyPageBottomSheetViewController: UIViewController {
     
     private lazy var menuTableView = {
         let tv = UITableView();
-        tv.register(PlaceTableViewCell.self, forCellReuseIdentifier: PlaceTableViewCell.identifier)
+        tv.register(MenuTableViewCell.self, forCellReuseIdentifier: MenuTableViewCell.identifier)
         
         tv.delegate = self;
         tv.dataSource = self;
@@ -86,19 +90,22 @@ final class MyPageBottomSheetViewController: UIViewController {
         
         tv.layer.cornerRadius = 10;
         tv.layer.masksToBounds = true;
-        tv.rowHeight = 80;
-        
- 
-        
+
+        tv.isScrollEnabled = false
         return tv;
     }()
+    
+    private var menuItems:[MenuItem] = []
+
     
     private var myPageBottomSheetViewModel:MyPageBottomSheetViewModelProtocol?
     
     
     init(myPageBottomSheetViewModel: MyPageBottomSheetViewModelProtocol) {
         self.myPageBottomSheetViewModel = myPageBottomSheetViewModel
+                
         super.init(nibName: nil, bundle: nil)
+
     }
     
     
@@ -113,7 +120,19 @@ final class MyPageBottomSheetViewController: UIViewController {
         setupUI();
         setupConstraints();
         setupStyle();
+        setupMemuItems()
         bindViewModel();
+    }
+    
+    override func viewDidLayoutSubviews() {
+        let menuLength = max(menuItems.count, 1)
+        menuHeight = Int(menuTableView.bounds.height) / menuLength
+    }
+    
+    private func setupMemuItems(){
+        menuItems = self.myPageBottomSheetViewModel?.menuItems ?? []
+        
+        menuTableView.reloadData();
     }
     
     private func setupStyle(){
@@ -148,7 +167,7 @@ final class MyPageBottomSheetViewController: UIViewController {
     private func bindViewModel(){
         let closeButtonTapped$ = closeButton.rx.tap.asObservable();
         
-        let output = myPageBottomSheetViewModel?.transform(input: MyPageBottomSheetViewModel.Input(closeButtonTapped$: closeButtonTapped$.asObservable()))
+        let output = myPageBottomSheetViewModel?.transform(input: MyPageBottomSheetViewModel.Input(closeButtonTapped$: closeButtonTapped$.asObservable(), menuItemCellTapped$: menuItemCellTapped$.asObservable()))
         
         output?.profile$.bind{ [weak self] profile in
             
@@ -190,17 +209,41 @@ final class MyPageBottomSheetViewController: UIViewController {
 }
 
 
-extension MyPageBottomSheetViewController: UITableViewDelegate, UITableViewDataSource{
+extension MyPageBottomSheetViewController:  UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return menuItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        guard let cell = tableView.dequeueReusableCell(withIdentifier: PlaceTableViewCell.identifier, for: indexPath) as? PlaceTableViewCell else {
-//            return UITableViewCell()
-//        }
-//        
-        return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MenuTableViewCell.identifier, for: indexPath) as? MenuTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        cell.setMenu(menuItem: menuItems[indexPath.row])
+        
+        if indexPath.row == menuItems.count - 1 {
+               cell.separatorInset = UIEdgeInsets(top: 0, left: tableView.bounds.width, bottom: 0, right: 0)
+           } else {
+               cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
+        }
+        return cell
 
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return CGFloat(menuHeight);
+    }
+    
+    
+}
+
+extension MyPageBottomSheetViewController:UITableViewDelegate{
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        menuItemCellTapped$.accept(menuItems[indexPath.row])
+        
+    }
+    
 }

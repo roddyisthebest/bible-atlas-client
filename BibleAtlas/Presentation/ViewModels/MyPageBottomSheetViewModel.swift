@@ -9,10 +9,20 @@ import Foundation
 import RxSwift
 import RxRelay
 protocol MyPageBottomSheetViewModelProtocol{
+    
+    var menuItems: [MenuItem] { get }
+    
     func transform(input:MyPageBottomSheetViewModel.Input) -> MyPageBottomSheetViewModel.Output
 }
 
 final class MyPageBottomSheetViewModel:MyPageBottomSheetViewModelProtocol{
+    
+    public let menuItems:[MenuItem] =
+    [
+        MenuItem(nameText: "계정관리", iconImage: "person.fill", iconBackground: .mainText, bottomSheetType: .accountManagement),
+        MenuItem(nameText: "리포트", iconImage: "exclamationmark.bubble.fill", iconBackground: .primaryRed),
+        MenuItem(nameText:"앱 버전", iconImage: "v.circle.fill", iconBackground: .primaryViolet, contentText: "1.0.0")
+    ]
     
     private let disposeBag = DisposeBag();
     private weak var navigator: BottomSheetNavigator?
@@ -20,8 +30,9 @@ final class MyPageBottomSheetViewModel:MyPageBottomSheetViewModelProtocol{
     private var appStore:AppStoreProtocol?
 
     private var profile$ = BehaviorRelay<User?>(value:nil)
-    public let cancelButtonTapped$ = PublishRelay<Void>();
 
+    
+    
     init(navigator: BottomSheetNavigator?, appStore: AppStoreProtocol?) {
         self.navigator = navigator
         self.appStore = appStore
@@ -34,6 +45,16 @@ final class MyPageBottomSheetViewModel:MyPageBottomSheetViewModelProtocol{
                 
         input.closeButtonTapped$.bind{
             [weak self] in self?.navigator?.dismiss(animated: true)
+        }.disposed(by: disposeBag)
+        
+        input.menuItemCellTapped$.bind{
+            [weak self] itemCell in
+            
+            guard let bottomSheetType = itemCell.bottomSheetType else {
+                return;
+            }
+            
+            self?.navigator?.present(bottomSheetType)
         }.disposed(by: disposeBag)
         
         return Output(profile$: profile$.asObservable())
@@ -49,6 +70,7 @@ final class MyPageBottomSheetViewModel:MyPageBottomSheetViewModelProtocol{
     
     public struct Input {
         let closeButtonTapped$:Observable<Void>
+        let menuItemCellTapped$:Observable<MenuItem>
     }
     
     public struct Output {

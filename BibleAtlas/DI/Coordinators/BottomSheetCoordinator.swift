@@ -24,6 +24,7 @@ enum BottomSheetType {
     case recentSearches
     case popularPlaces
     case myPage
+    case accountManagement
 }
 
 
@@ -242,6 +243,11 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
         case .myPage:
             let vm = vmFactory.makeMyPageBottomSheetVM();
             let vc = vcFactory.makeMyPageBottomSheetVC(vm: vm);
+            presentFromTopVC(vc)
+            
+        case .accountManagement:
+            let vm = vmFactory.makeAccountManagementBottomSheetVM();
+            let vc = vcFactory.makeAccountManagementBottomSheetVC(vm: vm);
             presentFromTopVC(vc)
         }
     
