@@ -12,6 +12,7 @@ struct UseCases {
     let auth: AuthUsecaseProtocol
     let user: UserUsecaseProtocol
     let place: PlaceUsecaseProtocol
+    let map: MapUsecaseProtocol
 }
 
 protocol VMFactoryProtocol {
@@ -53,7 +54,10 @@ protocol VMFactoryProtocol {
     
     func makeAccountManagementBottomSheetVM() -> AccountManagementBottomSheetViewModelProtocol
     
-    func configure(navigator:BottomSheetNavigator)
+    func makeMainVM() -> MainViewModelProtocol
+    
+    
+    func configure(navigator:BottomSheetNavigator, appCoordinator:AppCoordinatorProtocol)
 }
 
 final class VMFactory:VMFactoryProtocol{
@@ -106,6 +110,8 @@ final class VMFactory:VMFactoryProtocol{
     
     
     private weak var navigator:BottomSheetNavigator?;
+    private weak var appCoordinator:AppCoordinatorProtocol?
+    
     private var appStore:AppStoreProtocol?
     private var usecases:UseCases?
     private var notificationService: RxNotificationServiceProtocol?
@@ -164,12 +170,18 @@ final class VMFactory:VMFactoryProtocol{
     }
     
     func makeAccountManagementBottomSheetVM() -> AccountManagementBottomSheetViewModelProtocol {
-        let vm = AccountManagementBottomSheetViewModel(navigator: navigator, appStore: appStore)
+        let vm = AccountManagementBottomSheetViewModel(navigator: navigator, appStore: appStore, appCoordinator: appCoordinator)
         return vm
     }
     
-    func configure(navigator: BottomSheetNavigator) {
+    func makeMainVM() -> MainViewModelProtocol {
+        let vm = MainViewModel(bottomSheetCoordinator: navigator, mapUseCase: usecases?.map, placeUsecase: usecases?.place, notificationService: notificationService)
+        return vm
+    }
+    
+    func configure(navigator: BottomSheetNavigator, appCoordinator:AppCoordinatorProtocol) {
         self.navigator = navigator;
+        self.appCoordinator = appCoordinator;
     }
     
 }

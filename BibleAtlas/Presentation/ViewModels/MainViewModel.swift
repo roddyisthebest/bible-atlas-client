@@ -37,7 +37,7 @@ final class MainViewModel: MainViewModelProtocol {
     
     private let notificationService: RxNotificationServiceProtocol?
 
-    init(bottomSheetCoordinator:BottomSheetNavigator? ,mapUseCase: MapUsecaseProtocol?,placeUsecase: PlaceUsecaseProtocol? ,notificationService:RxNotificationServiceProtocol) {
+    init(bottomSheetCoordinator:BottomSheetNavigator? ,mapUseCase: MapUsecaseProtocol?,placeUsecase: PlaceUsecaseProtocol? ,notificationService:RxNotificationServiceProtocol?) {
         self.mapUseCase = mapUseCase
         self.placeUsecase = placeUsecase
         self.notificationService = notificationService

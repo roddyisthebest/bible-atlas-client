@@ -127,6 +127,8 @@
 		ECD9725C2E2A353300D94767 /* AccountManagementBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9725B2E2A353300D94767 /* AccountManagementBottomSheetViewModel.swift */; };
 		ECD9725E2E2A3DD000D94767 /* SimpleMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9725D2E2A3DD000D94767 /* SimpleMenuTableViewCell.swift */; };
 		ECD972602E2BA44400D94767 /* AccountManagementBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9725F2E2BA44400D94767 /* AccountManagementBottomSheetViewController.swift */; };
+		ECD972652E2CE02000D94767 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972642E2CE02000D94767 /* AppCoordinator.swift */; };
+		ECD972672E2CE78800D94767 /* WindowService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972662E2CE78800D94767 /* WindowService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -276,6 +278,8 @@
 		ECD9725B2E2A353300D94767 /* AccountManagementBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManagementBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		ECD9725D2E2A3DD000D94767 /* SimpleMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleMenuTableViewCell.swift; sourceTree = "<group>"; };
 		ECD9725F2E2BA44400D94767 /* AccountManagementBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManagementBottomSheetViewController.swift; sourceTree = "<group>"; };
+		ECD972642E2CE02000D94767 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		ECD972662E2CE78800D94767 /* WindowService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -420,6 +424,7 @@
 			isa = PBXGroup;
 			children = (
 				EC70587D2DB397CF002D47DF /* BottomSheetCoordinator.swift */,
+				ECD972642E2CE02000D94767 /* AppCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -442,6 +447,7 @@
 				EC64B97F2DE45B4200D3C8A7 /* ErrorHandlerService.swift */,
 				EC940EA02DF1756C00406944 /* RxNotificationService.swift */,
 				ECCB51D52E1A95F9007E4AB7 /* RecentSearchService.swift */,
+				ECD972662E2CE78800D94767 /* WindowService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1016,6 +1022,7 @@
 				EC64B9662DDE049500D3C8A7 /* UserRepositoryProtocol.swift in Sources */,
 				EC77CE062DC5E9910030DEF5 /* Place.swift in Sources */,
 				EC64B9692DDE051D00D3C8A7 /* UserRepository.swift in Sources */,
+				ECD972652E2CE02000D94767 /* AppCoordinator.swift in Sources */,
 				EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */,
 				ECCB51DC2E1E4B04007E4AB7 /* RecentSearchesBottomSheetViewModel.swift in Sources */,
 				EC940EA82DF7196A00406944 /* MapRepository.swift in Sources */,
@@ -1090,6 +1097,7 @@
 				ECD972562E27E14500D94767 /* MyPageBottomSheetViewController.swift in Sources */,
 				EC77CE3A2DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift in Sources */,
 				ECA94BE52D50AE92005B0428 /* AuthRepositoryProtocol.swift in Sources */,
+				ECD972672E2CE78800D94767 /* WindowService.swift in Sources */,
 				EC386DFF2E06F95900251FC6 /* SearchReadyViewController.swift in Sources */,
 				ECA94BEF2D50B492005B0428 /* MockingApi.swift in Sources */,
 				EC7058842DB3BAE5002D47DF /* HomeBottomSheetViewController.swift in Sources */,

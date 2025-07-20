@@ -8,6 +8,10 @@
 import UIKit
 protocol VCFactoryProtocol:AnyObject {
     //TODO: VC 직접 타입 리턴 프로토콜로 변경 필요
+    
+    
+    
+    
     func makeHomeBottomSheetVC(
         homeVM: HomeBottomSheetViewModelProtocol,
         homeContentVM:HomeContentViewModelProtocol,
@@ -39,6 +43,8 @@ protocol VCFactoryProtocol:AnyObject {
     func makeMyPageBottomSheetVC(vm:MyPageBottomSheetViewModelProtocol) -> MyPageBottomSheetViewController
         
     func makeAccountManagementBottomSheetVC(vm:AccountManagementBottomSheetViewModelProtocol) -> AccountManagementBottomSheetViewController
+    
+    func makeMainVC(vm:MainViewModelProtocol) -> MainViewController
     
     func setupVC(type: BottomSheetType, sheet: UIViewController) -> Void
 }
@@ -159,6 +165,11 @@ final class VCFactory:VCFactoryProtocol {
         let vc = AccountManagementBottomSheetViewController(accountManagementBottomSheetViewModel: vm);
         setupVC(type: .accountManagement, sheet: vc)
         return vc;
+    }
+    
+    func makeMainVC(vm: MainViewModelProtocol) -> MainViewController {
+        let vc = MainViewController(vm: vm)
+        return vc
     }
 
     func setupVC(type: BottomSheetType, sheet: UIViewController) {

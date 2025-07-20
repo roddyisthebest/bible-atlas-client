@@ -21,8 +21,10 @@ final class AccountManagementBottomSheetViewModel:AccountManagementBottomSheetVi
     
     private let disposeBag = DisposeBag();
     private weak var navigator: BottomSheetNavigator?
+    private weak var appCoordinator: AppCoordinatorProtocol?
 
     private var appStore:AppStoreProtocol?
+    
     
     private var profile$ = BehaviorRelay<User?>(value:nil)
     
@@ -40,10 +42,10 @@ final class AccountManagementBottomSheetViewModel:AccountManagementBottomSheetVi
     ]
     
     
-    init(navigator: BottomSheetNavigator?, appStore: AppStoreProtocol?) {
+    init(navigator: BottomSheetNavigator?, appStore: AppStoreProtocol?, appCoordinator:AppCoordinatorProtocol?) {
         self.navigator = navigator
         self.appStore = appStore
-        
+        self.appCoordinator = appCoordinator
         bindAppStore();
     }
     
@@ -66,7 +68,7 @@ final class AccountManagementBottomSheetViewModel:AccountManagementBottomSheetVi
             [weak self] menuItem in
             switch(menuItem.id){
                 case .logout:
-                    self?.appStore?.dispatch(.logout)
+                    self?.appCoordinator?.logout();
                 case .withdrawal:
                     self?.withdrawalButtonTapped$.accept(())
                 case .navigateCS:

@@ -16,7 +16,7 @@ final class MainViewController: UIViewController, Presentable  {
     private var mainViewModel:MainViewModelProtocol?
     private let loadingView = LoadingView();
 
-    private var navigator: BottomSheetNavigator;
+
     
     private let disposeBag = DisposeBag();
     
@@ -53,8 +53,7 @@ final class MainViewController: UIViewController, Presentable  {
     }
     
             
-    init(navigator:BottomSheetNavigator, vm:MainViewModelProtocol?) {
-        self.navigator = navigator
+    init(vm:MainViewModelProtocol?) {
         self.mainViewModel = vm;
         super.init(nibName: nil, bundle: nil)
         mapView.delegate = self  // ✅ 여기 추가
