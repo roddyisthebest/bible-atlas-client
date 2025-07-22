@@ -19,6 +19,7 @@ struct SimpleMenuItem {
     var id: SimpleMenuId
     var nameText:String
     var isMovable: Bool
+    var textColor: UIColor?
 }
 
 
@@ -82,6 +83,12 @@ final class SimpleMenuTableViewCell: UITableViewCell {
     func setMenu(menuItem:SimpleMenuItem){
         nameLabel.text = menuItem.nameText;
         arrowIcon.isHidden = !menuItem.isMovable
+        
+        guard let textColor = menuItem.textColor else {
+            return;
+        }
+        
+        nameLabel.textColor = textColor
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

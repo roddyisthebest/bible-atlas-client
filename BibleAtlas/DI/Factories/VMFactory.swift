@@ -170,7 +170,7 @@ final class VMFactory:VMFactoryProtocol{
     }
     
     func makeAccountManagementBottomSheetVM() -> AccountManagementBottomSheetViewModelProtocol {
-        let vm = AccountManagementBottomSheetViewModel(navigator: navigator, appStore: appStore, appCoordinator: appCoordinator)
+        let vm = AccountManagementBottomSheetViewModel(navigator: navigator, appStore: appStore, appCoordinator: appCoordinator, authUsecase: usecases?.auth)
         return vm
     }
     

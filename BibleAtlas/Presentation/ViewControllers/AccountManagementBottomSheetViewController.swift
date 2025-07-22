@@ -18,7 +18,9 @@ final class AccountManagementBottomSheetViewController: UIViewController {
     private let disposeBag = DisposeBag();
     
     private let menuItemCellTapped$ = PublishRelay<SimpleMenuItem>();
-    
+    private let withdrawConfirmButtonTapped$ = PublishRelay<Void>();
+    private let withdrawCompleteConfirmButtonTapped$ = PublishRelay<Void>();
+
     private let accountManagementBottomSheetViewModel:AccountManagementBottomSheetViewModelProtocol?
     
     private lazy var headerStackView = {
@@ -53,6 +55,17 @@ final class AccountManagementBottomSheetViewController: UIViewController {
     }()
     
     
+    private lazy var loadingOverlayView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.3) // 어두운 반투명 배경
+        view.isHidden = true
+        view.addSubview(loadingView)
+        return view
+    }()
+    
+    
+    
+    private let loadingView = LoadingView();
     
     
     
@@ -86,12 +99,15 @@ final class AccountManagementBottomSheetViewController: UIViewController {
             make.height.equalTo(menuHeight * menuItems.count)
         }
         
+      
+        
     }
     
     
     private func setupUI(){
         view.addSubview(headerStackView);
         view.addSubview(tableView);
+        view.addSubview(loadingOverlayView)
 
     }
     
@@ -103,24 +119,47 @@ final class AccountManagementBottomSheetViewController: UIViewController {
         
         let closeButtonTapped$ = closeButton.rx.tap.asObservable();
         
-        let output = accountManagementBottomSheetViewModel?.transform(input: AccountManagementBottomSheetViewModel.Input(closeButtonTapped$: closeButtonTapped$.asObservable(), menuItemCellTapped$: menuItemCellTapped$.asObservable()))
+        let output = accountManagementBottomSheetViewModel?.transform(input: AccountManagementBottomSheetViewModel.Input(closeButtonTapped$: closeButtonTapped$.asObservable(), menuItemCellTapped$: menuItemCellTapped$.asObservable(), withdrawConfirmButtonTapped$: withdrawConfirmButtonTapped$.asObservable(), withdrawCompleteConfirmButtonTapped$: withdrawCompleteConfirmButtonTapped$.asObservable()))
         
         
-        output?.profile$.bind{ [weak self]
-            profile in
-            
-            guard let profile = profile else {
-                return
-            }
-            
-            
+        output?.showWithdrawComplete$
+            .observe(on: MainScheduler.instance)
+            .bind{[weak self] in
+            self?.showWithdrawalCompleteAlert()
         }.disposed(by: disposeBag)
         
         
-        output?.withdrawalButtonTapped$.bind{[weak self] in
+        output?.showWithdrawConfirm$
+            .observe(on: MainScheduler.instance)
+            .bind{[weak self] in
             self?.showWithdrawalAlert();
             
         }.disposed(by: disposeBag)
+        
+        output?.isWithdrawing$
+            .distinctUntilChanged()
+            .observe(on: MainScheduler.instance)
+            .bind{ [weak self] isWithdrawing in
+                
+            if(isWithdrawing){
+                self?.loadingOverlayView.isHidden = false;
+                self?.loadingView.start();
+                self?.view.isUserInteractionEnabled = false
+            }
+            else{
+                self?.loadingOverlayView.isHidden = true;
+                self?.loadingView.stop();
+                self?.view.isUserInteractionEnabled = true
+            }
+        }.disposed(by: disposeBag)
+        
+        output?.error$
+            .observe(on: MainScheduler.instance)
+            .compactMap { $0 }
+            .bind{ [weak self] error in
+            self?.showErrorAlert(message: error?.description)
+        }.disposed(by: disposeBag)
+        
     }
     
     private func showWithdrawalAlert() {
@@ -133,9 +172,24 @@ final class AccountManagementBottomSheetViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
         
         alert.addAction(UIAlertAction(title: "탈퇴", style: .destructive) { [weak self] _ in
-                // TODO: 탈퇴 로직 처리 vm에 전달 필요
+            self?.withdrawConfirmButtonTapped$.accept(())
         })
         
+        present(alert, animated: true)
+    }
+    
+    
+    private func showWithdrawalCompleteAlert() {
+        let alert = UIAlertController(
+            title: "탈퇴 완료",
+            message: "회원 탈퇴가 정상적으로 처리되었습니다.",
+            preferredStyle: .alert
+        )
+
+        alert.addAction(UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+            self?.withdrawCompleteConfirmButtonTapped$.accept(())
+        })
+
         present(alert, animated: true)
     }
     
@@ -162,20 +216,15 @@ final class AccountManagementBottomSheetViewController: UIViewController {
             
         }
         
+        loadingOverlayView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        loadingView.snp.makeConstraints { make in
+            make.center.equalToSuperview();
+        }
         
     }
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 

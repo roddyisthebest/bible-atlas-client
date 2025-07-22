@@ -15,7 +15,7 @@ protocol AuthApiServiceProtocol{
     
     func loginGoogleUser(idToken: String) async -> Result<UserResponse,NetworkError>
     func loginAppleUser(idToken: String) async -> Result<UserResponse,NetworkError>
-
+    func withdraw() async -> Result<Int, NetworkError>
 
 }
 
@@ -80,10 +80,8 @@ final public class AuthApiService:AuthApiServiceProtocol {
             )
     }
     
-    
-    
-
- 
-    
+    func withdraw() async ->Result<Int, NetworkError> {
+        return await apiClient.deleteData(url: "\(url)/withdraw", parameters: nil)
+    }
     
 }

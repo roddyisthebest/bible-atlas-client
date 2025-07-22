@@ -14,6 +14,8 @@ protocol AuthUsecaseProtocol{
     
     func loginGoogleUser(idToken: String) async -> Result<UserResponse,NetworkError>
     func loginAppleUser(idToken: String) async -> Result<UserResponse,NetworkError>
+    
+    func withdraw() async -> Result<Int, NetworkError>
 }
 
 
@@ -68,7 +70,11 @@ public struct AuthUsecase:AuthUsecaseProtocol{
         return result;
     }
     
-    
+    func withdraw() async -> Result<Int, NetworkError> {
+        let result = await repository.withdraw();
+        
+        return result;
+    }
     
     
     func logout() -> Result<Bool, Error>{
