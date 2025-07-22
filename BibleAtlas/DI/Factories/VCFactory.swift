@@ -8,6 +8,10 @@
 import UIKit
 protocol VCFactoryProtocol:AnyObject {
     //TODO: VC 직접 타입 리턴 프로토콜로 변경 필요
+    
+    
+    
+    
     func makeHomeBottomSheetVC(
         homeVM: HomeBottomSheetViewModelProtocol,
         homeContentVM:HomeContentViewModelProtocol,
@@ -36,6 +40,11 @@ protocol VCFactoryProtocol:AnyObject {
     func makePopularPlacesBottomSheetVC(vm:PopularPlacesBottomSheetViewModelProtocol) ->
         PopularPlacesBottomSheetViewController
     
+    func makeMyPageBottomSheetVC(vm:MyPageBottomSheetViewModelProtocol) -> MyPageBottomSheetViewController
+        
+    func makeAccountManagementBottomSheetVC(vm:AccountManagementBottomSheetViewModelProtocol) -> AccountManagementBottomSheetViewController
+    
+    func makeMainVC(vm:MainViewModelProtocol) -> MainViewController
     
     func setupVC(type: BottomSheetType, sheet: UIViewController) -> Void
 }
@@ -43,16 +52,15 @@ protocol VCFactoryProtocol:AnyObject {
 
 final class VCFactory:VCFactoryProtocol {
 
-    
-    
-
-    
-
     private let highDetent = UISheetPresentationController.Detent.custom { context in
         return UIScreen.main.bounds.height * 1;
     }
-    private let lowDetent = UISheetPresentationController.Detent.custom { context in
+    private let lowestDetent = UISheetPresentationController.Detent.custom { context in
         return UIScreen.main.bounds.height * 0.2;
+    }
+    
+    private let lowDetent = UISheetPresentationController.Detent.custom { context in
+        return UIScreen.main.bounds.height * 0.35;
     }
     
     private let centerDetent = UISheetPresentationController.Detent.custom { context in
@@ -146,12 +154,29 @@ final class VCFactory:VCFactoryProtocol {
         setupVC(type: .popularPlaces, sheet: vc)
         return vc;
     }
+    
+    func makeMyPageBottomSheetVC(vm: MyPageBottomSheetViewModelProtocol) -> MyPageBottomSheetViewController {
+        let vc = MyPageBottomSheetViewController(myPageBottomSheetViewModel: vm)
+        setupVC(type: .myPage, sheet: vc)
+        return vc;
+    }
+    
+    func makeAccountManagementBottomSheetVC(vm:AccountManagementBottomSheetViewModelProtocol) -> AccountManagementBottomSheetViewController{
+        let vc = AccountManagementBottomSheetViewController(accountManagementBottomSheetViewModel: vm);
+        setupVC(type: .accountManagement, sheet: vc)
+        return vc;
+    }
+    
+    func makeMainVC(vm: MainViewModelProtocol) -> MainViewController {
+        let vc = MainViewController(vm: vm)
+        return vc
+    }
 
     func setupVC(type: BottomSheetType, sheet: UIViewController) {
         switch(type){
         case .home:
             if let sheet = sheet.sheetPresentationController {
-                sheet.detents = [.large(), .medium(), lowDetent]
+                sheet.detents = [.large(), .medium(), lowestDetent]
                 sheet.largestUndimmedDetentIdentifier = .medium;
                 sheet.selectedDetentIdentifier = .medium
                 sheet.prefersGrabberVisible = true // 위쪽 핸들 표시
@@ -193,6 +218,18 @@ final class VCFactory:VCFactoryProtocol {
                 sheet.detents = [.large()] // 높이 조절 가능 (중간, 전체 화면)
                 sheet.prefersScrollingExpandsWhenScrolledToEdge = false // 스크롤 시 확장 가능
                 sheet.prefersGrabberVisible = false // 위쪽 핸들 표시
+            }
+        case .accountManagement:
+            if let sheet = sheet.sheetPresentationController {
+                sheet.detents = [.large()]
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = true
+                sheet.prefersGrabberVisible = false
+            }
+        case .myPage:
+            if let sheet = sheet.sheetPresentationController {
+                sheet.detents = [lowDetent]
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = true
+                sheet.prefersGrabberVisible = false
             }
 
         default:

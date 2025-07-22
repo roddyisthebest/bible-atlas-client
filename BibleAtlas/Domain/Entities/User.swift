@@ -30,6 +30,7 @@ struct User:Decodable, Hashable{
 struct UserResponse: Decodable {
     let user: User
     let authData: AuthData
+    let recovered: Bool
 }
 
 

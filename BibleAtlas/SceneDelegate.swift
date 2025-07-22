@@ -11,6 +11,8 @@ import GoogleSignIn
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    private var bottomSheetCoordinator: BottomSheetCoordinator?
+    private var appCoordinator: AppCoordinatorProtocol?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -57,8 +59,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let placeUsecase = PlaceUsecase(repository:placeRepository)
         
+        let mapApiService = MapApiService(apiClient: apiClient, baseURL: "\(Constants.shared.geoJsonUrl)")
+        let mapRepository = MapRepository(mapApiService: mapApiService)
         
-        let usecases = UseCases(auth: authUsecase, user: userUsecase, place:placeUsecase)
+        let mapUsecase = MapUsecase(repository: mapRepository);
+        
+        
+        let usecases = UseCases(auth: authUsecase, user: userUsecase, place:placeUsecase, map:mapUsecase)
         
         let notificationService = RxNotificationService();
         
@@ -70,29 +77,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let vmFactory = VMFactory(appStore: appStore, usecases: usecases, notificationService: notificationService, recentSearchService: recentSearchService);
         let vcFactory = VCFactory();
             
-        let bottomSheetCoordinator = BottomSheetCoordinator(vcFactory: vcFactory, vmFactory: vmFactory, notificationService: notificationService);
-        
-        vmFactory.configure(navigator: bottomSheetCoordinator)
-        
-        
-        let mapApiService = MapApiService(apiClient: apiClient, baseURL: "\(Constants.shared.geoJsonUrl)")
-        let mapRepository = MapRepository(mapApiService: mapApiService)
-        
-        let mapUsecase = MapUsecase(repository: mapRepository);
-        
-        let mainVM = MainViewModel(bottomSheetCoordinator: bottomSheetCoordinator, mapUseCase: mapUsecase, placeUsecase: placeUsecase, notificationService: notificationService)
-        let mainVC = MainViewController(navigator: bottomSheetCoordinator, vm:mainVM);
+        self.bottomSheetCoordinator = BottomSheetCoordinator(vcFactory: vcFactory, vmFactory: vmFactory, notificationService: notificationService);
 
-        mainVC.modalPresentationStyle = .custom
-        bottomSheetCoordinator.setPresenter(mainVC)
-        DispatchQueue.main.async {
-            bottomSheetCoordinator.present(.home)
-        }
+        let windowService = RealWindowService(window: window);
         
-        window?.rootViewController = mainVC;
-        window?.makeKeyAndVisible()
+        appCoordinator = AppCoordinator(appStore: appStore, vmFactory: vmFactory, vcFactory: vcFactory, notificationService: notificationService, bottomSheetCoordinator: bottomSheetCoordinator, windowService: windowService)
+
         
         
+        vmFactory.configure(navigator: bottomSheetCoordinator!, appCoordinator: appCoordinator!)
+        
+
+        appCoordinator?.start()
+        
+
        
     }
     

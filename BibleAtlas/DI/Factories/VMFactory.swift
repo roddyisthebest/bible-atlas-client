@@ -12,6 +12,7 @@ struct UseCases {
     let auth: AuthUsecaseProtocol
     let user: UserUsecaseProtocol
     let place: PlaceUsecaseProtocol
+    let map: MapUsecaseProtocol
 }
 
 protocol VMFactoryProtocol {
@@ -49,8 +50,14 @@ protocol VMFactoryProtocol {
     
     func makePopularPlacesBottomSheetVM() -> PopularPlacesBottomSheetViewModelProtocol
     
+    func makeMyPageBottomSheetVM() -> MyPageBottomSheetViewModelProtocol
     
-    func configure(navigator:BottomSheetNavigator)
+    func makeAccountManagementBottomSheetVM() -> AccountManagementBottomSheetViewModelProtocol
+    
+    func makeMainVM() -> MainViewModelProtocol
+    
+    
+    func configure(navigator:BottomSheetNavigator, appCoordinator:AppCoordinatorProtocol)
 }
 
 final class VMFactory:VMFactoryProtocol{
@@ -103,6 +110,8 @@ final class VMFactory:VMFactoryProtocol{
     
     
     private weak var navigator:BottomSheetNavigator?;
+    private weak var appCoordinator:AppCoordinatorProtocol?
+    
     private var appStore:AppStoreProtocol?
     private var usecases:UseCases?
     private var notificationService: RxNotificationServiceProtocol?
@@ -155,8 +164,24 @@ final class VMFactory:VMFactoryProtocol{
         return vm;
     }
     
-    func configure(navigator: BottomSheetNavigator) {
+    func makeMyPageBottomSheetVM() -> MyPageBottomSheetViewModelProtocol {
+        let vm = MyPageBottomSheetViewModel(navigator: navigator, appStore: appStore)
+        return vm;
+    }
+    
+    func makeAccountManagementBottomSheetVM() -> AccountManagementBottomSheetViewModelProtocol {
+        let vm = AccountManagementBottomSheetViewModel(navigator: navigator, appStore: appStore, appCoordinator: appCoordinator, authUsecase: usecases?.auth)
+        return vm
+    }
+    
+    func makeMainVM() -> MainViewModelProtocol {
+        let vm = MainViewModel(bottomSheetCoordinator: navigator, mapUseCase: usecases?.map, placeUsecase: usecases?.place, notificationService: notificationService)
+        return vm
+    }
+    
+    func configure(navigator: BottomSheetNavigator, appCoordinator:AppCoordinatorProtocol) {
         self.navigator = navigator;
+        self.appCoordinator = appCoordinator;
     }
     
 }

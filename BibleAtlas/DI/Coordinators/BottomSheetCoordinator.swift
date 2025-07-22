@@ -23,6 +23,8 @@ enum BottomSheetType {
     case bibleVerseDetail(String)
     case recentSearches
     case popularPlaces
+    case myPage
+    case accountManagement
 }
 
 
@@ -37,6 +39,7 @@ protocol BottomSheetNavigator: AnyObject {
     func dismiss(animated:Bool)
     func dismissFromDetail(animated:Bool)
     func replace(with type: BottomSheetType)
+    func setPresenter(_ presenter: Presentable?)
     
 }
 
@@ -237,7 +240,16 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             let vm = vmFactory.makePopularPlacesBottomSheetVM();
             let vc = vcFactory.makePopularPlacesBottomSheetVC(vm: vm);
             presentFromTopVC(vc)
+        
+        case .myPage:
+            let vm = vmFactory.makeMyPageBottomSheetVM();
+            let vc = vcFactory.makeMyPageBottomSheetVC(vm: vm);
+            presentFromTopVC(vc)
             
+        case .accountManagement:
+            let vm = vmFactory.makeAccountManagementBottomSheetVM();
+            let vc = vcFactory.makeAccountManagementBottomSheetVC(vm: vm);
+            presentFromTopVC(vc)
         }
     
     }

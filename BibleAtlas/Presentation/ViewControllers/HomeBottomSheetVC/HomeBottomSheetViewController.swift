@@ -68,9 +68,18 @@ final class HomeBottomSheetViewController: UIViewController{
         
         button.setTitleColor(.primaryBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 12, weight: .medium)
- 
+        
+        button.addSubview(userAvatarImageView)
         
         return button;
+    }()
+    
+    private let userAvatarImageView = {
+        let iv = UIImageView();
+        
+        iv.contentMode = .scaleAspectFill;
+        iv.clipsToBounds = true;
+        return iv;
     }()
     
     private let cancelButton = {
@@ -178,15 +187,19 @@ final class HomeBottomSheetViewController: UIViewController{
             .subscribe(onNext: { [weak self] isLoggedIn, profile in
                 
                 if isLoggedIn {
-                    
+                        
                     guard let profile = profile else {
                         return
                     }
-                    self?.userAvatarButton.setTitle(profile.name ?? "아무개", for: .normal)
+                    
+                    self?.userAvatarImageView.isHidden = false
+                    self?.setAvatarImage(urlString: profile.avatar)
+                    self?.userAvatarButton.setTitle("", for: .normal)
                     return
                 }
                 
                 self?.userAvatarButton.setTitle("로그인", for: .normal)
+                self?.userAvatarImageView.isHidden = true
                 
             })
             .disposed(by: disposeBag)
@@ -244,6 +257,27 @@ final class HomeBottomSheetViewController: UIViewController{
     }
     
     
+    private func setAvatarImage(urlString: String) {
+        let replaced = urlString.replacingOccurrences(of: "svg", with: "png")
+        guard let url = URL(string: replaced) else { return }
+        
+        userAvatarImageView.kf.setImage(
+            with: url,
+            options: [
+                .transition(.fade(0.2))
+            ],
+            completionHandler: { result in
+                switch result {
+                case .success(let value):
+                    print("✅ Avatar image loaded: \(value.source.url?.absoluteString ?? "")")
+                case .failure(let error):
+                    print("❌ Avatar image load failed: \(error.localizedDescription)")
+                }
+            }
+        )
+
+    }
+    
     private func setupSheet(){
 //        if let sheet = self.sheetPresentationController {
 //            sheet.delegate = self
@@ -270,6 +304,10 @@ final class HomeBottomSheetViewController: UIViewController{
         
         userAvatarButton.snp.makeConstraints { make in
             make.width.equalTo(40);
+        }
+        
+        userAvatarImageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview();
         }
         
         

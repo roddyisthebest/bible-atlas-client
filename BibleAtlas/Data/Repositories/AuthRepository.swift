@@ -22,4 +22,8 @@ public struct AuthRepository:AuthRepositoryProtocol{
         return await authApiService.loginAppleUser(idToken: idToken)
     }
     
+    func withdraw() async -> Result<Int, NetworkError> {
+        return await authApiService.withdraw();
+    }
+    
 }
