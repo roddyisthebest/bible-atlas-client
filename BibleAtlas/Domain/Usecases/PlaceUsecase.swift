@@ -35,6 +35,8 @@ protocol PlaceUsecaseProtocol {
     
     func getBibleVerse(version:BibleVersion, book:String, chapter:String, verse:String) async -> Result<BibleVerseResponse, NetworkError>
 
+    func createPlaceReport(placeId:String, reportType:PlaceReportType, reason:String?) async -> Result<Int, NetworkError>
+    
 }
 
 
@@ -113,6 +115,10 @@ public struct PlaceUsecase:PlaceUsecaseProtocol{
     
     func getBibleVerse(version: BibleVersion, book: String, chapter: String, verse: String) async -> Result<BibleVerseResponse, NetworkError> {
         return await repository.getBibleVerse(version: version, book: book, chapter: chapter, verse: verse)
+    }
+    
+    func createPlaceReport(placeId:String, reportType:PlaceReportType, reason:String?) async -> Result<Int, NetworkError>{
+        return await repository.createPlaceReport(placeId: placeId, reportType: reportType, reason: reason)
     }
     
 }

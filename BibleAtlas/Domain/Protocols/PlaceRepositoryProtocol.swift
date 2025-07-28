@@ -33,6 +33,8 @@ protocol PlaceRepositoryProtocol {
     
     func getBibleVerse(version:BibleVersion, book:String, chapter:String, verse:String) async -> Result<BibleVerseResponse, NetworkError>
     
+    func createPlaceReport(placeId:String, reportType:PlaceReportType, reason:String?) async -> Result<Int, NetworkError>
+    
 }
 
 

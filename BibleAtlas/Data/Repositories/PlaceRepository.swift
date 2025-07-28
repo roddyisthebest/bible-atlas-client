@@ -59,4 +59,7 @@ public struct PlaceRepository:PlaceRepositoryProtocol{
         return await placeApiService.getBibleVerse(version: version, book: book, chapter: chapter, verse: verse)
     }
     
+    func createPlaceReport(placeId: String, reportType: PlaceReportType, reason: String?) async -> Result<Int, NetworkError> {
+        return await placeApiService.createPlaceReport(placeId: placeId, reportType: reportType, reason: reason)
+    }
 }

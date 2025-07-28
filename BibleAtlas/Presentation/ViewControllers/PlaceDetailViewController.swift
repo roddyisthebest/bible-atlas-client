@@ -38,6 +38,9 @@ final class PlaceDetailViewController: UIViewController {
     private let placeCellTapped$ = PublishRelay<String>();
     private let verseCellTapped$ = PublishRelay<String>();
     
+    private let reportButtonTapped$ = PublishRelay<PlaceReportType>();
+    
+    
     private var relations:[PlaceRelation] = [];
     
     private var bibles:[Bible] = []
@@ -469,16 +472,17 @@ final class PlaceDetailViewController: UIViewController {
         guard let imageTitle = imageTitle else {return}
         guard let url = URL(string: "\(imageEndpoint)/\(imageTitle)") else {return}
         
+        
         placeImageView.kf.setImage(with: url, options: [
             .transition(.fade(0.01))
         ],
         completionHandler: { result in
-//                switch result {
-//                case .success(let value):
-//                    print("✅ Place image loaded: \(value.source.url?.absoluteString ?? "")")
-//                case .failure(let error):
-//                    print("❌ Place image load failed: \(error.localizedDescription)")
-//                }
+                switch result {
+                case .success(let value):
+                    print("✅ Place image loaded: \(value.source.url?.absoluteString ?? "")")
+                case .failure(let error):
+                    print("❌ Place image load failed: \(error.localizedDescription)")
+                }
         })
         
     }
@@ -699,7 +703,7 @@ final class PlaceDetailViewController: UIViewController {
         
         
         
-        let output = placeDetailViewModel?.transform(input: PlaceDetailViewModel.Input(viewLoaded$: placeDetailViewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$, shareButtonTapped$: shareButtonTapped$, closeButtonTapped$: closeButtonTapped$, likeButtonTapped$: likeButtonTapped$, placeModificationButtonTapped$: placeModificationButtonTapped$.asObservable(), verseButtonTapped$: verseCellTapped$.asObservable(), memoButtonTapped$: memoButtonTapped$.asObservable(), placeCellTapped$: placeCellTapped$.asObservable(), refetchButtonTapped$: refetchButtonTapped$.asObservable(), verseCellTapped$: verseCellTapped$.asObservable()))
+        let output = placeDetailViewModel?.transform(input: PlaceDetailViewModel.Input(viewLoaded$: placeDetailViewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$, shareButtonTapped$: shareButtonTapped$, closeButtonTapped$: closeButtonTapped$, likeButtonTapped$: likeButtonTapped$, placeModificationButtonTapped$: placeModificationButtonTapped$.asObservable(), verseButtonTapped$: verseCellTapped$.asObservable(), memoButtonTapped$: memoButtonTapped$.asObservable(), placeCellTapped$: placeCellTapped$.asObservable(), refetchButtonTapped$: refetchButtonTapped$.asObservable(), verseCellTapped$: verseCellTapped$.asObservable(), reportButtonTapped$: reportButtonTapped$.asObservable()))
         
         output?.isSaving$.observe(on: MainScheduler.instance).bind{
             [weak self] isSaving in
@@ -784,6 +788,7 @@ final class PlaceDetailViewController: UIViewController {
                 self.relatedPlaceTable.isHidden = true;
                 self.relatedPlaceEmptyView.isHidden = false;
             }
+            
             
             self.setPlaceImage(imageTitle: place.imageTitle)
             
@@ -886,10 +891,16 @@ final class PlaceDetailViewController: UIViewController {
 
         // 신고 타입별 submenu actions
         let reportActions: [UIAction] = [
-            UIAction(title: "Spam", image: UIImage(systemName: "exclamationmark.circle")) { _ in print("Report: SPAM") },
-            UIAction(title: "Inappropriate", image: UIImage(systemName: "hand.raised")) { _ in print("Report: INAPPROPRIATE") },
-            UIAction(title: "False Information", image: UIImage(systemName: "questionmark.diamond")) { _ in print("Report: FALSE_INFORMATION") },
-            UIAction(title: "Other", image: UIImage(systemName: "ellipsis")) { _ in print("Report: ETC") }
+            UIAction(title: "Spam", image: UIImage(systemName: "exclamationmark.circle")) { [weak self] _ in
+                self?.reportButtonTapped$.accept(.spam)
+            },
+            UIAction(title: "Inappropriate", image: UIImage(systemName: "hand.raised")) { [weak self] _ in
+                self?.reportButtonTapped$.accept(.inappropriate)
+            },
+            UIAction(title: "False Information", image: UIImage(systemName: "questionmark.diamond")) { [weak self] _ in      self?.reportButtonTapped$.accept(.falseInfomation) },
+            UIAction(title: "Other", image: UIImage(systemName: "ellipsis")) { [weak self] _  in
+                self?.reportButtonTapped$.accept(.etc)
+            }
         ]
 
         // nested 메뉴
