@@ -22,6 +22,7 @@ final class Bible {
 
 protocol IdentifiableBottomSheet: AnyObject {
     var bottomSheetIdentity: BottomSheetType { get }
+    
 }
 
 

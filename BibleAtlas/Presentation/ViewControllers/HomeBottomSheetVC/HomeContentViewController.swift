@@ -146,7 +146,7 @@ final class HomeContentViewController: UIViewController {
     private let myGuidesLabel = MainLabel(text:"My Guides")
     
     private lazy var guideButtonsStackView = {
-        let sv = UIStackView(arrangedSubviews: [explorePlacesButton, reportIssueButton]);
+        let sv = UIStackView(arrangedSubviews: [explorePlacesButton]);
         sv.axis = .vertical;
         sv.distribution = .fill;
         sv.alignment = .fill
@@ -154,17 +154,15 @@ final class HomeContentViewController: UIViewController {
         return sv;
     }()
     
-    private let explorePlacesButton = {
+    private lazy var explorePlacesButton = {
         let button = GuideButton(titleText: "Explore Places")
-        button.addTarget(self, action: #selector(explorePlacesBtnTapped), for: .touchUpInside)
+        button.menu = buildPlacesMenu();
+        button.showsMenuAsPrimaryAction = true
+
         return button;
     }()
     
-    private let reportIssueButton =  {
-        let button = GuideButton(titleText: "Report an Issue");
-        button.addTarget(self, action: #selector(reportIssueBtnTapped), for: .touchUpInside)
-        return button;
-    }()
+
     
     private let dummySearches:[String] = ["onasdasdasdasdasddfasdfdfasdfasdfasdfasdfasdfe", "sdfasdfadsfasdfasdffsdsadf"];
     
@@ -255,10 +253,7 @@ final class HomeContentViewController: UIViewController {
         explorePlacesButton.snp.makeConstraints { make in
             make.height.equalTo(64)
         }
-        
-        reportIssueButton.snp.makeConstraints { make in
-            make.height.equalTo(64)
-        }
+    
        
         loadingView.snp.makeConstraints { make in
             make.center.equalToSuperview();
@@ -302,25 +297,8 @@ final class HomeContentViewController: UIViewController {
     
     }
 
-    @objc private func reportIssueBtnTapped(){
-
-        let action1 = UIAction(title: "Spam", image: UIImage(systemName: "exclamationmark.bubble.fill")) { _ in
-            print("A-Z")
-        }
-
-        let action2 = UIAction(title: "Inappropriate", image: UIImage(systemName: "hand.raised.fill")) { _ in
-            print("By Type")
-        }
-               
-        let menu = UIMenu(title: "Report Issue", children: [action1, action2])
+    private func buildPlacesMenu() -> UIMenu{
         
-        reportIssueButton.showsMenuAsPrimaryAction = true
-        reportIssueButton.menu = menu
-
-    }
-    
-    @objc private func explorePlacesBtnTapped(){
-
         let action1 = UIAction(title: "A-Z", image: UIImage(systemName: "character.phonetic")) { _ in
             self.placesByCharacterButtonTapped$.accept(Void())
         }
@@ -331,10 +309,11 @@ final class HomeContentViewController: UIViewController {
                
         let menu = UIMenu(title: "Explore Places", children: [action1, action2])
         
-        explorePlacesButton.showsMenuAsPrimaryAction = true
-        explorePlacesButton.menu = menu
-
+        return menu
+        
     }
+    
+   
     
 }
 
