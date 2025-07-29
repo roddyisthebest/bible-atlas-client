@@ -135,6 +135,14 @@ final class MainViewController: UIViewController, Presentable  {
                 self?.clearMapView();
             })
             .disposed(by: disposeBag)
+        
+        output?.zoomOutMapView$
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self]  in
+                self?.zoomOut();
+            })
+            .disposed(by: disposeBag)
+        
     }
     
     private func bindObservable(){
@@ -189,6 +197,25 @@ final class MainViewController: UIViewController, Presentable  {
         mapView.addAnnotations(annotations);
         isPainting$.accept(false)
 
+    }
+    
+    private func zoomOut() {
+        let center = mapView.centerCoordinate
+        let span = MKCoordinateSpan(latitudeDelta: 2.0, longitudeDelta: 2.0)
+        let region = MKCoordinateRegion(center: center, span: span)
+        
+        let mapRect = MKMapRect(for: region) // ✅ 핵심 수정 부분
+
+        let height = mapView.bounds.height
+
+        let padding = UIEdgeInsets(
+            top: height * 0.05,
+            left: 0,
+            bottom: height * 0.25,
+            right: 0
+        )
+
+        mapView.setVisibleMapRect(mapRect, edgePadding: padding, animated: true)
     }
     
     private func renderGeoJson(features: [MKGeoJSONFeature]) {

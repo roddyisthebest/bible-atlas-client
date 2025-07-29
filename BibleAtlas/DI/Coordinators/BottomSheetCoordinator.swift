@@ -148,6 +148,7 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             
             let stack = self.presentedVCStack(from: baseVC)
             
+
             for i in 0..<stack.count-1{
                 let vc = stack[i];
                 vc.sheetPresentationController?.animateChanges {
@@ -156,6 +157,7 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             }
             
             self.dismiss(animated: animated)
+            self.prevDetents = []
             self.currentPlaceId = nil
 
         }

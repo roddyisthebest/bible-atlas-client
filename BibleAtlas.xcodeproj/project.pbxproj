@@ -133,6 +133,7 @@
 		ECD9726B2E307AE300D94767 /* ReportBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9726A2E307AE300D94767 /* ReportBottomSheetViewModel.swift */; };
 		ECD9726D2E307C8A00D94767 /* PlaceReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9726C2E307C8A00D94767 /* PlaceReport.swift */; };
 		ECD9726F2E324E9F00D94767 /* ReportTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9726E2E324E9F00D94767 /* ReportTypeTableViewCell.swift */; };
+		ECD972712E38B6C200D94767 /* MKMapRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972702E38B6C200D94767 /* MKMapRect.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -288,6 +289,7 @@
 		ECD9726A2E307AE300D94767 /* ReportBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		ECD9726C2E307C8A00D94767 /* PlaceReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceReport.swift; sourceTree = "<group>"; };
 		ECD9726E2E324E9F00D94767 /* ReportTypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTypeTableViewCell.swift; sourceTree = "<group>"; };
+		ECD972702E38B6C200D94767 /* MKMapRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKMapRect.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -484,6 +486,7 @@
 			children = (
 				EC7058872DB3CA5B002D47DF /* UIColor.swift */,
 				EC77CDF32DC32C020030DEF5 /* UIViewController.swift */,
+				ECD972702E38B6C200D94767 /* MKMapRect.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1070,6 +1073,7 @@
 				ECCB51D22E140AC1007E4AB7 /* SearchTableViewCell.swift in Sources */,
 				EC940E9D2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift in Sources */,
 				EC77CDF42DC32C020030DEF5 /* UIViewController.swift in Sources */,
+				ECD972712E38B6C200D94767 /* MKMapRect.swift in Sources */,
 				EC77CDF22DC318EB0030DEF5 /* LoginBottomSheetViewModel.swift in Sources */,
 				EC940EA62DF6E56500406944 /* MapApiService.swift in Sources */,
 				EC77CE4C2DD5AACA0030DEF5 /* PlacesByTypeBottomSheetViewController.swift in Sources */,
