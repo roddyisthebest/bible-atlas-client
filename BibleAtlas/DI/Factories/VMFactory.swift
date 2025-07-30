@@ -69,7 +69,7 @@ final class VMFactory:VMFactoryProtocol{
     }
     
     func makeHomeContentVM() -> HomeContentViewModelProtocol {
-        let vm = HomeContentViewModel(navigator: navigator, appStore: appStore, userUsecase: usecases?.user, authUseCase: usecases?.auth)
+        let vm = HomeContentViewModel(navigator: navigator, appStore: appStore, userUsecase: usecases?.user, authUseCase: usecases?.auth, recentSearchService: recentSearchService)
         return vm;
     }
     

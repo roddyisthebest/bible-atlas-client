@@ -18,6 +18,7 @@ final class HomeContentViewController: UIViewController {
     
     private let placesByCharacterButtonTapped$ = PublishRelay<Void>();
     
+    private let recentSearchCellTapped$ = PublishRelay<String>();
     
     private let disposeBag = DisposeBag()
 
@@ -106,14 +107,44 @@ final class HomeContentViewController: UIViewController {
         return button;
     }()
     
+    
+    
+    
     private lazy var recentStackView = {
-        let sv = UIStackView(arrangedSubviews: [recentLabel]);
+        let sv = UIStackView(arrangedSubviews: [recentLabelStackView, recentSearchTableView, emptyView]);
         sv.axis = .vertical;
         sv.distribution = .fill;
         sv.alignment = .fill
         sv.spacing = 10;
         return sv;
     }();
+    
+    private lazy var emptyView = {
+        let v = UIView();
+        v.isHidden = true
+        v.addSubview(emptyLabel)
+        return v;
+    }()
+    
+    private let emptyLabel = {
+        let label = UILabel();
+        label.text = "최근 검색어가 없습니다."
+        label.textColor = .mainLabelText
+        label.font = .boldSystemFont(ofSize: 15)
+        return label;
+    }()
+    
+    
+    
+    
+    private lazy var recentLabelStackView = {
+        let sv = UIStackView(arrangedSubviews: [recentLabel, moreRecentSearchesButton])
+        sv.axis = .horizontal
+        sv.distribution = .fillProportionally;
+        sv.alignment = .fill
+        
+        return sv;
+    }()
     
     
     private lazy var recentSearchTableView: UITableView = {
@@ -133,6 +164,16 @@ final class HomeContentViewController: UIViewController {
     }()
     
     private let recentLabel = MainLabel(text:"Recent")
+    
+    private let moreRecentSearchesButton = {
+        let button = UIButton();
+        button.setTitle("More", for: .normal)
+        button.setTitleColor(.primaryBlue, for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 14)
+        button.contentHorizontalAlignment = .right
+
+        return button;
+    }()
     
     private lazy var myGuidesStackView = {
         let sv = UIStackView(arrangedSubviews: [myGuidesLabel, guideButtonsStackView]);
@@ -164,7 +205,7 @@ final class HomeContentViewController: UIViewController {
     
 
     
-    private let dummySearches:[String] = ["onasdasdasdasdasddfasdfdfasdfasdfasdfasdfasdfe", "sdfasdfadsfasdfasdffsdsadf"];
+    private var recentSearches:[RecentSearchItem] = [];
     
     init(homeContentViewModel: HomeContentViewModelProtocol) {
         self.homeContentViewModel = homeContentViewModel
@@ -187,7 +228,6 @@ final class HomeContentViewController: UIViewController {
         setupStyle();
         setupConstraints();
         bindViewModel();
-        print("home content vc")
     }
     
     private func setupUI(){
@@ -195,17 +235,17 @@ final class HomeContentViewController: UIViewController {
         view.addSubview(loadingView);
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        recentSearchTableView.reloadData()
-        recentSearchTableView.layoutIfNeeded()
-
-        let height = recentSearchTableView.contentSize.height
-        recentSearchTableView.snp.updateConstraints {
-            $0.height.equalTo(height)
-        }
-    }
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//
+//        recentSearchTableView.reloadData()
+//        recentSearchTableView.layoutIfNeeded()
+//
+//        let height = recentSearchTableView.contentSize.height
+//        recentSearchTableView.snp.updateConstraints {
+//            $0.height.equalTo(height)
+//        }
+//    }
     
     
     private func setupStyle(){
@@ -248,8 +288,8 @@ final class HomeContentViewController: UIViewController {
 
         }
         
-        recentStackView.addArrangedSubview(recentSearchTableView)
 
+        
         explorePlacesButton.snp.makeConstraints { make in
             make.height.equalTo(64)
         }
@@ -258,6 +298,15 @@ final class HomeContentViewController: UIViewController {
         loadingView.snp.makeConstraints { make in
             make.center.equalToSuperview();
         }
+        
+        emptyView.snp.makeConstraints { make in
+            make.height.equalTo(100)
+        }
+        
+        emptyLabel.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        
     }
     
     private func bindViewModel(){
@@ -269,9 +318,9 @@ final class HomeContentViewController: UIViewController {
 
         let collectionButtonTapped$ = Observable.merge(favoriteTapped$, bookmarkTapped$, memoTapped$)
         
-        let output = homeContentViewModel?.transform(input: HomeContentViewModel.Input(collectionButtonTapped$: collectionButtonTapped$.asObservable(), placesByTypeButtonTapped$: placesByTypeButtonTapped$.asObservable(), placesByCharacterButtonTapped$: placesByCharacterButtonTapped$.asObservable()))
+        let moreRecentSearchesButtonTapped$ = moreRecentSearchesButton.rx.tap.asObservable();
         
-        
+        let output = homeContentViewModel?.transform(input: HomeContentViewModel.Input(collectionButtonTapped$: collectionButtonTapped$.asObservable(), placesByTypeButtonTapped$: placesByTypeButtonTapped$.asObservable(), placesByCharacterButtonTapped$: placesByCharacterButtonTapped$.asObservable(), recentSearchCellTapped$: recentSearchCellTapped$.asObservable(), moreRecentSearchesButtonTapped$: moreRecentSearchesButtonTapped$));
         
 
         
@@ -294,6 +343,42 @@ final class HomeContentViewController: UIViewController {
                     self.loadingView.stop();
                 }
             }).disposed(by: disposeBag)
+        
+        Observable.combineLatest(output!.recentSearches$, output!.errorToFetchRecentSearches$)
+            .observe(on: MainScheduler.instance)
+            .bind{ [weak self] recentSearches, error in
+                guard let self = self else {
+                    return
+                }
+                
+                if(recentSearches.isEmpty || error != nil){
+                    
+                    self.recentSearchTableView.isHidden = true;
+                    self.moreRecentSearchesButton.isHidden = true;
+
+                    self.emptyView.isHidden = false;
+                    guard let error = error else {
+                        return
+                    }
+                    
+                    self.showErrorAlert(message: error.description)
+                    return;
+                }
+                
+                self.emptyView.isHidden = true;
+                self.moreRecentSearchesButton.isHidden = false;
+                self.recentSearches = recentSearches;
+                self.recentSearchTableView.isHidden = false;
+                self.recentSearchTableView.reloadData();
+                
+                
+                DispatchQueue.main.async {
+                    self.recentSearchTableView.snp.updateConstraints { make in
+                        make.height.equalTo(self.recentSearchTableView.contentSize.height)
+                    }
+                }
+                
+            }.disposed(by: disposeBag)
     
     }
 
@@ -321,7 +406,7 @@ final class HomeContentViewController: UIViewController {
 extension HomeContentViewController:UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dummySearches.count
+        return recentSearches.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -330,9 +415,9 @@ extension HomeContentViewController:UITableViewDelegate, UITableViewDataSource{
             return UITableViewCell()
         }
 
-        cell.setText(text: dummySearches[indexPath.row])
+        cell.setText(text: recentSearches[indexPath.row].name)
         
-        if indexPath.row == dummySearches.count - 1 {
+        if indexPath.row == recentSearches.count - 1 {
             cell.separatorInset = UIEdgeInsets(top: 0, left: tableView.bounds.width, bottom: 0, right: 0)
         } else {
             cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
@@ -349,7 +434,7 @@ extension HomeContentViewController:UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
+        recentSearchCellTapped$.accept(recentSearches[indexPath.row].id)
     }
     
 }
