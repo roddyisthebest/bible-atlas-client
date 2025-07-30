@@ -25,6 +25,8 @@ protocol PlaceApiServiceProtocol {
     func deletePlaceMemo(placeId:String) async -> Result<PlaceMemoDeleteResponse, NetworkError>
     
     func getBibleVerse(version:BibleVersion, book:String, chapter:String, verse:String) async -> Result<BibleVerseResponse, NetworkError>
+    
+    func createPlaceReport(placeId:String, reportType:PlaceReportType, reason:String?) async -> Result<Int, NetworkError>
 
 }
 
@@ -160,6 +162,24 @@ final public class PlaceApiService: PlaceApiServiceProtocol{
 
     func deletePlaceMemo(placeId: String) async -> Result<PlaceMemoDeleteResponse, NetworkError> {
         return await apiClient.deleteData(url: "\(url)/place/\(placeId)/memo", parameters: nil)
+    }
+    
+    
+    
+    func createPlaceReport(placeId:String, reportType:PlaceReportType, reason:String?) async -> Result<Int, NetworkError> {
+        
+        let json: [String: String?] = ["reason": reason, "type": String(reportType.rawValue), "placeId": placeId]
+         
+        guard let body = try? JSONSerialization.data(withJSONObject: json, options: []) else {
+             return .failure(.failToJSONSerialize("json 직렬화 에러"))
+        }
+        
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json"
+        ]
+        
+        return await apiClient.postData(url: "\(url)/place-report", parameters: nil, body: body, headers: headers)
+    
     }
     
 }

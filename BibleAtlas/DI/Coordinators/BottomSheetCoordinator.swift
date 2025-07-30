@@ -20,6 +20,7 @@ enum BottomSheetType {
     case placeCharacters
     case placesByType(Int)
     case placesByCharacter(String)
+    case placeReport(String, PlaceReportType)
     case bibleVerseDetail(String)
     case recentSearches
     case popularPlaces
@@ -147,6 +148,7 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             
             let stack = self.presentedVCStack(from: baseVC)
             
+
             for i in 0..<stack.count-1{
                 let vc = stack[i];
                 vc.sheetPresentationController?.animateChanges {
@@ -155,6 +157,7 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             }
             
             self.dismiss(animated: animated)
+            self.prevDetents = []
             self.currentPlaceId = nil
 
         }
@@ -250,6 +253,13 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             let vm = vmFactory.makeAccountManagementBottomSheetVM();
             let vc = vcFactory.makeAccountManagementBottomSheetVC(vm: vm);
             presentFromTopVC(vc)
+        case .placeReport(let placeId, let reportType):
+            let vm = vmFactory.makeReportBottomSheetVM(placeId: placeId, reportType: reportType)
+            
+            let vc = vcFactory.makeReportBottomSheetVC(vm: vm)
+            
+            presentFromTopVC(vc)
+            
         }
     
     }

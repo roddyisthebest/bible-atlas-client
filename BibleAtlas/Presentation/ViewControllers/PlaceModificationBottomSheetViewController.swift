@@ -164,6 +164,7 @@ final class PlaceModificationBottomSheetViewController: UIViewController {
         
         output?.isSuccess$.subscribe(onNext: {[weak self] isSuccess in
             if(isSuccess ?? false){
+                self?.showDefaultAlert(message: "수정이 요청되었습니다.", buttonTitle: "", animated: true, completion: nil, handler: self?.handleSuccessionAlertComplete)
                 self?.showAlertToDisplaySuccssion()
             }
         }).disposed(by: disposeBag)

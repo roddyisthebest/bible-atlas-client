@@ -54,6 +54,8 @@ protocol VMFactoryProtocol {
     
     func makeAccountManagementBottomSheetVM() -> AccountManagementBottomSheetViewModelProtocol
     
+    func makeReportBottomSheetVM(placeId:String, reportType:PlaceReportType) -> ReportBottomSheetViewModelProtocol
+    
     func makeMainVM() -> MainViewModelProtocol
     
     
@@ -172,6 +174,12 @@ final class VMFactory:VMFactoryProtocol{
     func makeAccountManagementBottomSheetVM() -> AccountManagementBottomSheetViewModelProtocol {
         let vm = AccountManagementBottomSheetViewModel(navigator: navigator, appStore: appStore, appCoordinator: appCoordinator, authUsecase: usecases?.auth)
         return vm
+    }
+    
+    func makeReportBottomSheetVM(placeId: String, reportType: PlaceReportType) -> ReportBottomSheetViewModelProtocol {
+        let vm = ReportBottomSheetViewModel(navigator: navigator, reportType: reportType, placeUsecase: usecases?.place, placeId: placeId)
+        
+        return vm;
     }
     
     func makeMainVM() -> MainViewModelProtocol {

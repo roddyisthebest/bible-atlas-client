@@ -30,6 +30,23 @@ extension UIViewController {
         }
     }
     
+    func showDefaultAlert(
+            message: String,
+            buttonTitle: String = "확인",
+            animated: Bool = true,
+            completion: (() -> Void)? = nil,
+            handler: ((UIAlertAction) -> Void)? = nil
+        ) {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self, self.view.window != nil else { return }
+                
+                let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+                let action = UIAlertAction(title: buttonTitle, style: .default, handler: handler)
+                alert.addAction(action)
+                
+                self.present(alert, animated: animated, completion: completion)
+            }
+        }
 
     @objc private func dismissKeyboardGlobally() {
         DispatchQueue.main.async {

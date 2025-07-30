@@ -188,6 +188,17 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
         input.verseCellTapped$.subscribe(onNext: {[weak self] keyword in self?.navigator?.present(.bibleVerseDetail(keyword))
         }).disposed(by: disposeBag)
         
+        input.reportButtonTapped$.bind{
+            [weak self] reportType in
+            
+            guard let placeId = self?.placeId else {
+                return;
+            }
+
+            self?.navigator?.present(.placeReport(placeId, reportType))
+            
+        }.disposed(by: disposeBag)
+        
         
         return Output(place$: place$.asObservable(), bibles$: bibles$.asObservable(), loadError$: loadError$.asObservable(), interactionError$: interactionError$.asObservable(), isLoading$: isLoading$.asObservable(),isSaving$: isSaving$.asObservable(), isLiking$: isLiking$.asObservable(),isLoggedIn$: isLoggedIn$.asObservable(),profile$: profile$.asObservable())
     }
@@ -274,6 +285,8 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
         let placeCellTapped$:Observable<String>
         let refetchButtonTapped$:Observable<Void>
         let verseCellTapped$:Observable<String>
+        
+        let reportButtonTapped$:Observable<PlaceReportType>
     }
     
     public struct Output{
