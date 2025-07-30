@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "settlement@1x.png",
+      "filename" : "settlement.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "settlement@2x.png",
+      "filename" : "settlement 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "settlement@3x.png",
+      "filename" : "settlement 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

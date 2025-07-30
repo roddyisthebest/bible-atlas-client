@@ -39,7 +39,22 @@ enum PlaceName: String, Decodable {
     case naturalArea = "natural area"
     case altar
     case gate
+    case pool
+    case ford
+    case island
+    case wall
+    case archipelago
+    case districtInSettlement = "district in settlement"
+    case rock
+    case garden
+    case probabilityCenterRadial = "probability center radial"
+    case cave
+    case stoneHeap = "stone heap"
+    case harb
+    case hall
+    case intersection
 }
+
 
 enum PlaceSort: String, Decodable {
     case desc = "desc"
