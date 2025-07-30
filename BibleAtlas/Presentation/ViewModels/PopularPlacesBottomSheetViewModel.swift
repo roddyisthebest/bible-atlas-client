@@ -57,7 +57,9 @@ final class PopularPlacesBottomSheetViewModel:PopularPlacesBottomSheetViewModelP
                         self.isInitialLoading$.accept(false)
                     }
                     
-                    let result = await  self.placeUsecase?.getPlaces(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeId: nil, name: nil, prefix: nil, sort: .like)
+                    let parameters = PlaceParameters(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeName: nil, name: nil, prefix: nil, sort: .like)
+                    
+                    let result = await  self.placeUsecase?.getPlaces(parameters: parameters)
                     
                     
                     switch(result){
@@ -90,7 +92,9 @@ final class PopularPlacesBottomSheetViewModel:PopularPlacesBottomSheetViewModelP
                     self.isFetchingNext$.accept(false)
                 }
                 
-                let result = await  self.placeUsecase?.getPlaces(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeId: nil, name: nil, prefix: nil, sort: .like)
+                let parameters = PlaceParameters(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeName: nil, name: nil, prefix: nil, sort: .like)
+                
+                let result = await  self.placeUsecase?.getPlaces(parameters: parameters)
                 
                 switch(result){
                     case .success(let response):

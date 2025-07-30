@@ -9,7 +9,7 @@ import Foundation
 
 
 protocol PlaceRepositoryProtocol {
-    func getPlaces(limit:Int?, page:Int?, placeTypeId:Int?, name:String?, prefix:String?, sort:PlaceSort?) async -> Result<ListResponse<Place>,NetworkError>
+    func getPlaces(parameters:PlaceParameters) async -> Result<ListResponse<Place>,NetworkError>
     
     func getPlacesWithRepresentativePoint() async -> Result<ListResponse<Place>, NetworkError>
 

@@ -50,8 +50,8 @@ final class PlacesByCharacterBottomSheetViewModel:PlacesByCharacterBottomSheetVi
                     self.isInitialLoading$.accept(false)
                 }
                 
-                
-                let response = await self.placeUsecase?.getPlaces(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeId: nil, name: nil, prefix: self.character$.value, sort:nil);
+                let parameters = PlaceParameters(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeName: nil, prefix: self.character$.value, sort:nil)
+                let response = await self.placeUsecase?.getPlaces(parameters:parameters);
                 
                 switch(response){
                 case.success(let response):
@@ -83,8 +83,9 @@ final class PlacesByCharacterBottomSheetViewModel:PlacesByCharacterBottomSheetVi
                     
                     guard self.pagination.advanceIfPossible() else { return }
                     
+                    let parameters = PlaceParameters(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeName: nil, prefix: self.character$.value, sort:nil)
                     
-                    let response = await self.placeUsecase?.getPlaces(limit: self.pagination.pageSize , page: self.pagination.page, placeTypeId: nil, name: nil, prefix: self.character$.value, sort:nil)
+                    let response = await self.placeUsecase?.getPlaces(parameters:parameters)
                     switch(response){
                     case.success(let response):
                         let current = self.places$.value
@@ -118,8 +119,10 @@ final class PlacesByCharacterBottomSheetViewModel:PlacesByCharacterBottomSheetVi
                 defer {
                     self.isInitialLoading$.accept(false)
                 }
+                let parameters = PlaceParameters(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeName: nil, prefix: self.character$.value, sort:nil)
                 
-                let response = await self.placeUsecase?.getPlaces(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeId: nil, name: nil, prefix: self.character$.value, sort: nil);
+                
+                let response = await self.placeUsecase?.getPlaces(parameters:parameters);
                 
                 switch(response){
                 case.success(let response):

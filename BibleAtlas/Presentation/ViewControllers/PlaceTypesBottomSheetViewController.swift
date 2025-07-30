@@ -18,7 +18,7 @@ final class PlaceTypesBottomSheetViewController: UIViewController {
     
     private var placeTypesBottomSheetViewModel: PlaceTypesBottomSheetViewModelProtocol?
     
-    private let placeTypeCellTapped$ = PublishRelay<Int>()
+    private let placeTypeCellTapped$ = PublishRelay<PlaceTypeName>()
     
     
     private let viewLoaded$ = PublishRelay<Void>();
@@ -123,6 +123,7 @@ final class PlaceTypesBottomSheetViewController: UIViewController {
 
         output?.placeTypes$.observe(on: MainScheduler.instance).bind{
             [weak self] placeTypes in
+            
             self?.placeTypes = placeTypes;
             self?.collectionView.reloadData();
         }.disposed(by: disposeBag)
@@ -223,7 +224,7 @@ extension PlaceTypesBottomSheetViewController: UICollectionViewDelegate, UIColle
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let placeType = placeTypes[indexPath.row]
-        placeTypeCellTapped$.accept(placeType.id)
+        placeTypeCellTapped$.accept(placeType.name)
 
     }
     

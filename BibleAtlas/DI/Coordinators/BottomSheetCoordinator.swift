@@ -18,7 +18,7 @@ enum BottomSheetType {
     case placeModification(String)
     case placeTypes
     case placeCharacters
-    case placesByType(Int)
+    case placesByType(PlaceTypeName)
     case placesByCharacter(String)
     case placeReport(String, PlaceReportType)
     case bibleVerseDetail(String)
@@ -218,9 +218,9 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             let vc = vcFactory.makePlaceCharactersBottomSheetVC(vm: vm);
             presentFromTopVC(vc)
             
-        case .placesByType(let placeTypeId):
-            let vm = vmFactory.makePlacesByTypeBottomSheetVM(placeTypeId: placeTypeId);
-            let vc = vcFactory.makePlacesByTypeBottomSheetVC(vm: vm, placeTypeId: placeTypeId);
+        case .placesByType(let placeTypeName):
+            let vm = vmFactory.makePlacesByTypeBottomSheetVM(placeTypeName: placeTypeName);
+            let vc = vcFactory.makePlacesByTypeBottomSheetVC(vm: vm, placeTypeName: placeTypeName);
             
             presentFromTopVC(vc)
             

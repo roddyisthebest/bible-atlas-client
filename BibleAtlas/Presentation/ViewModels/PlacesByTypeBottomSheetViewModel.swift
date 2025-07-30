@@ -19,16 +19,26 @@ final class PlacesByTypeBottomSheetViewModel:PlacesByTypeBottomSheetViewModelPro
     private weak var navigator: BottomSheetNavigator?
     
     
-    private let placesResponse$ = PublishRelay<[Place]>();
-    private let error$ = PublishRelay<String>()
-    private let type$ = PublishRelay<PlaceType>()
-    
-    private var typeId:Int
+    private let places$ = BehaviorRelay<[Place]>(value:[]);
+    private let error$ = PublishRelay<NetworkError?>()
+    private let placeTypeName$ = BehaviorRelay<PlaceTypeName?>(value: nil)
 
     
-    init(navigator:BottomSheetNavigator?, typeId:Int){
+    private let isInitialLoading$ = BehaviorRelay<Bool>(value: true);
+    private let isFetchingNext$ = BehaviorRelay<Bool>(value: false);
+    
+    private var pagination = Pagination(pageSize: 10)
+    
+    private let placeUsecase:PlaceUsecaseProtocol?
+
+
+    
+    init(navigator:BottomSheetNavigator?,
+         placeUsecase:PlaceUsecaseProtocol?,
+         placeTypeName:PlaceTypeName){
         self.navigator = navigator;
-        self.typeId = typeId;
+        self.placeUsecase = placeUsecase
+        self.placeTypeName$.accept(placeTypeName);
     }
     
     
@@ -39,35 +49,106 @@ final class PlacesByTypeBottomSheetViewModel:PlacesByTypeBottomSheetViewModelPro
             self?.navigator?.present(.placeDetail(placeId))
         }).disposed(by: disposeBag)
         
-        input.bottomReached$.subscribe(onNext: {
-            [weak self] in
-            // fetch more data from server
-        }).disposed(by: disposeBag)
+ 
+        
         
         input.closeButtonTapped$.subscribe(onNext: {[weak self] in
             self?.navigator?.dismiss(animated: true)
         }).disposed(by: disposeBag)
         
-        input.textFieldTyped$.subscribe(onNext: {[weak self] text in
-            print(text,"text")
-            // fetch data using text query from server
-        })
         
-        return Output(placesReponse$: placesResponse$.asObservable(), error$: error$.asObservable(), type$: type$.asObservable())
+        Observable.merge(input.viewLoaded$, input.refetchButtonTapped$).bind{
+            [weak self] in
+            guard let self = self else { return }
+            self.getInitialPlaces()
+        }.disposed(by: disposeBag)
+        
+        
+        input.bottomReached$.debounce(.microseconds(100), scheduler: MainScheduler.instance)
+            .bind{
+                [weak self] in
+                guard let self = self else { return }
+                self.getMorePlaces()
+            }.disposed(by: disposeBag)
+        
+
+        
+        return Output(places$: places$.asObservable(), error$: error$.asObservable(), typeName$: placeTypeName$.asObservable(), isInitialLoading$: isInitialLoading$.asObservable(), isFetchingNext$: isFetchingNext$.asObservable())
+    }
+    
+    private func getInitialPlaces(){
+        
+        self.isInitialLoading$.accept(true)
+        self.error$.accept(nil)
+        self.pagination.reset()
+
+        Task{
+            defer {
+                self.isInitialLoading$.accept(false)
+            }
+            
+            
+            let result = await self.placeUsecase?.getPlaces(parameters: PlaceParameters(limit: self.pagination.pageSize, page:self.pagination.page, placeTypeName: self.placeTypeName$.value));
+            
+            switch(result){
+            case.success(let response):
+                self.places$.accept(response.data)
+                self.pagination.update(total: response.total)
+            case .failure(let error):
+                self.error$.accept(error)
+                print(error.description)
+            case .none:
+                print("none")
+            }
+            
+        }
+    }
+    
+    private func getMorePlaces(){
+        
+        if self.isFetchingNext$.value || !self.pagination.hasMore { return }
+        self.isFetchingNext$.accept(true)
+        
+        Task{
+            
+            defer{
+                self.isFetchingNext$.accept(false)
+            }
+            
+            guard self.pagination.advanceIfPossible() else { return }
+
+            let result = await self.placeUsecase?.getPlaces(parameters: PlaceParameters(limit: self.pagination.pageSize, page:self.pagination.page, placeTypeName: self.placeTypeName$.value));
+            
+            switch(result){
+                case .success(let response):
+                    let current = self.places$.value;
+                    self.places$.accept(current + response.data)
+                    self.pagination.update(total: response.total)
+                case .failure(let error):
+                    self.error$.accept(error)
+                case .none:
+                    print("none")
+                }
+            
+        }
+        
     }
     
     public struct Input{
+        let viewLoaded$:Observable<Void>
         let placeCellTapped$:Observable<String>
         let closeButtonTapped$:Observable<Void>
-        let textFieldTyped$: Observable<String?>
         let bottomReached$:Observable<Void>
+        let refetchButtonTapped$:Observable<Void>
     }
     
     
     public struct Output {
-        let placesReponse$:Observable<[Place]>
-        let error$:Observable<String>
-        let type$:Observable<PlaceType>
+        let places$:Observable<[Place]>
+        let error$:Observable<NetworkError?>
+        let typeName$:Observable<PlaceTypeName?>
+        let isInitialLoading$:Observable<Bool>
+        let isFetchingNext$:Observable<Bool>
     }
     
     

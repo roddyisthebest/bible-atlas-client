@@ -7,9 +7,19 @@
 
 import Foundation
 import Alamofire
+    
+
+struct PlaceParameters {
+    var limit:Int? = 10
+    var page:Int? = 0
+    var placeTypeName:PlaceTypeName?
+    var name:String?
+    var prefix:String?
+    var sort:PlaceSort?
+}
 
 protocol PlaceApiServiceProtocol {
-    func getPlaces(limit:Int?, page:Int?, placeTypeId:Int?, name:String?, prefix:String?, sort:PlaceSort?) async -> Result<ListResponse<Place>,NetworkError>
+    func getPlaces(parameters:PlaceParameters) async -> Result<ListResponse<Place>,NetworkError>
     
     func getPlacesWithRepresentativePoint() async -> Result<ListResponse<Place>, NetworkError>
     func getPlaceTypes(limit:Int?, page:Int?) async -> Result<ListResponse<PlaceTypeWithPlaceCount>,NetworkError>
@@ -46,17 +56,16 @@ final public class PlaceApiService: PlaceApiServiceProtocol{
     }
     
     
-    func getPlaces(limit: Int?, page: Int?, placeTypeId: Int?, name: String?, prefix: String?, sort:PlaceSort?) async -> Result<ListResponse<Place>, NetworkError> {
-        let page = page ?? 0;
-        let limit = limit ?? 1;
+    func getPlaces(parameters:PlaceParameters) async -> Result<ListResponse<Place>, NetworkError> {
+    
         
         let rawParams: [String: Any?] = [
-            "limit": limit,
-            "page": page,
-            "name": name,
-            "placeTypeId": placeTypeId,
-            "prefix": prefix,
-            "sort": sort
+            "limit": parameters.limit,
+            "page": parameters.page,
+            "name": parameters.name,
+            "prefix": parameters.prefix,
+            "placeTypes": parameters.placeTypeName?.rawValue,
+            "sort": parameters.sort?.rawValue,
         ]
         
         

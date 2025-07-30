@@ -82,7 +82,9 @@ final class SearchReadyViewModel: SearchReadyViewModelProtocol {
                 isFetching$.accept(false)
             }
             
-            let result = await self.placeUsecase?.getPlaces(limit: 5, page: 0, placeTypeId: nil, name: nil, prefix: nil, sort: .like)
+            let parameters = PlaceParameters(limit:5, page:0, placeTypeName: nil, name:nil, prefix: nil, sort: .like)
+            
+            let result = await self.placeUsecase?.getPlaces(parameters: parameters)
             
             switch(result){
                 case .success(let response):
