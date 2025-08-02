@@ -46,9 +46,6 @@ final class PlaceDetailViewController: UIViewController {
     
     private var bibles:[Bible] = []
     
-    private let dummyPlaces:[String] = ["onasf", "sdfasdfadsfasdfasddasdasdsadasdasdadsffsdsadf","ffeqfdasdsqssdqwddsas"];
-        
-    private let dummyVerse:[Bible] = [ Bible(bookName:"창세기", verses: ["12:23","12:24"]), Bible(bookName:"출애굽기", verses: ["11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24","11:23","11:24"])]
     
     private let placeDetailViewLoaded$ = PublishRelay<Void>();
         
@@ -83,7 +80,30 @@ final class PlaceDetailViewController: UIViewController {
         return v
     }()
     
+    
     private lazy var headerStackView = {
+        let sv = UIStackView(arrangedSubviews: [backButton, innerHeaderStackView]);
+        sv.axis = .vertical;
+        sv.distribution = .fill;
+        sv.alignment = .fill;
+        sv.spacing = 10;
+        return sv;
+    }()
+    
+    
+    private let backButton: UIButton = {
+        let button = UIButton(type: .system)
+        
+        let image = UIImage(systemName: "chevron.left")
+        button.setImage(image, for: .normal)
+        button.setTitle("back", for: .normal)
+        button.setTitleColor(.primaryBlue, for: .normal)
+        button.tintColor = .primaryBlue
+        button.contentHorizontalAlignment = .leading // 필요 시 정렬
+        return button
+    }()
+    
+    private lazy var innerHeaderStackView = {
         let sv = UIStackView(arrangedSubviews: [titleLabel, headerButtonsStackView]);
         sv.axis = .horizontal;
         sv.distribution = .fill;
@@ -91,6 +111,8 @@ final class PlaceDetailViewController: UIViewController {
         sv.spacing = 20;
         return sv;
     }()
+    
+    
     
     private let titleLabel: UILabel = {
         let label = HeaderLabel(text: "Beijing Daxing International Airport")
@@ -425,11 +447,11 @@ final class PlaceDetailViewController: UIViewController {
     private let errorRetryView = ErrorRetryView(closable: true);
 
     
-    init(placeDetailViewModel:PlaceDetailViewModelProtocol,placeId:String) {
+    init(placeDetailViewModel:PlaceDetailViewModelProtocol, placeId:String) {
         self.placeId = placeId;
         self.placeDetailViewModel = placeDetailViewModel;
-        super.init(nibName: nil, bundle: nil)
         
+        super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {
@@ -523,8 +545,8 @@ final class PlaceDetailViewController: UIViewController {
         setupStyle();
         setupConstraints()
         setupSheet()
+        setupVisibility()
         bindViewModel();
-        
         
         placeDetailViewLoaded$.accept(Void())
     }
@@ -543,6 +565,10 @@ final class PlaceDetailViewController: UIViewController {
         view.addSubview(bodyView)
         view.addSubview(loadingView)
         view.addSubview(errorRetryView)
+    }
+    
+    private func setupVisibility(){
+//        backButton.isHidden = (prevPlaceId == nil)
     }
     
     private func setupConstraints(){
@@ -694,7 +720,8 @@ final class PlaceDetailViewController: UIViewController {
           );
         
         let likeButtonTapped$ = likeButton.rx.tap.asObservable();
-        
+        let backButtonTapped$ = backButton.rx.tap.asObservable();
+
         let refetchButtonTapped$ = errorRetryView.refetchTapped$;
         
         
@@ -704,7 +731,7 @@ final class PlaceDetailViewController: UIViewController {
         
         
         
-        let output = placeDetailViewModel?.transform(input: PlaceDetailViewModel.Input(viewLoaded$: placeDetailViewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$, shareButtonTapped$: shareButtonTapped$, closeButtonTapped$: closeButtonTapped$, likeButtonTapped$: likeButtonTapped$, placeModificationButtonTapped$: placeModificationButtonTapped$.asObservable(), verseButtonTapped$: verseCellTapped$.asObservable(), memoButtonTapped$: memoButtonTapped$.asObservable(), placeCellTapped$: placeCellTapped$.asObservable(), refetchButtonTapped$: refetchButtonTapped$.asObservable(), verseCellTapped$: verseCellTapped$.asObservable(), reportButtonTapped$: reportButtonTapped$.asObservable()))
+        let output = placeDetailViewModel?.transform(input: PlaceDetailViewModel.Input(viewLoaded$: placeDetailViewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$, shareButtonTapped$: shareButtonTapped$, closeButtonTapped$: closeButtonTapped$, backButtonTapped$: backButtonTapped$, likeButtonTapped$: likeButtonTapped$, placeModificationButtonTapped$: placeModificationButtonTapped$.asObservable(), verseButtonTapped$: verseCellTapped$.asObservable(), memoButtonTapped$: memoButtonTapped$.asObservable(), placeCellTapped$: placeCellTapped$.asObservable(), refetchButtonTapped$: refetchButtonTapped$.asObservable(), verseCellTapped$: verseCellTapped$.asObservable(), reportButtonTapped$: reportButtonTapped$.asObservable()))
         
         output?.isSaving$.observe(on: MainScheduler.instance).bind{
             [weak self] isSaving in
@@ -725,6 +752,7 @@ final class PlaceDetailViewController: UIViewController {
                     return;
                 }
                 
+                self?.scrollView.isScrollEnabled = false
                 if(place.isLiked ?? false){
                     self?.likeButton.backgroundColor = .primaryBlue
                     self?.likeButton.setTitleColor(.white, for: .normal)
@@ -869,6 +897,14 @@ final class PlaceDetailViewController: UIViewController {
                 self?.showAlert(message: error.description)
             })
             .disposed(by: disposeBag)
+        
+        
+        output?.hasPrevPlaceId$.observe(on: MainScheduler.instance)
+            .bind{ [weak self] hasPrevPlaceId in
+                self?.backButton.isHidden = !hasPrevPlaceId
+            }
+            .disposed(by: disposeBag)
+
         
     }
     

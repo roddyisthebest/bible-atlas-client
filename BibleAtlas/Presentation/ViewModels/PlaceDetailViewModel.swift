@@ -40,6 +40,7 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
     private var isLoggedIn$ = BehaviorRelay<Bool>(value:false)
     private var profile$ = BehaviorRelay<User?>(value:nil)
     
+    private var hasPrevPlaceId$ = BehaviorRelay<Bool>(value:false)
     
     
     
@@ -175,6 +176,11 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
 
         }).disposed(by: disposeBag)
         
+        input.backButtonTapped$.observe(on: MainScheduler.instance).bind{
+            [weak self] in
+            self?.navigator?.present(.placeDetailPrevious)
+        }.disposed(by: disposeBag)
+        
         input.memoButtonTapped$.subscribe(onNext: {
             [weak self] in
             guard let placeId = self?.placeId else { return }
@@ -200,7 +206,7 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
         }.disposed(by: disposeBag)
         
         
-        return Output(place$: place$.asObservable(), bibles$: bibles$.asObservable(), loadError$: loadError$.asObservable(), interactionError$: interactionError$.asObservable(), isLoading$: isLoading$.asObservable(),isSaving$: isSaving$.asObservable(), isLiking$: isLiking$.asObservable(),isLoggedIn$: isLoggedIn$.asObservable(),profile$: profile$.asObservable())
+        return Output(place$: place$.asObservable(), bibles$: bibles$.asObservable(), loadError$: loadError$.asObservable(), interactionError$: interactionError$.asObservable(), isLoading$: isLoading$.asObservable(),isSaving$: isSaving$.asObservable(), isLiking$: isLiking$.asObservable(),isLoggedIn$: isLoggedIn$.asObservable(),profile$: profile$.asObservable(), hasPrevPlaceId$: hasPrevPlaceId$.asObservable())
     }
     
     func bindAppStore(){
@@ -226,10 +232,22 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
         
         self.notificationService?.observe(.fetchPlaceRequired)
             .observe(on: MainScheduler.instance)
-            .compactMap { $0.object as? String }
-            .subscribe(onNext: { [weak self] placeId in
-                self?.placeId = placeId
-                self?.refetch()
+            .compactMap { $0.object as? [String:String?] }
+            .subscribe(onNext: { [weak self] object in
+                guard let self = self else { return }
+                
+                guard
+                      let placeIdOpt = object["placeId"],
+                      let placeId = placeIdOpt
+                  else {
+                      print("❌ placeId is nil")
+                      return
+                  }
+           
+                let prevPlaceId = object["prevPlaceId"] ?? nil
+                self.placeId = placeId
+                self.hasPrevPlaceId$.accept(prevPlaceId != nil)
+                self.refetch();
 
             }).disposed(by: disposeBag)
     }
@@ -278,6 +296,7 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
         let saveButtonTapped$:Observable<Void>
         let shareButtonTapped$:Observable<Void>
         let closeButtonTapped$:Observable<Void>
+        let backButtonTapped$:Observable<Void>
         let likeButtonTapped$:Observable<Void>
         let placeModificationButtonTapped$:Observable<Void>
         let verseButtonTapped$:Observable<String>
@@ -285,7 +304,6 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
         let placeCellTapped$:Observable<String>
         let refetchButtonTapped$:Observable<Void>
         let verseCellTapped$:Observable<String>
-        
         let reportButtonTapped$:Observable<PlaceReportType>
     }
     
@@ -299,6 +317,7 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
         let isLiking$:Observable<Bool>
         let isLoggedIn$:Observable<Bool>
         let profile$:Observable<User?>
+        let hasPrevPlaceId$:Observable<Bool>
     }
     
     
