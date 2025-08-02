@@ -134,6 +134,7 @@
 		ECD9726D2E307C8A00D94767 /* PlaceReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9726C2E307C8A00D94767 /* PlaceReport.swift */; };
 		ECD9726F2E324E9F00D94767 /* ReportTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9726E2E324E9F00D94767 /* ReportTypeTableViewCell.swift */; };
 		ECD972712E38B6C200D94767 /* MKMapRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972702E38B6C200D94767 /* MKMapRect.swift */; };
+		ECD972732E3DEE2000D94767 /* ShareItemSourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972722E3DEE2000D94767 /* ShareItemSourceView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -290,6 +291,7 @@
 		ECD9726C2E307C8A00D94767 /* PlaceReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceReport.swift; sourceTree = "<group>"; };
 		ECD9726E2E324E9F00D94767 /* ReportTypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTypeTableViewCell.swift; sourceTree = "<group>"; };
 		ECD972702E38B6C200D94767 /* MKMapRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKMapRect.swift; sourceTree = "<group>"; };
+		ECD972722E3DEE2000D94767 /* ShareItemSourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareItemSourceView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -477,6 +479,7 @@
 				EC64B98C2DEB3ADB00D3C8A7 /* LoadingView.swift */,
 				EC64B9922DEC3E1700D3C8A7 /* ErrorRetryView.swift */,
 				EC64B9942DEC595900D3C8A7 /* FooterLoadingReusableView.swift */,
+				ECD972722E3DEE2000D94767 /* ShareItemSourceView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1069,6 +1072,7 @@
 				ECA94B9B2D5082B9005B0428 /* ViewController.swift in Sources */,
 				ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */,
 				EC77CE362DCF630E0030DEF5 /* MemoBottomSheetViewController.swift in Sources */,
+				ECD972732E3DEE2000D94767 /* ShareItemSourceView.swift in Sources */,
 				EC7058A92DBFAEB5002D47DF /* VCFactory.swift in Sources */,
 				ECCB51D22E140AC1007E4AB7 /* SearchTableViewCell.swift in Sources */,
 				EC940E9D2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift in Sources */,

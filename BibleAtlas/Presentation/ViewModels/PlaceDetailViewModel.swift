@@ -11,6 +11,7 @@ import RxRelay
 
 protocol PlaceDetailViewModelProtocol {
     func transform(input:PlaceDetailViewModel.Input) -> PlaceDetailViewModel.Output
+    var currentPlace: Place? { get }
 }
 
 final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
@@ -21,6 +22,11 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
     private let notificationService: RxNotificationServiceProtocol?
     
     private let place$ = BehaviorRelay<Place?>(value: nil);
+    
+    var currentPlace: Place? {
+         return place$.value
+     }
+    
     private let bibles$ = BehaviorRelay<[Bible]>(value:[]);
     
     private var placeId:String
@@ -294,7 +300,6 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
     public struct Input {
         let viewLoaded$:Observable<Void>
         let saveButtonTapped$:Observable<Void>
-        let shareButtonTapped$:Observable<Void>
         let closeButtonTapped$:Observable<Void>
         let backButtonTapped$:Observable<Void>
         let likeButtonTapped$:Observable<Void>

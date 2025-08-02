@@ -131,7 +131,11 @@ final class PlaceDetailViewController: UIViewController {
     
     private let saveButton = ToggleCircleButton(activeIconSystemName: "bookmark.fill", inActiveIconSystemName: "bookmark")
     
-    private let shareButton = CircleButton(iconSystemName: "square.and.arrow.up")
+    private let shareButton = {
+        let button = CircleButton(iconSystemName: "square.and.arrow.up");
+        button.addTarget(self, action: #selector(showShareVC), for: .touchUpInside)
+        return button;
+    }()
     
     private let closeButton = CircleButton(iconSystemName: "xmark")
     
@@ -545,7 +549,6 @@ final class PlaceDetailViewController: UIViewController {
         setupStyle();
         setupConstraints()
         setupSheet()
-        setupVisibility()
         bindViewModel();
         
         placeDetailViewLoaded$.accept(Void())
@@ -565,10 +568,6 @@ final class PlaceDetailViewController: UIViewController {
         view.addSubview(bodyView)
         view.addSubview(loadingView)
         view.addSubview(errorRetryView)
-    }
-    
-    private func setupVisibility(){
-//        backButton.isHidden = (prevPlaceId == nil)
     }
     
     private func setupConstraints(){
@@ -712,8 +711,8 @@ final class PlaceDetailViewController: UIViewController {
     private func bindViewModel(){
         
         let saveButtonTapped$ = saveButton.rx.tap.asObservable();
-        let shareButtonTapped$ = shareButton.rx.tap.asObservable();
-    
+
+        
         let closeButtonTapped$ = Observable.merge(
             closeButton.rx.tap.asObservable(),
             errorRetryView.closeTapped$.asObservable()
@@ -731,7 +730,7 @@ final class PlaceDetailViewController: UIViewController {
         
         
         
-        let output = placeDetailViewModel?.transform(input: PlaceDetailViewModel.Input(viewLoaded$: placeDetailViewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$, shareButtonTapped$: shareButtonTapped$, closeButtonTapped$: closeButtonTapped$, backButtonTapped$: backButtonTapped$, likeButtonTapped$: likeButtonTapped$, placeModificationButtonTapped$: placeModificationButtonTapped$.asObservable(), verseButtonTapped$: verseCellTapped$.asObservable(), memoButtonTapped$: memoButtonTapped$.asObservable(), placeCellTapped$: placeCellTapped$.asObservable(), refetchButtonTapped$: refetchButtonTapped$.asObservable(), verseCellTapped$: verseCellTapped$.asObservable(), reportButtonTapped$: reportButtonTapped$.asObservable()))
+        let output = placeDetailViewModel?.transform(input: PlaceDetailViewModel.Input(viewLoaded$: placeDetailViewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$, closeButtonTapped$: closeButtonTapped$, backButtonTapped$: backButtonTapped$, likeButtonTapped$: likeButtonTapped$, placeModificationButtonTapped$: placeModificationButtonTapped$.asObservable(), verseButtonTapped$: verseCellTapped$.asObservable(), memoButtonTapped$: memoButtonTapped$.asObservable(), placeCellTapped$: placeCellTapped$.asObservable(), refetchButtonTapped$: refetchButtonTapped$.asObservable(), verseCellTapped$: verseCellTapped$.asObservable(), reportButtonTapped$: reportButtonTapped$.asObservable()))
         
         output?.isSaving$.observe(on: MainScheduler.instance).bind{
             [weak self] isSaving in
@@ -983,6 +982,25 @@ final class PlaceDetailViewController: UIViewController {
             make.height.equalTo(300)
         }
         
+    }
+    
+    
+    @objc private func showShareVC() {
+        guard let place = placeDetailViewModel?.currentPlace else { return }
+
+        let type = place.types.first
+        let image = UIImage(named: type?.name.rawValue ?? "ground")
+
+        let shareURL = URL(string: "https://bibleatlas.app/places/\(place.id)")!
+
+        let source = ShareItemSourceView(
+            url: shareURL,
+            title: place.name,
+            image: image
+        )
+
+        let activityVC = UIActivityViewController(activityItems: [source], applicationActivities: nil)
+        present(activityVC, animated: true)
     }
     
     
