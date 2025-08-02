@@ -243,8 +243,7 @@ extension MyCollectionBottomSheetViewController:UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        
+        placeTabelCellSelected$.accept(places[indexPath.row].id)
     }
     
     
