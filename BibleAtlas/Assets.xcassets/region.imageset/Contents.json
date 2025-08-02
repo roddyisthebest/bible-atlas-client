@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "region@1x.png",
+      "filename" : "region.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "region@2x.png",
+      "filename" : "region 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "region@3x.png",
+      "filename" : "region 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

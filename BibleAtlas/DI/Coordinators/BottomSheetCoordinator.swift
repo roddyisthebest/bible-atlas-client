@@ -14,11 +14,12 @@ enum BottomSheetType {
     case login
     case myCollection(PlaceFilter)
     case placeDetail(String)
+    case placeDetailPrevious
     case memo(String)
     case placeModification(String)
     case placeTypes
     case placeCharacters
-    case placesByType(Int)
+    case placesByType(PlaceTypeName)
     case placesByCharacter(String)
     case placeReport(String, PlaceReportType)
     case bibleVerseDetail(String)
@@ -52,16 +53,18 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
     
     private let notificationService: RxNotificationServiceProtocol?;
         
+    private var placeHistory: [String] = []
     private var currentPlaceId: String? = nil {
         didSet{
             guard let placeId = currentPlaceId else {
                 self.notificationService?.post(.resetGeoJson, object: nil)
                 return;
             }
-    
             self.notificationService?.post(.fetchGeoJsonRequired, object: placeId)
         }
     }
+    
+    
     
     
     init(vcFactory: VCFactoryProtocol, vmFactory:VMFactoryProtocol, notificationService:RxNotificationServiceProtocol) {
@@ -102,9 +105,8 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
         return UIScreen.main.bounds.height * 0.2;
     }
     
-    private func presentDetail(_ vc:UIViewController, placeId:String){
-        
-        
+    private func presentDetail(placeId:String){
+    
         DispatchQueue.main.async {
             guard let baseVC = self.presenter as? UIViewController else { return }
             let stack = self.presentedVCStack(from: baseVC)
@@ -127,13 +129,21 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
                     }
                  
                 }
+                let vm = self.vmFactory.makePlaceDetailBottomSheetVM(placeId: placeId);
+                let vc = self.vcFactory.makePlaceDetailBottomSheetVC(vm: vm, placeId: placeId);
+                
                 topVC.present(vc, animated: true)
                 self.currentPlaceId = placeId;
                 return;
             }
-            
+            self.placeHistory.append(currentPlaceId)
+            let prevPlaceId = currentPlaceId
             self.currentPlaceId = placeId;
-            self.notificationService?.post(.fetchPlaceRequired, object: placeId)
+
+
+            
+            let object:[String:String?] = ["placeId":placeId, "prevPlaceId":prevPlaceId]
+            self.notificationService?.post(.fetchPlaceRequired, object: object)
 
             
         }
@@ -158,11 +168,36 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             
             self.dismiss(animated: animated)
             self.prevDetents = []
+            self.placeHistory = []
             self.currentPlaceId = nil
 
+            
         }
         
         
+    }
+    
+    private func backDetail(){
+     
+        
+        
+        guard let newPlaceId = self.placeHistory.popLast() else {
+            return;
+        }
+        
+        self.currentPlaceId = newPlaceId;
+
+        guard let prevPlaceId = self.placeHistory.last else {
+            let object:[String:String?] = ["placeId":newPlaceId, "prevPlaceId":nil]
+            self.notificationService?.post(.fetchPlaceRequired, object: object)
+            return;
+        }
+        
+        let object:[String:String?] = ["placeId":newPlaceId, "prevPlaceId":prevPlaceId]
+        self.notificationService?.post(.fetchPlaceRequired, object: object)
+
+        
+
     }
 
     func present(_ type: BottomSheetType) {
@@ -190,10 +225,10 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             presentFromTopVC(vc)
             
         case .placeDetail(let placeId):
+            presentDetail(placeId: placeId)
             
-            let vm = vmFactory.makePlaceDetailBottomSheetVM(placeId: placeId);
-            let vc = vcFactory.makePlaceDetailBottomSheetVC(vm: vm, placeId: placeId);
-            presentDetail(vc, placeId: placeId)
+        case .placeDetailPrevious:
+            backDetail()
             
         case .memo(let placeId):
             let vm = vmFactory.makeMemoBottomSheetVM(placeId: placeId);
@@ -218,9 +253,9 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             let vc = vcFactory.makePlaceCharactersBottomSheetVC(vm: vm);
             presentFromTopVC(vc)
             
-        case .placesByType(let placeTypeId):
-            let vm = vmFactory.makePlacesByTypeBottomSheetVM(placeTypeId: placeTypeId);
-            let vc = vcFactory.makePlacesByTypeBottomSheetVC(vm: vm, placeTypeId: placeTypeId);
+        case .placesByType(let placeTypeName):
+            let vm = vmFactory.makePlacesByTypeBottomSheetVM(placeTypeName: placeTypeName);
+            let vc = vcFactory.makePlacesByTypeBottomSheetVC(vm: vm, placeTypeName: placeTypeName);
             
             presentFromTopVC(vc)
             

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "valley.png",
+      "filename" : "structure.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "valley 1.png",
+      "filename" : "structure 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "valley 2.png",
+      "filename" : "structure 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

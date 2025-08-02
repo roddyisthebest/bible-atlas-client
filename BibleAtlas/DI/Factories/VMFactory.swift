@@ -38,7 +38,7 @@ protocol VMFactoryProtocol {
     
     func makePlaceCharactersBottomSheetVM() -> PlaceCharactersBottomSheetViewModelProtocol
     
-    func makePlacesByTypeBottomSheetVM(placeTypeId:Int) -> PlacesByTypeBottomSheetViewModelProtocol
+    func makePlacesByTypeBottomSheetVM(placeTypeName:PlaceTypeName) -> PlacesByTypeBottomSheetViewModelProtocol
     
     func makePlacesByCharacterBottomSheetVM(character:String) ->
         PlacesByCharacterBottomSheetViewModelProtocol
@@ -69,7 +69,7 @@ final class VMFactory:VMFactoryProtocol{
     }
     
     func makeHomeContentVM() -> HomeContentViewModelProtocol {
-        let vm = HomeContentViewModel(navigator: navigator, appStore: appStore, userUsecase: usecases?.user, authUseCase: usecases?.auth)
+        let vm = HomeContentViewModel(navigator: navigator, appStore: appStore, userUsecase: usecases?.user, authUseCase: usecases?.auth, recentSearchService: recentSearchService)
         return vm;
     }
     
@@ -156,8 +156,8 @@ final class VMFactory:VMFactoryProtocol{
         return vm
     }
     
-    func makePlacesByTypeBottomSheetVM(placeTypeId:Int) -> PlacesByTypeBottomSheetViewModelProtocol {
-        let vm = PlacesByTypeBottomSheetViewModel(navigator:navigator, typeId:placeTypeId)
+    func makePlacesByTypeBottomSheetVM(placeTypeName:PlaceTypeName) -> PlacesByTypeBottomSheetViewModelProtocol {
+        let vm = PlacesByTypeBottomSheetViewModel(navigator:navigator, placeUsecase: usecases?.place, placeTypeName:placeTypeName)
         return vm;
     }
     

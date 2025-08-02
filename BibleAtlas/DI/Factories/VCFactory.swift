@@ -29,7 +29,7 @@ protocol VCFactoryProtocol:AnyObject {
     
     func makePlaceCharactersBottomSheetVC(vm:PlaceCharactersBottomSheetViewModelProtocol) -> PlaceCharactersBottomSheetViewController
     
-    func makePlacesByTypeBottomSheetVC(vm:PlacesByTypeBottomSheetViewModelProtocol, placeTypeId:Int) -> PlacesByTypeBottomSheetViewController
+    func makePlacesByTypeBottomSheetVC(vm:PlacesByTypeBottomSheetViewModelProtocol, placeTypeName:PlaceTypeName) -> PlacesByTypeBottomSheetViewController
     
     func makePlacesByCharacterBottomSheetVC(vm:PlacesByCharacterBottomSheetViewModelProtocol, character:String) -> PlacesByCharacterBottomSheetViewController
     
@@ -127,9 +127,9 @@ final class VCFactory:VCFactoryProtocol {
         return vc;
     }
     
-    func makePlacesByTypeBottomSheetVC(vm: PlacesByTypeBottomSheetViewModelProtocol, placeTypeId:Int) -> PlacesByTypeBottomSheetViewController {
+    func makePlacesByTypeBottomSheetVC(vm: PlacesByTypeBottomSheetViewModelProtocol, placeTypeName:PlaceTypeName) -> PlacesByTypeBottomSheetViewController {
         let vc = PlacesByTypeBottomSheetViewController(vm: vm);
-        setupVC(type: .placesByType(placeTypeId), sheet: vc);
+        setupVC(type: .placesByType(placeTypeName), sheet: vc);
         return vc;
     }
     

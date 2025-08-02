@@ -15,7 +15,7 @@ enum PlaceStereo: String, Decodable {
     case child
 }
 
-enum PlaceName: String, Decodable {
+enum PlaceTypeName: String, Decodable {
     case river
     case mountainRange = "mountain range"
     case settlement
@@ -39,7 +39,23 @@ enum PlaceName: String, Decodable {
     case naturalArea = "natural area"
     case altar
     case gate
+    case pool
+    case ford
+    case island
+    case wall
+    case archipelago
+    case districtInSettlement = "district in settlement"
+    case rock
+    case garden
+    case probabilityCenterRadial = "probability center radial"
+    case cave
+    case stoneHeap = "stone heap"
+    case harb
+    case hall
+    case intersection
+    case cliff
 }
+
 
 enum PlaceSort: String, Decodable {
     case desc = "desc"
@@ -49,12 +65,12 @@ enum PlaceSort: String, Decodable {
 
 struct PlaceType: Decodable {
     var id: Int
-    var name: PlaceName
+    var name: PlaceTypeName
 }
 
 struct PlaceTypeWithPlaceCount: Decodable{
     var id: Int
-    var name:PlaceName
+    var name:PlaceTypeName
     var placeCount: Int
 }
 

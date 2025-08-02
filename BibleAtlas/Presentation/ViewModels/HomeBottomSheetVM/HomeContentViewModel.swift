@@ -18,8 +18,11 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
     
     private let disposeBag = DisposeBag();
     private weak var navigator: BottomSheetNavigator?
+    
     private let userUsecase:UserUsecaseProtocol?
     private let authUsecase:AuthUsecaseProtocol?
+    
+    private let recentSearchService:RecentSearchServiceProtocol?
     
     private var appStore:AppStoreProtocol?
 
@@ -33,13 +36,21 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
     
     private let loading$ = BehaviorRelay<Bool>(value:false);
     
+    private let recentSearches$ = BehaviorRelay<[RecentSearchItem]>(value: []);
+    private let errorToFetchRecentSearches$ = BehaviorRelay<RecentSearchError?>(value: nil)
+
+    init(navigator:BottomSheetNavigator?, appStore:AppStoreProtocol?,userUsecase:UserUsecaseProtocol?, authUseCase:AuthUsecaseProtocol?,
+         recentSearchService:RecentSearchServiceProtocol?
     
-    init(navigator:BottomSheetNavigator?, appStore:AppStoreProtocol?,userUsecase:UserUsecaseProtocol?, authUseCase:AuthUsecaseProtocol?){
+    ){
         self.navigator = navigator
         self.appStore = appStore
         self.userUsecase = userUsecase
         self.authUsecase = authUseCase
+        self.recentSearchService = recentSearchService
         bindAppStore();
+        bindRecentSearchService();
+        getRecentSearchItems();
     }
     
     func bindAppStore(){
@@ -103,10 +114,35 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
         
     }
     
+    private func bindRecentSearchService(){
+        self.recentSearchService?.didChanged$.subscribe(onNext:{[weak self] in
+            self?.getRecentSearchItems()
+        }).disposed(by: disposeBag)
+
+    }
+    
+    
+    
+    private func getRecentSearchItems(){
+        let result = self.recentSearchService?.fetch(limit: 2, page:nil)
+        switch(result){
+        case .success(let response):
+            self.recentSearches$.accept(response.items)
+            print(response)
+        case .failure(let error):
+            self.errorToFetchRecentSearches$.accept(error)
+        default:
+            print("wo")
+        }
+    }
+    
+    
     public struct Input {
         let collectionButtonTapped$:Observable<PlaceFilter>
         let placesByTypeButtonTapped$:Observable<Void>
         let placesByCharacterButtonTapped$:Observable<Void>
+        let recentSearchCellTapped$:Observable<String>
+        let moreRecentSearchesButtonTapped$:Observable<Void>
     }
     
     public struct Output{
@@ -115,6 +151,8 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
         let likePlacesCount$:Observable<Int>
         let savePlacesCount$:Observable<Int>
         let memoPlacesCount$:Observable<Int>
+        let recentSearches$:Observable<[RecentSearchItem]>
+        let errorToFetchRecentSearches$:Observable<RecentSearchError?>
         let loading$:Observable<Bool>
         
     }
@@ -145,7 +183,15 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
             self?.navigator?.present(.placeCharacters)
         }).disposed(by: disposeBag)
         
-        return Output(profile$: profile$.asObservable(), isLoggedIn$: isLoggedIn$.asObservable(),likePlacesCount$: likePlacesCount$.asObservable(),savePlacesCount$: savePlacesCount$.asObservable(),memoPlacesCount$: memoPlacesCount$.asObservable(),loading$: loading$.asObservable() )
+        input.recentSearchCellTapped$.bind{[weak self] placeId in
+            self?.navigator?.present(.placeDetail(placeId))
+        }.disposed(by: disposeBag)
+        
+        input.moreRecentSearchesButtonTapped$.bind{[weak self] in
+            self?.navigator?.present(.recentSearches)
+        }.disposed(by: disposeBag)
+        
+        return Output(profile$: profile$.asObservable(), isLoggedIn$: isLoggedIn$.asObservable(), likePlacesCount$: likePlacesCount$.asObservable(), savePlacesCount$: savePlacesCount$.asObservable(), memoPlacesCount$: memoPlacesCount$.asObservable(), recentSearches$: recentSearches$.asObservable(), errorToFetchRecentSearches$: errorToFetchRecentSearches$.asObservable(), loading$: loading$.asObservable())
     }
     
 }

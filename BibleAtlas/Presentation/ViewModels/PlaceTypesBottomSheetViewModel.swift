@@ -137,7 +137,7 @@ final class PlaceTypesBottomSheetViewModel:PlaceTypesBottomSheetViewModelProtoco
     
     
     public struct Input {
-        let placeTypeCellTapped$:Observable<Int>
+        let placeTypeCellTapped$:Observable<PlaceTypeName>
         let closeButtonTapped$:Observable<Void>
         let viewLoaded$:Observable<Void>
         let bottomReached$:Observable<Void>

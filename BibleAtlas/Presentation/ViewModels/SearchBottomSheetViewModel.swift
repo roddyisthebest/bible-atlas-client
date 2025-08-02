@@ -148,7 +148,10 @@ final class SearchBottomSheetViewModel:SearchBottomSheetViewModelProtocol {
             defer{
                 isSearching$.accept(false)
             }
-            let result = await self.placeUsecase?.getPlaces(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeId: nil, name: keyword, prefix: nil, sort: nil)
+            
+            let parameters = PlaceParameters(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeName: nil, name: keyword, prefix: nil, sort: nil)
+            
+            let result = await self.placeUsecase?.getPlaces(parameters: parameters)
             
             
             switch(result){
@@ -177,7 +180,9 @@ final class SearchBottomSheetViewModel:SearchBottomSheetViewModelProtocol {
             
             guard self.pagination.advanceIfPossible() else { return }
             
-            let result = await self.placeUsecase?.getPlaces(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeId: nil, name: keyword, prefix: nil, sort: nil)
+            let parameters = PlaceParameters(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeName: nil, name: keyword, prefix: nil, sort: nil)
+            
+            let result = await self.placeUsecase?.getPlaces(parameters: parameters)
             
             
             switch(result){

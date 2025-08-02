@@ -403,7 +403,7 @@ extension MainViewController: MKMapViewDelegate {
 
 final class CustomPointAnnotation: MKPointAnnotation {
     var placeId: String?
-    var placeTypeName: PlaceName?
+    var placeTypeName: PlaceTypeName?
 
 }
 
