@@ -11,6 +11,7 @@ import RxRelay
 
 protocol PlaceDetailViewModelProtocol {
     func transform(input:PlaceDetailViewModel.Input) -> PlaceDetailViewModel.Output
+    var currentPlace: Place? { get }
 }
 
 final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
@@ -21,6 +22,11 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
     private let notificationService: RxNotificationServiceProtocol?
     
     private let place$ = BehaviorRelay<Place?>(value: nil);
+    
+    var currentPlace: Place? {
+         return place$.value
+     }
+    
     private let bibles$ = BehaviorRelay<[Bible]>(value:[]);
     
     private var placeId:String
@@ -36,6 +42,7 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
     private let placeUsecase:PlaceUsecaseProtocol?
     
     private var appStore:AppStoreProtocol?
+    private var collectionStore:CollectionStoreProtocol?
     
     private var isLoggedIn$ = BehaviorRelay<Bool>(value:false)
     private var profile$ = BehaviorRelay<User?>(value:nil)
@@ -116,6 +123,7 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
                     }
 
                     place.isLiked = response.liked
+                    self.collectionStore?.dispatch(response.liked ? .like(self.placeId): .unlike(self.placeId))
                     place.likeCount = response.liked ? place.likeCount + 1 : place.likeCount - 1
 
                     self.place$.accept(place)
@@ -165,6 +173,8 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
                             return
                         }
                         place.isSaved = response.saved
+                        self.collectionStore?.dispatch(response.saved ? .bookmark(self.placeId): .unbookmark(self.placeId))
+                    
                         self.place$.accept(place);
                     case .failure(let error):
                         self.interactionError$.accept(error)
@@ -276,12 +286,14 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
     
     
     
-    init(navigator:BottomSheetNavigator?, placeId:String, placeUsecase:PlaceUsecaseProtocol?, appStore:AppStoreProtocol?, notificationService:RxNotificationServiceProtocol?){
+    init(navigator:BottomSheetNavigator?, placeId:String, placeUsecase:PlaceUsecaseProtocol?, appStore:AppStoreProtocol?, collectionStore:CollectionStoreProtocol?, notificationService:RxNotificationServiceProtocol?){
         self.navigator = navigator
         self.placeId = placeId;
         
         self.placeUsecase = placeUsecase
+        
         self.appStore = appStore
+        self.collectionStore = collectionStore
         
         self.notificationService = notificationService
     
@@ -294,7 +306,6 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
     public struct Input {
         let viewLoaded$:Observable<Void>
         let saveButtonTapped$:Observable<Void>
-        let shareButtonTapped$:Observable<Void>
         let closeButtonTapped$:Observable<Void>
         let backButtonTapped$:Observable<Void>
         let likeButtonTapped$:Observable<Void>

@@ -25,6 +25,7 @@ final class MyCollectionBottomSheetViewModel:MyCollectionBottomSheetViewModelPro
     private let isInitialLoading$ = BehaviorRelay<Bool>(value: true);
     private let isFetchingNext$ = BehaviorRelay<Bool>(value: false);
     
+    
     private let userUsecase:UserUsecaseProtocol?
     
     private var pagination = Pagination(pageSize: 10)

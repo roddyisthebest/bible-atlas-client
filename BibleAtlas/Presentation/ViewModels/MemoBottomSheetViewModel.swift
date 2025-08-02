@@ -23,6 +23,8 @@ final class MemoBottomSheetViewModel:MemoBottomSheetViewModelProtocol{
     
     private var placeUsecase:PlaceUsecaseProtocol?
     
+    private var collectionStore:CollectionStoreProtocol?
+    
     private weak var notificationService: RxNotificationServiceProtocol?
     
     private let placeId:String
@@ -40,10 +42,11 @@ final class MemoBottomSheetViewModel:MemoBottomSheetViewModelProtocol{
     
     private let isDeleting$ = BehaviorRelay<Bool>(value: false)
 
-    init(navigator:BottomSheetNavigator?, placeId:String, placeUsecase:PlaceUsecaseProtocol?, notificationService:RxNotificationServiceProtocol?){
+    init(navigator:BottomSheetNavigator?, placeId:String, placeUsecase:PlaceUsecaseProtocol?, collectionStore:CollectionStoreProtocol? ,notificationService:RxNotificationServiceProtocol?){
         self.navigator = navigator
         self.placeId = placeId;
         self.placeUsecase = placeUsecase;
+        self.collectionStore = collectionStore
         self.notificationService = notificationService
     }
     
@@ -57,13 +60,11 @@ final class MemoBottomSheetViewModel:MemoBottomSheetViewModelProtocol{
         }).disposed(by: disposeBag)
         
         input.confirmButtonTapped$.subscribe(onNext: { [weak self] text in
-            print(text,"TEXT")
             self?.createOrUpdatePlaceMemo(text: text)
         }).disposed(by: disposeBag)
                
         input.deleteButtonTapped$.subscribe(onNext:{
             [weak self] in
-            print("두꺼워지는주머니")
             self?.deletePlaceMemo()
         }).disposed(by: disposeBag)
         
@@ -126,6 +127,7 @@ final class MemoBottomSheetViewModel:MemoBottomSheetViewModelProtocol{
             switch(result){
             case.success(let place):
                 self.notificationService?.post(.refetchRequired, object: nil)
+                self.collectionStore?.dispatch(.addMemo(placeId))
                 self.navigator?.dismiss(animated: true);
             case.failure(let error):
                 self.interactionError$.accept(error)
@@ -156,6 +158,7 @@ final class MemoBottomSheetViewModel:MemoBottomSheetViewModelProtocol{
             switch(result){
             case.success(let response):
                 self.notificationService?.post(.refetchRequired, object: nil)
+                self.collectionStore?.dispatch(.removeMemo(placeId))
                 self.navigator?.dismiss(animated: true)
             case.failure(let error):
                 self.interactionError$.accept(error)

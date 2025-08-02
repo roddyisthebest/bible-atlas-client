@@ -15,6 +15,10 @@ public struct UserRepository:UserRepositoryProtocol{
         return await userApiService.getPlaces(limit: limit, page: page, filter: filter)
     }
     
+    func getMyCollectionPlaceIds() async -> Result<MyCollectionPlaceIds, NetworkError>{
+        return await userApiService.getMyCollectionPlaceIds()
+    }
+
     func getProfile() async -> Result<User, NetworkError> {
         return await userApiService.getProfile()
     }

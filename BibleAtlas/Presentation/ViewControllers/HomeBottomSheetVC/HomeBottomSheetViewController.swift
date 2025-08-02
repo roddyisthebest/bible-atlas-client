@@ -285,7 +285,6 @@ final class HomeBottomSheetViewController: UIViewController{
     }
     
     
-    
     private func setupStyle(){
         view.backgroundColor = .mainBkg;
     }

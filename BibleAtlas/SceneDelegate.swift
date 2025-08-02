@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let session = DefaultSession();
         let appStore = AppStore();
-
+        let collectionStore = CollectionStore();
         
         let tokenProvider = KeychainTokenProvider();
         let tokenRefresher  = TokenRefresher(session: session, tokenProvider: tokenProvider, refreshURL: "\(Constants.shared.url)/auth/refresh-token")
@@ -74,7 +74,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let recentSearchService = RecentSearchService(context: context)
         
         
-        let vmFactory = VMFactory(appStore: appStore, usecases: usecases, notificationService: notificationService, recentSearchService: recentSearchService);
+        let vmFactory = VMFactory(appStore: appStore, collectionStore: collectionStore, usecases: usecases, notificationService: notificationService, recentSearchService: recentSearchService);
+        
         let vcFactory = VCFactory();
             
         self.bottomSheetCoordinator = BottomSheetCoordinator(vcFactory: vcFactory, vmFactory: vmFactory, notificationService: notificationService);

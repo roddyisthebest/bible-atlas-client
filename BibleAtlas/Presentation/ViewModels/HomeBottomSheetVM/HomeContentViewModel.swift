@@ -25,6 +25,7 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
     private let recentSearchService:RecentSearchServiceProtocol?
     
     private var appStore:AppStoreProtocol?
+    private var collectionStore:CollectionStoreProtocol?
 
     private var isLoggedIn$ = BehaviorRelay<Bool>(value:false)
     private var profile$ = BehaviorRelay<User?>(value:nil)
@@ -39,80 +40,79 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
     private let recentSearches$ = BehaviorRelay<[RecentSearchItem]>(value: []);
     private let errorToFetchRecentSearches$ = BehaviorRelay<RecentSearchError?>(value: nil)
 
-    init(navigator:BottomSheetNavigator?, appStore:AppStoreProtocol?,userUsecase:UserUsecaseProtocol?, authUseCase:AuthUsecaseProtocol?,
+    init(navigator:BottomSheetNavigator?, appStore:AppStoreProtocol?, collectionStore:CollectionStoreProtocol? ,userUsecase:UserUsecaseProtocol?, authUseCase:AuthUsecaseProtocol?,
          recentSearchService:RecentSearchServiceProtocol?
     
     ){
         self.navigator = navigator
         self.appStore = appStore
+        self.collectionStore = collectionStore
         self.userUsecase = userUsecase
         self.authUsecase = authUseCase
         self.recentSearchService = recentSearchService
-        bindAppStore();
+        bindStores();
+        bindCollectionStore();
         bindRecentSearchService();
         getRecentSearchItems();
     }
     
-    func bindAppStore(){
-        appStore?.state$.subscribe(onNext: { appState in
-            self.profile$.accept(appState.profile)
-            self.isLoggedIn$.accept(appState.isLoggedIn)
+    func bindStores(){
+        Observable.combineLatest(appStore!.state$, collectionStore!.state$)
+            .distinctUntilChanged { prev, next in
+                return prev.0.isLoggedIn == next.0.isLoggedIn
+            }
+            .observe(on: MainScheduler.asyncInstance)
+            .bind{
+                [weak self] appState, collectionState in
                 
-            if(appState.isLoggedIn){
-                Task{
+                guard let self = self else {return}
+                self.profile$.accept(appState.profile)
+                self.isLoggedIn$.accept(appState.isLoggedIn)
                     
-                    self.loading$.accept(true)
-                    defer {
-                          self.loading$.accept(false)
+                if(appState.isLoggedIn){
+                    Task{
+                        
+                        self.loading$.accept(true)
+                        defer {
+                              self.loading$.accept(false)
+                        }
+                        
+                        let result = await self.userUsecase?.getMyCollectionPlaceIds();
+                        
+                        switch(result){
+                            case .success(let myCollectionPlaceIds):
+                                self.collectionStore?.dispatch(.initialize(myCollectionPlaceIds))
+                            case .failure(let error):
+                                print("error")
+                            default:
+                                print("none")
+                        }
+                                                
                     }
-                    
-                    async let result1 = self.userUsecase?.getPlaces(limit: nil, page: nil, filter: .like)
-                    async let result2 = self.userUsecase?.getPlaces(limit: nil, page: nil, filter: .memo)
-                    async let result3 = self.userUsecase?.getPlaces(limit: nil, page: nil, filter: .save)
-                    
-                    let results: [(PlaceFilter, Result<ListResponse<Place>, NetworkError>?)] = [
-                            (.like, await result1),
-                            (.memo, await result2),
-                            (.save, await result3)
-                        ]
-                    
-                    
 
-                    for (filter, result) in results {
-                          guard let result else { continue }
-                          
-                          switch result {
-                          case .success(let response):
-                              switch(filter){
-                                case .like:
-                                    self.likePlacesCount$.accept(response.total)
-                                case .memo:
-                                    self.memoPlacesCount$.accept(response.total)
-                                case .save:
-                                    self.savePlacesCount$.accept(response.total)
-                              }
-                              if filter == .like {
-                                  self.likePlacesCount$.accept(response.total)
-                              }
-                          case .failure(let error):
-                              print("❌ \(filter) → \(error.description)")
-                          }
-                      }
-                    
-                            
                 }
-
-            }
-            else{
-                self.likePlacesCount$.accept(0)
-                self.memoPlacesCount$.accept(0)
-                self.savePlacesCount$.accept(0)
-            }
-            
-        }).disposed(by: disposeBag)
-        
+                else{
+                    self.collectionStore?.dispatch(.reset)
+                }
+                
+                
+                
+            }.disposed(by: disposeBag)
         
     }
+    
+    func bindCollectionStore(){
+        collectionStore!.state$.bind{
+            [weak self] state in
+            self?.memoPlacesCount$.accept(state.memoedPlaceIds.count)
+            self?.likePlacesCount$.accept(state.likedPlaceIds.count)
+            self?.savePlacesCount$.accept(state.bookmarkedPlaceIds.count)
+        }.disposed(by: disposeBag)
+    }
+    
+    
+   
+    
     
     private func bindRecentSearchService(){
         self.recentSearchService?.didChanged$.subscribe(onNext:{[weak self] in
