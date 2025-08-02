@@ -160,3 +160,11 @@ struct GeoJsonFeatureProperties: Codable {
     let id: String?
     let role: String?
 }
+
+struct MyCollectionPlaceIds:Decodable{
+    let liked: [String]
+    let bookmarked: [String]
+    let memoed:[String]
+}
+
+

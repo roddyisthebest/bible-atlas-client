@@ -10,7 +10,7 @@ import Foundation
 protocol UserUsecaseProtocol{
     func getPlaces(limit:Int?, page:Int?, filter:PlaceFilter? ) async -> Result<ListResponse<Place>,NetworkError>
     func getProfile() async -> Result<User,NetworkError>
-    
+    func getMyCollectionPlaceIds() async -> Result<MyCollectionPlaceIds, NetworkError>
 }
 
 
@@ -24,6 +24,10 @@ public struct UserUsecase:UserUsecaseProtocol{
     func getPlaces(limit: Int?, page: Int?, filter: PlaceFilter?) async -> Result<ListResponse<Place>, NetworkError> {
         let result = await repository.getPlaces(limit: limit, page: page, filter: filter)
         return result;
+    }
+    
+    func getMyCollectionPlaceIds() async -> Result<MyCollectionPlaceIds, NetworkError> {
+        return await repository.getMyCollectionPlaceIds();
     }
     
     func getProfile() async -> Result<User, NetworkError> {

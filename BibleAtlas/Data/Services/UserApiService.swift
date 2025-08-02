@@ -17,7 +17,7 @@ enum PlaceFilter:String {
 
 protocol UserApiServiceProtocol {
     func getPlaces(limit:Int?, page:Int?, filter:PlaceFilter? ) async -> Result<ListResponse<Place>,NetworkError>
-    
+    func getMyCollectionPlaceIds() async -> Result<MyCollectionPlaceIds, NetworkError>
     func getProfile() async -> Result<User,NetworkError>
 
 }
@@ -49,6 +49,10 @@ final public class UserApiService:UserApiServiceProtocol{
             
         return await apiClient.getData(url:"\(url)/me/places", parameters: params)
         
+    }
+    
+    func getMyCollectionPlaceIds() async -> Result<MyCollectionPlaceIds, NetworkError>{
+        return await apiClient.getData(url: "\(url)/me/collection-place-ids", parameters: nil)
     }
     
     

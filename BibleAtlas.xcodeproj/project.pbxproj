@@ -135,6 +135,7 @@
 		ECD9726F2E324E9F00D94767 /* ReportTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9726E2E324E9F00D94767 /* ReportTypeTableViewCell.swift */; };
 		ECD972712E38B6C200D94767 /* MKMapRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972702E38B6C200D94767 /* MKMapRect.swift */; };
 		ECD972732E3DEE2000D94767 /* ShareItemSourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972722E3DEE2000D94767 /* ShareItemSourceView.swift */; };
+		ECD972752E3E086100D94767 /* CollectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972742E3E086100D94767 /* CollectionStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -292,6 +293,7 @@
 		ECD9726E2E324E9F00D94767 /* ReportTypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTypeTableViewCell.swift; sourceTree = "<group>"; };
 		ECD972702E38B6C200D94767 /* MKMapRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKMapRect.swift; sourceTree = "<group>"; };
 		ECD972722E3DEE2000D94767 /* ShareItemSourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareItemSourceView.swift; sourceTree = "<group>"; };
+		ECD972742E3E086100D94767 /* CollectionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -360,6 +362,7 @@
 			isa = PBXGroup;
 			children = (
 				EC64B9572DD8482C00D3C8A7 /* AppStore.swift */,
+				ECD972742E3E086100D94767 /* CollectionStore.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -1105,6 +1108,7 @@
 				ECA94BD12D509377005B0428 /* NetworkError.swift in Sources */,
 				EC77CE3C2DD09AB10030DEF5 /* PlaceModificationBottomSheetViewController.swift in Sources */,
 				EC77CE342DCF348D0030DEF5 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
+				ECD972752E3E086100D94767 /* CollectionStore.swift in Sources */,
 				EC64B9582DD8482C00D3C8A7 /* AppStore.swift in Sources */,
 				EC386DF92E06C77A00251FC6 /* HomeContentViewController.swift in Sources */,
 				ECA94BD72D50977A005B0428 /* AuthorizedApiClient.swift in Sources */,
