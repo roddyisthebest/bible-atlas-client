@@ -138,6 +138,7 @@
 		ECD972752E3E086100D94767 /* CollectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972742E3E086100D94767 /* CollectionStore.swift */; };
 		ECD972782E3F71B100D94767 /* AuthUsecaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972772E3F71B100D94767 /* AuthUsecaseTests.swift */; };
 		ECD9727C2E3F8A0B00D94767 /* AuthApiServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9727B2E3F8A0B00D94767 /* AuthApiServiceTests.swift */; };
+		ECD9727F2E3F92DA00D94767 /* AuthRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9727E2E3F92DA00D94767 /* AuthRepositoryTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -298,6 +299,7 @@
 		ECD972742E3E086100D94767 /* CollectionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionStore.swift; sourceTree = "<group>"; };
 		ECD972772E3F71B100D94767 /* AuthUsecaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUsecaseTests.swift; sourceTree = "<group>"; };
 		ECD9727B2E3F8A0B00D94767 /* AuthApiServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthApiServiceTests.swift; sourceTree = "<group>"; };
+		ECD9727E2E3F92DA00D94767 /* AuthRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -598,6 +600,7 @@
 		ECA94BAF2D5082BA005B0428 /* BibleAtlasTests */ = {
 			isa = PBXGroup;
 			children = (
+				ECD9727D2E3F928700D94767 /* Repositories */,
 				ECD9727A2E3F89F200D94767 /* Services */,
 				ECD972762E3F718D00D94767 /* Usecases */,
 				ECA94BB02D5082BA005B0428 /* BibleAtlasTests.swift */,
@@ -781,6 +784,14 @@
 				ECD9727B2E3F8A0B00D94767 /* AuthApiServiceTests.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		ECD9727D2E3F928700D94767 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				ECD9727E2E3F92DA00D94767 /* AuthRepositoryTests.swift */,
+			);
+			path = Repositories;
 			sourceTree = "<group>";
 		};
 		FA9885F27C7E364B662974A9 /* Pods */ = {
@@ -1172,6 +1183,7 @@
 				ECA94BB12D5082BA005B0428 /* BibleAtlasTests.swift in Sources */,
 				ECD972782E3F71B100D94767 /* AuthUsecaseTests.swift in Sources */,
 				EC64B9712DE3456900D3C8A7 /* PaginationTests.swift in Sources */,
+				ECD9727F2E3F92DA00D94767 /* AuthRepositoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
