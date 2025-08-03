@@ -7,13 +7,13 @@
 
 import Foundation
 
-public struct ErrorResponse: Decodable {
+public struct ErrorResponse: Decodable, Equatable {
     let message: String
     let error: String?
     let statusCode: Int?
 }
 
-public enum NetworkError:Error {
+public enum NetworkError:Error,Equatable {
     case urlError
     case invalid
     case failToDecode(String)
@@ -23,6 +23,28 @@ public enum NetworkError:Error {
     case serverError(Int)
     case clientError(String)
     case failToJSONSerialize(String)
+    
+    public static func == (lhs: NetworkError, rhs: NetworkError) -> Bool {
+        switch (lhs, rhs) {
+        case (.urlError, .urlError),
+             (.invalid, .invalid),
+             (.dataNil, .dataNil):
+            return true
+        case (.failToDecode(let l), .failToDecode(let r)),
+             (.failToEncode(let l), .failToEncode(let r)),
+             (.clientError(let l), .clientError(let r)),
+             (.failToJSONSerialize(let l), .failToJSONSerialize(let r)):
+            return l == r
+        case (.serverError(let lCode), .serverError(let rCode)):
+            return lCode == rCode
+        case (.serverErrorWithMessage(let lRes), .serverErrorWithMessage(let rRes)):
+            return lRes == rRes
+        default:
+            return false
+        }
+    }
+
+    
     
     
     public var description: String {

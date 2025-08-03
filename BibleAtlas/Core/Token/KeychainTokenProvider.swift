@@ -54,11 +54,11 @@ final class KeychainTokenProvider: TokenProviderProtocol {
         }
     }
 
-    func clear() -> Result<Bool, Error>{
+    func clear() -> Result<Void, Error>{
         do {
                try keychain.remove(Keys.accessToken)
                try keychain.remove(Keys.refreshToken)
-               return .success(true)
+               return .success(())
            } catch {
                print("❌ Failed to clear tokens from Keychain: \(error.localizedDescription)")
                return .failure(error)

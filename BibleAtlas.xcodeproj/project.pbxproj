@@ -136,6 +136,7 @@
 		ECD972712E38B6C200D94767 /* MKMapRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972702E38B6C200D94767 /* MKMapRect.swift */; };
 		ECD972732E3DEE2000D94767 /* ShareItemSourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972722E3DEE2000D94767 /* ShareItemSourceView.swift */; };
 		ECD972752E3E086100D94767 /* CollectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972742E3E086100D94767 /* CollectionStore.swift */; };
+		ECD972782E3F71B100D94767 /* AuthUsecaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972772E3F71B100D94767 /* AuthUsecaseTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -294,6 +295,7 @@
 		ECD972702E38B6C200D94767 /* MKMapRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKMapRect.swift; sourceTree = "<group>"; };
 		ECD972722E3DEE2000D94767 /* ShareItemSourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareItemSourceView.swift; sourceTree = "<group>"; };
 		ECD972742E3E086100D94767 /* CollectionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionStore.swift; sourceTree = "<group>"; };
+		ECD972772E3F71B100D94767 /* AuthUsecaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUsecaseTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -594,6 +596,7 @@
 		ECA94BAF2D5082BA005B0428 /* BibleAtlasTests */ = {
 			isa = PBXGroup;
 			children = (
+				ECD972762E3F718D00D94767 /* Usecases */,
 				ECA94BB02D5082BA005B0428 /* BibleAtlasTests.swift */,
 				EC64B9702DE3456900D3C8A7 /* PaginationTests.swift */,
 			);
@@ -759,6 +762,14 @@
 				EC7058892DB8BCA5002D47DF /* Buttons */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		ECD972762E3F718D00D94767 /* Usecases */ = {
+			isa = PBXGroup;
+			children = (
+				ECD972772E3F71B100D94767 /* AuthUsecaseTests.swift */,
+			);
+			path = Usecases;
 			sourceTree = "<group>";
 		};
 		FA9885F27C7E364B662974A9 /* Pods */ = {
@@ -1147,6 +1158,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ECA94BB12D5082BA005B0428 /* BibleAtlasTests.swift in Sources */,
+				ECD972782E3F71B100D94767 /* AuthUsecaseTests.swift in Sources */,
 				EC64B9712DE3456900D3C8A7 /* PaginationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
