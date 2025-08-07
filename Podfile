@@ -19,7 +19,9 @@ target 'BibleAtlas' do
     pod "Kingfisher"
     pod "GoogleSignIn" 
     pod "FirebaseCore" 
-
+    pod 'RxTest'
+    pod 'RxBlocking'
+    
   target 'BibleAtlasTests' do
     inherit! :search_paths
     # Pods for testing
