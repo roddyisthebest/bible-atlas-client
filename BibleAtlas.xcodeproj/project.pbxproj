@@ -141,6 +141,7 @@
 		ECD9727F2E3F92DA00D94767 /* AuthRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9727E2E3F92DA00D94767 /* AuthRepositoryTests.swift */; };
 		ECD972822E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972812E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift */; };
 		ECD972842E4487CA00D94767 /* HomeContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972832E4487CA00D94767 /* HomeContentViewModelTests.swift */; };
+		ECD972862E45EE5900D94767 /* SearchResultViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972852E45EE5900D94767 /* SearchResultViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -304,6 +305,7 @@
 		ECD9727E2E3F92DA00D94767 /* AuthRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryTests.swift; sourceTree = "<group>"; };
 		ECD972812E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
 		ECD972832E4487CA00D94767 /* HomeContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewModelTests.swift; sourceTree = "<group>"; };
+		ECD972852E45EE5900D94767 /* SearchResultViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -804,6 +806,7 @@
 			children = (
 				ECD972812E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift */,
 				ECD972832E4487CA00D94767 /* HomeContentViewModelTests.swift */,
+				ECD972852E45EE5900D94767 /* SearchResultViewModelTests.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1199,6 +1202,7 @@
 				ECD972842E4487CA00D94767 /* HomeContentViewModelTests.swift in Sources */,
 				EC64B9712DE3456900D3C8A7 /* PaginationTests.swift in Sources */,
 				ECD972822E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift in Sources */,
+				ECD972862E45EE5900D94767 /* SearchResultViewModelTests.swift in Sources */,
 				ECD9727F2E3F92DA00D94767 /* AuthRepositoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

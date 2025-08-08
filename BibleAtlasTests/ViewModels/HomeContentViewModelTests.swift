@@ -75,7 +75,7 @@ final class MockRecentSearchService: RecentSearchServiceProtocol {
     }
     
     func save(_ place: BibleAtlas.Place) -> Result<Void, BibleAtlas.RecentSearchError> {
-        return .success(())
+        return saveResultToReturn ?? .success(())
     }
     
     func delete(id: String) -> Result<Void, BibleAtlas.RecentSearchError> {
@@ -94,7 +94,7 @@ final class MockRecentSearchService: RecentSearchServiceProtocol {
     var fetchCalled = false
 
     var resultToReturn: Result<RecentSearchFetchResult, RecentSearchError>?
-
+    var saveResultToReturn: Result<Void,RecentSearchError>?
     
     init() {
     }

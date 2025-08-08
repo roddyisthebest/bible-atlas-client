@@ -38,14 +38,17 @@ final class SearchResultViewModel:SearchResultViewModelProtocol {
     
     private let recentSearchService: RecentSearchServiceProtocol?
     
+    private let schedular:SchedulerType
     
-    init(navigator: BottomSheetNavigator? = nil, placeUsecase: PlaceUsecaseProtocol?, isSearchingMode$:Observable<Bool>, keyword$:Observable<String>, cancelButtonTapped$:Observable<Void>, recentSearchService:RecentSearchServiceProtocol? ) {
+    init(navigator: BottomSheetNavigator? = nil, placeUsecase: PlaceUsecaseProtocol?, isSearchingMode$:Observable<Bool>, keyword$:Observable<String>, cancelButtonTapped$:Observable<Void>, recentSearchService:RecentSearchServiceProtocol?,
+         schedular:SchedulerType = MainScheduler.instance) {
         self.navigator = navigator
         self.placeUsecase = placeUsecase
         self.isSearchingMode$ = isSearchingMode$
         self.keyword$ = keyword$
         self.cancelButtonTapped$ = cancelButtonTapped$
         self.recentSearchService = recentSearchService
+        self.schedular = schedular
     }
         
     
@@ -53,7 +56,7 @@ final class SearchResultViewModel:SearchResultViewModelProtocol {
 
         let debouncedKeyword$ = keyword$
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
+            .debounce(.microseconds(300), scheduler: schedular)
             .distinctUntilChanged()
    
         
@@ -87,7 +90,7 @@ final class SearchResultViewModel:SearchResultViewModelProtocol {
        
             
         let debouncedBottomReached$ = input.bottomReached$
-            .debounce(.microseconds(500), scheduler: MainScheduler.instance)
+            .debounce(.microseconds(500), scheduler: schedular)
         
         Observable.combineLatest(debouncedBottomReached$, keyword$)
             .subscribe(onNext: { [weak self] _, keyword in
