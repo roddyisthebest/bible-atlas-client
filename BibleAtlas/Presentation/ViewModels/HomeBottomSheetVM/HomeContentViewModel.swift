@@ -39,9 +39,11 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
     
     private let recentSearches$ = BehaviorRelay<[RecentSearchItem]>(value: []);
     private let errorToFetchRecentSearches$ = BehaviorRelay<RecentSearchError?>(value: nil)
-
+    
+    private let scheduler:SchedulerType;
+    
     init(navigator:BottomSheetNavigator?, appStore:AppStoreProtocol?, collectionStore:CollectionStoreProtocol? ,userUsecase:UserUsecaseProtocol?, authUseCase:AuthUsecaseProtocol?,
-         recentSearchService:RecentSearchServiceProtocol?
+         recentSearchService:RecentSearchServiceProtocol?, schedular:SchedulerType = MainScheduler.asyncInstance
     
     ){
         self.navigator = navigator
@@ -50,6 +52,8 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
         self.userUsecase = userUsecase
         self.authUsecase = authUseCase
         self.recentSearchService = recentSearchService
+        self.scheduler = schedular;
+        
         bindStores();
         bindCollectionStore();
         bindRecentSearchService();
@@ -61,7 +65,7 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
             .distinctUntilChanged { prev, next in
                 return prev.0.isLoggedIn == next.0.isLoggedIn
             }
-            .observe(on: MainScheduler.asyncInstance)
+            .observe(on: self.scheduler)
             .bind{
                 [weak self] appState, collectionState in
                 
@@ -164,7 +168,6 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
             .withLatestFrom(isLoggedIn$, resultSelector: { collectionType, isLoggedIn in
                 return (collectionType, isLoggedIn)
             })
-            .observe(on: MainScheduler.asyncInstance)
             .subscribe(onNext: { [weak self] collectionType, isLoggedIn in
                 if(isLoggedIn){
                     self?.navigator?.present(.myCollection(collectionType))

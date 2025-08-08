@@ -60,6 +60,7 @@ protocol RecentSearchServiceProtocol{
 
 
 
+
 final class RecentSearchService: RecentSearchServiceProtocol{
     private let didChangeSubject$ = PublishSubject<Void>()
     public var didChanged$: Observable<Void> {
@@ -153,7 +154,7 @@ final class RecentSearchService: RecentSearchServiceProtocol{
     
     init(context: NSManagedObjectContext) {
           self.context = context
-      }
+    }
     
 
     

@@ -161,7 +161,7 @@ struct GeoJsonFeatureProperties: Codable {
     let role: String?
 }
 
-struct MyCollectionPlaceIds:Decodable{
+struct MyCollectionPlaceIds:Equatable, Decodable{
     let liked: [String]
     let bookmarked: [String]
     let memoed:[String]
