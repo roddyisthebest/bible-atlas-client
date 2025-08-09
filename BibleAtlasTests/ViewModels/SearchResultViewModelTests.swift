@@ -17,11 +17,13 @@ final class MockPlaceusecase: PlaceUsecaseProtocol{
     
     var resultToReturn: Result<ListResponse<Place>, NetworkError>?
     var isCalled = false;
-    var expectation: XCTestExpectation?
+    var invokedExp: XCTestExpectation?
+    var completedExp: XCTestExpectation?
 
     func getPlaces(parameters: BibleAtlas.PlaceParameters) async -> Result<BibleAtlas.ListResponse<BibleAtlas.Place>, BibleAtlas.NetworkError> {
         self.isCalled = true;
-        expectation?.fulfill()
+        invokedExp?.fulfill()
+        defer { completedExp?.fulfill() }
         return resultToReturn ?? .failure(.clientError("test-error"))
     }
     
@@ -104,7 +106,7 @@ final class SearchResultViewModelTests: XCTestCase {
     func test_search_starts_when_keyword_and_searchMode_are_valid(){
         
         let expectation = XCTestExpectation(description: "wait for async task")
-        mockPlaceUsecase.expectation = expectation
+        mockPlaceUsecase.invokedExp = expectation
 
         let isSearchingMode$ = BehaviorRelay<Bool>(value: false);
         let keyword$ = BehaviorRelay<String>(value: "");

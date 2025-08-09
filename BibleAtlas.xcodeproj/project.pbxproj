@@ -142,6 +142,7 @@
 		ECD972822E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972812E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift */; };
 		ECD972842E4487CA00D94767 /* HomeContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972832E4487CA00D94767 /* HomeContentViewModelTests.swift */; };
 		ECD972862E45EE5900D94767 /* SearchResultViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972852E45EE5900D94767 /* SearchResultViewModelTests.swift */; };
+		ECD972892E47371900D94767 /* SearchReadyViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972882E47371900D94767 /* SearchReadyViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -306,6 +307,7 @@
 		ECD972812E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
 		ECD972832E4487CA00D94767 /* HomeContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewModelTests.swift; sourceTree = "<group>"; };
 		ECD972852E45EE5900D94767 /* SearchResultViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModelTests.swift; sourceTree = "<group>"; };
+		ECD972882E47371900D94767 /* SearchReadyViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReadyViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -807,6 +809,7 @@
 				ECD972812E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift */,
 				ECD972832E4487CA00D94767 /* HomeContentViewModelTests.swift */,
 				ECD972852E45EE5900D94767 /* SearchResultViewModelTests.swift */,
+				ECD972882E47371900D94767 /* SearchReadyViewModelTests.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1196,6 +1199,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECD972892E47371900D94767 /* SearchReadyViewModelTests.swift in Sources */,
 				ECD9727C2E3F8A0B00D94767 /* AuthApiServiceTests.swift in Sources */,
 				ECA94BB12D5082BA005B0428 /* BibleAtlasTests.swift in Sources */,
 				ECD972782E3F71B100D94767 /* AuthUsecaseTests.swift in Sources */,

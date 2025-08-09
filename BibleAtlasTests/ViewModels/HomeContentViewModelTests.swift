@@ -263,7 +263,6 @@ final class HomeContentViewModelTests: XCTestCase {
     
     
     func test_recentSearchService_updates_recentSearches$() throws {
-        let didChanged$ = PublishRelay<Void>();
 
         let mockRecent = MockRecentSearchService()
         mockRecent.resultToReturn = .success(RecentSearchFetchResult(items:[
@@ -294,7 +293,5 @@ final class HomeContentViewModelTests: XCTestCase {
         XCTAssertEqual(items?.count, 2)
         XCTAssertEqual(items?.first?.name, "jelusalem")
     }
-
-
 
 }
