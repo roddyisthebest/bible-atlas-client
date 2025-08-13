@@ -24,7 +24,9 @@ final class MockAppStore:AppStoreProtocol{
     func dispatch(_ action: BibleAtlas.AppAction) {
         switch(action){
             case .login(let user):
+                print("login-user")
                 state$.accept(AppState(profile:user, isLoggedIn: true))
+                print("login-user-all")
             case .logout:
                 state$.accept(AppState(profile: nil, isLoggedIn: false))
         }

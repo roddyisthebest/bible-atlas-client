@@ -57,11 +57,7 @@ final class LoginBottomSheetViewModel:LoginBottomSheetViewModelProtocol {
                         print(response)
                         self.notificationService?.post(.refetchRequired, object: nil)
                         self.appStore?.dispatch(.login(response.user))
-                        
-                        
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                            self.navigator?.dismiss(animated: true)
-                        }
+                        self.navigator?.dismiss(animated: true)
 
                     case .failure(let networkError):
                         self.error$.accept(networkError)
@@ -89,15 +85,11 @@ final class LoginBottomSheetViewModel:LoginBottomSheetViewModelProtocol {
                 
                 switch(result){
                     case .success(let response):
-                        print(response)
+
                         self.notificationService?.post(.refetchRequired, object: nil)
                         self.appStore?.dispatch(.login(response.user))
-                    print(response.user)
-                        
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                            self.navigator?.dismiss(animated: true)
-                        }
-
+                        self.navigator?.dismiss(animated: true)
+                    
                     case .failure(let networkError):
                         self.error$.accept(networkError)
                         print(networkError)

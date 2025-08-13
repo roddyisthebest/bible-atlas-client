@@ -16,12 +16,15 @@ import RxBlocking
 
 final class MockBottomSheetNavigator:BottomSheetNavigator{
     var presentedSheet: BottomSheetType?
+    var isDismissed = false;
     
     func present(_ type: BottomSheetType) {
          presentedSheet = type
      }
 
-    func dismiss(animated: Bool) {}
+    func dismiss(animated: Bool) {
+        self.isDismissed = true
+    }
     func dismissFromDetail(animated: Bool) {}
     func replace(with type: BottomSheetType) {}
     func setPresenter(_ presenter: Presentable?) {}
