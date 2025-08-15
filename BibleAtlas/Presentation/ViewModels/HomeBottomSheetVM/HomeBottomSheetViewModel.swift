@@ -47,7 +47,6 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
     public let isSearchingMode$ = BehaviorRelay<Bool>(value: false);
     public let keyword$ = BehaviorRelay<String>(value: "");
     public let cancelButtonTapped$ = PublishRelay<Void>();
-    
 
     init(navigator:BottomSheetNavigator?, appStore:AppStoreProtocol?, authUseCase:AuthUsecaseProtocol?, recentSearchService:RecentSearchServiceProtocol?){
         self.navigator = navigator

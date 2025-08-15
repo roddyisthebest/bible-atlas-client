@@ -50,16 +50,22 @@ final class MockCollectionStore: CollectionStoreProtocol {
 
 final class MockUserUsecase: UserUsecaseProtocol {
     
+    var placesExp: XCTestExpectation?
+
     var myCollectionPlaceIdsResultToReturn: Result<MyCollectionPlaceIds, NetworkError>?
     
     var profileResultToReturn: Result<User, NetworkError>?
+    
+    var placesResultToReturn: Result<ListResponse<Place>, NetworkError>?
+
     
     func getMyCollectionPlaceIds() async -> Result<MyCollectionPlaceIds, NetworkError> {
         return myCollectionPlaceIdsResultToReturn ?? .failure(.clientError("test")) ;
     }
     
     func getPlaces(limit: Int?, page: Int?, filter: BibleAtlas.PlaceFilter?) async -> Result<BibleAtlas.ListResponse<BibleAtlas.Place>, BibleAtlas.NetworkError> {
-        return  .failure(.clientError("test"))
+        defer { placesExp?.fulfill() }
+        return placesResultToReturn ?? .failure(.clientError("test"))
     }
     
     func getProfile() async -> Result<BibleAtlas.User, BibleAtlas.NetworkError> {

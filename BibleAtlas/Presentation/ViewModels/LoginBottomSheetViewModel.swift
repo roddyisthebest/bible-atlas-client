@@ -17,7 +17,6 @@ final class LoginBottomSheetViewModel:LoginBottomSheetViewModelProtocol {
     
     private let localId = "admin@naver.com"
     private let localPw = "one"
-    
     private let disposeBag = DisposeBag();
     private weak var navigator: BottomSheetNavigator?
     private var authUsecase:AuthUsecaseProtocol?

@@ -32,24 +32,31 @@ final class MyCollectionBottomSheetViewModel:MyCollectionBottomSheetViewModelPro
 
     private var filter:PlaceFilter
 
-    init(navigator:BottomSheetNavigator?, filter:PlaceFilter, userUsecase:UserUsecaseProtocol?){
+    private let schedular:SchedulerType
+
+    
+    init(navigator:BottomSheetNavigator?, filter:PlaceFilter, userUsecase:UserUsecaseProtocol?,
+         schedular:SchedulerType = MainScheduler.instance){
         self.navigator = navigator
         self.filter = filter;
         self.userUsecase = userUsecase;
         
         self.filter$ = BehaviorRelay(value: filter)
+        self.schedular = schedular
     }
         
     func transform(input:Input) -> Output{
         
         
         
-        input.myCollectionViewLoaded$.subscribe(onNext: {
+        input.myCollectionViewLoaded$
+            .observe(on: schedular)
+            .subscribe(onNext: {
             [weak self] in
             guard let self = self else { return }
             
             Task{
-                
+                @MainActor in
                 defer {
                     self.isInitialLoading$.accept(false)
                 }
@@ -71,7 +78,7 @@ final class MyCollectionBottomSheetViewModel:MyCollectionBottomSheetViewModelPro
         }).disposed(by: disposeBag)
         
         input.bottomReached$
-            .debounce(.milliseconds(100), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(100), scheduler: schedular)
             .subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
                 
@@ -79,6 +86,8 @@ final class MyCollectionBottomSheetViewModel:MyCollectionBottomSheetViewModelPro
                 self.isFetchingNext$.accept(true)
                 
                 Task{
+                    @MainActor in
+
                     defer {
                         self.isFetchingNext$.accept(false)
                     }
@@ -122,7 +131,7 @@ final class MyCollectionBottomSheetViewModel:MyCollectionBottomSheetViewModelPro
             self.error$.accept(nil)
             
             Task{
-                
+                @MainActor in
                 defer {
                     self.isInitialLoading$.accept(false)
                 }
