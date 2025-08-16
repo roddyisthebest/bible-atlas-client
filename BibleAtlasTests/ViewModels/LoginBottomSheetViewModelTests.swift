@@ -56,6 +56,7 @@ final class MockNotificationService:RxNotificationServiceProtocol{
     
     func post(_ name: Notification.Name, object: Any?) {
         self.calledNotificationName = name;
+        
     }
     
     func observe(_ name: Notification.Name) -> RxSwift.Observable<Notification> {

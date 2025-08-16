@@ -20,6 +20,10 @@ final class MockPlaceusecase: PlaceUsecaseProtocol{
     var invokedExp: XCTestExpectation?
     var completedExp: XCTestExpectation?
 
+    var detailResultToReturn: Result<Place, NetworkError>?
+    var completedDetailExp: XCTestExpectation?
+
+    
     func getPlaces(parameters: BibleAtlas.PlaceParameters) async -> Result<BibleAtlas.ListResponse<BibleAtlas.Place>, BibleAtlas.NetworkError> {
         self.isCalled = true;
         invokedExp?.fulfill()
@@ -40,7 +44,10 @@ final class MockPlaceusecase: PlaceUsecaseProtocol{
     }
     
     func getPlace(placeId: String) async -> Result<BibleAtlas.Place, BibleAtlas.NetworkError> {
-        return .failure(.clientError("not-implemented"))
+        defer{
+            completedDetailExp?.fulfill()
+        }
+        return detailResultToReturn ?? .failure(.clientError("not-implemented"))
     }
     
     func getRelatedUserInfo(placeId: String) async -> Result<BibleAtlas.RelatedUserInfo, BibleAtlas.NetworkError> {
@@ -51,12 +58,28 @@ final class MockPlaceusecase: PlaceUsecaseProtocol{
         return []
     }
     
+    
+    var saveResultToReturn: Result<TogglePlaceSaveResponse, NetworkError>?
+
+    var saveExp: XCTestExpectation?
+    
     func toggleSave(placeId: String) async -> Result<BibleAtlas.TogglePlaceSaveResponse, BibleAtlas.NetworkError> {
-        return .failure(.clientError("not-implemented"))
+        defer{
+            saveExp?.fulfill()
+        }
+        return saveResultToReturn ?? .failure(.clientError("not-implemented"))
     }
     
+    
+    var likeResultToReturn: Result<TogglePlaceLikeResponse, NetworkError>?
+
+    var likeExp: XCTestExpectation?
+    
     func toggleLike(placeId: String) async -> Result<BibleAtlas.TogglePlaceLikeResponse, BibleAtlas.NetworkError> {
-        return .failure(.clientError("not-implemented"))
+        defer{
+            likeExp?.fulfill()
+        }
+        return likeResultToReturn ?? .failure(.clientError("not-implemented"))
     }
     
     func createOrUpdatePlaceMemo(placeId: String, text: String) async -> Result<BibleAtlas.PlaceMemoResponse, BibleAtlas.NetworkError> {

@@ -109,6 +109,8 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
             self.isLiking$.accept(true)
             
             Task{
+                @MainActor in
+
                 defer{
                     self.isLiking$.accept(false)
                 }
@@ -234,14 +236,14 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
     
     func bindNotificationSerivce(){
         self.notificationService?.observe(.refetchRequired)
-            .observe(on: MainScheduler.instance)
+            .observe(on: schedular)
             .subscribe(onNext: { [weak self] _ in
                 self?.refetch()
             }).disposed(by: disposeBag)
         
         
         self.notificationService?.observe(.fetchPlaceRequired)
-            .observe(on: MainScheduler.instance)
+            .observe(on: schedular)
             .compactMap { $0.object as? [String:String?] }
             .subscribe(onNext: { [weak self] object in
                 guard let self = self else { return }
@@ -267,6 +269,7 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
         loadError$.accept(nil)
 
         Task {
+            @MainActor in
             defer { isLoading$.accept(false) }
 
             let response = await placeUsecase?.getPlace(placeId: placeId)
@@ -283,10 +286,11 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
     }
     
     
+    private let schedular:SchedulerType
     
     
-    
-    init(navigator:BottomSheetNavigator?, placeId:String, placeUsecase:PlaceUsecaseProtocol?, appStore:AppStoreProtocol?, collectionStore:CollectionStoreProtocol?, notificationService:RxNotificationServiceProtocol?){
+    init(navigator:BottomSheetNavigator?, placeId:String, placeUsecase:PlaceUsecaseProtocol?, appStore:AppStoreProtocol?, collectionStore:CollectionStoreProtocol?, notificationService:RxNotificationServiceProtocol?,
+         schedular:SchedulerType = MainScheduler.instance){
         self.navigator = navigator
         self.placeId = placeId;
         
@@ -296,7 +300,8 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
         self.collectionStore = collectionStore
         
         self.notificationService = notificationService
-    
+        self.schedular = schedular
+        
         self.bindAppStore()
         self.bindNotificationSerivce();
     }
