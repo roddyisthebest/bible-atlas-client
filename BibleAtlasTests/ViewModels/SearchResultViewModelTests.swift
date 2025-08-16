@@ -86,8 +86,25 @@ final class MockPlaceusecase: PlaceUsecaseProtocol{
         return .failure(.clientError("not-implemented"))
     }
     
+    
+    var proposalResultToReturn: Result<PlaceProposalResponse, NetworkError>?
+
+    var proposalExp: XCTestExpectation?
+    
+    var createProposalCallCount = 0
+    var lastProposalPlaceId: String?
+    var lastProposalComment: String?
+    
     func createPlaceProposal(placeId: String, comment: String) async -> Result<BibleAtlas.PlaceProposalResponse, BibleAtlas.NetworkError> {
-        return .failure(.clientError("not-implemented"))
+        
+        createProposalCallCount+=1;
+        lastProposalPlaceId = placeId
+        lastProposalComment = comment
+        
+        defer{
+            proposalExp?.fulfill()
+        }
+        return proposalResultToReturn ?? .failure(.clientError("not-implemented"))
     }
     
     func deletePlaceMemo(placeId: String) async -> Result<BibleAtlas.PlaceMemoDeleteResponse, BibleAtlas.NetworkError> {
