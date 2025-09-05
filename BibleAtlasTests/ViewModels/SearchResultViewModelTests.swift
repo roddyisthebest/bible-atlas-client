@@ -115,8 +115,16 @@ final class MockPlaceusecase: PlaceUsecaseProtocol{
         return .failure(.clientError("not-implemented"))
     }
     
+    var createReportResultToReturn: Result<Int, NetworkError>?
+    var createReportExp: XCTestExpectation?
+    var reportType:PlaceReportType?
     func createPlaceReport(placeId: String, reportType: BibleAtlas.PlaceReportType, reason: String?) async -> Result<Int, BibleAtlas.NetworkError> {
-        return .failure(.clientError("not-implemented"))
+        
+        defer{
+            createReportExp?.fulfill()
+        }
+        self.reportType = reportType
+        return createReportResultToReturn ?? .failure(.clientError("not-implemented"))
     }
     
 }
