@@ -44,8 +44,17 @@ final class MockPlaceusecase: PlaceUsecaseProtocol{
         return  placesWithRepresentativePointResult ?? .failure(.clientError("not-implemented"))
     }
     
+    
+    var placeTypesResult: Result<BibleAtlas.ListResponse<BibleAtlas.PlaceTypeWithPlaceCount>, BibleAtlas.NetworkError>?
+    
+    var placeTypesExp: XCTestExpectation?
+    var placeTypesCallCount = 0
     func getPlaceTypes(limit: Int?, page: Int?) async -> Result<BibleAtlas.ListResponse<BibleAtlas.PlaceTypeWithPlaceCount>, BibleAtlas.NetworkError> {
-        return .failure(.clientError("not-implemented"))
+        defer{
+            placeTypesExp?.fulfill()
+            placeTypesCallCount += 1
+        }
+        return  placeTypesResult ?? .failure(.clientError("not-implemented"))
     }
     
     func getPrefixs() async -> Result<BibleAtlas.ListResponse<BibleAtlas.PlacePrefix>, BibleAtlas.NetworkError> {

@@ -17,8 +17,6 @@ import RxBlocking
 
 final class MemoBottomSheetViewModelTests: XCTestCase {
 
-    
-
     var placeUsecase:MockPlaceusecase!
     var notificationService:MockNotificationService!
     var collectionStore: MockCollectionStore!
