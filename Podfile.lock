@@ -45,12 +45,16 @@ PODS:
   - OHHTTPStubs/Swift (9.1.0):
     - OHHTTPStubs/Default
   - PromisesObjC (2.3.1)
+  - RxBlocking (6.8.0):
+    - RxSwift (= 6.8.0)
   - RxCocoa (6.8.0):
     - RxRelay (= 6.8.0)
     - RxSwift (= 6.8.0)
   - RxRelay (6.8.0):
     - RxSwift (= 6.8.0)
   - RxSwift (6.8.0)
+  - RxTest (6.8.0):
+    - RxSwift (= 6.8.0)
   - SnapKit (5.7.1)
   - UBottomSheet (1.0.10)
 
@@ -64,8 +68,10 @@ DEPENDENCIES:
   - MarkdownView
   - OHHTTPStubs
   - OHHTTPStubs/Swift
+  - RxBlocking
   - RxCocoa
   - RxSwift
+  - RxTest
   - SnapKit
   - UBottomSheet
 
@@ -85,9 +91,11 @@ SPEC REPOS:
     - MarkdownView
     - OHHTTPStubs
     - PromisesObjC
+    - RxBlocking
     - RxCocoa
     - RxRelay
     - RxSwift
+    - RxTest
     - SnapKit
     - UBottomSheet
 
@@ -106,12 +114,14 @@ SPEC CHECKSUMS:
   MarkdownView: 22249778219cc22901f1454e8355298dd0bda7f0
   OHHTTPStubs: 90eac6d8f2c18317baeca36698523dc67c513831
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
+  RxBlocking: a8b634fba6850913bc3df40bb73fd08b2dbf0f01
   RxCocoa: 2d33c1e1e5d66492052ad46b11024ae287572880
   RxRelay: 335c78b926a2aea8d863a6d25f1ed3b5ad8e8705
   RxSwift: 4e28be97cbcfeee614af26d83415febbf2bf6f45
+  RxTest: d0fa1ec82feb41efa826a59173ec65eafbbe4aaf
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   UBottomSheet: a40ddcad489bb6d5f6171ffa96f161e558fcfaf0
 
-PODFILE CHECKSUM: 491217bbe45aad96beed78b4ce5fcc9a308645ca
+PODFILE CHECKSUM: 858f92408957648cdeda41d4fbb91d8a526907a6
 
 COCOAPODS: 1.16.2

@@ -118,6 +118,7 @@ final class MainViewController: UIViewController, Presentable  {
             })
             .disposed(by: disposeBag)
         
+        
         output?.geoJsonRender$
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] geoJson in

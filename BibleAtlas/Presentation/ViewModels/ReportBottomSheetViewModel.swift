@@ -35,7 +35,7 @@ final class ReportBottomSheetViewModel:ReportBottomSheetViewModelProtocol{
 
     private let placeUsecase:PlaceUsecaseProtocol?
 
-    init(navigator: BottomSheetNavigator?, reportType:PlaceReportType, placeUsecase:PlaceUsecaseProtocol?, placeId:String) {
+    init(navigator: BottomSheetNavigator?, reportType:PlaceReportType?, placeUsecase:PlaceUsecaseProtocol?, placeId:String?) {
         self.navigator = navigator
         self.reportType$.accept(reportType)
         self.placeUsecase = placeUsecase
@@ -43,14 +43,16 @@ final class ReportBottomSheetViewModel:ReportBottomSheetViewModelProtocol{
     }
     
     func transform(input:Input) -> Output{
-        Observable.merge(input.cancelButttonTapped$).bind{[weak self] in
-            self?.navigator?.dismiss(animated: true)
-        }.disposed(by: disposeBag)
-            
-        input.placeTypeCellTapped$.bind{[weak self] placeType in
-            self?.reportType$.accept(placeType)
-        }.disposed(by: disposeBag)
         
+        input.cancelButttonTapped$.subscribe(onNext:{[weak self] in
+            self?.navigator?.dismiss(animated: true)
+        }).disposed(by: disposeBag)
+ 
+        input.placeTypeCellTapped$.subscribe(onNext:{
+            [weak self] placeType in
+            self?.reportType$.accept(placeType)
+        }).disposed(by: disposeBag)
+            
         input.confirmButtonTapped$.bind{[weak self] reason in
             self?.createReport(reason: reason)
         }.disposed(by: disposeBag)

@@ -95,6 +95,12 @@
 		EC940EAC2DF71A8100406944 /* MapUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940EAB2DF71A8100406944 /* MapUsecase.swift */; };
 		EC940EAE2DF7229800406944 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940EAD2DF7229800406944 /* MainViewModel.swift */; };
 		EC940EB02E01950D00406944 /* SearchBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940EAF2E01950D00406944 /* SearchBottomSheetViewModel.swift */; };
+		EC9A0A382E6A8EB300BB580E /* ReportBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9A0A372E6A8EB300BB580E /* ReportBottomSheetViewModelTests.swift */; };
+		EC9A0A3A2E6ACCB400BB580E /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9A0A392E6ACCB400BB580E /* MainViewModelTests.swift */; };
+		EC9A0A3D2E6B2F1A00BB580E /* MockMapUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9A0A3C2E6B2F1A00BB580E /* MockMapUsecase.swift */; };
+		EC9A0A3F2E6B33AB00BB580E /* MockPlaceUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9A0A3E2E6B33AB00BB580E /* MockPlaceUsecase.swift */; };
+		EC9A0A412E6C0AF000BB580E /* MemoBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9A0A402E6C0AF000BB580E /* MemoBottomSheetViewModelTests.swift */; };
+		EC9A0A432E6C1EE400BB580E /* PlaceTypesBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9A0A422E6C1EE400BB580E /* PlaceTypesBottomSheetViewModelTests.swift */; };
 		ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B962D5082B9005B0428 /* AppDelegate.swift */; };
 		ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B982D5082B9005B0428 /* SceneDelegate.swift */; };
 		ECA94B9B2D5082B9005B0428 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B9A2D5082B9005B0428 /* ViewController.swift */; };
@@ -113,6 +119,10 @@
 		ECA94BE82D50AF41005B0428 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BE72D50AF41005B0428 /* AuthRepository.swift */; };
 		ECA94BEB2D50B0B9005B0428 /* AuthUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BEA2D50B0B9005B0428 /* AuthUsecase.swift */; };
 		ECA94BEF2D50B492005B0428 /* MockingApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94BEE2D50B492005B0428 /* MockingApi.swift */; };
+		ECC49F7F2E4A1F000061B467 /* LoginBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC49F7E2E4A1F000061B467 /* LoginBottomSheetViewModelTests.swift */; };
+		ECC49F812E4CC3C10061B467 /* MyCollectionBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC49F802E4CC3C10061B467 /* MyCollectionBottomSheetViewModelTests.swift */; };
+		ECC49F832E4F25090061B467 /* PlaceDetailBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC49F822E4F25090061B467 /* PlaceDetailBottomSheetViewModelTests.swift */; };
+		ECC49F852E506BED0061B467 /* PlaceModificationBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC49F842E506BED0061B467 /* PlaceModificationBottomSheetViewModelTests.swift */; };
 		ECCB51D22E140AC1007E4AB7 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB51D12E140AC1007E4AB7 /* SearchTableViewCell.swift */; };
 		ECCB51D42E18F4D7007E4AB7 /* PopularPlaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB51D32E18F4D7007E4AB7 /* PopularPlaceTableViewCell.swift */; };
 		ECCB51D62E1A95F9007E4AB7 /* RecentSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB51D52E1A95F9007E4AB7 /* RecentSearchService.swift */; };
@@ -136,6 +146,13 @@
 		ECD972712E38B6C200D94767 /* MKMapRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972702E38B6C200D94767 /* MKMapRect.swift */; };
 		ECD972732E3DEE2000D94767 /* ShareItemSourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972722E3DEE2000D94767 /* ShareItemSourceView.swift */; };
 		ECD972752E3E086100D94767 /* CollectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972742E3E086100D94767 /* CollectionStore.swift */; };
+		ECD972782E3F71B100D94767 /* AuthUsecaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972772E3F71B100D94767 /* AuthUsecaseTests.swift */; };
+		ECD9727C2E3F8A0B00D94767 /* AuthApiServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9727B2E3F8A0B00D94767 /* AuthApiServiceTests.swift */; };
+		ECD9727F2E3F92DA00D94767 /* AuthRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9727E2E3F92DA00D94767 /* AuthRepositoryTests.swift */; };
+		ECD972822E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972812E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift */; };
+		ECD972842E4487CA00D94767 /* HomeContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972832E4487CA00D94767 /* HomeContentViewModelTests.swift */; };
+		ECD972862E45EE5900D94767 /* SearchResultViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972852E45EE5900D94767 /* SearchResultViewModelTests.swift */; };
+		ECD972892E47371900D94767 /* SearchReadyViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972882E47371900D94767 /* SearchReadyViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -248,6 +265,12 @@
 		EC940EAB2DF71A8100406944 /* MapUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapUsecase.swift; sourceTree = "<group>"; };
 		EC940EAD2DF7229800406944 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		EC940EAF2E01950D00406944 /* SearchBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBottomSheetViewModel.swift; sourceTree = "<group>"; };
+		EC9A0A372E6A8EB300BB580E /* ReportBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
+		EC9A0A392E6ACCB400BB580E /* MainViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelTests.swift; sourceTree = "<group>"; };
+		EC9A0A3C2E6B2F1A00BB580E /* MockMapUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMapUsecase.swift; sourceTree = "<group>"; };
+		EC9A0A3E2E6B33AB00BB580E /* MockPlaceUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPlaceUsecase.swift; sourceTree = "<group>"; };
+		EC9A0A402E6C0AF000BB580E /* MemoBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
+		EC9A0A422E6C1EE400BB580E /* PlaceTypesBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTypesBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
 		ECA94B932D5082B9005B0428 /* BibleAtlas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BibleAtlas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECA94B962D5082B9005B0428 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ECA94B982D5082B9005B0428 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -270,6 +293,10 @@
 		ECA94BE72D50AF41005B0428 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		ECA94BEA2D50B0B9005B0428 /* AuthUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUsecase.swift; sourceTree = "<group>"; };
 		ECA94BEE2D50B492005B0428 /* MockingApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockingApi.swift; sourceTree = "<group>"; };
+		ECC49F7E2E4A1F000061B467 /* LoginBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
+		ECC49F802E4CC3C10061B467 /* MyCollectionBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
+		ECC49F822E4F25090061B467 /* PlaceDetailBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
+		ECC49F842E506BED0061B467 /* PlaceModificationBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModificationBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
 		ECCB51D02E0AE473007E4AB7 /* BibleAtlas.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BibleAtlas.entitlements; sourceTree = "<group>"; };
 		ECCB51D12E140AC1007E4AB7 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		ECCB51D32E18F4D7007E4AB7 /* PopularPlaceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularPlaceTableViewCell.swift; sourceTree = "<group>"; };
@@ -294,6 +321,13 @@
 		ECD972702E38B6C200D94767 /* MKMapRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKMapRect.swift; sourceTree = "<group>"; };
 		ECD972722E3DEE2000D94767 /* ShareItemSourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareItemSourceView.swift; sourceTree = "<group>"; };
 		ECD972742E3E086100D94767 /* CollectionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionStore.swift; sourceTree = "<group>"; };
+		ECD972772E3F71B100D94767 /* AuthUsecaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUsecaseTests.swift; sourceTree = "<group>"; };
+		ECD9727B2E3F8A0B00D94767 /* AuthApiServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthApiServiceTests.swift; sourceTree = "<group>"; };
+		ECD9727E2E3F92DA00D94767 /* AuthRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryTests.swift; sourceTree = "<group>"; };
+		ECD972812E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
+		ECD972832E4487CA00D94767 /* HomeContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewModelTests.swift; sourceTree = "<group>"; };
+		ECD972852E45EE5900D94767 /* SearchResultViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModelTests.swift; sourceTree = "<group>"; };
+		ECD972882E47371900D94767 /* SearchReadyViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReadyViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -547,6 +581,15 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		EC9A0A3B2E6B2EF200BB580E /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				EC9A0A3C2E6B2F1A00BB580E /* MockMapUsecase.swift */,
+				EC9A0A3E2E6B33AB00BB580E /* MockPlaceUsecase.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		ECA94B8A2D5082B9005B0428 = {
 			isa = PBXGroup;
 			children = (
@@ -594,6 +637,11 @@
 		ECA94BAF2D5082BA005B0428 /* BibleAtlasTests */ = {
 			isa = PBXGroup;
 			children = (
+				EC9A0A3B2E6B2EF200BB580E /* Mocks */,
+				ECD972802E40F48900D94767 /* ViewModels */,
+				ECD9727D2E3F928700D94767 /* Repositories */,
+				ECD9727A2E3F89F200D94767 /* Services */,
+				ECD972762E3F718D00D94767 /* Usecases */,
 				ECA94BB02D5082BA005B0428 /* BibleAtlasTests.swift */,
 				EC64B9702DE3456900D3C8A7 /* PaginationTests.swift */,
 			);
@@ -759,6 +807,49 @@
 				EC7058892DB8BCA5002D47DF /* Buttons */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		ECD972762E3F718D00D94767 /* Usecases */ = {
+			isa = PBXGroup;
+			children = (
+				ECD972772E3F71B100D94767 /* AuthUsecaseTests.swift */,
+			);
+			path = Usecases;
+			sourceTree = "<group>";
+		};
+		ECD9727A2E3F89F200D94767 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				ECD9727B2E3F8A0B00D94767 /* AuthApiServiceTests.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		ECD9727D2E3F928700D94767 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				ECD9727E2E3F92DA00D94767 /* AuthRepositoryTests.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		ECD972802E40F48900D94767 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				ECD972812E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift */,
+				ECD972832E4487CA00D94767 /* HomeContentViewModelTests.swift */,
+				ECD972852E45EE5900D94767 /* SearchResultViewModelTests.swift */,
+				ECD972882E47371900D94767 /* SearchReadyViewModelTests.swift */,
+				ECC49F7E2E4A1F000061B467 /* LoginBottomSheetViewModelTests.swift */,
+				ECC49F802E4CC3C10061B467 /* MyCollectionBottomSheetViewModelTests.swift */,
+				ECC49F822E4F25090061B467 /* PlaceDetailBottomSheetViewModelTests.swift */,
+				ECC49F842E506BED0061B467 /* PlaceModificationBottomSheetViewModelTests.swift */,
+				EC9A0A372E6A8EB300BB580E /* ReportBottomSheetViewModelTests.swift */,
+				EC9A0A392E6ACCB400BB580E /* MainViewModelTests.swift */,
+				EC9A0A402E6C0AF000BB580E /* MemoBottomSheetViewModelTests.swift */,
+				EC9A0A422E6C1EE400BB580E /* PlaceTypesBottomSheetViewModelTests.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		FA9885F27C7E364B662974A9 /* Pods */ = {
@@ -1146,8 +1237,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC9A0A3F2E6B33AB00BB580E /* MockPlaceUsecase.swift in Sources */,
+				ECD972892E47371900D94767 /* SearchReadyViewModelTests.swift in Sources */,
+				ECC49F7F2E4A1F000061B467 /* LoginBottomSheetViewModelTests.swift in Sources */,
+				ECD9727C2E3F8A0B00D94767 /* AuthApiServiceTests.swift in Sources */,
 				ECA94BB12D5082BA005B0428 /* BibleAtlasTests.swift in Sources */,
+				ECD972782E3F71B100D94767 /* AuthUsecaseTests.swift in Sources */,
+				ECD972842E4487CA00D94767 /* HomeContentViewModelTests.swift in Sources */,
 				EC64B9712DE3456900D3C8A7 /* PaginationTests.swift in Sources */,
+				EC9A0A382E6A8EB300BB580E /* ReportBottomSheetViewModelTests.swift in Sources */,
+				ECD972822E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift in Sources */,
+				EC9A0A3A2E6ACCB400BB580E /* MainViewModelTests.swift in Sources */,
+				EC9A0A412E6C0AF000BB580E /* MemoBottomSheetViewModelTests.swift in Sources */,
+				ECD972862E45EE5900D94767 /* SearchResultViewModelTests.swift in Sources */,
+				EC9A0A432E6C1EE400BB580E /* PlaceTypesBottomSheetViewModelTests.swift in Sources */,
+				ECD9727F2E3F92DA00D94767 /* AuthRepositoryTests.swift in Sources */,
+				EC9A0A3D2E6B2F1A00BB580E /* MockMapUsecase.swift in Sources */,
+				ECC49F832E4F25090061B467 /* PlaceDetailBottomSheetViewModelTests.swift in Sources */,
+				ECC49F812E4CC3C10061B467 /* MyCollectionBottomSheetViewModelTests.swift in Sources */,
+				ECC49F852E506BED0061B467 /* PlaceModificationBottomSheetViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -55,9 +55,20 @@ final class PlaceModificationBottomSheetViewModel:PlaceModificationBottomSheetVi
         guard let placeId = placeId else {
             return
         }
-        self.isCreating$.accept(true)
+      
+        let trimmed = comment.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        guard !trimmed.isEmpty else {
+            interactionError$.accept(.clientError("Please enter a comment."))
+            return
+        }
+
+        if isCreating$.value { return }
+        
+        isCreating$.accept(true)
         
         Task{
+            @MainActor in
             defer{
                 self.isCreating$.accept(false)
             }
@@ -65,7 +76,7 @@ final class PlaceModificationBottomSheetViewModel:PlaceModificationBottomSheetVi
             let result = await self.placeUsecase?.createPlaceProposal(placeId: placeId, comment: comment)
             
             switch(result){
-                case .success(let response):
+                case .success:
                     self.isSuccess$.accept(true)
                 case .failure(let error):
                     self.interactionError$.accept(error)

@@ -47,7 +47,6 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
     public let isSearchingMode$ = BehaviorRelay<Bool>(value: false);
     public let keyword$ = BehaviorRelay<String>(value: "");
     public let cancelButtonTapped$ = PublishRelay<Void>();
-    
 
     init(navigator:BottomSheetNavigator?, appStore:AppStoreProtocol?, authUseCase:AuthUsecaseProtocol?, recentSearchService:RecentSearchServiceProtocol?){
         self.navigator = navigator
@@ -63,20 +62,10 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
 
         input.avatarButtonTapped$
             .withLatestFrom(profile$)
-            .observe(on: MainScheduler.asyncInstance)
             .subscribe(onNext: { [weak self] profile in
                 guard let self = self else { return }
                 if (profile != nil) {
                         self.navigator?.present(.myPage)
-//                    let result = self.authUsecase?.logout()
-//                    switch result {
-//                        case .success:
-//                            self.appStore?.dispatch(.logout)
-//                        case .failure(let error):
-//                            print(error.localizedDescription)
-//                        case .none:
-//                            print("none")
-//                    }
                 } else {
                     self.navigator?.present(.login)
                 }
@@ -86,37 +75,30 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
         
         Observable
             .combineLatest(isSearchingMode$, keyword$)
-            .subscribe(onNext: { [weak self] isSearchingMode, keyword in
-                guard let self = self else { return }
-
-                if isSearchingMode {
-                    if keyword.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                        self.screenMode$.accept(.searchReady)
-                    } else {
-                        self.screenMode$.accept(.searching)
-                    }
-                } else {
-                    self.screenMode$.accept(.home)
-                }
-            })
+            .map { isSearchingMode, keyword in
+                let trimmed = keyword.trimmingCharacters(in: .whitespacesAndNewlines)
+                let screenMode: HomeScreenMode = isSearchingMode
+                    ? (trimmed.isEmpty ? .searchReady : .searching)
+                    : .home
+                return screenMode
+            }
+            .distinctUntilChanged()
+            .bind(to: screenMode$)
             .disposed(by: disposeBag)
         
         input.cancelButtonTapped$
-            .subscribe(onNext: {[weak self] in
+            .bind{[weak self] in
                 guard let self = self else { return }
-
                 self.cancelButtonTapped$.accept(Void())
                 self.isSearchingMode$.accept(false)
                 self.keyword$.accept("")
-                
-            })
+            }
             .disposed(by: disposeBag)
         
         input.editingDidBegin$
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] in
+            .bind { [weak self] in
                 self?.isSearchingMode$.accept(true);
-            })
+            }
             .disposed(by: disposeBag)
             
         return Output(profile$: profile$.asObservable(), isLoggedIn$: isLoggedIn$.asObservable(), screenMode$: screenMode$.asObservable(), keyword$: keyword$, keywordText$: keyword$.asDriver(onErrorJustReturn: ""), isSearchingMode$: isSearchingMode$.asObservable())

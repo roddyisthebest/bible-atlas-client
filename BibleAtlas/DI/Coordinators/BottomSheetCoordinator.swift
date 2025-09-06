@@ -9,7 +9,7 @@ import UIKit
 import PanModal
 
 
-enum BottomSheetType {
+enum BottomSheetType:Equatable {
     case home
     case login
     case myCollection(PlaceFilter)

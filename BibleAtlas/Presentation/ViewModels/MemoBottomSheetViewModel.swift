@@ -152,7 +152,6 @@ final class MemoBottomSheetViewModel:MemoBottomSheetViewModelProtocol{
                 self.isDeleting$.accept(false)
             }
             
-            
             let result = await self.placeUsecase?.deletePlaceMemo(placeId: self.placeId)
             
             switch(result){

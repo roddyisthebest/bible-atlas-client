@@ -13,7 +13,31 @@ struct CollectionState {
     var memoedPlaceIds: Set<String>
 }
 
-enum CollectionAction {
+enum CollectionAction:Equatable {
+    static func == (lhs: CollectionAction, rhs: CollectionAction) -> Bool {
+        switch (lhs, rhs) {
+        case let (.like(a), .like(b)):
+            return a == b
+        case let (.unlike(a), .unlike(b)):
+            return a == b
+        case let (.bookmark(a), .bookmark(b)):
+            return a == b
+        case let (.unbookmark(a), .unbookmark(b)):
+            return a == b
+        case let (.addMemo(a), .addMemo(b)):
+            return a == b
+        case let (.removeMemo(a), .removeMemo(b)):
+            return a == b
+        case (.reset, .reset):
+            return true
+        case let (.initialize(a), .initialize(b)):
+            return a == b
+        default:
+            return false
+        }
+    }
+
+    
     case like(String)
     case unlike(String)
     case bookmark(String)

@@ -27,12 +27,15 @@ final class PlaceTypesBottomSheetViewModel:PlaceTypesBottomSheetViewModelProtoco
     
     private var pagination = Pagination(pageSize: 18)
     
+    private let schedular:SchedulerType
 
     
     
-    init(navigator:BottomSheetNavigator?,placeUsecase:PlaceUsecaseProtocol?){
+    init(navigator:BottomSheetNavigator?,placeUsecase:PlaceUsecaseProtocol?, schedular:SchedulerType = MainScheduler.instance
+    ){
         self.navigator = navigator
         self.placeUsecase = placeUsecase
+        self.schedular = schedular
     }
     
     
@@ -70,7 +73,7 @@ final class PlaceTypesBottomSheetViewModel:PlaceTypesBottomSheetViewModelProtoco
         }).disposed(by: disposeBag)
         
         input.bottomReached$
-            .debounce(.milliseconds(100), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(100), scheduler: schedular)
             .subscribe(onNext:{ [weak self] in
                 guard let self = self else { return }
 

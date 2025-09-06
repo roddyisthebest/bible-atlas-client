@@ -10,7 +10,7 @@ import Foundation
 
 protocol AuthUsecaseProtocol{
     func loginUser(body:AuthPayload) async -> Result<UserResponse,NetworkError>
-    func logout() -> Result<Bool, Error>
+    func logout() -> Result<Void, Error>
     
     func loginGoogleUser(idToken: String) async -> Result<UserResponse,NetworkError>
     func loginAppleUser(idToken: String) async -> Result<UserResponse,NetworkError>
@@ -72,12 +72,11 @@ public struct AuthUsecase:AuthUsecaseProtocol{
     
     func withdraw() async -> Result<Int, NetworkError> {
         let result = await repository.withdraw();
-        
         return result;
     }
     
     
-    func logout() -> Result<Bool, Error>{
+    func logout() -> Result<Void, Error>{
         return tokenProvider.clear()
     }
 }

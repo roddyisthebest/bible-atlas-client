@@ -33,9 +33,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let apiClient = AuthorizedApiClient(session: session, tokenProvider: tokenProvider, tokenRefresher: tokenRefresher, errorHandlerService: errorHandlerService)
         
         let authApiService = AuthApiService(apiClient: apiClient, url: "\(Constants.shared.url)/auth")
-        
         let userApiService = UserApiService(apiClient: apiClient, url: "\(Constants.shared.url)/user")
-        
         let placeApiService = PlaceApiService(apiClient: apiClient, url: "\(Constants.shared.url)")
         
         
