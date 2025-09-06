@@ -50,21 +50,41 @@ final class MockAuthUsecase:AuthUsecaseProtocol{
 }
 
 
-final class MockNotificationService:RxNotificationServiceProtocol{
-    
+
+
+final class MockNotificationService: RxNotificationServiceProtocol {
+
+    // 테스트용 추적
     var calledNotificationName: Notification.Name?
-    
+
+    // 이름별 Subject 풀
+    private var subjects: [Notification.Name: PublishSubject<Notification>] = [:]
+
+    // 필요 시 해당 이름의 Subject를 가져오거나 생성
+    private func subject(for name: Notification.Name) -> PublishSubject<Notification> {
+        if let s = subjects[name] { return s }
+        let s = PublishSubject<Notification>()
+        subjects[name] = s
+        return s
+    }
+
+    // 실제 트리거: observe 구독자들에게 이벤트 전달
     func post(_ name: Notification.Name, object: Any?) {
-        self.calledNotificationName = name;
-        
+        calledNotificationName = name
+        subject(for: name).onNext(Notification(name: name, object: object))
     }
-    
-    func observe(_ name: Notification.Name) -> RxSwift.Observable<Notification> {
-        .empty()
+
+    // 구독 제공
+    func observe(_ name: Notification.Name) -> Observable<Notification> {
+        subject(for: name).asObservable()
     }
-    
-    
+
+    // (옵션) 테스트에서 쓰기 좋은 헬퍼
+    func emit(_ name: Notification.Name, object: Any? = nil) {
+        post(name, object: object)
+    }
 }
+
 
 
 final class LoginBottomSheetViewModelTests:XCTestCase{

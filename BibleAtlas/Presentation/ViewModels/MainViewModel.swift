@@ -93,7 +93,6 @@ final class MainViewModel: MainViewModelProtocol {
     
     private func bindNotificationService(){
         self.notificationService?.observe(.fetchGeoJsonRequired)
-            .observe(on: MainScheduler.instance)
             .compactMap { $0.object as? String }
             .subscribe(onNext: { [weak self] placeId in
                 self?.selectedPlaceId$.accept(placeId)
@@ -101,7 +100,6 @@ final class MainViewModel: MainViewModelProtocol {
             }).disposed(by: disposeBag)
         
         self.notificationService?.observe(.resetGeoJson)
-            .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
                 self?.resetMapView$.accept(Void())
                 self?.zoomOutMapView$.accept(Void())
@@ -118,26 +116,32 @@ final class MainViewModel: MainViewModelProtocol {
     }
     
     private func fetchGeoJson(placeId:String){
-        isLoading$.accept(true)
-        error$.accept(nil)
+        Task { [weak self] in
+               guard let self else { return }
+
+               // 시작: 메인에서 상태 세팅
+               await MainActor.run {
+                   self.isLoading$.accept(true)
+                   self.error$.accept(nil)
+               }
+
+               let result = await self.mapUseCase?.getGeoJson(placeId: placeId)
+
+               // 종료: 메인에서 결과 반영 + 로딩 해제
+               await MainActor.run {
+                   switch result {
+                   case .success(let features):
+                       self.geoJsonRender$.accept(features)
+                   case .failure(let e):
+                       self.error$.accept(e)
+                   case .none:
+                       break
+                   }
+                   self.isLoading$.accept(false)
+               }
+           }
         
         
-        Task{
-            defer{
-                isLoading$.accept(false)
-            }
-            
-            let result = await mapUseCase?.getGeoJson(placeId: placeId);
-            switch result {
-            case .success(let response):
-                geoJsonRender$.accept(response)
-            case .failure(let error):
-                
-                error$.accept(error)
-            case .none:
-                print("none")
-            }
-        }
         
     }
     
