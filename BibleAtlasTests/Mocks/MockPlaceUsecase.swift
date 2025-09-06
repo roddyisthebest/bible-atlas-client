@@ -91,8 +91,15 @@ final class MockPlaceusecase: PlaceUsecaseProtocol{
         return likeResultToReturn ?? .failure(.clientError("not-implemented"))
     }
     
+    
+    var createMemoResult:Result<BibleAtlas.PlaceMemoResponse, BibleAtlas.NetworkError>?
+    var memoExp: XCTestExpectation?
+    
     func createOrUpdatePlaceMemo(placeId: String, text: String) async -> Result<BibleAtlas.PlaceMemoResponse, BibleAtlas.NetworkError> {
-        return .failure(.clientError("not-implemented"))
+        defer{
+            memoExp?.fulfill()
+        }
+        return  createMemoResult ?? .failure(.clientError("not-implemented"))
     }
     
     
@@ -116,8 +123,15 @@ final class MockPlaceusecase: PlaceUsecaseProtocol{
         return proposalResultToReturn ?? .failure(.clientError("not-implemented"))
     }
     
+    
+    var deletePlaceMemoResult: Result<BibleAtlas.PlaceMemoDeleteResponse, BibleAtlas.NetworkError>?
+    var deletePlaceMemoExp: XCTestExpectation?
+    
     func deletePlaceMemo(placeId: String) async -> Result<BibleAtlas.PlaceMemoDeleteResponse, BibleAtlas.NetworkError> {
-        return .failure(.clientError("not-implemented"))
+        defer{
+            deletePlaceMemoExp?.fulfill()
+        }
+        return  deletePlaceMemoResult ?? .failure(.clientError("not-implemented"))
     }
     
     func getBibleVerse(version: BibleAtlas.BibleVersion, book: String, chapter: String, verse: String) async -> Result<BibleAtlas.BibleVerseResponse, BibleAtlas.NetworkError> {
