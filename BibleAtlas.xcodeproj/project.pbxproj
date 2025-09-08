@@ -101,6 +101,7 @@
 		EC9A0A3F2E6B33AB00BB580E /* MockPlaceUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9A0A3E2E6B33AB00BB580E /* MockPlaceUsecase.swift */; };
 		EC9A0A412E6C0AF000BB580E /* MemoBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9A0A402E6C0AF000BB580E /* MemoBottomSheetViewModelTests.swift */; };
 		EC9A0A432E6C1EE400BB580E /* PlaceTypesBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9A0A422E6C1EE400BB580E /* PlaceTypesBottomSheetViewModelTests.swift */; };
+		EC9A0A452E6C71BF00BB580E /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC9A0A442E6C71BF00BB580E /* Launch Screen.storyboard */; };
 		ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B962D5082B9005B0428 /* AppDelegate.swift */; };
 		ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B982D5082B9005B0428 /* SceneDelegate.swift */; };
 		ECA94B9B2D5082B9005B0428 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B9A2D5082B9005B0428 /* ViewController.swift */; };
@@ -271,6 +272,7 @@
 		EC9A0A3E2E6B33AB00BB580E /* MockPlaceUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPlaceUsecase.swift; sourceTree = "<group>"; };
 		EC9A0A402E6C0AF000BB580E /* MemoBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
 		EC9A0A422E6C1EE400BB580E /* PlaceTypesBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTypesBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
+		EC9A0A442E6C71BF00BB580E /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		ECA94B932D5082B9005B0428 /* BibleAtlas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BibleAtlas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECA94B962D5082B9005B0428 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ECA94B982D5082B9005B0428 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -627,6 +629,7 @@
 				ECA94B9A2D5082B9005B0428 /* ViewController.swift */,
 				ECA94BA22D5082BA005B0428 /* Assets.xcassets */,
 				ECA94BA72D5082BA005B0428 /* Info.plist */,
+				EC9A0A442E6C71BF00BB580E /* Launch Screen.storyboard */,
 				ECA94B9F2D5082B9005B0428 /* BibleAtlas.xcdatamodeld */,
 				EC386E052E0AD31900251FC6 /* GoogleService-Info.plist */,
 				ECCB51D92E1AB31A007E4AB7 /* PersistenceController.swift */,
@@ -983,6 +986,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC9A0A452E6C71BF00BB580E /* Launch Screen.storyboard in Resources */,
 				ECA94BA32D5082BA005B0428 /* Assets.xcassets in Resources */,
 				EC386E062E0AD31900251FC6 /* GoogleService-Info.plist in Resources */,
 			);
@@ -1417,7 +1421,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BibleAtlas/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
@@ -1448,7 +1452,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BibleAtlas/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
