@@ -57,8 +57,15 @@ final class MockPlaceusecase: PlaceUsecaseProtocol{
         return  placeTypesResult ?? .failure(.clientError("not-implemented"))
     }
     
+    
+    var prefixExp: XCTestExpectation?
+    var prefixResult: Result<BibleAtlas.ListResponse<BibleAtlas.PlacePrefix>, BibleAtlas.NetworkError>?
+    
     func getPrefixs() async -> Result<BibleAtlas.ListResponse<BibleAtlas.PlacePrefix>, BibleAtlas.NetworkError> {
-        return .failure(.clientError("not-implemented"))
+        defer{
+            prefixExp?.fulfill()
+        }
+        return  prefixResult ?? .failure(.clientError("not-implemented"))
     }
     
     func getPlace(placeId: String) async -> Result<BibleAtlas.Place, BibleAtlas.NetworkError> {
