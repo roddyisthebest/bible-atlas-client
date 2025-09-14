@@ -25,6 +25,8 @@ final class RecentSearchesBottomSheetViewModel:RecentSearchesBottomSheetViewMode
     private let errorToFetch$ = BehaviorRelay<RecentSearchError?>(value: nil)
     private let errorToInteract$ = BehaviorRelay<RecentSearchError?>(value: nil)
 
+    private let schedular:SchedulerType
+
     
     private let isInitialLoading$ = BehaviorRelay<Bool>(value: true);
     private let isFetchingNext$ = BehaviorRelay<Bool>(value: false);
@@ -34,9 +36,10 @@ final class RecentSearchesBottomSheetViewModel:RecentSearchesBottomSheetViewMode
     private var pagination = Pagination(pageSize: 15)
 
     
-    init(navigator: BottomSheetNavigator?, recentSearchService: RecentSearchServiceProtocol?) {
+    init(navigator: BottomSheetNavigator?, recentSearchService: RecentSearchServiceProtocol?, schedular:SchedulerType = MainScheduler.instance) {
         self.navigator = navigator
         self.recentSearchService = recentSearchService
+        self.schedular = schedular
     }
     
     func transform(input: Input) -> Output {
@@ -65,7 +68,7 @@ final class RecentSearchesBottomSheetViewModel:RecentSearchesBottomSheetViewMode
             
         }).disposed(by: disposeBag)
         
-        input.bottomReached$.debounce(.microseconds(100), scheduler: MainScheduler.instance).subscribe(onNext: { [weak self] in
+        input.bottomReached$.debounce(.microseconds(100), scheduler: schedular).subscribe(onNext: { [weak self] in
             guard let self = self else { return }
             
             if self.isFetchingNext$.value || !self.pagination.hasMore { return }

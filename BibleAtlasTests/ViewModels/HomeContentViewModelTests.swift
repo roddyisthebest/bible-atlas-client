@@ -76,8 +76,13 @@ final class MockUserUsecase: UserUsecaseProtocol {
 
 
 final class MockRecentSearchService: RecentSearchServiceProtocol {
+    
+    var resultToReturn: Result<RecentSearchFetchResult, RecentSearchError>?
+    var resultExp:XCTestExpectation?
     func fetch(limit: Int, page: Int?) -> Result<RecentSearchFetchResult, RecentSearchError> {
-        
+        defer{
+            resultExp?.fulfill()
+        }
         fetchCalled = true
         return resultToReturn ?? .success(RecentSearchFetchResult(items:[], total:0, page:0))
     }
@@ -90,8 +95,11 @@ final class MockRecentSearchService: RecentSearchServiceProtocol {
         .success(())
     }
     
+    
+    var clearAllResultToReturn: Result<Void, RecentSearchError>?
+
     func clearAll() -> Result<Void, BibleAtlas.RecentSearchError> {
-        .success(())
+        return clearAllResultToReturn ?? .failure(.unknown)
     }
     
     private let didChangeSubject$ = PublishSubject<Void>()
@@ -101,7 +109,6 @@ final class MockRecentSearchService: RecentSearchServiceProtocol {
 
     var fetchCalled = false
 
-    var resultToReturn: Result<RecentSearchFetchResult, RecentSearchError>?
     var saveResultToReturn: Result<Void,RecentSearchError>?
     
     init() {

@@ -109,6 +109,7 @@
 		EC9A0A502E6F110900BB580E /* AppBootstrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9A0A4F2E6F110900BB580E /* AppBootstrapper.swift */; };
 		EC9A0A522E6FE16900BB580E /* PlaceCharactersBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9A0A512E6FE16900BB580E /* PlaceCharactersBottomSheetViewModelTests.swift */; };
 		EC9A0A562E71B11A00BB580E /* BibleVerseDetailBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9A0A552E71B11A00BB580E /* BibleVerseDetailBottomSheetViewModelTests.swift */; };
+		EC9A0A582E74250D00BB580E /* RecentSearchesBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9A0A572E74250D00BB580E /* RecentSearchesBottomSheetViewModelTests.swift */; };
 		ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B962D5082B9005B0428 /* AppDelegate.swift */; };
 		ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B982D5082B9005B0428 /* SceneDelegate.swift */; };
 		ECA94B9B2D5082B9005B0428 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA94B9A2D5082B9005B0428 /* ViewController.swift */; };
@@ -287,6 +288,7 @@
 		EC9A0A4F2E6F110900BB580E /* AppBootstrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBootstrapper.swift; sourceTree = "<group>"; };
 		EC9A0A512E6FE16900BB580E /* PlaceCharactersBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCharactersBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
 		EC9A0A552E71B11A00BB580E /* BibleVerseDetailBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleVerseDetailBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
+		EC9A0A572E74250D00BB580E /* RecentSearchesBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchesBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
 		ECA94B932D5082B9005B0428 /* BibleAtlas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BibleAtlas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECA94B962D5082B9005B0428 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ECA94B982D5082B9005B0428 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -880,6 +882,7 @@
 				EC9A0A422E6C1EE400BB580E /* PlaceTypesBottomSheetViewModelTests.swift */,
 				EC9A0A512E6FE16900BB580E /* PlaceCharactersBottomSheetViewModelTests.swift */,
 				EC9A0A552E71B11A00BB580E /* BibleVerseDetailBottomSheetViewModelTests.swift */,
+				EC9A0A572E74250D00BB580E /* RecentSearchesBottomSheetViewModelTests.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1295,6 +1298,7 @@
 				EC9A0A3D2E6B2F1A00BB580E /* MockMapUsecase.swift in Sources */,
 				ECC49F832E4F25090061B467 /* PlaceDetailBottomSheetViewModelTests.swift in Sources */,
 				ECC49F812E4CC3C10061B467 /* MyCollectionBottomSheetViewModelTests.swift in Sources */,
+				EC9A0A582E74250D00BB580E /* RecentSearchesBottomSheetViewModelTests.swift in Sources */,
 				ECC49F852E506BED0061B467 /* PlaceModificationBottomSheetViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
