@@ -129,10 +129,14 @@ final class LoginBottomSheetViewModel:LoginBottomSheetViewModelProtocol {
                         print("none!")
                 }
             }
-
+            
+        
             
         }).disposed(by: disposeBag)
         
+        input.closeButtonTapped$.subscribe(onNext:{[weak self] in
+            self?.navigator?.dismiss(animated: true)
+        }).disposed(by: disposeBag)
         
         
         return Output(error$: error$.asObservable(), localLoading$: localLoading$.asObservable(), googleLoading$: googleLoading$.asObservable(), appleLoading$: appleLoading$.asObservable())
@@ -143,6 +147,7 @@ final class LoginBottomSheetViewModel:LoginBottomSheetViewModelProtocol {
         let localButtonTapped$:Observable<Void>
         let googleTokenReceived$:Observable<String?>
         let appleTokenReceived$:Observable<String?>
+        let closeButtonTapped$:Observable<Void>
     }
     
     

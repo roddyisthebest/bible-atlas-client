@@ -74,7 +74,7 @@ final class LoginBottomSheetViewController: UIViewController {
         let localButtonTapped$ = localButton.rx.tap.asObservable();
         
         
-        let output = loginBottomSheetViewModel?.transform(input: LoginBottomSheetViewModel.Input(localButtonTapped$: localButtonTapped$.asObservable(), googleTokenReceived$: googleTokenReceived$.asObservable(), appleTokenReceived$: appleTokenReceived$.asObservable()))
+        let output = loginBottomSheetViewModel?.transform(input: LoginBottomSheetViewModel.Input(localButtonTapped$: localButtonTapped$, googleTokenReceived$: googleTokenReceived$.asObservable(), appleTokenReceived$: appleTokenReceived$.asObservable(), closeButtonTapped$: closeButtonTapped$))
         
         
         output?.error$.subscribe(onNext: { [weak self] error in
