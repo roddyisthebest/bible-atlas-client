@@ -62,7 +62,7 @@ final class VCFactory:VCFactoryProtocol {
     }
     
     private let lowDetent = UISheetPresentationController.Detent.custom { context in
-        return UIScreen.main.bounds.height * 0.35;
+        return UIScreen.main.bounds.height * 0.28;
     }
     
     private let centerDetent = UISheetPresentationController.Detent.custom { context in

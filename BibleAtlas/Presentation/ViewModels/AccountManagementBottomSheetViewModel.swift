@@ -48,7 +48,7 @@ final class AccountManagementBottomSheetViewModel:AccountManagementBottomSheetVi
     
     public let menuItems:[SimpleMenuItem] = [
         SimpleMenuItem(id: .navigateCS, nameText: "고객센터 문의하기", isMovable: true),
-        SimpleMenuItem(id: .navigatePROFILE, nameText: "프로필 수정", isMovable: true),
+//        SimpleMenuItem(id: .navigatePROFILE, nameText: "프로필 수정", isMovable: true),
         SimpleMenuItem(id: .logout, nameText: "로그아웃", isMovable: false),
         SimpleMenuItem(id: .withdrawal, nameText: "회원탈퇴", isMovable: false, textColor: .primaryRed)
     ]
