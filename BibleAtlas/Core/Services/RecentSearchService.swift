@@ -15,7 +15,25 @@ struct RecentSearchItem {
 }
 
 
-enum RecentSearchError: LocalizedError {
+enum RecentSearchError: LocalizedError ,Equatable{
+    static func == (lhs: RecentSearchError, rhs: RecentSearchError) -> Bool {
+        switch (lhs, rhs) {
+        case (.unknown, .unknown):
+            return true
+
+        case let (.fetchFailed(l), .fetchFailed(r)),
+             let (.saveFailed(l), .saveFailed(r)),
+             let (.deleteFailed(l), .deleteFailed(r)),
+             let (.clearFailed(l), .clearFailed(r)):
+            let ln = l as NSError
+            let rn = r as NSError
+            return ln.domain == rn.domain && ln.code == rn.code
+
+        default:
+            return false
+        }
+    }
+    
     case fetchFailed(Error)
     case saveFailed(Error)
     case deleteFailed(Error)
