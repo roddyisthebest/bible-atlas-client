@@ -19,6 +19,7 @@ final class PopularPlacesBottomSheetViewModel:PopularPlacesBottomSheetViewModelP
     private let disposeBag = DisposeBag();
     private weak var navigator: BottomSheetNavigator?
 
+    private let schedular:SchedulerType
     
     private let places$ = BehaviorRelay<[Place]>(value: []);
     
@@ -34,9 +35,10 @@ final class PopularPlacesBottomSheetViewModel:PopularPlacesBottomSheetViewModelP
     private var pagination = Pagination(pageSize: 15)
     
     
-    init(navigator:BottomSheetNavigator?, placeUsecase:PlaceUsecaseProtocol?){
+    init(navigator:BottomSheetNavigator?, placeUsecase:PlaceUsecaseProtocol?, schedular:SchedulerType = MainScheduler.instance){
         self.navigator = navigator
         self.placeUsecase = placeUsecase;
+        self.schedular = schedular
     }
         
     
@@ -79,7 +81,7 @@ final class PopularPlacesBottomSheetViewModel:PopularPlacesBottomSheetViewModelP
             })
             .disposed(by: disposeBag)
         
-        input.bottomReached$.debounce(.microseconds(100), scheduler: MainScheduler.instance).subscribe(onNext:{ [weak self] in
+        input.bottomReached$.debounce(.microseconds(100), scheduler: schedular).subscribe(onNext:{ [weak self] in
             guard let self = self else { return }
             
             if self.isFetchingNext$.value || !self.pagination.hasMore { return }
