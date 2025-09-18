@@ -131,7 +131,7 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
         
         let localButtonTapped$ = PublishRelay<Void>()
         
-        let _ = viewModel.transform(input: LoginBottomSheetViewModel.Input(localButtonTapped$: localButtonTapped$.asObservable(), googleTokenReceived$: .empty(), appleTokenReceived$: .empty()))
+        let _ = viewModel.transform(input: LoginBottomSheetViewModel.Input(localButtonTapped$: localButtonTapped$.asObservable(), googleTokenReceived$: .empty(), appleTokenReceived$: .empty(), closeButtonTapped$: .empty()))
         
         let stateExpectation = XCTestExpectation(description: "appStore state updated")
         
@@ -170,7 +170,7 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
         let output = vm.transform(input: .init(
             localButtonTapped$: localButtonTapped$.asObservable(),
             googleTokenReceived$: .empty(),
-            appleTokenReceived$: .empty()
+            appleTokenReceived$: .empty(), closeButtonTapped$: .empty()
         ))
 
         let exp = expectation(description: "error emitted")
@@ -198,7 +198,7 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
         
         let googleTokenReceived$ = PublishRelay<String?>();
         
-        let output = viewModel.transform(input: LoginBottomSheetViewModel.Input(localButtonTapped$: .empty(), googleTokenReceived$: googleTokenReceived$.asObservable(), appleTokenReceived$: .empty()))
+        let output = viewModel.transform(input: LoginBottomSheetViewModel.Input(localButtonTapped$: .empty(), googleTokenReceived$: googleTokenReceived$.asObservable(), appleTokenReceived$: .empty(), closeButtonTapped$: .empty()))
         
         
         
