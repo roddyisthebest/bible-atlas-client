@@ -117,7 +117,9 @@ final class AccountManagementBottomSheetViewModel:AccountManagementBottomSheetVi
                 isWithdrawing$.accept(false)
             }
             
-            let result = await self.authUsecase?.withdraw();
+            guard let result = await self.authUsecase?.withdraw() else {
+                return
+            };
             
             switch(result){
             case .success:
@@ -125,8 +127,6 @@ final class AccountManagementBottomSheetViewModel:AccountManagementBottomSheetVi
                 
             case .failure(let error):
                 self.error$.accept(error)
-            default:
-                print("as")
             }
             
         }
