@@ -123,10 +123,8 @@ final class MainViewController: UIViewController, Presentable  {
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] geoJson in
                 self?.renderGeoJson(features: geoJson)
-
             })
             .disposed(by: disposeBag)
-        
         
         
         
@@ -210,9 +208,9 @@ final class MainViewController: UIViewController, Presentable  {
         let height = mapView.bounds.height
 
         let padding = UIEdgeInsets(
-            top: height * 0.05,
+            top: height * 0.25,
             left: 0,
-            bottom: height * 0.25,
+            bottom: height * 0.75,
             right: 0
         )
 
@@ -409,3 +407,10 @@ final class CustomPointAnnotation: MKPointAnnotation {
 }
 
 
+
+#if DEBUG
+extension MainViewController {
+    var _test_mapView: MKMapView { mapView }
+    var _test_isLoadingAnimating: Bool { loadingView.isAnimating }
+}
+#endif

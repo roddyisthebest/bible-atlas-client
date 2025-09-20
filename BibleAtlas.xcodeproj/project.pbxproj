@@ -13,6 +13,8 @@
 		EC0F01AF2E7B9AE600D7C216 /* MyPageBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01AE2E7B9AE600D7C216 /* MyPageBottomSheetViewModelTests.swift */; };
 		EC0F01B12E7C261B00D7C216 /* AccountManagementBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01B02E7C261B00D7C216 /* AccountManagementBottomSheetViewModelTests.swift */; };
 		EC0F01B32E7C26C500D7C216 /* MockAppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01B22E7C26C500D7C216 /* MockAppCoordinator.swift */; };
+		EC0F01B62E7CEFBC00D7C216 /* MainViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01B52E7CEFBC00D7C216 /* MainViewControllerTests.swift */; };
+		EC0F01B82E7CF09700D7C216 /* MockMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01B72E7CF09700D7C216 /* MockMainViewModel.swift */; };
 		EC386DF42E06C4A700251FC6 /* HomeContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF32E06C4A700251FC6 /* HomeContentViewModel.swift */; };
 		EC386DF62E06C60600251FC6 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF52E06C60600251FC6 /* SearchResultViewModel.swift */; };
 		EC386DF92E06C77A00251FC6 /* HomeContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF82E06C77A00251FC6 /* HomeContentViewController.swift */; };
@@ -198,6 +200,8 @@
 		EC0F01AE2E7B9AE600D7C216 /* MyPageBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
 		EC0F01B02E7C261B00D7C216 /* AccountManagementBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManagementBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
 		EC0F01B22E7C26C500D7C216 /* MockAppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAppCoordinator.swift; sourceTree = "<group>"; };
+		EC0F01B52E7CEFBC00D7C216 /* MainViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewControllerTests.swift; sourceTree = "<group>"; };
+		EC0F01B72E7CF09700D7C216 /* MockMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMainViewModel.swift; sourceTree = "<group>"; };
 		EC386DF32E06C4A700251FC6 /* HomeContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewModel.swift; sourceTree = "<group>"; };
 		EC386DF52E06C60600251FC6 /* SearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModel.swift; sourceTree = "<group>"; };
 		EC386DF82E06C77A00251FC6 /* HomeContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewController.swift; sourceTree = "<group>"; };
@@ -394,6 +398,14 @@
 				8EA6D60ADC15852CAC915A09 /* Pods_BibleAtlasTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EC0F01B42E7CEFA400D7C216 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				EC0F01B52E7CEFBC00D7C216 /* MainViewControllerTests.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		EC386DF72E06C74000251FC6 /* HomeBottomSheetVC */ = {
@@ -617,6 +629,7 @@
 				EC9A0A3C2E6B2F1A00BB580E /* MockMapUsecase.swift */,
 				EC9A0A3E2E6B33AB00BB580E /* MockPlaceUsecase.swift */,
 				EC0F01B22E7C26C500D7C216 /* MockAppCoordinator.swift */,
+				EC0F01B72E7CF09700D7C216 /* MockMainViewModel.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -677,6 +690,7 @@
 		ECA94BAF2D5082BA005B0428 /* BibleAtlasTests */ = {
 			isa = PBXGroup;
 			children = (
+				EC0F01B42E7CEFA400D7C216 /* ViewControllers */,
 				EC9A0A3B2E6B2EF200BB580E /* Mocks */,
 				ECD972802E40F48900D94767 /* ViewModels */,
 				ECD9727D2E3F928700D94767 /* Repositories */,
@@ -1315,7 +1329,9 @@
 				EC0F01B32E7C26C500D7C216 /* MockAppCoordinator.swift in Sources */,
 				ECC49F812E4CC3C10061B467 /* MyCollectionBottomSheetViewModelTests.swift in Sources */,
 				EC9A0A582E74250D00BB580E /* RecentSearchesBottomSheetViewModelTests.swift in Sources */,
+				EC0F01B82E7CF09700D7C216 /* MockMainViewModel.swift in Sources */,
 				ECC49F852E506BED0061B467 /* PlaceModificationBottomSheetViewModelTests.swift in Sources */,
+				EC0F01B62E7CEFBC00D7C216 /* MainViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
