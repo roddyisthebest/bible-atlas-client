@@ -1101,3 +1101,66 @@ extension PlaceDetailViewController: IdentifiableBottomSheet {
         .placeDetail(self.placeId)
     }
 }
+
+
+
+#if DEBUG
+
+extension PlaceDetailViewController {
+    // 읽기 전용 상태/뷰 확인용
+    var _test_isBodyHidden: Bool { bodyView.isHidden }
+    var _test_isLoadingVisible: Bool { !loadingView.isHidden && loadingView.isAnimating }
+    var _test_isErrorVisible: Bool { !errorRetryView.isHidden }
+
+    var _test_isRelatedPlaceTableVisible: Bool { !relatedPlaceTable.isHidden }
+    var _test_isRelatedVerseTableVisible: Bool { !relatedVerseTable.isHidden }
+    var _test_isRelatedVerseEmptyViewVisible: Bool { !relatedVerseEmptyView.isHidden }
+
+    var _test_isLikeLoadingVisible: Bool { !likeLoadingView.isHidden && likeLoadingView.isAnimating }
+
+    
+    var _test_titleText: String? { titleLabel.text }
+    var _test_generationText: String? { generationLabel.text }
+    var _test_descriptionText: String? { descriptionTextView.text }
+
+    var _test_likeButtonTitle: String? { likeButton.title(for: .normal) }
+    var _test_likeButtonEnabled: Bool { likeButton.isEnabled }
+    var _test_likeButtonImage: UIImage? { likeButton.image(for: .normal)}
+    var _test_likeButton:UIButton? {likeButton}
+    
+    var _test_saveButton:ToggleCircleButton? {saveButton}
+    
+    var _test_memoButton:UIButton? {memoButton}
+    var _test_memoLabel:UILabel? {memoLabel}
+
+    var _test_relatedPlaceCount: Int { relatedPlaceTable.numberOfRows(inSection: 0) }
+    var _test_relatedVerseCount: Int { relatedVerseTable.numberOfRows(inSection: 0) }
+
+    
+    // 사용자 상호작용 시뮬레이션
+    func _test_tapClose() { closeButton.sendActions(for: .touchUpInside) }
+    func _test_tapSave() { saveButton.sendActions(for: .touchUpInside) }
+    func _test_tapLike() { likeButton.sendActions(for: .touchUpInside) }
+    func _test_tapBack() { backButton.sendActions(for: .touchUpInside) }
+    func _test_tapMemo() { memoButton.sendActions(for: .touchUpInside) }
+
+    func _test_selectRelatedPlaceRow(_ row: Int) {
+        let indexPath = IndexPath(row: row, section: 0)
+        relatedPlaceTable.delegate?.tableView?(relatedPlaceTable, didSelectRowAt: indexPath)
+    }
+
+    func _test_selectRelatedVerseRow(_ row: Int) {
+        let indexPath = IndexPath(row: row, section: 0)
+        relatedVerseTable.delegate?.tableView?(relatedVerseTable, didSelectRowAt: indexPath)
+    }
+    
+    func _test_makeVerseCell(row: Int) -> RelatedVerseTableViewCell? {
+            let idx = IndexPath(row: row, section: 0)
+            // dataSource 경유로 VC의 cellForRowAt을 타서 delegate가 VC로 세팅됨
+            return relatedVerseTable.dataSource?
+                .tableView(relatedVerseTable, cellForRowAt: idx) as? RelatedVerseTableViewCell
+    }
+    
+    
+}
+#endif

@@ -147,3 +147,12 @@ extension RelatedVerseTableViewCell: UICollectionViewDelegate, UICollectionViewD
         return cell
     }
 }
+
+
+#if DEBUG
+extension RelatedVerseTableViewCell {
+    func _test_fireTap(verse: String) {
+        delegate?.didTapVerse(verse, in: self)
+    }
+}
+#endif

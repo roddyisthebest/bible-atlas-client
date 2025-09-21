@@ -113,6 +113,42 @@ final class MainViewControllerTests: XCTestCase {
     }
     
     
+    func test_renderGeoJson_setsVisibleMapRect_withMinSizeAndPadding() {
+        vc.loadViewIfNeeded()
+
+        // Spy 주입(프레임 맞춰야 height 기반 패딩이 정확)
+        let spy = SpyMapView()
+        spy.frame = vc._test_mapView.frame
+        vc._test_replaceMapView(spy)
+
+        // 작은 영역의 GeoJSON → minSize 브랜치 타도록
+        let features = makeGeoJsonFeaturesForTest()
+        vm.emitGeoJSON(features)
+        RunLoop.current.run(until: Date().addingTimeInterval(0.02))
+
+        guard let call = spy.setVisibleCalls.last else {
+            return XCTFail("setVisibleMapRect was not called")
+        }
+
+        // 패딩: top/left/right = 20, bottom = height*0.5 + 20
+        let h = spy.bounds.height
+        XCTAssertEqual(call.padding.top, 20, accuracy: 0.5)
+        XCTAssertEqual(call.padding.left, 20, accuracy: 0.5)
+        XCTAssertEqual(call.padding.right, 20, accuracy: 0.5)
+        XCTAssertEqual(call.padding.bottom, h * 0.5 + 20, accuracy: 1.0)
+
+        // 최소 크기: 10km 이상
+        XCTAssertGreaterThanOrEqual(call.rect.size.width,  12_500)
+        XCTAssertGreaterThanOrEqual(call.rect.size.height, 12_500)
+
+        // 애니메이션 플래그
+        XCTAssertTrue(call.animated)
+    }
+
+    
+    
+    
+    
     func test_didSelectAnnotation_emitsPlaceId_toViewModelInput() {
         // Given
         vc.loadViewIfNeeded()

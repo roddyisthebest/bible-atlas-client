@@ -30,7 +30,7 @@ final class MainViewController: UIViewController, Presentable  {
     private let isPainting$ = BehaviorRelay<Bool>(value: false);
 
     
-    private let mapView = {
+    private var mapView = {
         let mv = MKMapView();
         return mv;
     }()
@@ -276,8 +276,8 @@ final class MainViewController: UIViewController, Presentable  {
                 right: paddingValue
             )
             
-            let minWidth: Double = 10000    // 최소 가로 10km
-            let minHeight: Double = 10000   // 최소 세로 10km
+            let minWidth: Double = 12_500    // 최소 가로 12.5km
+            let minHeight: Double = 12_500   // 최소 세로 12.5km
 
             var safeRect = boundingMapRect
 
@@ -295,12 +295,8 @@ final class MainViewController: UIViewController, Presentable  {
                     size: MKMapSize(width: newWidth, height: newHeight)
                 )
             }
-            
-            
+                        
             mapView.setVisibleMapRect(safeRect, edgePadding: edgePadding, animated: true)
-
-            
-      
 
         }
         
@@ -357,7 +353,6 @@ extension MainViewController: MKMapViewDelegate {
 
         
         if let customAnnotation = annotation as? CustomPointAnnotation {
-            let placeType = customAnnotation.placeTypeName
 
             if let placeId = customAnnotation.placeId {
                 
@@ -412,5 +407,20 @@ final class CustomPointAnnotation: MKPointAnnotation {
 extension MainViewController {
     var _test_mapView: MKMapView { mapView }
     var _test_isLoadingAnimating: Bool { loadingView.isAnimating }
+    
+    func _test_replaceMapView(_ mv: MKMapView) {
+          // 기존 맵 제거 & 새 맵 삽입 (프레임/오토리사이즈 일치)
+          mapView.removeFromSuperview()
+          view.addSubview(mv)
+          mv.frame = mapView.frame
+          mv.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+          mv.delegate = self
+          mapView = mv
+      }
+    
 }
+
+
 #endif
+
+

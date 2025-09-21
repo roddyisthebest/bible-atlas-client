@@ -8,6 +8,8 @@
 import Foundation
 import MapKit
 
+
+
 protocol MapUsecaseProtocol{
     func getGeoJson(placeId:String) async -> Result<[MKGeoJSONFeature], NetworkError>
 }
