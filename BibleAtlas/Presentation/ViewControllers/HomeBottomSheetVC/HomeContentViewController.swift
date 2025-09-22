@@ -203,8 +203,6 @@ final class HomeContentViewController: UIViewController {
         return button;
     }()
     
-
-    
     private var recentSearches:[RecentSearchItem] = [];
     
     init(homeContentViewModel: HomeContentViewModelProtocol) {
@@ -227,6 +225,7 @@ final class HomeContentViewController: UIViewController {
         setupUI();
         setupStyle();
         setupConstraints();
+        setupSheet()
         bindViewModel();
     }
     
@@ -235,18 +234,13 @@ final class HomeContentViewController: UIViewController {
         view.addSubview(loadingView);
     }
     
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//
-//        recentSearchTableView.reloadData()
-//        recentSearchTableView.layoutIfNeeded()
-//
-//        let height = recentSearchTableView.contentSize.height
-//        recentSearchTableView.snp.updateConstraints {
-//            $0.height.equalTo(height)
-//        }
-//    }
-    
+    private func setupSheet(){
+        if let sheet = self.sheetPresentationController {
+            sheet.delegate = self
+        }else{
+            print("mo daizobu")
+        }
+    }
     
     private func setupStyle(){
         view.backgroundColor = .mainBkg;
@@ -264,6 +258,7 @@ final class HomeContentViewController: UIViewController {
         
         
         contentView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView.contentLayoutGuide)
             make.width.equalTo(scrollView.frameLayoutGuide)
         }
         
@@ -403,6 +398,15 @@ final class HomeContentViewController: UIViewController {
 }
 
 
+extension HomeContentViewController:UISheetPresentationControllerDelegate{
+    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
+                
+        let isLarge = sheetPresentationController.selectedDetentIdentifier == .large
+        scrollView.isScrollEnabled = isLarge
+      }
+}
+
+
 extension HomeContentViewController:UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -427,7 +431,6 @@ extension HomeContentViewController:UITableViewDelegate, UITableViewDataSource{
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    
         return 80;
     }
     

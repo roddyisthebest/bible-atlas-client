@@ -19,6 +19,12 @@
 		EC0F01BC2E7F7FE400D7C216 /* SpyMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01BB2E7F7FE400D7C216 /* SpyMapView.swift */; };
 		EC0F01BE2E7F844000D7C216 /* MockPlaceDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01BD2E7F844000D7C216 /* MockPlaceDetailViewModel.swift */; };
 		EC0F01C02E7FE25900D7C216 /* PlaceDetailViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01BF2E7FE25900D7C216 /* PlaceDetailViewControllerTests.swift */; };
+		EC0F01C22E813CB600D7C216 /* MockHomeBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01C12E813CB500D7C216 /* MockHomeBottomSheetViewModel.swift */; };
+		EC0F01C62E81466800D7C216 /* MockSearchReadyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01C52E81466800D7C216 /* MockSearchReadyViewModel.swift */; };
+		EC0F01C82E81486400D7C216 /* HomeBottomSheetViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01C72E81486400D7C216 /* HomeBottomSheetViewControllerTests.swift */; };
+		EC0F01CA2E814C8600D7C216 /* MockHomeContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01C92E814C8600D7C216 /* MockHomeContentViewModel.swift */; };
+		EC0F01CC2E81504500D7C216 /* MockSearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01CB2E81504500D7C216 /* MockSearchResultViewModel.swift */; };
+		EC0F01CE2E81552100D7C216 /* PlaceDetailViewControllerScrollTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01CD2E81552100D7C216 /* PlaceDetailViewControllerScrollTests.swift */; };
 		EC386DF42E06C4A700251FC6 /* HomeContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF32E06C4A700251FC6 /* HomeContentViewModel.swift */; };
 		EC386DF62E06C60600251FC6 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF52E06C60600251FC6 /* SearchResultViewModel.swift */; };
 		EC386DF92E06C77A00251FC6 /* HomeContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF82E06C77A00251FC6 /* HomeContentViewController.swift */; };
@@ -210,6 +216,12 @@
 		EC0F01BB2E7F7FE400D7C216 /* SpyMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpyMapView.swift; sourceTree = "<group>"; };
 		EC0F01BD2E7F844000D7C216 /* MockPlaceDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPlaceDetailViewModel.swift; sourceTree = "<group>"; };
 		EC0F01BF2E7FE25900D7C216 /* PlaceDetailViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailViewControllerTests.swift; sourceTree = "<group>"; };
+		EC0F01C12E813CB500D7C216 /* MockHomeBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeBottomSheetViewModel.swift; sourceTree = "<group>"; };
+		EC0F01C52E81466800D7C216 /* MockSearchReadyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSearchReadyViewModel.swift; sourceTree = "<group>"; };
+		EC0F01C72E81486400D7C216 /* HomeBottomSheetViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomSheetViewControllerTests.swift; sourceTree = "<group>"; };
+		EC0F01C92E814C8600D7C216 /* MockHomeContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeContentViewModel.swift; sourceTree = "<group>"; };
+		EC0F01CB2E81504500D7C216 /* MockSearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSearchResultViewModel.swift; sourceTree = "<group>"; };
+		EC0F01CD2E81552100D7C216 /* PlaceDetailViewControllerScrollTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailViewControllerScrollTests.swift; sourceTree = "<group>"; };
 		EC386DF32E06C4A700251FC6 /* HomeContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewModel.swift; sourceTree = "<group>"; };
 		EC386DF52E06C60600251FC6 /* SearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModel.swift; sourceTree = "<group>"; };
 		EC386DF82E06C77A00251FC6 /* HomeContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewController.swift; sourceTree = "<group>"; };
@@ -413,6 +425,8 @@
 			children = (
 				EC0F01B52E7CEFBC00D7C216 /* MainViewControllerTests.swift */,
 				EC0F01BF2E7FE25900D7C216 /* PlaceDetailViewControllerTests.swift */,
+				EC0F01C72E81486400D7C216 /* HomeBottomSheetViewControllerTests.swift */,
+				EC0F01CD2E81552100D7C216 /* PlaceDetailViewControllerScrollTests.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -641,6 +655,10 @@
 				EC0F01B72E7CF09700D7C216 /* MockMainViewModel.swift */,
 				EC0F01BB2E7F7FE400D7C216 /* SpyMapView.swift */,
 				EC0F01BD2E7F844000D7C216 /* MockPlaceDetailViewModel.swift */,
+				EC0F01C12E813CB500D7C216 /* MockHomeBottomSheetViewModel.swift */,
+				EC0F01C52E81466800D7C216 /* MockSearchReadyViewModel.swift */,
+				EC0F01C92E814C8600D7C216 /* MockHomeContentViewModel.swift */,
+				EC0F01CB2E81504500D7C216 /* MockSearchResultViewModel.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -822,8 +840,8 @@
 				EC70587A2DB39629002D47DF /* MainViewController.swift */,
 				EC7058992DBC7BE1002D47DF /* LoginBottomSheetViewController.swift */,
 				EC70589F2DBCC6FE002D47DF /* MyCollectionBottomSheetViewController.swift */,
-				EC77CE002DC5DA8D0030DEF5 /* PlaceDetailViewController.swift */,
 				EC77CE352DCF630E0030DEF5 /* MemoBottomSheetViewController.swift */,
+				EC77CE002DC5DA8D0030DEF5 /* PlaceDetailViewController.swift */,
 				EC77CE3B2DD09AB10030DEF5 /* PlaceModificationBottomSheetViewController.swift */,
 				EC77CE3F2DD0A7E90030DEF5 /* PlaceTypesBottomSheetViewController.swift */,
 				EC77CE472DD0E3E70030DEF5 /* PlaceCharactersBottomSheetViewController.swift */,
@@ -1317,6 +1335,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC0F01CA2E814C8600D7C216 /* MockHomeContentViewModel.swift in Sources */,
 				EC9A0A3F2E6B33AB00BB580E /* MockPlaceUsecase.swift in Sources */,
 				ECD972892E47371900D94767 /* SearchReadyViewModelTests.swift in Sources */,
 				EC0F01B12E7C261B00D7C216 /* AccountManagementBottomSheetViewModelTests.swift in Sources */,
@@ -1327,17 +1346,22 @@
 				ECD972782E3F71B100D94767 /* AuthUsecaseTests.swift in Sources */,
 				ECD972842E4487CA00D94767 /* HomeContentViewModelTests.swift in Sources */,
 				EC9A0A522E6FE16900BB580E /* PlaceCharactersBottomSheetViewModelTests.swift in Sources */,
+				EC0F01C82E81486400D7C216 /* HomeBottomSheetViewControllerTests.swift in Sources */,
 				EC0F01BE2E7F844000D7C216 /* MockPlaceDetailViewModel.swift in Sources */,
 				EC0F01AF2E7B9AE600D7C216 /* MyPageBottomSheetViewModelTests.swift in Sources */,
 				EC64B9712DE3456900D3C8A7 /* PaginationTests.swift in Sources */,
 				EC9A0A382E6A8EB300BB580E /* ReportBottomSheetViewModelTests.swift in Sources */,
 				EC9A0A562E71B11A00BB580E /* BibleVerseDetailBottomSheetViewModelTests.swift in Sources */,
+				EC0F01C62E81466800D7C216 /* MockSearchReadyViewModel.swift in Sources */,
 				EC0F01C02E7FE25900D7C216 /* PlaceDetailViewControllerTests.swift in Sources */,
 				ECD972822E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift in Sources */,
 				EC9A0A3A2E6ACCB400BB580E /* MainViewModelTests.swift in Sources */,
+				EC0F01C22E813CB600D7C216 /* MockHomeBottomSheetViewModel.swift in Sources */,
 				EC9A0A412E6C0AF000BB580E /* MemoBottomSheetViewModelTests.swift in Sources */,
 				EC9A0A5A2E76EE4B00BB580E /* PopularPlacesBottomSheetViewModelTests.swift in Sources */,
+				EC0F01CE2E81552100D7C216 /* PlaceDetailViewControllerScrollTests.swift in Sources */,
 				ECD972862E45EE5900D94767 /* SearchResultViewModelTests.swift in Sources */,
+				EC0F01CC2E81504500D7C216 /* MockSearchResultViewModel.swift in Sources */,
 				EC9A0A432E6C1EE400BB580E /* PlaceTypesBottomSheetViewModelTests.swift in Sources */,
 				ECD9727F2E3F92DA00D94767 /* AuthRepositoryTests.swift in Sources */,
 				EC9A0A3D2E6B2F1A00BB580E /* MockMapUsecase.swift in Sources */,

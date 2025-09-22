@@ -1136,6 +1136,7 @@ extension PlaceDetailViewController {
     var _test_relatedPlaceCount: Int { relatedPlaceTable.numberOfRows(inSection: 0) }
     var _test_relatedVerseCount: Int { relatedVerseTable.numberOfRows(inSection: 0) }
 
+    var _test_isScrollEnabled: Bool { scrollView.isScrollEnabled }
     
     // 사용자 상호작용 시뮬레이션
     func _test_tapClose() { closeButton.sendActions(for: .touchUpInside) }

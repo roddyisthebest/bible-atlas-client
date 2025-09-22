@@ -315,11 +315,11 @@ final class HomeBottomSheetViewController: UIViewController{
 }
 
 
-
+//
 //extension HomeBottomSheetViewController:UISheetPresentationControllerDelegate{
 //    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
 //          let isLarge = sheetPresentationController.selectedDetentIdentifier == .large
-//        homeScrollView.isScrollEnabled = isLarge
+//        .isScrollEnabled = isLarge
 //      }
 //}
 
@@ -333,5 +333,65 @@ extension HomeBottomSheetViewController: UITextFieldDelegate {
 
 
 
+#if DEBUG
+extension HomeBottomSheetViewController {
+    // ====== 읽기 전용 상태 ======
+    /// 현재 child VC의 클래스명 (예: "HomeContentViewController", "SearchReadyViewController", "SearchResultViewController")
+    var _test_currentChildClassName: String? {
+        return children.first.map { String(describing: type(of: $0)) }
+    }
 
+    /// 아바타 버튼/캔슬 버튼 가시성
+    var _test_isUserAvatarHidden: Bool { userAvatarButton.isHidden }
+    var _test_isCancelHidden: Bool { cancelButton.isHidden }
 
+    /// 검색 필드 텍스트
+    var _test_searchText: String? {
+        get { searchTextField.text }
+        set { searchTextField.text = newValue }
+    }
+
+    /// 현재 시트 detent 선택값 (nil이면 시트가 없거나 선택값 없음)
+    var _test_selectedDetentIdentifier: UISheetPresentationController.Detent.Identifier? {
+        sheetPresentationController?.selectedDetentIdentifier
+    }
+
+    /// 현재 시트 detents 개수 (nil이면 시트 없음)
+    var _test_detentsCount: Int? {
+        sheetPresentationController?.detents.count
+    }
+
+    // ====== 사용자 상호작용 시뮬레이터 ======
+    /// Cancel 버튼 탭 시뮬레이션
+    func _test_tapCancel() {
+        cancelButton.sendActions(for: .touchUpInside)
+    }
+
+    /// 아바타 버튼 탭 시뮬레이션
+    func _test_tapAvatar() {
+        userAvatarButton.sendActions(for: .touchUpInside)
+    }
+
+    /// 검색 필드 '편집 시작' 시그널 시뮬레이션
+    func _test_beginEditing() {
+        // delegate 경유 + controlEvent 둘 다 보내 안정적으로 트리거
+//        _ = textFieldShouldBeginEditing(searchTextField)
+        searchTextField.becomeFirstResponder()
+        searchTextField.sendActions(for: .editingDidBegin)
+    }
+
+    /// 검색 필드 '편집 종료' 시그널 시뮬레이션
+    func _test_endEditing() {
+//        _ = textFieldShouldEndEditing(searchTextField)
+        searchTextField.resignFirstResponder()
+        searchTextField.sendActions(for: .editingDidEnd)
+    }
+
+    /// 검색 텍스트 입력 시뮬레이션 (Rx 바인딩 타게 editingChanged 함께 보냄)
+    func _test_typeSearchText(_ text: String) {
+        searchTextField.text = text
+        searchTextField.sendActions(for: .editingChanged)
+    }
+}
+
+#endif
