@@ -1,0 +1,53 @@
+/* 
+  Localizable.strings
+  BibleAtlas
+
+  Created by 배성연 on 9/23/25.
+  
+*/
+
+// home
+"Home.SearchPlaceholder" = "Search places...";
+"Home.Login" = "Login";
+"Home.Cancel" = "Cancel";
+ 
+// homeContent
+"HomeContent.Collections" = "Collections";
+"HomeContent.Recent" = "Recent";
+"HomeContent.MyGuides" = "My Guides";
+
+"HomeContent.Favorites" = "Favorites";
+"HomeContent.Bookmarks" = "Bookmarks";
+"HomeContent.Memos" = "Memos";
+
+"HomeContent.More" = "More";
+"HomeContent.RecentEmpty" = "No recent searches.";
+
+"HomeContent.ExplorePlaces" = "Explore Places";
+"HomeContent.ExploreMenu.Title" = "Explore Places";
+"HomeContent.ExploreMenu.AZ" = "A–Z";
+"HomeContent.ExploreMenu.ByType" = "By Type";
+"HomeContent.ExploreMenu.ByBible" = "By Bible";
+
+"HomeContent.Places" = "Places";
+
+
+// searchResult
+"SearchResult.Empty" = "No places found.";
+"SearchResult.Error.Title" = "Something went wrong";
+"SearchResult.Error.Message" = "We couldn’t load places. Please try again.";
+
+
+// searchReady
+"SearchReady.Popular" = "Popular";
+"SearchReady.PopularEmpty" = "No popular places.";
+"SearchReady.Recent" = "Recent";
+"SearchReady.More" = "More";
+
+// common
+"Common.Retry" = "Retry";
+"Common.DefaultErrorMessage" = "An error has occurred.";
+"Common.Close" = "Close";
+
+
+

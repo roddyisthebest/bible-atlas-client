@@ -58,7 +58,7 @@ final class HomeContentViewController: UIViewController {
         return sv;
     }();
     
-    private let collectionLabel = MainLabel(text:"Collections")
+    private let collectionLabel = MainLabel(text:L10n.HomeContent.collections)
     
     private lazy var collectionDynamicContainer = {
         let sv = UIStackView(arrangedSubviews: [collectionContentStackView])
@@ -84,7 +84,7 @@ final class HomeContentViewController: UIViewController {
     private lazy var favoriteButton = {
         let button = CollectionButton(
             iconSystemName: "hand.thumbsup.fill",
-            mainText: "Favorites",
+            mainText: L10n.HomeContent.favorites,
             subText: "0 places"
         )
         
@@ -94,7 +94,7 @@ final class HomeContentViewController: UIViewController {
     private lazy var bookmarkButton = {
         let button = CollectionButton(
             iconSystemName: "bookmark.fill",
-            mainText: "Bookmarks",
+            mainText: L10n.HomeContent.bookmarks,
             subText: "0 places"
         );
         return button;
@@ -103,7 +103,7 @@ final class HomeContentViewController: UIViewController {
     private lazy var memoButton = {
         let button = CollectionButton(
             iconSystemName: "note.text",
-            mainText: "Memos",
+            mainText: L10n.HomeContent.memos,
             subText: "0 places"
         );
         return button;
@@ -130,7 +130,7 @@ final class HomeContentViewController: UIViewController {
     
     private let emptyLabel = {
         let label = UILabel();
-        label.text = "최근 검색어가 없습니다."
+        label.text = L10n.HomeContent.recentEmpty
         label.textColor = .mainLabelText
         label.font = .boldSystemFont(ofSize: 15)
         return label;
@@ -165,11 +165,11 @@ final class HomeContentViewController: UIViewController {
         return tv
     }()
     
-    private let recentLabel = MainLabel(text:"Recent")
+    private let recentLabel = MainLabel(text:L10n.HomeContent.recent)
     
     private let moreRecentSearchesButton = {
         let button = UIButton();
-        button.setTitle("More", for: .normal)
+        button.setTitle(L10n.HomeContent.more, for: .normal)
         button.setTitleColor(.primaryBlue, for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 14)
         button.contentHorizontalAlignment = .right
@@ -186,7 +186,7 @@ final class HomeContentViewController: UIViewController {
         return sv;
     }();
     
-    private let myGuidesLabel = MainLabel(text:"My Guides")
+    private let myGuidesLabel = MainLabel(text:L10n.HomeContent.myGuides)
     
     private lazy var guideButtonsStackView = {
         let sv = UIStackView(arrangedSubviews: [explorePlacesButton]);
@@ -198,7 +198,7 @@ final class HomeContentViewController: UIViewController {
     }()
     
     private lazy var explorePlacesButton = {
-        let button = GuideButton(titleText: "Explore Places")
+        let button = GuideButton(titleText: L10n.HomeContent.explorePlaces)
         button.menu = buildPlacesMenu();
         button.showsMenuAsPrimaryAction = true
 
@@ -323,9 +323,10 @@ final class HomeContentViewController: UIViewController {
         
 
         Observable.combineLatest(output!.likePlacesCount$,output!.savePlacesCount$, output!.memoPlacesCount$).observe(on: MainScheduler.instance).subscribe { (likePlacesCount, savePlacesCount, memoPlacesCount) in
-            self.favoriteButton.setSubLabelText(subText: "\(likePlacesCount) places")
-            self.bookmarkButton.setSubLabelText(subText: "\(savePlacesCount) places")
-            self.memoButton.setSubLabelText(subText: "\(memoPlacesCount) places")
+            self.favoriteButton.setSubLabelText(subText: L10n.Common.placesCount(likePlacesCount))
+
+            self.bookmarkButton.setSubLabelText(subText: L10n.Common.placesCount(savePlacesCount))
+            self.memoButton.setSubLabelText(subText: L10n.Common.placesCount(memoPlacesCount))
             
         }.disposed(by: disposeBag)
         
@@ -381,19 +382,19 @@ final class HomeContentViewController: UIViewController {
 
     private func buildPlacesMenu() -> UIMenu{
         
-        let action1 = UIAction(title: "A-Z", image: UIImage(systemName: "character.phonetic")) { _ in
+        let action1 = UIAction(title: L10n.HomeContent.menuAZ, image: UIImage(systemName: "character.phonetic")) { _ in
             self.placesByCharacterButtonTapped$.accept(Void())
         }
-        let action2 = UIAction(title: "By Type", image: UIImage(systemName: "mappin.and.ellipse")) { _ in
+        let action2 = UIAction(title: L10n.HomeContent.menuByType, image: UIImage(systemName: "mappin.and.ellipse")) { _ in
             self.placesByTypeButtonTapped$.accept(Void())
 
         }
         
-        let action3 = UIAction(title:"By Bible", image: UIImage(systemName: "book.pages")){_ in
+        let action3 = UIAction(title:L10n.HomeContent.menuByBible, image: UIImage(systemName: "book.pages")){_ in
             self.placesByBibleButtonTapped$.accept(())
         }
                
-        let menu = UIMenu(title: "Explore Places", children: [action1, action2, action3])
+        let menu = UIMenu(title: L10n.HomeContent.explorePlaces, children: [action1, action2, action3])
         
         return menu
         

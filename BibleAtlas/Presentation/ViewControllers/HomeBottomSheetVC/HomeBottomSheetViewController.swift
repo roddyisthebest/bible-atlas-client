@@ -43,7 +43,7 @@ final class HomeBottomSheetViewController: UIViewController{
         let input = UISearchTextField()
         
         input.delegate = self;
-        input.placeholder = "search places..."
+        input.placeholder = L10n.Home.searchPlaceholder
         
         input.font = .systemFont(ofSize: 16)
         
@@ -64,7 +64,7 @@ final class HomeBottomSheetViewController: UIViewController{
         button.backgroundColor = .userAvatarBkg;
         button.layer.cornerRadius = 20;
         button.layer.masksToBounds = true;
-        button.setTitle("로그인", for: .normal)
+        button.setTitle(L10n.Home.login, for: .normal)
         
         button.setTitleColor(.primaryBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 12, weight: .medium)
@@ -85,7 +85,7 @@ final class HomeBottomSheetViewController: UIViewController{
     private let cancelButton = {
         let button =  UIButton(type: .system)
             
-        button.setTitle("Cancel", for: .normal)
+        button.setTitle(L10n.Home.cancel, for: .normal)
         button.setTitleColor(.primaryBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
 
@@ -198,7 +198,8 @@ final class HomeBottomSheetViewController: UIViewController{
                     return
                 }
                 
-                self?.userAvatarButton.setTitle("로그인", for: .normal)
+                let loginText = L10n.Home.login
+                self?.userAvatarButton.setTitle(loginText, for: .normal)
                 self?.userAvatarImageView.isHidden = true
                 
             })

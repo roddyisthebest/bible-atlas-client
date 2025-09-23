@@ -60,7 +60,7 @@ final class SearchReadyViewController: UIViewController {
     
     private let moreRecentSearchButton = {
         let button = UIButton();
-        button.setTitle("More", for: .normal)
+        button.setTitle(L10n.SearchReady.more, for: .normal)
         button.setTitleColor(.primaryBlue, for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 14)
         return button;
@@ -77,7 +77,7 @@ final class SearchReadyViewController: UIViewController {
     }();
     
     
-    private let recentSearchLabel = MainLabel(text:"Recent")
+    private let recentSearchLabel = MainLabel(text:L10n.SearchReady.recent)
     private let recentSearchLine = {
         let v = UIView();
         v.backgroundColor = .mainLabelLine
@@ -112,7 +112,7 @@ final class SearchReadyViewController: UIViewController {
     
     private let morePopularPlacesButton = {
         let button = UIButton();
-        button.setTitle("More", for: .normal)
+        button.setTitle(L10n.SearchReady.more, for: .normal)
         button.setTitleColor(.primaryBlue, for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 14)
         return button;
@@ -129,7 +129,7 @@ final class SearchReadyViewController: UIViewController {
     
     
     
-    private let popularPlaceLabel = MainLabel(text:"Popular")
+    private let popularPlaceLabel = MainLabel(text:L10n.SearchReady.popular)
     private let popularPlaceLine = {
         let v = UIView();
         v.backgroundColor = .mainLabelLine
@@ -166,7 +166,7 @@ final class SearchReadyViewController: UIViewController {
     
     private let emptyLabel = {
         let label = UILabel();
-        label.text = "인기 장소가 없습니다."
+        label.text = L10n.SearchReady.popularEmpty
         label.textColor = .mainLabelText
         label.font = .boldSystemFont(ofSize: 15)
         return label;
