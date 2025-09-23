@@ -29,6 +29,8 @@ protocol VCFactoryProtocol:AnyObject {
     
     func makePlaceCharactersBottomSheetVC(vm:PlaceCharactersBottomSheetViewModelProtocol) -> PlaceCharactersBottomSheetViewController
     
+    func makeBiblesBottomSheetVC(vm:BiblesBottomSheetViewModelProtocol) -> BiblesBottomSheetViewController
+    
     func makePlacesByTypeBottomSheetVC(vm:PlacesByTypeBottomSheetViewModelProtocol, placeTypeName:PlaceTypeName) -> PlacesByTypeBottomSheetViewController
     
     func makePlacesByCharacterBottomSheetVC(vm:PlacesByCharacterBottomSheetViewModelProtocol, character:String) -> PlacesByCharacterBottomSheetViewController
@@ -124,6 +126,12 @@ final class VCFactory:VCFactoryProtocol {
     func makePlaceCharactersBottomSheetVC(vm: PlaceCharactersBottomSheetViewModelProtocol) -> PlaceCharactersBottomSheetViewController {
         let vc = PlaceCharactersBottomSheetViewController(vm: vm);
         setupVC(type: .placeCharacters, sheet:vc)
+        return vc;
+    }
+    
+    func makeBiblesBottomSheetVC(vm:BiblesBottomSheetViewModelProtocol) -> BiblesBottomSheetViewController{
+        let vc = BiblesBottomSheetViewController(vm: vm)
+        setupVC(type: .bibles, sheet: vc)
         return vc;
     }
     

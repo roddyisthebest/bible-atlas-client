@@ -18,6 +18,8 @@ final class HomeContentViewController: UIViewController {
     
     private let placesByCharacterButtonTapped$ = PublishRelay<Void>();
     
+    private let placesByBibleButtonTapped$ = PublishRelay<Void>();
+    
     private let recentSearchCellTapped$ = PublishRelay<String>();
     
     private let disposeBag = DisposeBag()
@@ -315,7 +317,7 @@ final class HomeContentViewController: UIViewController {
         
         let moreRecentSearchesButtonTapped$ = moreRecentSearchesButton.rx.tap.asObservable();
         
-        let output = homeContentViewModel?.transform(input: HomeContentViewModel.Input(collectionButtonTapped$: collectionButtonTapped$.asObservable(), placesByTypeButtonTapped$: placesByTypeButtonTapped$.asObservable(), placesByCharacterButtonTapped$: placesByCharacterButtonTapped$.asObservable(), recentSearchCellTapped$: recentSearchCellTapped$.asObservable(), moreRecentSearchesButtonTapped$: moreRecentSearchesButtonTapped$));
+        let output = homeContentViewModel?.transform(input: HomeContentViewModel.Input(collectionButtonTapped$: collectionButtonTapped$.asObservable(), placesByTypeButtonTapped$: placesByTypeButtonTapped$.asObservable(), placesByCharacterButtonTapped$: placesByCharacterButtonTapped$.asObservable(), placesByBibleButtonTapped$: placesByBibleButtonTapped$.asObservable(), recentSearchCellTapped$: recentSearchCellTapped$.asObservable(), moreRecentSearchesButtonTapped$: moreRecentSearchesButtonTapped$));
         
 
         
@@ -386,8 +388,12 @@ final class HomeContentViewController: UIViewController {
             self.placesByTypeButtonTapped$.accept(Void())
 
         }
+        
+        let action3 = UIAction(title:"By Bible", image: UIImage(systemName: "book.pages")){_ in
+            self.placesByBibleButtonTapped$.accept(())
+        }
                
-        let menu = UIMenu(title: "Explore Places", children: [action1, action2])
+        let menu = UIMenu(title: "Explore Places", children: [action1, action2, action3])
         
         return menu
         

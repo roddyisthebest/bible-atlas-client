@@ -27,6 +27,10 @@ public struct PlaceRepository:PlaceRepositoryProtocol{
         return await placeApiService.getPrefixs();
     }
     
+    func getBibleBookCounts() async ->  Result<ListResponse<BibleBookCount>,NetworkError> {
+        return await placeApiService.getBibleBookCounts();
+    }
+    
     func getPlace(placeId: String) async -> Result<Place, NetworkError> {
         return await placeApiService.getPlace(placeId: placeId)
     }

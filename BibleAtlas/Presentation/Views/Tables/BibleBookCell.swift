@@ -1,14 +1,16 @@
 //
-//  PlaceTypeCell.swift
+//  BibleBookCell.swift
 //  BibleAtlas
 //
-//  Created by 배성연 on 5/11/25.
+//  Created by 배성연 on 9/23/25.
 //
 
 import UIKit
 
-class PlaceTypeCell: UICollectionViewCell {
-    static let identifier = "placeTypeCell"
+import UIKit
+
+class BibleBookCell: UICollectionViewCell {
+    static let identifier = "bibleBookCell"
     
     private lazy var containerStackView = {
         let sv = UIStackView(arrangedSubviews: [iconWrapper, nameLabel, numberLabel]);
@@ -25,13 +27,15 @@ class PlaceTypeCell: UICollectionViewCell {
         v.backgroundColor = .placeCircle;
         v.layer.cornerRadius = 25;
         v.layer.masksToBounds = true;
-        v.addSubview(placeIcon)
+        v.addSubview(bibleBookLabel)
         return v;
     }()
     
-    private let placeIcon:UIImageView = {
-        let icon = UIImageView(image: UIImage(named: "ground"));
-        return icon;
+    private let bibleBookLabel:UILabel = {
+        let label = UILabel();
+        label.textColor = .mainText;
+        label.font = .boldSystemFont(ofSize: 20)
+        return label;
     }()
     
     private let nameLabel = {
@@ -58,10 +62,14 @@ class PlaceTypeCell: UICollectionViewCell {
   
     
     
-    func setPlace(placeType:PlaceTypeWithPlaceCount){
-        nameLabel.text = placeType.name.rawValue;
-        placeIcon.image = UIImage(named: placeType.name.rawValue);
-        numberLabel.text =  "\(placeType.placeCount) Places"
+    func setBibleBook(bibleBookCount:BibleBookCount){
+        nameLabel.text = bibleBookCount.bible;
+        
+        let twoChars = String(bibleBookCount.bible
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .prefix(2))
+        bibleBookLabel.text = twoChars
+        numberLabel.text =  "\(bibleBookCount.placeCount) Places"
     }
     
     
@@ -91,9 +99,8 @@ class PlaceTypeCell: UICollectionViewCell {
             make.height.width.equalTo(50)
         }
         
-        placeIcon.snp.makeConstraints { make in
+        bibleBookLabel.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.width.height.equalTo(30)
         }
     }
     

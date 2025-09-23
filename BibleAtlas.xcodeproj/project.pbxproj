@@ -25,6 +25,9 @@
 		EC0F01CA2E814C8600D7C216 /* MockHomeContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01C92E814C8600D7C216 /* MockHomeContentViewModel.swift */; };
 		EC0F01CC2E81504500D7C216 /* MockSearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01CB2E81504500D7C216 /* MockSearchResultViewModel.swift */; };
 		EC0F01CE2E81552100D7C216 /* PlaceDetailViewControllerScrollTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01CD2E81552100D7C216 /* PlaceDetailViewControllerScrollTests.swift */; };
+		EC0F01D02E81921E00D7C216 /* BiblesBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01CF2E81921E00D7C216 /* BiblesBottomSheetViewModel.swift */; };
+		EC0F01D22E81929300D7C216 /* BiblesBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01D12E81929300D7C216 /* BiblesBottomSheetViewController.swift */; };
+		EC0F01D42E8228E300D7C216 /* BibleBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01D32E8228E300D7C216 /* BibleBookCell.swift */; };
 		EC386DF42E06C4A700251FC6 /* HomeContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF32E06C4A700251FC6 /* HomeContentViewModel.swift */; };
 		EC386DF62E06C60600251FC6 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF52E06C60600251FC6 /* SearchResultViewModel.swift */; };
 		EC386DF92E06C77A00251FC6 /* HomeContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF82E06C77A00251FC6 /* HomeContentViewController.swift */; };
@@ -222,6 +225,9 @@
 		EC0F01C92E814C8600D7C216 /* MockHomeContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeContentViewModel.swift; sourceTree = "<group>"; };
 		EC0F01CB2E81504500D7C216 /* MockSearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSearchResultViewModel.swift; sourceTree = "<group>"; };
 		EC0F01CD2E81552100D7C216 /* PlaceDetailViewControllerScrollTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailViewControllerScrollTests.swift; sourceTree = "<group>"; };
+		EC0F01CF2E81921E00D7C216 /* BiblesBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiblesBottomSheetViewModel.swift; sourceTree = "<group>"; };
+		EC0F01D12E81929300D7C216 /* BiblesBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiblesBottomSheetViewController.swift; sourceTree = "<group>"; };
+		EC0F01D32E8228E300D7C216 /* BibleBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleBookCell.swift; sourceTree = "<group>"; };
 		EC386DF32E06C4A700251FC6 /* HomeContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewModel.swift; sourceTree = "<group>"; };
 		EC386DF52E06C60600251FC6 /* SearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModel.swift; sourceTree = "<group>"; };
 		EC386DF82E06C77A00251FC6 /* HomeContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewController.swift; sourceTree = "<group>"; };
@@ -634,6 +640,7 @@
 				ECD972592E29154900D94767 /* MenuTableViewCell.swift */,
 				ECD9725D2E2A3DD000D94767 /* SimpleMenuTableViewCell.swift */,
 				ECD9726E2E324E9F00D94767 /* ReportTypeTableViewCell.swift */,
+				EC0F01D32E8228E300D7C216 /* BibleBookCell.swift */,
 			);
 			path = Tables;
 			sourceTree = "<group>";
@@ -854,6 +861,7 @@
 				ECD9725F2E2BA44400D94767 /* AccountManagementBottomSheetViewController.swift */,
 				ECD972682E307AC500D94767 /* ReportBottomSheetViewController.swift */,
 				EC9A0A482E6F051F00BB580E /* AppGateViewController.swift */,
+				EC0F01D12E81929300D7C216 /* BiblesBottomSheetViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -879,6 +887,7 @@
 				ECD972572E27E8B800D94767 /* MyPageBottomSheetViewModel.swift */,
 				ECD9725B2E2A353300D94767 /* AccountManagementBottomSheetViewModel.swift */,
 				ECD9726A2E307AE300D94767 /* ReportBottomSheetViewModel.swift */,
+				EC0F01CF2E81921E00D7C216 /* BiblesBottomSheetViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1216,6 +1225,7 @@
 				EC940EAC2DF71A8100406944 /* MapUsecase.swift in Sources */,
 				EC77CE032DC5E3460030DEF5 /* PlaceDetailViewModel.swift in Sources */,
 				EC77CE302DCF2D9C0030DEF5 /* RelatedVerseTableViewCell.swift in Sources */,
+				EC0F01D42E8228E300D7C216 /* BibleBookCell.swift in Sources */,
 				EC70589E2DBCA8B6002D47DF /* HeaderLabel.swift in Sources */,
 				EC64B9822DE45C0300D3C8A7 /* ErrorHandlerServiceProtocol.swift in Sources */,
 				ECD9726B2E307AE300D94767 /* ReportBottomSheetViewModel.swift in Sources */,
@@ -1256,6 +1266,7 @@
 				ECD9726D2E307C8A00D94767 /* PlaceReport.swift in Sources */,
 				EC64B97E2DE44F0400D3C8A7 /* TokenRefresher.swift in Sources */,
 				EC77CE502DD5C86A0030DEF5 /* PlacesByCharacterBottomSheetViewController.swift in Sources */,
+				EC0F01D22E81929300D7C216 /* BiblesBottomSheetViewController.swift in Sources */,
 				ECA94B9B2D5082B9005B0428 /* ViewController.swift in Sources */,
 				ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */,
 				EC77CE362DCF630E0030DEF5 /* MemoBottomSheetViewController.swift in Sources */,
@@ -1285,6 +1296,7 @@
 				EC9A0A4E2E6F10CF00BB580E /* AppEnvironment.swift in Sources */,
 				EC64B96B2DDE05C900D3C8A7 /* UserUsecase.swift in Sources */,
 				EC9A0A4C2E6F106500BB580E /* DIContainer.swift in Sources */,
+				EC0F01D02E81921E00D7C216 /* BiblesBottomSheetViewModel.swift in Sources */,
 				EC7058882DB3CA5B002D47DF /* UIColor.swift in Sources */,
 				EC9A0A492E6F051F00BB580E /* AppGateViewController.swift in Sources */,
 				ECD972692E307AC500D94767 /* ReportBottomSheetViewController.swift in Sources */,

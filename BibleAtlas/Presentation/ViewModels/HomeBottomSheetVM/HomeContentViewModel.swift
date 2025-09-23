@@ -145,6 +145,7 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
         let collectionButtonTapped$:Observable<PlaceFilter>
         let placesByTypeButtonTapped$:Observable<Void>
         let placesByCharacterButtonTapped$:Observable<Void>
+        let placesByBibleButtonTapped$:Observable<Void>
         let recentSearchCellTapped$:Observable<String>
         let moreRecentSearchesButtonTapped$:Observable<Void>
     }
@@ -184,6 +185,10 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
         
         input.placesByCharacterButtonTapped$.subscribe(onNext: {[weak self] in
             self?.navigator?.present(.placeCharacters)
+        }).disposed(by: disposeBag)
+        
+        input.placesByBibleButtonTapped$.subscribe(onNext: {[weak self] in
+            self?.navigator?.present(.bibles)
         }).disposed(by: disposeBag)
         
         input.recentSearchCellTapped$.bind{[weak self] placeId in

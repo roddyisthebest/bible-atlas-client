@@ -17,6 +17,8 @@ protocol PlaceRepositoryProtocol {
     
     func getPrefixs() async -> Result<ListResponse<PlacePrefix>,NetworkError>
     
+    func getBibleBookCounts() async ->  Result<ListResponse<BibleBookCount>,NetworkError>
+    
     func getPlace(placeId: String) async -> Result<Place, NetworkError>
     
     func getRelatedUserInfo(placeId: String) async -> Result<RelatedUserInfo, NetworkError>

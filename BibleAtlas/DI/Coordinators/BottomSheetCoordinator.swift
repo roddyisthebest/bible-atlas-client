@@ -19,6 +19,7 @@ enum BottomSheetType:Equatable {
     case placeModification(String)
     case placeTypes
     case placeCharacters
+    case bibles
     case placesByType(PlaceTypeName)
     case placesByCharacter(String)
     case placeReport(String, PlaceReportType)
@@ -251,6 +252,11 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
         case .placeCharacters:
             let vm = vmFactory.makePlaceCharactersBottomSheetVM();
             let vc = vcFactory.makePlaceCharactersBottomSheetVC(vm: vm);
+            presentFromTopVC(vc)
+            
+        case .bibles:
+            let vm = vmFactory.makeBiblesBottomSheetVM();
+            let vc = vcFactory.makeBiblesBottomSheetVC(vm: vm);
             presentFromTopVC(vc)
             
         case .placesByType(let placeTypeName):

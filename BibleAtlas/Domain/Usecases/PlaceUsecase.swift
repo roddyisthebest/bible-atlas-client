@@ -16,6 +16,8 @@ protocol PlaceUsecaseProtocol {
     
     func getPrefixs() async -> Result<ListResponse<PlacePrefix>,NetworkError>
     
+    func getBibleBookCounts() async ->  Result<ListResponse<BibleBookCount>,NetworkError>
+    
     func getPlace(placeId:String) async -> Result<Place,NetworkError>
     
     func getRelatedUserInfo(placeId: String) async -> Result<RelatedUserInfo, NetworkError>
@@ -63,6 +65,10 @@ public struct PlaceUsecase:PlaceUsecaseProtocol{
     
     func getPrefixs() async -> Result<ListResponse<PlacePrefix>, NetworkError> {
         return await repository.getPrefixs();
+    }
+    
+    func getBibleBookCounts() async ->  Result<ListResponse<BibleBookCount>,NetworkError>{
+        return await repository.getBibleBookCounts()
     }
     
     func getPlace(placeId: String) async -> Result<Place, NetworkError> {

@@ -38,6 +38,8 @@ protocol VMFactoryProtocol {
     
     func makePlaceCharactersBottomSheetVM() -> PlaceCharactersBottomSheetViewModelProtocol
     
+    func makeBiblesBottomSheetVM() -> BiblesBottomSheetViewModelProtocol
+
     func makePlacesByTypeBottomSheetVM(placeTypeName:PlaceTypeName) -> PlacesByTypeBottomSheetViewModelProtocol
     
     func makePlacesByCharacterBottomSheetVM(character:String) ->
@@ -92,6 +94,11 @@ final class VMFactory:VMFactoryProtocol{
     
     func makeBibleVerseDetailBottomSheetVM(keyword: String) -> BibleVerseDetailBottomSheetViewModelProtocol {
         let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, keyword: keyword, placeUsecase: usecases?.place)
+        return vm
+    }
+    
+    func makeBiblesBottomSheetVM() -> BiblesBottomSheetViewModelProtocol {
+        let vm = BiblesBottomSheetViewModel(navigator: navigator, placeUsecase: usecases?.place)
         return vm
     }
     
