@@ -44,6 +44,15 @@
 "SearchReady.Recent" = "Recent";
 "SearchReady.More" = "More";
 
+// bibles
+"Bibles.Title" = "Select Bible";
+"Bibles.Empty" = "No books available.";
+"Bibles.FetchErrorMessage" = "We couldn’t load the list. Please try again.";
+
+// placesByBible
+"PlacesByBible.Title" = "Places in %@";
+"PlacesByBible.Empty" = "No places found for this book.";
+
 // common
 "Common.Retry" = "Retry";
 "Common.DefaultErrorMessage" = "An error has occurred.";

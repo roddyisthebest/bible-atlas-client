@@ -32,6 +32,8 @@
 		EC0F01D92E826B8E00D7C216 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EC0F01DB2E826B8E00D7C216 /* Localizable.strings */; };
 		EC0F01DF2E82746500D7C216 /* L10n.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01DE2E82746500D7C216 /* L10n.swift */; };
 		EC0F01E62E827CB800D7C216 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = EC0F01E82E827CB800D7C216 /* Localizable.stringsdict */; };
+		EC0F01EB2E828C0500D7C216 /* PlacesByBibleBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01EA2E828C0500D7C216 /* PlacesByBibleBottomSheetViewModel.swift */; };
+		EC0F01ED2E828D9400D7C216 /* PlacesByBibleBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01EC2E828D9400D7C216 /* PlacesByBibleBottomSheetViewController.swift */; };
 		EC386DF42E06C4A700251FC6 /* HomeContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF32E06C4A700251FC6 /* HomeContentViewModel.swift */; };
 		EC386DF62E06C60600251FC6 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF52E06C60600251FC6 /* SearchResultViewModel.swift */; };
 		EC386DF92E06C77A00251FC6 /* HomeContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF82E06C77A00251FC6 /* HomeContentViewController.swift */; };
@@ -238,6 +240,8 @@
 		EC0F01DE2E82746500D7C216 /* L10n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10n.swift; sourceTree = "<group>"; };
 		EC0F01E72E827CB800D7C216 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		EC0F01E92E827CB900D7C216 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ko; path = ko.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		EC0F01EA2E828C0500D7C216 /* PlacesByBibleBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesByBibleBottomSheetViewModel.swift; sourceTree = "<group>"; };
+		EC0F01EC2E828D9400D7C216 /* PlacesByBibleBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesByBibleBottomSheetViewController.swift; sourceTree = "<group>"; };
 		EC386DF32E06C4A700251FC6 /* HomeContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewModel.swift; sourceTree = "<group>"; };
 		EC386DF52E06C60600251FC6 /* SearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModel.swift; sourceTree = "<group>"; };
 		EC386DF82E06C77A00251FC6 /* HomeContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewController.swift; sourceTree = "<group>"; };
@@ -884,6 +888,7 @@
 				ECD972682E307AC500D94767 /* ReportBottomSheetViewController.swift */,
 				EC9A0A482E6F051F00BB580E /* AppGateViewController.swift */,
 				EC0F01D12E81929300D7C216 /* BiblesBottomSheetViewController.swift */,
+				EC0F01EC2E828D9400D7C216 /* PlacesByBibleBottomSheetViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -910,6 +915,7 @@
 				ECD9725B2E2A353300D94767 /* AccountManagementBottomSheetViewModel.swift */,
 				ECD9726A2E307AE300D94767 /* ReportBottomSheetViewModel.swift */,
 				EC0F01CF2E81921E00D7C216 /* BiblesBottomSheetViewModel.swift */,
+				EC0F01EA2E828C0500D7C216 /* PlacesByBibleBottomSheetViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1296,6 +1302,7 @@
 				ECA94B972D5082B9005B0428 /* AppDelegate.swift in Sources */,
 				EC77CE362DCF630E0030DEF5 /* MemoBottomSheetViewController.swift in Sources */,
 				ECD972732E3DEE2000D94767 /* ShareItemSourceView.swift in Sources */,
+				EC0F01ED2E828D9400D7C216 /* PlacesByBibleBottomSheetViewController.swift in Sources */,
 				EC7058A92DBFAEB5002D47DF /* VCFactory.swift in Sources */,
 				ECCB51D22E140AC1007E4AB7 /* SearchTableViewCell.swift in Sources */,
 				EC940E9D2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift in Sources */,
@@ -1353,6 +1360,7 @@
 				ECA94BE52D50AE92005B0428 /* AuthRepositoryProtocol.swift in Sources */,
 				ECD972672E2CE78800D94767 /* WindowService.swift in Sources */,
 				EC386DFF2E06F95900251FC6 /* SearchReadyViewController.swift in Sources */,
+				EC0F01EB2E828C0500D7C216 /* PlacesByBibleBottomSheetViewModel.swift in Sources */,
 				ECA94BEF2D50B492005B0428 /* MockingApi.swift in Sources */,
 				EC0F01DF2E82746500D7C216 /* L10n.swift in Sources */,
 				EC7058842DB3BAE5002D47DF /* HomeBottomSheetViewController.swift in Sources */,

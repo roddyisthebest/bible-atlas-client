@@ -41,6 +41,14 @@
 "SearchReady.Recent" = "최근 검색어";
 "SearchReady.More" = "더보기";
 
+// bibles
+"Bibles.Title" = "성경을 선택하세요.";
+"Bibles.Empty" = "성경 목록이 없습니다.";
+"Bibles.FetchErrorMessage" = "목록을 불러오지 못했습니다. 다시 시도해 주세요.";
+
+// placesByBible
+"PlacesByBible.Title" = "%@에 나오는 장소";
+"PlacesByBible.Empty" = "이 성경에 나오는 장소가 없습니다.";
 
 // common
 "Common.Retry" = "다시 시도";

@@ -86,6 +86,27 @@ enum L10n {
         static var more: String { moreKey.localized }
     }
     
+    enum Bibles{
+        static let titleKey = "Bibles.Title"
+        static let emptyKey = "Bibles.Empty"
+        static let fetchErrorMessageKey = "Bibles.FetchErrorMessage"
+
+        static var title: String { titleKey.localized }
+        static var empty: String { emptyKey.localized }
+        static var fetchErrorMessage: String { fetchErrorMessageKey.localized }
+    }
+    
+    enum PlacesByBible{
+        static let titleKey = "PlacesByBible.Title"
+        static let emptyKey = "PlacesByBible.Empty"
+        
+        static func title(_ bibleBookName: String) -> String {
+            titleKey.localized(bibleBookName)
+        }
+        
+        static var empty:String {emptyKey.localized}
+    }
+    
     enum Common {
         static let retryKey = "Common.Retry"
         static var retry: String { retryKey.localized }

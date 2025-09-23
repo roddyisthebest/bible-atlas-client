@@ -36,8 +36,8 @@ final class BiblesBottomSheetViewModel:BiblesBottomSheetViewModelProtocol{
     
     func transform(input: Input) -> Output {
         
-        input.cellTapped$.subscribe(onNext: {[weak self] character in
-//            self?.navigator?.present(.placesByCharacter(character))
+        input.cellTapped$.subscribe(onNext: {[weak self] bible in
+            self?.navigator?.present(.placesByBible(bible))
         }).disposed(by: disposeBag)
         
         input.closeButtonTapped$.subscribe(onNext: {[weak self] in
@@ -105,7 +105,7 @@ final class BiblesBottomSheetViewModel:BiblesBottomSheetViewModelProtocol{
     }
     
     public struct Input {
-        let cellTapped$:Observable<String>
+        let cellTapped$:Observable<BibleBook>
         let closeButtonTapped$:Observable<Void>
         let viewLoaded$:Observable<Void>
         let refetchButtonTapped$:Observable<Void>

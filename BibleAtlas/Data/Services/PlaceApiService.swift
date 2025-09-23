@@ -16,7 +16,7 @@ struct PlaceParameters {
     var name:String?
     var prefix:String?
     var sort:PlaceSort?
-    var bible:String?
+    var bible:BibleBook?
 }
 
 protocol PlaceApiServiceProtocol {
@@ -69,7 +69,7 @@ final public class PlaceApiService: PlaceApiServiceProtocol{
             "prefix": parameters.prefix,
             "placeTypes": parameters.placeTypeName?.rawValue,
             "sort": parameters.sort?.rawValue,
-            "bibleBook":parameters.bible
+            "bibleBook":parameters.bible?.rawValue
         ]
 
         let params: Parameters = rawParams.reduce(into: [:]) { result, pair in

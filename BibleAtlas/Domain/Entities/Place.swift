@@ -107,10 +107,7 @@ struct PlacePrefix:Decodable {
     var placeCount: String;
 }
 
-struct BibleBookCount:Decodable {
-    var bible: String;
-    var placeCount: Int
-}
+
 
 struct PlaceRelation:Decodable{
     var id:Int;

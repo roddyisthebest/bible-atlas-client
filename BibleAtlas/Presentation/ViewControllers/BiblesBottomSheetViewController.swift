@@ -15,7 +15,7 @@ final class BiblesBottomSheetViewController: UIViewController {
 
     private var biblesBottomSheetViewModel:BiblesBottomSheetViewModelProtocol?
     
-    private let cellTapped$ = PublishRelay<String>()
+    private let cellTapped$ = PublishRelay<BibleBook>()
     
     private let viewLoaded$ = PublishRelay<Void>();
     
@@ -34,7 +34,7 @@ final class BiblesBottomSheetViewController: UIViewController {
     }()
     
     
-    private let headerLabel = HeaderLabel(text: "Places By Bible");
+    private let headerLabel = HeaderLabel(text: L10n.Bibles.title);
     private let closeButton = CircleButton(iconSystemName: "xmark");
 
     

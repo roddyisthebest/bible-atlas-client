@@ -55,7 +55,7 @@ class BibleBookCell: UICollectionViewCell {
         label.numberOfLines = 1;
         label.lineBreakMode = .byTruncatingTail
         label.font = .systemFont(ofSize: 14, weight: .medium)
-        label.text = "12 places"
+        label.text = "0 places"
         return label;
     }()
     
@@ -63,13 +63,13 @@ class BibleBookCell: UICollectionViewCell {
     
     
     func setBibleBook(bibleBookCount:BibleBookCount){
-        nameLabel.text = bibleBookCount.bible;
+        nameLabel.text = bibleBookCount.bible.title();
         
-        let twoChars = String(bibleBookCount.bible
+        let twoChars = String(bibleBookCount.bible.code.uppercased()
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .prefix(2))
         bibleBookLabel.text = twoChars
-        numberLabel.text =  "\(bibleBookCount.placeCount) Places"
+        numberLabel.text =  L10n.Common.placesCount(bibleBookCount.placeCount)
     }
     
     
