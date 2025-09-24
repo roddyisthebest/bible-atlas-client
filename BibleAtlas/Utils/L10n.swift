@@ -181,11 +181,21 @@ enum L10n {
     
     
     enum PlaceTypes {
-            // Keys
+        // Keys
         static let titleKey = "PlaceTypes.Title"   // 타입명이 아직 없을 때
         static let emptyKey = "PlaceTypes.Empty"                   // 목록 비었을 때
 
-            // Values
+        // Values
+        static var title: String { titleKey.localized }
+        static var empty: String { emptyKey.localized }
+    }
+    
+    enum PlaceCharacters{
+        // Keys
+        static let titleKey = "PlaceCharacters.Title"   // 타입명이 아직 없을 때
+        static let emptyKey = "PlaceCharacters.Empty"                   // 목록 비었을 때
+
+        // Values
         static var title: String { titleKey.localized }
         static var empty: String { emptyKey.localized }
     }

@@ -34,7 +34,7 @@ final class PlaceCharactersBottomSheetViewController: UIViewController {
     }()
     
     
-    private let headerLabel = HeaderLabel(text: "Places By A-Z");
+    private let headerLabel = HeaderLabel(text: L10n.PlaceCharacters.title);
     private let closeButton = CircleButton(iconSystemName: "xmark");
 
     
@@ -53,7 +53,7 @@ final class PlaceCharactersBottomSheetViewController: UIViewController {
     
     private let loadingView = LoadingView();
     
-    private let emptyLabel = EmptyLabel();
+    private let emptyLabel = EmptyLabel(text:L10n.PlaceCharacters.empty);
     
     private let errorRetryView = ErrorRetryView();
     

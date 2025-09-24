@@ -61,7 +61,7 @@ class PlaceTypeCell: UICollectionViewCell {
     func setPlace(placeType:PlaceTypeWithPlaceCount){
         nameLabel.text = placeType.name.rawValue;
         placeIcon.image = UIImage(named: placeType.name.rawValue);
-        numberLabel.text =  "\(placeType.placeCount) Places"
+        numberLabel.text =  L10n.Common.placesCount(placeType.placeCount)
     }
     
     

@@ -84,3 +84,7 @@
 "PlaceTypes.Title" = "유형을 선택하세요.";
 "PlaceTypes.Empty" = "장소 타입/유형이 없습니다.";
 
+
+// placeCharacters
+"PlaceCharacters.Title" = "문자를 선택하세요.";
+"PlaceCharacters.Empty" = "선택 가능한 문자가 없습니다.";
