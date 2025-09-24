@@ -59,4 +59,28 @@
 "Common.Close" = "Close";
 
 
+// placeDetail
+"PlaceDetail.Back" = "Back";
+"PlaceDetail.PlaceType" = "Place type";
+"PlaceDetail.Ancient" = "Ancient";
+"PlaceDetail.Modern" = "Modern";
+
+"PlaceDetail.Description" = "Description";
+"PlaceDetail.RelatedPlaces" = "Related places";
+"PlaceDetail.RelatedPlacesEmpty" = "No related places.";
+"PlaceDetail.RelatedVerses" = "Related verses";
+"PlaceDetail.RelatedVersesEmpty" = "No related verses.";
+
+"PlaceDetail.ReportIssue" = "Report an issue";
+"PlaceDetail.AddMemo" = "Add memo";
+"PlaceDetail.RequestEdit" = "Request edit";
+
+"PlaceDetail.ReportMenuTitle" = "Report issue";
+"PlaceDetail.Report.Spam" = "Spam";
+"PlaceDetail.Report.Inappropriate" = "Inappropriate";
+"PlaceDetail.Report.FalseInfo" = "False information";
+"PlaceDetail.Report.Other" = "Other";
+
+"PlaceDetail.OK" = "OK";
+"PlaceDetail.LikesFmt" = "%d Likes";
 

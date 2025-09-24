@@ -123,10 +123,61 @@ enum L10n {
             // "Home.PlacesCount" = "%d places" | "장소 %d개" 등
             "Common.PlacesCount".localized(n)
         }
-        
-        
-        
+    
     }
+    
+    enum PlaceDetail {
+            // Keys
+        static let backKey = "PlaceDetail.Back"
+        static let placeTypeKey = "PlaceDetail.PlaceType"
+        static let ancientKey = "PlaceDetail.Ancient"
+        static let modernKey = "PlaceDetail.Modern"
+
+        static let descriptionKey = "PlaceDetail.Description"
+        static let relatedPlacesKey = "PlaceDetail.RelatedPlaces"
+        static let relatedPlacesEmptyKey = "PlaceDetail.RelatedPlacesEmpty"
+        static let relatedVersesKey = "PlaceDetail.RelatedVerses"
+        static let relatedVersesEmptyKey = "PlaceDetail.RelatedVersesEmpty"
+
+        static let reportIssueKey = "PlaceDetail.ReportIssue"
+        static let addMemoKey = "PlaceDetail.AddMemo"
+        static let requestEditKey = "PlaceDetail.RequestEdit"
+
+        static let reportMenuTitleKey = "PlaceDetail.ReportMenuTitle"
+        static let reportSpamKey = "PlaceDetail.Report.Spam"
+        static let reportInappropriateKey = "PlaceDetail.Report.Inappropriate"
+        static let reportFalseInfoKey = "PlaceDetail.Report.FalseInfo"
+        static let reportOtherKey = "PlaceDetail.Report.Other"
+
+        static let okKey = "PlaceDetail.OK"
+        static let likesFmtKey = "PlaceDetail.LikesFmt" // "%d Likes"
+
+            // Values
+        static var back: String { backKey.localized }
+        static var placeType: String { placeTypeKey.localized }
+        static var ancient: String { ancientKey.localized }
+        static var modern: String { modernKey.localized }
+
+        static var description: String { descriptionKey.localized }
+        static var relatedPlaces: String { relatedPlacesKey.localized }
+        static var relatedPlacesEmpty: String { relatedPlacesEmptyKey.localized }
+        static var relatedVerses: String { relatedVersesKey.localized }
+        static var relatedVersesEmpty: String { relatedVersesEmptyKey.localized }
+
+        static var reportIssue: String { reportIssueKey.localized }
+        static var addMemo: String { addMemoKey.localized }
+        static var requestEdit: String { requestEditKey.localized }
+
+        static var reportMenuTitle: String { reportMenuTitleKey.localized }
+        static var reportSpam: String { reportSpamKey.localized }
+        static var reportInappropriate: String { reportInappropriateKey.localized }
+        static var reportFalseInfo: String { reportFalseInfoKey.localized }
+        static var reportOther: String { reportOtherKey.localized }
+
+        static var ok: String { okKey.localized }
+
+        static func likes(_ n: Int) -> String { likesFmtKey.localized(n) }
+        }
     
 }
 

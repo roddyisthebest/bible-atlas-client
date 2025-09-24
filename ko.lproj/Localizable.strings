@@ -55,3 +55,27 @@
 "Common.DefaultErrorMessage" = "에러가 발생했습니다.";
 "Common.Close" = "닫기";
 
+// placeDetail
+"PlaceDetail.Back" = "뒤로";
+"PlaceDetail.PlaceType" = "장소 유형";
+"PlaceDetail.Ancient" = "고대";
+"PlaceDetail.Modern" = "현대";
+
+"PlaceDetail.Description" = "설명";
+"PlaceDetail.RelatedPlaces" = "연관된 장소";
+"PlaceDetail.RelatedPlacesEmpty" = "연관된 장소가 없습니다.";
+"PlaceDetail.RelatedVerses" = "관련 성경 구절";
+"PlaceDetail.RelatedVersesEmpty" = "관련된 성경 구절이 없습니다.";
+
+"PlaceDetail.ReportIssue" = "문제 신고";
+"PlaceDetail.AddMemo" = "메모 추가";
+"PlaceDetail.RequestEdit" = "수정 요청";
+
+"PlaceDetail.ReportMenuTitle" = "문제 신고";
+"PlaceDetail.Report.Spam" = "스팸";
+"PlaceDetail.Report.Inappropriate" = "부적절함";
+"PlaceDetail.Report.FalseInfo" = "허위 정보";
+"PlaceDetail.Report.Other" = "기타";
+
+"PlaceDetail.OK" = "확인";
+"PlaceDetail.LikesFmt" = "좋아요 %d개";
