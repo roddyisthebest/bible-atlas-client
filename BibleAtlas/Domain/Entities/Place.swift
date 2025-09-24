@@ -161,6 +161,8 @@ enum BibleVersion: String, Decodable {
 struct GeoJsonFeatureProperties: Codable {
     let id: String?
     let role: String?
+    let isParent: Bool?
+    let possibility: Int?
 }
 
 struct MyCollectionPlaceIds:Equatable, Decodable{

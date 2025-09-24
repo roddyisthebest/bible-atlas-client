@@ -15,15 +15,15 @@ protocol MapApiServiceProtocol {
 final class MapApiService:MapApiServiceProtocol {
     
     private let apiClient: AuthorizedApiClientProtocol
-    private let baseURL: String
+    private let url: String
     
-    init(apiClient: AuthorizedApiClientProtocol, baseURL: String) {
+    init(apiClient: AuthorizedApiClientProtocol, url: String) {
         self.apiClient = apiClient
-        self.baseURL = baseURL
+        self.url = url
     }
     
     func getGeoJson(placeId: String) async -> Result<[MKGeoJSONFeature], NetworkError> {
-        let url = "\(baseURL)/\(placeId).geojson"
+        let url = "\(url)/place/\(placeId)/geojson"
                 
         let result = await apiClient.getRawData(url: url, parameters: nil);
         

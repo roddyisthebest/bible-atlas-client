@@ -188,6 +188,7 @@ final class MainViewController: UIViewController, Presentable  {
             if let placeType = $0.types.first{
                 annotation.placeTypeName = placeType.name
             }
+            
 
             annotation.title = $0.name
 
@@ -230,11 +231,15 @@ final class MainViewController: UIViewController, Presentable  {
         for feature in features {
             for geometry in feature.geometry {
                 var id: String?
+                var possibility:Int?
+                var isParent:Bool?
 
                 if let propertiesData = feature.properties {
                      do {
                          let props = try JSONDecoder().decode(GeoJsonFeatureProperties.self, from: propertiesData)
                          id = props.id
+                         possibility = props.possibility
+                         isParent = props.isParent
                      } catch {
                          print("⚠️ properties decode 실패:", error)
                      }
@@ -246,6 +251,8 @@ final class MainViewController: UIViewController, Presentable  {
                     let annotation = CustomPointAnnotation()
                     annotation.coordinate = geometry.coordinate
                     annotation.placeId = id?.split(separator: ".").first.map { String($0) }
+                    annotation.possibility = possibility
+                    annotation.isParent = isParent
 
                     annotations.append(annotation)
 
@@ -333,54 +340,69 @@ extension MainViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is MKUserLocation {
-            return nil
-        }
+           guard !(annotation is MKUserLocation) else { return nil }
 
-        let identifier = "CustomMarker"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
+           let id = "CustomMarker"
+           let view = (mapView.dequeueReusableAnnotationView(withIdentifier: id) as? MKMarkerAnnotationView)
+               ?? MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: id)
+           view.annotation = annotation
+           view.canShowCallout = true
 
-        if annotationView == nil {
-            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView?.canShowCallout = true
-        } else {
-            annotationView?.annotation = annotation
-        }
+           // 재사용 대비 초기화
+           view.glyphImage = nil
+           view.glyphText = nil
+           view.glyphTintColor = .white
+           view.markerTintColor = .systemGray3
+           view.displayPriority = .defaultLow
+           view.titleVisibility = .adaptive
+           view.subtitleVisibility = .adaptive
 
-        // ✅ cast to our custom annotation
-        let config = UIImage.SymbolConfiguration(pointSize: 15, weight: .medium)
+           let config = UIImage.SymbolConfiguration(pointSize: 15, weight: .medium)
 
+           if let ann = annotation as? CustomPointAnnotation {
+               // 선택 상태 우선 처리
+               if let placeId = ann.placeId, placeId == selectedPlaceId {
+                   view.glyphImage = UIImage(systemName: "checkmark.circle", withConfiguration: config)
+                   view.markerTintColor = .systemIndigo
+                   view.displayPriority = .required
+               } else {
+                   let isHistorical = (ann.isParent == true)
+                   let possibility = ann.possibility
 
-        
-        if let customAnnotation = annotation as? CustomPointAnnotation {
+                   if isHistorical {
+                       // 과거 추정: 보조 톤 + 시계 아이콘
+                       view.markerTintColor = .systemOrange   // 또는 .systemGray3
+                       view.glyphImage = UIImage(systemName: "clock", withConfiguration: config)
+                       view.displayPriority = .defaultLow
+                   } else {
+                       // 현재 추정: 강조 + 퍼센트
+                       view.markerTintColor = .systemGreen
+                       if let p = possibility {
+                           view.glyphText = "\(p)%"
+                       } else {
+                           view.glyphImage = UIImage(systemName: "questionmark", withConfiguration: config)
+                       }
+                       view.displayPriority = .required
+                   }
 
-            if let placeId = customAnnotation.placeId {
-                
-                if(selectedPlaceId == placeId){
-                    annotationView?.glyphImage = UIImage(systemName: "checkmark.circle", withConfiguration: config)
-                }
-                
-                else{
-                    if let placeTypeName = customAnnotation.placeTypeName?.rawValue {
-                        annotationView?.glyphImage = UIImage(named:placeTypeName)
+                   // 타입 아이콘을 꼭 쓰고 싶다면(퍼센트 대신):
+                    if let name = ann.placeTypeName?.rawValue, let img = UIImage(named: name) {
+                        view.glyphImage = img
                     }
-                    else{
-                        annotationView?.glyphImage = UIImage(systemName: "questionmark.circle", withConfiguration: config)
-                    }
-                   
 
-                }
-            }   else {
+                   // 말풍선 서브타이틀(퍼센트가 있을 때만)
+                   if let p = possibility {
+                       // i18n: "Confidence %d%%" / "신뢰도 %d%%"
+                       let subtitleEn = "Confidence \(p)%"
+                       ann.subtitle = Locale.current.languageCode == "ko" ? "신뢰도 \(p)%" : subtitleEn
+                   } else {
+                       ann.subtitle = nil
+                   }
+               }
+           }
 
-                annotationView?.glyphImage = UIImage(systemName: "record.circle", withConfiguration: config)
-
-            }
-        }
-
-        annotationView?.markerTintColor = .white
-        annotationView?.glyphTintColor = .primaryViolet
-        return annotationView
-    }
+           return view
+       }
     
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -398,7 +420,8 @@ extension MainViewController: MKMapViewDelegate {
 final class CustomPointAnnotation: MKPointAnnotation {
     var placeId: String?
     var placeTypeName: PlaceTypeName?
-
+    var possibility:Int?
+    var isParent:Bool?
 }
 
 
