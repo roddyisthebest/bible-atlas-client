@@ -179,6 +179,16 @@ enum L10n {
         static func likes(_ n: Int) -> String { likesFmtKey.localized(n) }
         }
     
+    
+    enum PlaceTypes {
+            // Keys
+        static let titleKey = "PlaceTypes.Title"   // 타입명이 아직 없을 때
+        static let emptyKey = "PlaceTypes.Empty"                   // 목록 비었을 때
+
+            // Values
+        static var title: String { titleKey.localized }
+        static var empty: String { emptyKey.localized }
+    }
 }
 
 

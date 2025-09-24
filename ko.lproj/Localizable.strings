@@ -79,3 +79,8 @@
 
 "PlaceDetail.OK" = "확인";
 "PlaceDetail.LikesFmt" = "좋아요 %d개";
+
+// placeTypes
+"PlaceTypes.Title" = "유형을 선택하세요.";
+"PlaceTypes.Empty" = "장소 타입/유형이 없습니다.";
+

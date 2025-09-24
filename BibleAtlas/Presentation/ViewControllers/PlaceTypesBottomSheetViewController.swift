@@ -40,7 +40,7 @@ final class PlaceTypesBottomSheetViewController: UIViewController {
     }()
     
     
-    private let headerLabel = HeaderLabel(text: "Places By Type");
+    private let headerLabel = HeaderLabel(text: L10n.PlaceTypes.title);
     private let closeButton = CircleButton(iconSystemName: "xmark");
 
     
@@ -66,7 +66,7 @@ final class PlaceTypesBottomSheetViewController: UIViewController {
 
     private let footerLoadingView = LoadingView(style: .medium);
 
-    private let emptyLabel = EmptyLabel();
+    private let emptyLabel = EmptyLabel(text: L10n.PlaceTypes.empty);
     
     private let errorRetryView = ErrorRetryView();
     

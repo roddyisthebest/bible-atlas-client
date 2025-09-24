@@ -84,3 +84,7 @@
 "PlaceDetail.OK" = "OK";
 "PlaceDetail.LikesFmt" = "%d Likes";
 
+
+// placeTypes
+"PlaceTypes.Title" = "Select The Type";
+"PlaceTypes.Empty" = "No types available.";
