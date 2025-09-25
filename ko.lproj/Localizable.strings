@@ -88,3 +88,7 @@
 // placeCharacters
 "PlaceCharacters.Title" = "문자를 선택하세요.";
 "PlaceCharacters.Empty" = "선택 가능한 문자가 없습니다.";
+
+// placesByCharacter
+"PlacesByCharacter.Title" = "%@ 기준 정렬";
+"PlacesByCharacter.Empty" = "표시할 장소가 없습니다.";

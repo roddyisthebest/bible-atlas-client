@@ -75,7 +75,7 @@ class PlacesByCharacterBottomSheetViewController: UIViewController {
 
     private let footerLoadingView = LoadingView(style: .medium);
     
-    private let emptyLabel = EmptyLabel();
+    private let emptyLabel = EmptyLabel(text: L10n.PlacesByCharacter.empty);
     
     private let errorRetryView = ErrorRetryView();
 
@@ -130,7 +130,7 @@ class PlacesByCharacterBottomSheetViewController: UIViewController {
         
         output?.character$.observe(on:MainScheduler.instance).bind{
             [weak self] character in
-            self?.headerLabel.text = "Sorted By \(character)"
+            self?.headerLabel.text = L10n.PlacesByCharacter.title(character)
         }.disposed(by: disposeBag)
 
             

@@ -92,3 +92,12 @@
 // placeCharacters
 "PlaceCharacters.Title" = "Select The Character";
 "PlaceCharacters.Empty" = "No characters available.";
+
+
+// placesByCharacter
+"PlacesByCharacter.Title" = "Sorted by %@";
+"PlacesByCharacter.Empty" = "No places found.";
+
+
+
+

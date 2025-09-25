@@ -199,6 +199,18 @@ enum L10n {
         static var title: String { titleKey.localized }
         static var empty: String { emptyKey.localized }
     }
+    
+    enum PlacesByCharacter {
+        // Keys
+        static let titleKey = "PlacesByCharacter.Title"
+        static let emptyKey = "PlacesByCharacter.Empty"
+
+        
+        // Values
+        static func title(_ char: String) -> String { titleKey.localized(char) }
+        static var empty: String { emptyKey.localized }
+        
+    }
 }
 
 
