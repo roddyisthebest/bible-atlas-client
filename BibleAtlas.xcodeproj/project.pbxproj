@@ -34,6 +34,11 @@
 		EC0F01E62E827CB800D7C216 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = EC0F01E82E827CB800D7C216 /* Localizable.stringsdict */; };
 		EC0F01EB2E828C0500D7C216 /* PlacesByBibleBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01EA2E828C0500D7C216 /* PlacesByBibleBottomSheetViewModel.swift */; };
 		EC0F01ED2E828D9400D7C216 /* PlacesByBibleBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01EC2E828D9400D7C216 /* PlacesByBibleBottomSheetViewController.swift */; };
+		EC0F01F32E850A3700D7C216 /* PresenterHostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01F22E850A3700D7C216 /* PresenterHostVC.swift */; };
+		EC0F01F52E850A7400D7C216 /* MockVCFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01F42E850A7400D7C216 /* MockVCFactory.swift */; };
+		EC0F01F72E850B1500D7C216 /* MockVMFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01F62E850B1500D7C216 /* MockVMFactory.swift */; };
+		EC0F01FA2E8512DE00D7C216 /* BottomSheetCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01F92E8512DE00D7C216 /* BottomSheetCoordinatorTests.swift */; };
+		EC0F01FD2E85144800D7C216 /* TestHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01FC2E85144800D7C216 /* TestHost.swift */; };
 		EC386DF42E06C4A700251FC6 /* HomeContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF32E06C4A700251FC6 /* HomeContentViewModel.swift */; };
 		EC386DF62E06C60600251FC6 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF52E06C60600251FC6 /* SearchResultViewModel.swift */; };
 		EC386DF92E06C77A00251FC6 /* HomeContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF82E06C77A00251FC6 /* HomeContentViewController.swift */; };
@@ -242,6 +247,11 @@
 		EC0F01E92E827CB900D7C216 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ko; path = ko.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		EC0F01EA2E828C0500D7C216 /* PlacesByBibleBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesByBibleBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		EC0F01EC2E828D9400D7C216 /* PlacesByBibleBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesByBibleBottomSheetViewController.swift; sourceTree = "<group>"; };
+		EC0F01F22E850A3700D7C216 /* PresenterHostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterHostVC.swift; sourceTree = "<group>"; };
+		EC0F01F42E850A7400D7C216 /* MockVCFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockVCFactory.swift; sourceTree = "<group>"; };
+		EC0F01F62E850B1500D7C216 /* MockVMFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockVMFactory.swift; sourceTree = "<group>"; };
+		EC0F01F92E8512DE00D7C216 /* BottomSheetCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetCoordinatorTests.swift; sourceTree = "<group>"; };
+		EC0F01FC2E85144800D7C216 /* TestHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHost.swift; sourceTree = "<group>"; };
 		EC386DF32E06C4A700251FC6 /* HomeContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewModel.swift; sourceTree = "<group>"; };
 		EC386DF52E06C60600251FC6 /* SearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModel.swift; sourceTree = "<group>"; };
 		EC386DF82E06C77A00251FC6 /* HomeContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewController.swift; sourceTree = "<group>"; };
@@ -457,6 +467,22 @@
 				EC0F01DE2E82746500D7C216 /* L10n.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		EC0F01F82E8512B700D7C216 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				EC0F01F92E8512DE00D7C216 /* BottomSheetCoordinatorTests.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		EC0F01FB2E85143700D7C216 /* Supports */ = {
+			isa = PBXGroup;
+			children = (
+				EC0F01FC2E85144800D7C216 /* TestHost.swift */,
+			);
+			path = Supports;
 			sourceTree = "<group>";
 		};
 		EC386DF72E06C74000251FC6 /* HomeBottomSheetVC */ = {
@@ -688,6 +714,9 @@
 				EC0F01C52E81466800D7C216 /* MockSearchReadyViewModel.swift */,
 				EC0F01C92E814C8600D7C216 /* MockHomeContentViewModel.swift */,
 				EC0F01CB2E81504500D7C216 /* MockSearchResultViewModel.swift */,
+				EC0F01F22E850A3700D7C216 /* PresenterHostVC.swift */,
+				EC0F01F42E850A7400D7C216 /* MockVCFactory.swift */,
+				EC0F01F62E850B1500D7C216 /* MockVMFactory.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -751,6 +780,8 @@
 		ECA94BAF2D5082BA005B0428 /* BibleAtlasTests */ = {
 			isa = PBXGroup;
 			children = (
+				EC0F01FB2E85143700D7C216 /* Supports */,
+				EC0F01F82E8512B700D7C216 /* Coordinators */,
 				EC0F01B42E7CEFA400D7C216 /* ViewControllers */,
 				EC9A0A3B2E6B2EF200BB580E /* Mocks */,
 				ECD972802E40F48900D94767 /* ViewModels */,
@@ -962,10 +993,10 @@
 				ECD972832E4487CA00D94767 /* HomeContentViewModelTests.swift */,
 				ECD972852E45EE5900D94767 /* SearchResultViewModelTests.swift */,
 				ECD972882E47371900D94767 /* SearchReadyViewModelTests.swift */,
+				ECC49F842E506BED0061B467 /* PlaceModificationBottomSheetViewModelTests.swift */,
 				ECC49F7E2E4A1F000061B467 /* LoginBottomSheetViewModelTests.swift */,
 				ECC49F802E4CC3C10061B467 /* MyCollectionBottomSheetViewModelTests.swift */,
 				ECC49F822E4F25090061B467 /* PlaceDetailBottomSheetViewModelTests.swift */,
-				ECC49F842E506BED0061B467 /* PlaceModificationBottomSheetViewModelTests.swift */,
 				EC9A0A372E6A8EB300BB580E /* ReportBottomSheetViewModelTests.swift */,
 				EC9A0A392E6ACCB400BB580E /* MainViewModelTests.swift */,
 				EC9A0A402E6C0AF000BB580E /* MemoBottomSheetViewModelTests.swift */,
@@ -1383,9 +1414,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				EC0F01CA2E814C8600D7C216 /* MockHomeContentViewModel.swift in Sources */,
+				EC0F01F52E850A7400D7C216 /* MockVCFactory.swift in Sources */,
 				EC9A0A3F2E6B33AB00BB580E /* MockPlaceUsecase.swift in Sources */,
+				EC0F01FA2E8512DE00D7C216 /* BottomSheetCoordinatorTests.swift in Sources */,
 				ECD972892E47371900D94767 /* SearchReadyViewModelTests.swift in Sources */,
 				EC0F01B12E7C261B00D7C216 /* AccountManagementBottomSheetViewModelTests.swift in Sources */,
+				EC0F01F32E850A3700D7C216 /* PresenterHostVC.swift in Sources */,
 				EC0F01BC2E7F7FE400D7C216 /* SpyMapView.swift in Sources */,
 				ECC49F7F2E4A1F000061B467 /* LoginBottomSheetViewModelTests.swift in Sources */,
 				ECD9727C2E3F8A0B00D94767 /* AuthApiServiceTests.swift in Sources */,
@@ -1402,7 +1436,9 @@
 				EC0F01C62E81466800D7C216 /* MockSearchReadyViewModel.swift in Sources */,
 				EC0F01C02E7FE25900D7C216 /* PlaceDetailViewControllerTests.swift in Sources */,
 				ECD972822E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift in Sources */,
+				EC0F01F72E850B1500D7C216 /* MockVMFactory.swift in Sources */,
 				EC9A0A3A2E6ACCB400BB580E /* MainViewModelTests.swift in Sources */,
+				EC0F01FD2E85144800D7C216 /* TestHost.swift in Sources */,
 				EC0F01C22E813CB600D7C216 /* MockHomeBottomSheetViewModel.swift in Sources */,
 				EC9A0A412E6C0AF000BB580E /* MemoBottomSheetViewModelTests.swift in Sources */,
 				EC9A0A5A2E76EE4B00BB580E /* PopularPlacesBottomSheetViewModelTests.swift in Sources */,

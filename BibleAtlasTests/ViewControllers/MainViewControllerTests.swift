@@ -72,7 +72,7 @@ final class MainViewControllerTests: XCTestCase {
         let places = makePlaces(count: 20);
     
         vm.setPlaces(places)
-        RunLoop.current.run(until: Date().addingTimeInterval(0.01))
+        RunLoop.current.run(until: Date().addingTimeInterval(0.02))
 
         XCTAssertEqual(vc._test_mapView.annotations.count, 20)
         

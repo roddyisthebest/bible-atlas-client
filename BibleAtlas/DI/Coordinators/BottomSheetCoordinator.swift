@@ -42,7 +42,6 @@ protocol BottomSheetNavigator: AnyObject {
     func present(_ type: BottomSheetType)
     func dismiss(animated:Bool)
     func dismissFromDetail(animated:Bool)
-    func replace(with type: BottomSheetType)
     func setPresenter(_ presenter: Presentable?)
     
 }
@@ -325,9 +324,6 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
     
     
     
-    func replace(with type: BottomSheetType) {
-        self.dismiss(animated: false)
-        self.present(type)
-    }
+
     
 }

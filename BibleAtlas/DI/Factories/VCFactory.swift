@@ -16,41 +16,41 @@ protocol VCFactoryProtocol:AnyObject {
         homeVM: HomeBottomSheetViewModelProtocol,
         homeContentVM:HomeContentViewModelProtocol,
         searchResultVM:SearchResultViewModelProtocol,
-        searchReadyVM:SearchReadyViewModelProtocol) -> HomeBottomSheetViewController
+        searchReadyVM:SearchReadyViewModelProtocol) -> UIViewController
     
-    func makeLoginBottomSheetVC(vm:LoginBottomSheetViewModelProtocol) -> LoginBottomSheetViewController
-    func makeMyCollectionBottomSheetVC(vm:MyCollectionBottomSheetViewModelProtocol) -> MyCollectionBottomSheetViewController;
-    func makePlaceDetailBottomSheetVC(vm:PlaceDetailViewModelProtocol, placeId:String) -> PlaceDetailViewController
-    func makeMemoBottomSheetVC(vm:MemoBottomSheetViewModelProtocol) -> MemoBottomSheetViewController
+    func makeLoginBottomSheetVC(vm:LoginBottomSheetViewModelProtocol) -> UIViewController
+    func makeMyCollectionBottomSheetVC(vm:MyCollectionBottomSheetViewModelProtocol) -> UIViewController;
+    func makePlaceDetailBottomSheetVC(vm:PlaceDetailViewModelProtocol, placeId:String) -> UIViewController
+    func makeMemoBottomSheetVC(vm:MemoBottomSheetViewModelProtocol) -> UIViewController
     
-    func makePlaceModificationBottomSheetVC(vm:PlaceModificationBottomSheetViewModelProtocol) -> PlaceModificationBottomSheetViewController
+    func makePlaceModificationBottomSheetVC(vm:PlaceModificationBottomSheetViewModelProtocol) -> UIViewController
     
-    func makePlaceTypesBottomSheetVC(vm:PlaceTypesBottomSheetViewModelProtocol) -> PlaceTypesBottomSheetViewController
+    func makePlaceTypesBottomSheetVC(vm:PlaceTypesBottomSheetViewModelProtocol) -> UIViewController
     
-    func makePlaceCharactersBottomSheetVC(vm:PlaceCharactersBottomSheetViewModelProtocol) -> PlaceCharactersBottomSheetViewController
+    func makePlaceCharactersBottomSheetVC(vm:PlaceCharactersBottomSheetViewModelProtocol) -> UIViewController
     
-    func makeBiblesBottomSheetVC(vm:BiblesBottomSheetViewModelProtocol) -> BiblesBottomSheetViewController
+    func makeBiblesBottomSheetVC(vm:BiblesBottomSheetViewModelProtocol) -> UIViewController
     
-    func makePlacesByTypeBottomSheetVC(vm:PlacesByTypeBottomSheetViewModelProtocol, placeTypeName:PlaceTypeName) -> PlacesByTypeBottomSheetViewController
+    func makePlacesByTypeBottomSheetVC(vm:PlacesByTypeBottomSheetViewModelProtocol, placeTypeName:PlaceTypeName) -> UIViewController
     
-    func makePlacesByCharacterBottomSheetVC(vm:PlacesByCharacterBottomSheetViewModelProtocol, character:String) -> PlacesByCharacterBottomSheetViewController
+    func makePlacesByCharacterBottomSheetVC(vm:PlacesByCharacterBottomSheetViewModelProtocol, character:String) -> UIViewController
     
-    func makePlacesByBibleBottomSheetVC(vm:PlacesByBibleBottomSheetViewModelProtocol, bibleBook:BibleBook) -> PlacesByBibleBottomSheetViewController
+    func makePlacesByBibleBottomSheetVC(vm:PlacesByBibleBottomSheetViewModelProtocol, bibleBook:BibleBook) -> UIViewController
     
-    func makeBibleVerseDetailBottomSheetVC(vm:BibleVerseDetailBottomSheetViewModelProtocol, keyword:String) -> BibleVerseDetailBottomSheetViewController
+    func makeBibleVerseDetailBottomSheetVC(vm:BibleVerseDetailBottomSheetViewModelProtocol, keyword:String) -> UIViewController
     
-    func makeRecentSearchesBottomSheetVC(vm:RecentSearchesBottomSheetViewModelProtocol) -> RecentSearchesBottomSheetViewController
+    func makeRecentSearchesBottomSheetVC(vm:RecentSearchesBottomSheetViewModelProtocol) -> UIViewController
     
     func makePopularPlacesBottomSheetVC(vm:PopularPlacesBottomSheetViewModelProtocol) ->
-        PopularPlacesBottomSheetViewController
+    UIViewController
     
-    func makeMyPageBottomSheetVC(vm:MyPageBottomSheetViewModelProtocol) -> MyPageBottomSheetViewController
+    func makeMyPageBottomSheetVC(vm:MyPageBottomSheetViewModelProtocol) -> UIViewController
         
-    func makeAccountManagementBottomSheetVC(vm:AccountManagementBottomSheetViewModelProtocol) -> AccountManagementBottomSheetViewController
+    func makeAccountManagementBottomSheetVC(vm:AccountManagementBottomSheetViewModelProtocol) -> UIViewController
     
-    func makeMainVC(vm:MainViewModelProtocol) -> MainViewController
+    func makeMainVC(vm:MainViewModelProtocol) -> UIViewController & Presentable
     
-    func makeReportBottomSheetVC(vm:ReportBottomSheetViewModelProtocol) -> ReportBottomSheetViewController
+    func makeReportBottomSheetVC(vm:ReportBottomSheetViewModelProtocol) -> UIViewController
     
     func setupVC(type: BottomSheetType, sheet: UIViewController) -> Void
 }
@@ -74,7 +74,7 @@ final class VCFactory:VCFactoryProtocol {
     }
     
 
-    func makeHomeBottomSheetVC(homeVM: HomeBottomSheetViewModelProtocol, homeContentVM: HomeContentViewModelProtocol, searchResultVM: SearchResultViewModelProtocol, searchReadyVM: SearchReadyViewModelProtocol) -> HomeBottomSheetViewController {
+    func makeHomeBottomSheetVC(homeVM: HomeBottomSheetViewModelProtocol, homeContentVM: HomeContentViewModelProtocol, searchResultVM: SearchResultViewModelProtocol, searchReadyVM: SearchReadyViewModelProtocol) -> UIViewController {
         
         let homeContentVC = HomeContentViewController(homeContentViewModel: homeContentVM);
         let searchResultVC = SearchResultViewController(searchResultViewModel: searchResultVM);
@@ -87,111 +87,111 @@ final class VCFactory:VCFactoryProtocol {
     }
     
     
-    func makeLoginBottomSheetVC(vm: LoginBottomSheetViewModelProtocol) -> LoginBottomSheetViewController {
+    func makeLoginBottomSheetVC(vm: LoginBottomSheetViewModelProtocol) -> UIViewController {
         let vc = LoginBottomSheetViewController(loginBottomSheetViewModel: vm);
         return vc;
     }
     
-    func makeMyCollectionBottomSheetVC(vm:MyCollectionBottomSheetViewModelProtocol) -> MyCollectionBottomSheetViewController{
+    func makeMyCollectionBottomSheetVC(vm:MyCollectionBottomSheetViewModelProtocol) -> UIViewController{
         let vc = MyCollectionBottomSheetViewController(myCollectionBottomSheetViewModel: vm);
         return vc;
         
     }
 
     
-    func makePlaceDetailBottomSheetVC(vm: PlaceDetailViewModelProtocol, placeId:String) -> PlaceDetailViewController {
+    func makePlaceDetailBottomSheetVC(vm: PlaceDetailViewModelProtocol, placeId:String) -> UIViewController {
         let vc = PlaceDetailViewController(placeDetailViewModel: vm, placeId: placeId);
         setupVC(type: .placeDetail(placeId), sheet: vc);
         return vc;
     }
     
-    func makeMemoBottomSheetVC(vm:MemoBottomSheetViewModelProtocol) -> MemoBottomSheetViewController {
+    func makeMemoBottomSheetVC(vm:MemoBottomSheetViewModelProtocol) -> UIViewController {
         let vc = MemoBottomSheetViewController(memoBottomSheetViewModel: vm);
         setupVC(type: .memo("123"), sheet: vc);
         return vc;
     }
     
     
-    func makePlaceModificationBottomSheetVC(vm: PlaceModificationBottomSheetViewModelProtocol) -> PlaceModificationBottomSheetViewController {
+    func makePlaceModificationBottomSheetVC(vm: PlaceModificationBottomSheetViewModelProtocol) -> UIViewController {
         let vc = PlaceModificationBottomSheetViewController(vm: vm);
         setupVC(type:.placeModification("123"),sheet: vc)
         return vc;
     }
     
     
-    func makePlaceTypesBottomSheetVC(vm: PlaceTypesBottomSheetViewModelProtocol) -> PlaceTypesBottomSheetViewController {
+    func makePlaceTypesBottomSheetVC(vm: PlaceTypesBottomSheetViewModelProtocol) -> UIViewController {
         let vc = PlaceTypesBottomSheetViewController(vm: vm);
         setupVC(type: .placeTypes, sheet: vc);
         return vc;
     }
     
-    func makePlaceCharactersBottomSheetVC(vm: PlaceCharactersBottomSheetViewModelProtocol) -> PlaceCharactersBottomSheetViewController {
+    func makePlaceCharactersBottomSheetVC(vm: PlaceCharactersBottomSheetViewModelProtocol) -> UIViewController {
         let vc = PlaceCharactersBottomSheetViewController(vm: vm);
         setupVC(type: .placeCharacters, sheet:vc)
         return vc;
     }
     
-    func makeBiblesBottomSheetVC(vm:BiblesBottomSheetViewModelProtocol) -> BiblesBottomSheetViewController{
+    func makeBiblesBottomSheetVC(vm:BiblesBottomSheetViewModelProtocol) -> UIViewController{
         let vc = BiblesBottomSheetViewController(vm: vm)
         setupVC(type: .bibles, sheet: vc)
         return vc;
     }
     
-    func makePlacesByTypeBottomSheetVC(vm: PlacesByTypeBottomSheetViewModelProtocol, placeTypeName:PlaceTypeName) -> PlacesByTypeBottomSheetViewController {
+    func makePlacesByTypeBottomSheetVC(vm: PlacesByTypeBottomSheetViewModelProtocol, placeTypeName:PlaceTypeName) -> UIViewController {
         let vc = PlacesByTypeBottomSheetViewController(vm: vm);
         setupVC(type: .placesByType(placeTypeName), sheet: vc);
         return vc;
     }
     
-    func makePlacesByCharacterBottomSheetVC(vm: PlacesByCharacterBottomSheetViewModelProtocol, character:String) -> PlacesByCharacterBottomSheetViewController {
+    func makePlacesByCharacterBottomSheetVC(vm: PlacesByCharacterBottomSheetViewModelProtocol, character:String) -> UIViewController {
         let vc = PlacesByCharacterBottomSheetViewController(vm: vm);
         setupVC(type: .placesByCharacter(character), sheet: vc);
         return vc;
     }
-    func makePlacesByBibleBottomSheetVC(vm:PlacesByBibleBottomSheetViewModelProtocol, bibleBook:BibleBook) -> PlacesByBibleBottomSheetViewController{
+    func makePlacesByBibleBottomSheetVC(vm:PlacesByBibleBottomSheetViewModelProtocol, bibleBook:BibleBook) -> UIViewController{
         let vc = PlacesByBibleBottomSheetViewController(vm: vm)
         setupVC(type: .placesByBible(bibleBook), sheet: vc)
         return vc;
     }
     
-    func makeBibleVerseDetailBottomSheetVC(vm: BibleVerseDetailBottomSheetViewModelProtocol, keyword:String) -> BibleVerseDetailBottomSheetViewController {
+    func makeBibleVerseDetailBottomSheetVC(vm: BibleVerseDetailBottomSheetViewModelProtocol, keyword:String) -> UIViewController {
         let vc = BibleVerseDetailBottomSheetViewController(bibleVerseDetailBottomSheetViewModel: vm);
         setupVC(type: .bibleVerseDetail(.Etc, keyword),sheet: vc);
         return vc;
     }
     
-    func makeRecentSearchesBottomSheetVC(vm: RecentSearchesBottomSheetViewModelProtocol) -> RecentSearchesBottomSheetViewController {
+    func makeRecentSearchesBottomSheetVC(vm: RecentSearchesBottomSheetViewModelProtocol) -> UIViewController {
         let vc = RecentSearchesBottomSheetViewController(recentSearchesBottomSheetViewModel: vm);
         setupVC(type: .recentSearches,sheet: vc);
         return vc;
     }
     
-    func makePopularPlacesBottomSheetVC(vm: PopularPlacesBottomSheetViewModelProtocol) -> PopularPlacesBottomSheetViewController {
+    func makePopularPlacesBottomSheetVC(vm: PopularPlacesBottomSheetViewModelProtocol) -> UIViewController {
         let vc = PopularPlacesBottomSheetViewController(popularPlacesBottomSheetViewModel: vm);
         setupVC(type: .popularPlaces, sheet: vc)
         return vc;
     }
     
-    func makeMyPageBottomSheetVC(vm: MyPageBottomSheetViewModelProtocol) -> MyPageBottomSheetViewController {
+    func makeMyPageBottomSheetVC(vm: MyPageBottomSheetViewModelProtocol) -> UIViewController {
         let vc = MyPageBottomSheetViewController(myPageBottomSheetViewModel: vm)
         setupVC(type: .myPage, sheet: vc)
         return vc;
     }
     
-    func makeAccountManagementBottomSheetVC(vm:AccountManagementBottomSheetViewModelProtocol) -> AccountManagementBottomSheetViewController{
+    func makeAccountManagementBottomSheetVC(vm:AccountManagementBottomSheetViewModelProtocol) -> UIViewController{
         let vc = AccountManagementBottomSheetViewController(accountManagementBottomSheetViewModel: vm);
         setupVC(type: .accountManagement, sheet: vc)
         return vc;
     }
     
     
-    func makeReportBottomSheetVC(vm: ReportBottomSheetViewModelProtocol) -> ReportBottomSheetViewController {
+    func makeReportBottomSheetVC(vm: ReportBottomSheetViewModelProtocol) -> UIViewController {
         let vc = ReportBottomSheetViewController(reportBottomSheetViewModel: vm);
         setupVC(type: .placeReport("0", .etc), sheet: vc)
         return vc;
     }
     
-    func makeMainVC(vm: MainViewModelProtocol) -> MainViewController {
+    func makeMainVC(vm: MainViewModelProtocol) -> UIViewController & Presentable {
         let vc = MainViewController(vm: vm)
         return vc
     }

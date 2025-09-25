@@ -8,9 +8,9 @@
 import XCTest
 @testable import BibleAtlas
 
-private func pump(_ sec: TimeInterval = 0.05) {
-    RunLoop.current.run(until: Date().addingTimeInterval(sec))
-}
+//private func pump(_ sec: TimeInterval = 0.05) {
+//    RunLoop.current.run(until: Date().addingTimeInterval(sec))
+//}
 
 final class HomeBottomSheetViewControllerTests: XCTestCase {
 
