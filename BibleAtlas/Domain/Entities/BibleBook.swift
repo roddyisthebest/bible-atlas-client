@@ -74,6 +74,7 @@ enum BibleBook: String, Codable, CaseIterable {
     case Jn3 = "3jn"
     case Jude = "jude"
     case Rev = "rev"
+    case Etc = "etc"
 }
 
 // MARK: - Display names (EN/KR) + helpers
@@ -118,7 +119,7 @@ extension BibleBook {
         .Heb: "Hebrews", .Jam: "James",
         .Pet1: "1 Peter", .Pet2: "2 Peter",
         .Jn1: "1 John", .Jn2: "2 John", .Jn3: "3 John",
-        .Jude: "Jude", .Rev: "Revelation"
+        .Jude: "Jude", .Rev: "Revelation", .Etc: "Etc"
     ]
 
     private static let _ko: [BibleBook: String] = [
@@ -143,7 +144,7 @@ extension BibleBook {
         .Heb: "히브리서", .Jam: "야고보서",
         .Pet1: "베드로전서", .Pet2: "베드로후서",
         .Jn1: "요한일서", .Jn2: "요한이서", .Jn3: "요한삼서",
-        .Jude: "유다서", .Rev: "요한계시록"
+        .Jude: "유다서", .Rev: "요한계시록", .Etc: "기타"
     ]
 
     private static let _tsKey: [BibleBook: String] = [
@@ -168,7 +169,7 @@ extension BibleBook {
         .Heb: "Heb", .Jam: "Jam",
         .Pet1: "1Pet", .Pet2: "2Pet",
         .Jn1: "1Jn", .Jn2: "2Jn", .Jn3: "3Jn",
-        .Jude: "Jude", .Rev: "Rev"
+        .Jude: "Jude", .Rev: "Rev", .Etc: "Etc"
     ]
 }
 
@@ -195,7 +196,7 @@ extension BibleBook {
         "Titus": .Titus, "Phile": .Phile, "Heb": .Heb, "Jam": .Jam,
         "1Pet": .Pet1, "2Pet": .Pet2,
         "1Jn": .Jn1, "2Jn": .Jn2, "3Jn": .Jn3,
-        "Jude": .Jude, "Rev": .Rev
+        "Jude": .Jude, "Rev": .Rev, "Etc": .Etc
     ]
 
     public init(from decoder: Decoder) throws {
@@ -221,6 +222,47 @@ extension BibleBook {
         // 서버로 보낼 땐 코드값(rawValue)로 내보냄
         try c.encode(self.rawValue)
     }
+}
+
+// BibleBook.swift (아래 extension만 추가)
+
+extension BibleBook {
+    /// 임의의 문자열을 BibleBook으로 파싱 (TS 키/코드/케이스명 지원)
+    /// 허용 예: "Gen", "ge", "GEN", "1Sam", "1sam", "Cor1", "1Cor"
+    init?(parsing string: String) {
+        let trimmed = string.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return nil }
+        let lower = trimmed.lowercased()
+
+        // 1) TS 키 (정확/대소문자 무시) → .Gen, .Sam1, ...
+        if let e = Self.tsKeyToCase[trimmed] { self = e; return }
+        if let e = Self._tsKeyLowerToCase[lower] { self = e; return }
+
+        // 2) 코드값(rawValue) "ge","exo","1sm" ... (대소문자 무시)
+        if let e = BibleBook(rawValue: lower) { self = e; return }
+
+        // 3) enum 케이스명 "Gen","Sam1","Cor1" ... (대소문자 무시)
+        if let e = Self._caseNameLowerToCase[lower] { self = e; return }
+
+        return nil
+    }
+
+   
+
+    // MARK: - 내부 맵들 (대소문자 무시용)
+    private static let _tsKeyLowerToCase: [String: BibleBook] = {
+        var m: [String: BibleBook] = [:]
+        for (k, v) in Self.tsKeyToCase { m[k.lowercased()] = v }
+        return m
+    }()
+
+    private static let _caseNameLowerToCase: [String: BibleBook] = {
+        var m: [String: BibleBook] = [:]
+        for e in Self.allCases {
+            m[String(describing: e).lowercased()] = e
+        }
+        return m
+    }()
 }
 
 

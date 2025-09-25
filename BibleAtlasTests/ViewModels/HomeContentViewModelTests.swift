@@ -159,7 +159,8 @@ final class HomeContentViewModelTests: XCTestCase {
             let output = viewModel.transform(input: .init(
                 collectionButtonTapped$: .empty(),
                 placesByTypeButtonTapped$: .empty(),
-                placesByCharacterButtonTapped$: .empty(),
+                placesByCharacterButtonTapped$: .empty(), 
+                placesByBibleButtonTapped$: .empty(),
                 recentSearchCellTapped$: .empty(),
                 moreRecentSearchesButtonTapped$: .empty()
             ))
@@ -212,7 +213,8 @@ final class HomeContentViewModelTests: XCTestCase {
         let input = HomeContentViewModel.Input(
             collectionButtonTapped$: collectionButtonTapped$.asObservable(),
             placesByTypeButtonTapped$: .empty(),
-            placesByCharacterButtonTapped$: .empty(),
+            placesByCharacterButtonTapped$: .empty(), 
+            placesByBibleButtonTapped$: .empty(),
             recentSearchCellTapped$: .empty(),
             moreRecentSearchesButtonTapped$: .empty()
         )
@@ -262,7 +264,8 @@ final class HomeContentViewModelTests: XCTestCase {
         let output = viewModel.transform(input: .init(
             collectionButtonTapped$: .empty(),
             placesByTypeButtonTapped$: .empty(),
-            placesByCharacterButtonTapped$: .empty(),
+            placesByCharacterButtonTapped$: .empty(), 
+            placesByBibleButtonTapped$: .empty(),
             recentSearchCellTapped$: .empty(),
             moreRecentSearchesButtonTapped$: .empty()
         ))
@@ -297,7 +300,8 @@ final class HomeContentViewModelTests: XCTestCase {
         let output = viewModel.transform(input: .init(
             collectionButtonTapped$: .empty(),
             placesByTypeButtonTapped$: .empty(),
-            placesByCharacterButtonTapped$: .empty(),
+            placesByCharacterButtonTapped$: .empty(), 
+            placesByBibleButtonTapped$: .empty(),
             recentSearchCellTapped$: .empty(),
             moreRecentSearchesButtonTapped$: .empty()
         ))

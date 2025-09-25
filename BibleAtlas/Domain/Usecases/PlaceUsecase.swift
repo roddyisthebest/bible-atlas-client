@@ -91,11 +91,11 @@ public struct PlaceUsecase:PlaceUsecaseProtocol{
               }
         
         return grouped.map { book, fullVerses in
-                 let bodyVerses = fullVerses.map {
-                     $0.split(separator: ".").dropFirst().joined(separator: ".")
-                 }
-                 return Bible(bookName: book, verses: bodyVerses)
-             }
+            let bodyVerses = fullVerses.map {
+                $0.split(separator: ".").dropFirst().joined(separator: ".")
+            }
+            return Bible(bookName: BibleBook(parsing: book) ?? .Etc, verses: bodyVerses)
+        }
 
     }
     

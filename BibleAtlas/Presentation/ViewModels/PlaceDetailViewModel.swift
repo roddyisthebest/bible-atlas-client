@@ -203,7 +203,7 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
             self?.navigator?.present(.placeDetail(placeId))
         }).disposed(by: disposeBag)
         
-        input.verseCellTapped$.subscribe(onNext: {[weak self] keyword in self?.navigator?.present(.bibleVerseDetail(keyword))
+        input.verseCellTapped$.subscribe(onNext: {[weak self] (bibleBook, keyword) in self?.navigator?.present(.bibleVerseDetail(bibleBook, keyword))
         }).disposed(by: disposeBag)
         
         input.reportButtonTapped$.bind{
@@ -315,11 +315,10 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
         let backButtonTapped$:Observable<Void>
         let likeButtonTapped$:Observable<Void>
         let placeModificationButtonTapped$:Observable<Void>
-        let verseButtonTapped$:Observable<String>
         let memoButtonTapped$:Observable<Void>
         let placeCellTapped$:Observable<String>
         let refetchButtonTapped$:Observable<Void>
-        let verseCellTapped$:Observable<String>
+        let verseCellTapped$:Observable<(BibleBook, String)>
         let reportButtonTapped$:Observable<PlaceReportType>
     }
     

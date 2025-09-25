@@ -22,22 +22,35 @@ final class BibleVerseDetailBottomSheetViewModel: BibleVerseDetailBottomSheetVie
     private let bibleVerse$ = BehaviorRelay<String>(value:"");
     private let error$ = BehaviorRelay<NetworkError?>(value: nil)
     private let isLoading$ = BehaviorRelay<Bool>(value: true);
-    private let keyword$ = BehaviorRelay<String?>(value: nil);
-
+    private let title$ = BehaviorRelay<String?>(value: nil);
+    private let bibleBook$ = BehaviorRelay<BibleBook>(value:.Etc)
     
-    private let keyword:String
+
     
     private let placeUsecase:PlaceUsecaseProtocol?
     
     
 
     
-    init(navigator: BottomSheetNavigator? = nil, keyword: String, placeUsecase:PlaceUsecaseProtocol?) {
+    init(navigator: BottomSheetNavigator? = nil, bibleBook:BibleBook, keyword: String, placeUsecase:PlaceUsecaseProtocol?) {
         self.navigator = navigator
-        self.keyword = keyword
-        self.keyword$.accept(keyword)
+
+        self.title$.accept("\(bibleBook.title()) \(keyword)")
+        self.bibleBook$.accept(bibleBook)
         self.placeUsecase = placeUsecase
     }
+    
+    func preferredBibleVersion() -> BibleVersion {
+        // 앱이 현재 사용하는 로케일(번들 로컬라이즈 우선)
+        let lang = Bundle.main.preferredLocalizations.first
+            ?? Locale.preferredLanguages.first
+            ?? "en"
+        switch lang.prefix(2) {
+        case "ko": return .kor
+        default:   return .niv
+        }
+    }
+    
     
     func transform(input: Input) -> Output {
         
@@ -49,17 +62,21 @@ final class BibleVerseDetailBottomSheetViewModel: BibleVerseDetailBottomSheetVie
                     self.isLoading$.accept(false)
                 }
                 
-                let book = self.keyword.split(separator: " ").first.map{ String.init($0)}
+
                 
-                let chapter = self.keyword.split(separator: " ").last.map{
-                    String.init($0)
-                }?.split(separator: ".").first.map{ String.init($0) }
+                let chapter: String? = self.title$.value?
+                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                    .split(whereSeparator: \.isWhitespace).last       // "1.21"
+                    .flatMap { $0.split(separator: ".", maxSplits: 1).first } // "1"
+                    .map(String.init)
                 
-                let verse = self.keyword.split(separator: " ").last.map{
-                    String.init($0)
-                }?.split(separator: ".").last.map{ String.init($0) }
+                let verse = self.title$.value?.trimmingCharacters(in: .whitespacesAndNewlines)
+                    .split(separator: ".")
+                    .last.map{ String.init($0) }
                 
-                let result = await self.placeUsecase?.getBibleVerse(version: .kor, book: book ?? "Gen", chapter: chapter ?? "1" , verse: verse ?? "1")
+                
+                
+                let result = await self.placeUsecase?.getBibleVerse(version: self.preferredBibleVersion(), book: self.bibleBook$.value.code, chapter: chapter ?? "1" , verse: verse ?? "1")
                 
                 
                 switch(result){
@@ -87,17 +104,10 @@ final class BibleVerseDetailBottomSheetViewModel: BibleVerseDetailBottomSheetVie
                     self.isLoading$.accept(false)
                 }
                 
-                let book = self.keyword.split(separator: " ").first.map{ String.init($0)}
+                let chapter = self.title$.value?.split(separator: ".").first.map{ String.init($0) }
+                let verse = self.title$.value?.split(separator: ".").last.map{ String.init($0) }
                 
-                let chapter = self.keyword.split(separator: " ").last.map{
-                    String.init($0)
-                }?.split(separator: ".").first.map{ String.init($0) }
-                
-                let verse = self.keyword.split(separator: " ").last.map{
-                    String.init($0)
-                }?.split(separator: ".").last.map{ String.init($0) }
-                
-                let result = await self.placeUsecase?.getBibleVerse(version: .kor, book: book ?? "Gen", chapter: chapter ?? "1" , verse: verse ?? "1")
+                let result = await self.placeUsecase?.getBibleVerse(version: .kor, book: self.bibleBook$.value.code, chapter: chapter ?? "1" , verse: verse ?? "1")
                 
                 
                 switch(result){
@@ -121,7 +131,7 @@ final class BibleVerseDetailBottomSheetViewModel: BibleVerseDetailBottomSheetVie
         }).disposed(by: disposeBag)
         
         
-        return Output(bibleVerse$: bibleVerse$.asObservable(), error$: error$.asObservable(), isLoading$: isLoading$.asObservable(), keyword$: keyword$.asObservable())
+        return Output(bibleVerse$: bibleVerse$.asObservable(), error$: error$.asObservable(), isLoading$: isLoading$.asObservable(), title$: title$.asObservable())
         
     }
     
@@ -137,7 +147,7 @@ final class BibleVerseDetailBottomSheetViewModel: BibleVerseDetailBottomSheetVie
         let bibleVerse$:Observable<String>
         let error$:Observable<NetworkError?>
         let isLoading$:Observable<Bool>
-        let keyword$:Observable<String?>
+        let title$:Observable<String?>
     }
 }
 

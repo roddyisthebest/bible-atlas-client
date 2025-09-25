@@ -127,8 +127,10 @@ final public class PlaceApiService: PlaceApiServiceProtocol{
     
     
     func getBibleVerse(version:BibleVersion, book:String, chapter:String, verse:String) async -> Result<BibleVerseResponse, NetworkError> {
-        
-   
+            
+        print(chapter,"chapter")
+        print(verse,"verse")
+
         let params: Parameters = [
             "version": version.rawValue,
             "book": book,

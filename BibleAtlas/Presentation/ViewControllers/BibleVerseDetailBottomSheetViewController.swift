@@ -125,9 +125,9 @@ class BibleVerseDetailBottomSheetViewController: UIViewController {
             self?.textView.text = bibleVerse
         }.disposed(by: disposeBag)
         
-        output?.keyword$.observe(on: MainScheduler.instance).bind{
-            [weak self] keyword in
-            self?.headerLabel.text = keyword
+        output?.title$.observe(on: MainScheduler.instance).bind{
+            [weak self] title in
+            self?.headerLabel.text = title
         }.disposed(by: disposeBag)
         Observable.combineLatest(output!.isLoading$, output!.error$)
             .observe(on: MainScheduler.instance)

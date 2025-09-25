@@ -12,8 +12,8 @@ import Kingfisher
 
 final class Bible {
     var verses:[String] = []
-    var bookName:String = "창세기"
-    init(bookName:String, verses:[String]){
+    var bookName:BibleBook
+    init(bookName:BibleBook, verses:[String]){
         self.bookName = bookName
         self.verses = verses;
     }
@@ -37,7 +37,7 @@ final class PlaceDetailViewController: UIViewController {
     private let placeModificationButtonTapped$ = PublishRelay<Void>();
         
     private let placeCellTapped$ = PublishRelay<String>();
-    private let verseCellTapped$ = PublishRelay<String>();
+    private let verseCellTapped$ = PublishRelay<(BibleBook, String)>();
     
     private let reportButtonTapped$ = PublishRelay<PlaceReportType>();
     
@@ -728,7 +728,7 @@ final class PlaceDetailViewController: UIViewController {
         
         
         
-        let output = placeDetailViewModel?.transform(input: PlaceDetailViewModel.Input(viewLoaded$: placeDetailViewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$, closeButtonTapped$: closeButtonTapped$, backButtonTapped$: backButtonTapped$, likeButtonTapped$: likeButtonTapped$, placeModificationButtonTapped$: placeModificationButtonTapped$.asObservable(), verseButtonTapped$: verseCellTapped$.asObservable(), memoButtonTapped$: memoButtonTapped$.asObservable(), placeCellTapped$: placeCellTapped$.asObservable(), refetchButtonTapped$: refetchButtonTapped$.asObservable(), verseCellTapped$: verseCellTapped$.asObservable(), reportButtonTapped$: reportButtonTapped$.asObservable()))
+        let output = placeDetailViewModel?.transform(input: PlaceDetailViewModel.Input(viewLoaded$: placeDetailViewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$, closeButtonTapped$: closeButtonTapped$, backButtonTapped$: backButtonTapped$, likeButtonTapped$: likeButtonTapped$, placeModificationButtonTapped$: placeModificationButtonTapped$.asObservable(), memoButtonTapped$: memoButtonTapped$.asObservable(), placeCellTapped$: placeCellTapped$.asObservable(), refetchButtonTapped$: refetchButtonTapped$.asObservable(), verseCellTapped$: verseCellTapped$.asObservable(), reportButtonTapped$: reportButtonTapped$.asObservable()))
         
         output?.isSaving$.observe(on: MainScheduler.instance).bind{
             [weak self] isSaving in
@@ -1059,8 +1059,7 @@ extension PlaceDetailViewController:UITableViewDelegate, UITableViewDataSource {
             
             let bible = bibles[indexPath.row];
             
-            
-            cell.configure(with: bible.verses, title: bible.bookName)
+            cell.configure(with: bible.verses, bibleBook: bible.bookName)
 
             cell.delegate = self;
             if indexPath.row == bibles.count - 1 {
@@ -1094,8 +1093,8 @@ extension PlaceDetailViewController:UITableViewDelegate, UITableViewDataSource {
 }
 
 extension PlaceDetailViewController: RelatedVerseTableViewCellDelegate {
-    func didTapVerse(_ verse: String, in cell: RelatedVerseTableViewCell) {
-        verseCellTapped$.accept(verse)
+    func didTapVerse(bibleBook: BibleBook, keyword: String, in cell: RelatedVerseTableViewCell) {
+        verseCellTapped$.accept((bibleBook, keyword))
     }
 }
 

@@ -79,7 +79,7 @@ final class MockPlaceDetailViewModel: PlaceDetailViewModelProtocol {
             .disposed(by: disposeBag)
 
         input.verseCellTapped$
-            .subscribe(onNext: { [weak self] verse in self?.tappedVerses.append(verse) })
+            .subscribe(onNext: { [weak self] (bibleBook, verse) in self?.tappedVerses.append(verse) })
             .disposed(by: disposeBag)
 
         input.refetchButtonTapped$

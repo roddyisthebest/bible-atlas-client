@@ -34,7 +34,7 @@ final class BibleVerseDetailBottomSheetViewModelTests: XCTestCase {
         let result: Result<BibleAtlas.BibleVerseResponse, BibleAtlas.NetworkError>? = .success(BibleVerseResponse(text: text))
         placeUsecase.bibleVerseResult = result
         
-        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, keyword: keyword, placeUsecase: placeUsecase)
+        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: .Etc, keyword: keyword, placeUsecase: placeUsecase)
         
         let viewLoaded$ = PublishRelay<Void>();
         
@@ -94,7 +94,7 @@ final class BibleVerseDetailBottomSheetViewModelTests: XCTestCase {
         let result: Result<BibleAtlas.BibleVerseResponse, BibleAtlas.NetworkError>? = .failure(error)
         placeUsecase.bibleVerseResult = result
         
-        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, keyword: keyword, placeUsecase: placeUsecase)
+        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: .Etc, keyword: keyword, placeUsecase: placeUsecase)
         
         let viewLoaded$ = PublishRelay<Void>();
         
@@ -146,7 +146,7 @@ final class BibleVerseDetailBottomSheetViewModelTests: XCTestCase {
         let result: Result<BibleAtlas.BibleVerseResponse, BibleAtlas.NetworkError>? = .success(BibleVerseResponse(text: text))
         placeUsecase.bibleVerseResult = result
         
-        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, keyword: keyword, placeUsecase: placeUsecase)
+        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: .Etc, keyword: keyword, placeUsecase: placeUsecase)
         
         let refetchButtonTapped$ = PublishRelay<Void>();
         
@@ -215,7 +215,7 @@ final class BibleVerseDetailBottomSheetViewModelTests: XCTestCase {
         let result: Result<BibleAtlas.BibleVerseResponse, BibleAtlas.NetworkError>? = .success(BibleVerseResponse(text: text))
         placeUsecase.bibleVerseResult = result
         
-        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, keyword: keyword, placeUsecase: placeUsecase)
+        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: .Etc, keyword: keyword, placeUsecase: placeUsecase)
         
         let viewLoaded$ = PublishRelay<Void>();
         let refetchButtonTapped$ = PublishRelay<Void>();
@@ -285,7 +285,7 @@ final class BibleVerseDetailBottomSheetViewModelTests: XCTestCase {
     
     
     func test_closeButtonTapped_dismisses(){
-        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, keyword: keyword, placeUsecase: placeUsecase)
+        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: .Etc, keyword: keyword, placeUsecase: placeUsecase)
         
         let closeButtonTapped$ = PublishRelay<Void>();
 
@@ -303,9 +303,9 @@ final class BibleVerseDetailBottomSheetViewModelTests: XCTestCase {
         let exp = expectation(description: "verse api wait")
         placeUsecase.bibleVerseExp = exp;
  
-        keyword = "Gen 1.1"
+        keyword = "1.1"
         
-        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, keyword: keyword, placeUsecase: placeUsecase)
+        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: .Gen, keyword: keyword, placeUsecase: placeUsecase)
         
         let viewLoaded$ = PublishRelay<Void>();
         
@@ -314,16 +314,9 @@ final class BibleVerseDetailBottomSheetViewModelTests: XCTestCase {
         viewLoaded$.accept(())
         wait(for:[exp])
     
-        XCTAssertEqual(placeUsecase.calledVerseProps?.book, "Gen")
+        XCTAssertEqual(placeUsecase.calledVerseProps?.book, "ge")
         XCTAssertEqual(placeUsecase.calledVerseProps?.chapter, "1")
-        XCTAssertEqual(placeUsecase.calledVerseProps?.verse, "1")
-
-//
-//        wait(for: [loadingExp, exp, textExp, errorExp], timeout: 1.0)
-//        
-//        XCTAssertEqual(bibleVerseText, text)
-//        XCTAssertEqual(loadingSeq, [true, false])
-//        
+        XCTAssertEqual(placeUsecase.calledVerseProps?.verse, "1")    
         
     }
     
@@ -336,7 +329,7 @@ final class BibleVerseDetailBottomSheetViewModelTests: XCTestCase {
         let result: Result<BibleAtlas.BibleVerseResponse, BibleAtlas.NetworkError>? = .failure(error)
         placeUsecase.bibleVerseResult = result
         
-        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, keyword: keyword, placeUsecase: placeUsecase)
+        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: .Etc, keyword: keyword, placeUsecase: placeUsecase)
         
         let viewLoaded$ = PublishRelay<Void>();
         let refetchButtonTapped$ = PublishRelay<Void>();

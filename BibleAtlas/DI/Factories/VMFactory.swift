@@ -47,7 +47,7 @@ protocol VMFactoryProtocol {
     
     func makePlacesByBibleBottomSheetVM(bible:BibleBook) -> PlacesByBibleBottomSheetViewModelProtocol
     
-    func makeBibleVerseDetailBottomSheetVM(keyword:String) ->
+    func makeBibleVerseDetailBottomSheetVM(bibleBook:BibleBook, keyword:String) ->
         BibleVerseDetailBottomSheetViewModelProtocol
     
     func makeRecentSearchesBottomSheetVM() -> RecentSearchesBottomSheetViewModelProtocol
@@ -92,10 +92,8 @@ final class VMFactory:VMFactoryProtocol{
         return vm
     }
     
-    
-    
-    func makeBibleVerseDetailBottomSheetVM(keyword: String) -> BibleVerseDetailBottomSheetViewModelProtocol {
-        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, keyword: keyword, placeUsecase: usecases?.place)
+    func makeBibleVerseDetailBottomSheetVM(bibleBook:BibleBook, keyword: String) -> BibleVerseDetailBottomSheetViewModelProtocol {
+        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: bibleBook, keyword: keyword, placeUsecase: usecases?.place)
         return vm
     }
     

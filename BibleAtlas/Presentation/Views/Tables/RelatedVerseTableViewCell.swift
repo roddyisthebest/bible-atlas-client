@@ -10,7 +10,7 @@ import SnapKit
 
 
 protocol RelatedVerseTableViewCellDelegate: AnyObject {
-    func didTapVerse(_ verse: String, in cell: RelatedVerseTableViewCell)
+    func didTapVerse(bibleBook:BibleBook, keyword: String, in cell: RelatedVerseTableViewCell)
 }
 
 final class RelatedVerseTableViewCell: UITableViewCell {
@@ -22,9 +22,9 @@ final class RelatedVerseTableViewCell: UITableViewCell {
 
     private var verses: [String] = [];
     
-    private var title: String = "" {
+    private var bibleBook: BibleBook = .Etc {
         didSet{
-            titleLabel.text = title
+            titleLabel.text = bibleBook.title()
         }
     }
 
@@ -103,9 +103,10 @@ final class RelatedVerseTableViewCell: UITableViewCell {
         setupStyle();
     }
 
-    func configure(with verses: [String], title: String) {
+    func configure(with verses: [String], bibleBook: BibleBook) {
         self.verses = verses
-         self.title = title
+        self.bibleBook = bibleBook
+   
          collectionView.reloadData()
          collectionView.collectionViewLayout.invalidateLayout()
          collectionView.layoutIfNeeded()
@@ -139,9 +140,8 @@ extension RelatedVerseTableViewCell: UICollectionViewDelegate, UICollectionViewD
         
         cell.verseTappedHandler = { [weak self] tappedVerse in
             guard let self = self else { return }
-            let full = "\(title) \(tappedVerse)"
 
-            self.delegate?.didTapVerse(full, in: self)
+            delegate?.didTapVerse(bibleBook: bibleBook, keyword: tappedVerse, in: self)
         }
         
         return cell
@@ -152,7 +152,7 @@ extension RelatedVerseTableViewCell: UICollectionViewDelegate, UICollectionViewD
 #if DEBUG
 extension RelatedVerseTableViewCell {
     func _test_fireTap(verse: String) {
-        delegate?.didTapVerse(verse, in: self)
+        delegate?.didTapVerse(bibleBook: bibleBook, keyword: verse, in: self)
     }
 }
 #endif

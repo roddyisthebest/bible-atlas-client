@@ -94,7 +94,7 @@ final class PlaceDetailViewControllerTests: XCTestCase {
     }
     
     func test_bibles_emit_showsOrHidesRelatedVerseEmptyView(){
-        let bibles = [Bible(bookName: "test", verses: ["12:21"]), Bible(bookName: "test2", verses: ["12:31","21:21"])]
+        let bibles = [Bible(bookName: .Acts, verses: ["12:21"]), Bible(bookName: .Chr1, verses: ["12:31","21:21"])]
         
         vm.emit(bibles: bibles)
         
@@ -249,7 +249,7 @@ final class PlaceDetailViewControllerTests: XCTestCase {
     
     func test_tapVerseCell_emitsVerse_toViewModelInput(){
         
-        vm.emit(bibles: [Bible(bookName: "gen", verses: ["12:21","12:23"])])
+        vm.emit(bibles: [Bible(bookName: .Acts, verses: ["12:21","12:23"])])
             
         RunLoop.current.run(until: Date().addingTimeInterval(0.01))
         guard let cell = vc._test_makeVerseCell(row: 0) else { XCTFail("cell nil"); return }
