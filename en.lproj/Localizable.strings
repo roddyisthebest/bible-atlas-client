@@ -138,3 +138,12 @@
 // popularPlaces
 "PopularPlaces.Title" = "Popular Places";
 "PopularPlaces.Empty" = "No popular places yet.";
+
+
+// myPage
+"MyPage.GuestName" = "Guest";
+"MyPage.EmailHidden" = "Email hidden";
+"MyPage.MenuEmpty" = "No menu items available.";
+"MyPageMenu.AccountManagement" = "Account Management";
+"MyPageMenu.AppVersion" = "App Version";
+

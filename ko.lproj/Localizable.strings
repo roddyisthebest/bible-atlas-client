@@ -134,3 +134,10 @@
 // popularPlaces
 "PopularPlaces.Title" = "인기 장소";
 "PopularPlaces.Empty" = "표시할 인기 장소가 없습니다.";
+
+// myPage
+"MyPage.GuestName" = "아무개";
+"MyPage.EmailHidden" = "이메일 비공개";
+"MyPage.MenuEmpty" = "표시할 메뉴가 없습니다.";
+"MyPageMenu.AccountManagement" = "계정관리";
+"MyPageMenu.AppVersion" = "앱 버전";

@@ -308,6 +308,22 @@ enum L10n {
     }
     
     
+    enum MyPage {
+        static let guestNameKey = "MyPage.GuestName"
+        static let emailHiddenKey = "MyPage.EmailHidden"
+        static let menuEmptyKey = "MyPage.MenuEmpty"
+        static let accountManagementKey = "MyPageMenu.AccountManagement"
+        static let appVersionKey = "MyPageMenu.AppVersion"
+        
+        static var guestName: String { guestNameKey.localized }
+        static var emailHidden: String { emailHiddenKey.localized }
+        static var menuEmpty: String { menuEmptyKey.localized }
+        static var accountManagement: String { accountManagementKey.localized }
+        static var appVersion: String { appVersionKey.localized }
+    }
+    
+    
+    
 }
 
 
