@@ -32,21 +32,21 @@ final class PlaceModificationBottomSheetViewController: UIViewController {
     
     private let cancelButton = {
         let button = UIButton(type: .system);
-        button.setTitle("취소", for: .normal)
+        button.setTitle(L10n.Common.cancel, for: .normal)
         button.setTitleColor(.primaryBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
         return button;
     }()
     
     private let headerLabel = {
-        let label = HeaderLabel(text: "Request Modification");
+        let label = HeaderLabel(text: L10n.PlaceModification.title);
         label.font = .boldSystemFont(ofSize: 18);
         return label;
     }()
     
     private let confirmButton = {
         let button = UIButton(type: .system);
-        button.setTitle("완료", for: .normal)
+        button.setTitle(L10n.Common.done, for: .normal)
         button.setTitleColor(.primaryBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
         return button;
@@ -62,6 +62,7 @@ final class PlaceModificationBottomSheetViewController: UIViewController {
         tv.layer.cornerRadius = 8;
         tv.layer.masksToBounds = true;
         tv.text = ""
+        tv.accessibilityLabel = L10n.PlaceModification.placeholder
         tv.textContainerInset = UIEdgeInsets(top: 15, left: 10, bottom: 15, right: 10) // ✅ 내부 여백 추가
         return tv
     }()
@@ -99,9 +100,8 @@ final class PlaceModificationBottomSheetViewController: UIViewController {
         DispatchQueue.main.async { [weak self] in
             guard let self = self, self.view.window != nil else { return }
             
-            print(message,"message")
             let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+            let okAction = UIAlertAction(title: L10n.Common.done, style: .default, handler: nil)
             alert.addAction(okAction)
             self.present(alert, animated: true)
         }
@@ -113,8 +113,8 @@ final class PlaceModificationBottomSheetViewController: UIViewController {
         DispatchQueue.main.async { [weak self] in
             guard let self = self, self.view.window != nil else { return }
             
-            let alert = UIAlertController(title: nil, message: "수정이 요청되었습니다.", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "확인", style: .default, handler: handleSuccessionAlertComplete)
+            let alert = UIAlertController(title: nil, message:L10n.PlaceModification.success, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: L10n.Common.ok, style: .default, handler: handleSuccessionAlertComplete)
             alert.addAction(okAction)
             self.present(alert, animated: true)
         }
@@ -157,14 +157,14 @@ final class PlaceModificationBottomSheetViewController: UIViewController {
                 else{
                     self?.confirmButton.isHidden = false;
                     self?.confirmLoadingView.stop()
-                    self?.confirmButton.setTitle("완료", for: .normal)
+                    self?.confirmButton.setTitle(L10n.Common.ok, for: .normal)
                 }
             }).disposed(by: disposeBag)
         
         
         output?.isSuccess$.subscribe(onNext: {[weak self] isSuccess in
             if(isSuccess ?? false){
-                self?.showDefaultAlert(message: "수정이 요청되었습니다.", buttonTitle: "", animated: true, completion: nil, handler: self?.handleSuccessionAlertComplete)
+                self?.showDefaultAlert(message: L10n.PlaceModification.success, buttonTitle: L10n.Common.ok, animated: true, completion: nil, handler: self?.handleSuccessionAlertComplete)
                 self?.showAlertToDisplaySuccssion()
             }
         }).disposed(by: disposeBag)

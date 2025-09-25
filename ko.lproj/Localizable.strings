@@ -119,3 +119,8 @@
 "MyCollection.Memos" = "메모한 장소";
 "MyCollection.Saves" = "저장한 장소";
 "MyCollection.Empty" = "아직 장소가 없어요.";
+
+// placeModification
+"PlaceModification.Title" = "수정 요청";
+"PlaceModification.Success" = "수정이 요청되었습니다.";
+"PlaceModification.Placeholder" = "어떤 부분을 수정해야 하는지 알려주세요.";

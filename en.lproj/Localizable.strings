@@ -122,3 +122,9 @@
 "MyCollection.Memos" = "Memos";
 "MyCollection.Saves" = "Saves";
 "MyCollection.Empty" = "No places yet.";
+
+
+// placeModification
+"PlaceModification.Title" = "Request Modification";
+"PlaceModification.Success" = "Your modification request has been submitted.";
+"PlaceModification.Placeholder" = "Tell us what needs to be corrected.";

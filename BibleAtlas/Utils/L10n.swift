@@ -275,6 +275,17 @@ enum L10n {
         static var empty: String { emptyKey.localized }
 
     }
+    
+    
+    enum PlaceModification {
+        static let titleKey = "PlaceModification.Title"                // "Request Modification"
+        static let successMessageKey = "PlaceModification.Success"     // "수정이 요청되었습니다."
+        static let placeholderKey = "PlaceModification.Placeholder"    // 선택: "무엇을 수정해야 할지 알려주세요"
+
+        static var title: String { titleKey.localized }
+        static var success: String { successMessageKey.localized }
+        static var placeholder: String { placeholderKey.localized }
+    }
 }
 
 
