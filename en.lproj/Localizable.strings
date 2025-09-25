@@ -135,3 +135,6 @@
 "RecentSearches.ClearAll" = "Clear All";
 "RecentSearches.Empty" = "No recent searches yet.";
 
+// popularPlaces
+"PopularPlaces.Title" = "Popular Places";
+"PopularPlaces.Empty" = "No popular places yet.";

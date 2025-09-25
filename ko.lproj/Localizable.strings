@@ -130,3 +130,7 @@
 "RecentSearches.Title" = "최근 검색어";
 "RecentSearches.ClearAll" = "전체 삭제";
 "RecentSearches.Empty" = "최근 검색 기록이 없습니다.";
+
+// popularPlaces
+"PopularPlaces.Title" = "인기 장소";
+"PopularPlaces.Empty" = "표시할 인기 장소가 없습니다.";

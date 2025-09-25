@@ -42,7 +42,7 @@ class PopularPlacesBottomSheetViewController: UIViewController {
     }()
     
     
-    private let headerLabel = HeaderLabel(text: "Popular Places");
+    private let headerLabel = HeaderLabel(text: L10n.PopularPlaces.title);
     
     private let closeButton = CircleButton(iconSystemName: "xmark")
     
@@ -69,7 +69,7 @@ class PopularPlacesBottomSheetViewController: UIViewController {
     
     private let footerLoadingView = LoadingView(style: .medium);
     
-    private let emptyLabel = EmptyLabel();
+    private let emptyLabel = EmptyLabel(text: L10n.PopularPlaces.empty);
     
     private let errorRetryView = ErrorRetryView();
     

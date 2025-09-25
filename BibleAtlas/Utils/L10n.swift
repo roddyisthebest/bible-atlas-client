@@ -298,6 +298,16 @@ enum L10n {
         static var empty: String { emptyKey.localized }
     }
     
+    
+    enum PopularPlaces {
+        static let titleKey = "PopularPlaces.Title"
+        static let emptyKey = "PopularPlaces.Empty"
+
+        static var title: String { titleKey.localized }
+        static var empty: String { emptyKey.localized }
+    }
+    
+    
 }
 
 
