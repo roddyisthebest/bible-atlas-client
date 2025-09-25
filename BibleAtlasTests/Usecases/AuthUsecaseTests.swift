@@ -9,61 +9,6 @@ import XCTest
 @testable import BibleAtlas
 
 
-final class MockAuthRepository: AuthRepositoryProtocol{
-    var resultToReturn: Result<UserResponse, NetworkError>!
-    var withdrawResultToReturn: Result<Int, NetworkError>!
-    
-    func loginUser(body: BibleAtlas.AuthPayload) async -> Result<BibleAtlas.UserResponse, BibleAtlas.NetworkError> {
-        return resultToReturn
-    }
-    
-    func loginGoogleUser(idToken: String) async -> Result<BibleAtlas.UserResponse, BibleAtlas.NetworkError> {
-        return resultToReturn
-    }
-    
-    func loginAppleUser(idToken: String) async -> Result<BibleAtlas.UserResponse, BibleAtlas.NetworkError> {
-        return resultToReturn
-    }
-    
-    func withdraw() async -> Result<Int, BibleAtlas.NetworkError> {
-        return withdrawResultToReturn
-    }
-}
-
-final class MockTokenProvider: TokenProviderProtocol {
-    var accessToken: String? = nil
-    var refreshToken: String? = nil
-    var hasToken: Bool = false
-    
-    var didSaveCalled = false
-    var savedAccessToken: String?
-    var savedRefreshToken: String?
-    
-    var clearResult: Result<Void, Error>!
-
-    
-    func save(accessToken: String, refreshToken: String) {
-        didSaveCalled = true;
-        savedAccessToken = accessToken
-        savedRefreshToken = refreshToken
-        
-        self.accessToken = accessToken
-        self.refreshToken = refreshToken
-        
-    }
-
-    
-    func setAccessToken(accessToken: String) {
-        self.accessToken = accessToken
-    }
-    
-    func clear() -> Result<Void, Error> {
-         accessToken = nil
-         refreshToken = nil
-         return clearResult
-     }
-
-}
 
 final class AuthUsecaseTests:XCTestCase {
     

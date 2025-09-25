@@ -39,6 +39,15 @@
 		EC0F01F72E850B1500D7C216 /* MockVMFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01F62E850B1500D7C216 /* MockVMFactory.swift */; };
 		EC0F01FA2E8512DE00D7C216 /* BottomSheetCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01F92E8512DE00D7C216 /* BottomSheetCoordinatorTests.swift */; };
 		EC0F01FD2E85144800D7C216 /* TestHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01FC2E85144800D7C216 /* TestHost.swift */; };
+		EC0F01FF2E85255500D7C216 /* PlaceUsecaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01FE2E85255500D7C216 /* PlaceUsecaseTests.swift */; };
+		EC0F02012E8526AC00D7C216 /* MockPlaceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F02002E8526AC00D7C216 /* MockPlaceRepository.swift */; };
+		EC0F02032E8526E100D7C216 /* MockAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F02022E8526E100D7C216 /* MockAuthRepository.swift */; };
+		EC0F02062E85362300D7C216 /* AuthorizedApiClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F02052E85362300D7C216 /* AuthorizedApiClientTests.swift */; };
+		EC0F02082E85375E00D7C216 /* StubURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F02072E85375E00D7C216 /* StubURLProtocol.swift */; };
+		EC0F020A2E85399500D7C216 /* AlamofireSessionAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F02092E85399500D7C216 /* AlamofireSessionAdapter.swift */; };
+		EC0F020C2E853AC700D7C216 /* MockTokenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F020B2E853AC700D7C216 /* MockTokenProvider.swift */; };
+		EC0F020E2E853B1400D7C216 /* MockTokenRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F020D2E853B1400D7C216 /* MockTokenRefresher.swift */; };
+		EC0F02102E853BB900D7C216 /* MockErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F020F2E853BB900D7C216 /* MockErrorHandler.swift */; };
 		EC386DF42E06C4A700251FC6 /* HomeContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF32E06C4A700251FC6 /* HomeContentViewModel.swift */; };
 		EC386DF62E06C60600251FC6 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF52E06C60600251FC6 /* SearchResultViewModel.swift */; };
 		EC386DF92E06C77A00251FC6 /* HomeContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF82E06C77A00251FC6 /* HomeContentViewController.swift */; };
@@ -252,6 +261,15 @@
 		EC0F01F62E850B1500D7C216 /* MockVMFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockVMFactory.swift; sourceTree = "<group>"; };
 		EC0F01F92E8512DE00D7C216 /* BottomSheetCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetCoordinatorTests.swift; sourceTree = "<group>"; };
 		EC0F01FC2E85144800D7C216 /* TestHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHost.swift; sourceTree = "<group>"; };
+		EC0F01FE2E85255500D7C216 /* PlaceUsecaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceUsecaseTests.swift; sourceTree = "<group>"; };
+		EC0F02002E8526AC00D7C216 /* MockPlaceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPlaceRepository.swift; sourceTree = "<group>"; };
+		EC0F02022E8526E100D7C216 /* MockAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAuthRepository.swift; sourceTree = "<group>"; };
+		EC0F02052E85362300D7C216 /* AuthorizedApiClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizedApiClientTests.swift; sourceTree = "<group>"; };
+		EC0F02072E85375E00D7C216 /* StubURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubURLProtocol.swift; sourceTree = "<group>"; };
+		EC0F02092E85399500D7C216 /* AlamofireSessionAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireSessionAdapter.swift; sourceTree = "<group>"; };
+		EC0F020B2E853AC700D7C216 /* MockTokenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTokenProvider.swift; sourceTree = "<group>"; };
+		EC0F020D2E853B1400D7C216 /* MockTokenRefresher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTokenRefresher.swift; sourceTree = "<group>"; };
+		EC0F020F2E853BB900D7C216 /* MockErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockErrorHandler.swift; sourceTree = "<group>"; };
 		EC386DF32E06C4A700251FC6 /* HomeContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewModel.swift; sourceTree = "<group>"; };
 		EC386DF52E06C60600251FC6 /* SearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModel.swift; sourceTree = "<group>"; };
 		EC386DF82E06C77A00251FC6 /* HomeContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewController.swift; sourceTree = "<group>"; };
@@ -481,8 +499,18 @@
 			isa = PBXGroup;
 			children = (
 				EC0F01FC2E85144800D7C216 /* TestHost.swift */,
+				EC0F02072E85375E00D7C216 /* StubURLProtocol.swift */,
+				EC0F02092E85399500D7C216 /* AlamofireSessionAdapter.swift */,
 			);
 			path = Supports;
+			sourceTree = "<group>";
+		};
+		EC0F02042E85361300D7C216 /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				EC0F02052E85362300D7C216 /* AuthorizedApiClientTests.swift */,
+			);
+			path = Clients;
 			sourceTree = "<group>";
 		};
 		EC386DF72E06C74000251FC6 /* HomeBottomSheetVC */ = {
@@ -717,6 +745,11 @@
 				EC0F01F22E850A3700D7C216 /* PresenterHostVC.swift */,
 				EC0F01F42E850A7400D7C216 /* MockVCFactory.swift */,
 				EC0F01F62E850B1500D7C216 /* MockVMFactory.swift */,
+				EC0F02002E8526AC00D7C216 /* MockPlaceRepository.swift */,
+				EC0F02022E8526E100D7C216 /* MockAuthRepository.swift */,
+				EC0F020B2E853AC700D7C216 /* MockTokenProvider.swift */,
+				EC0F020D2E853B1400D7C216 /* MockTokenRefresher.swift */,
+				EC0F020F2E853BB900D7C216 /* MockErrorHandler.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -780,6 +813,7 @@
 		ECA94BAF2D5082BA005B0428 /* BibleAtlasTests */ = {
 			isa = PBXGroup;
 			children = (
+				EC0F02042E85361300D7C216 /* Clients */,
 				EC0F01FB2E85143700D7C216 /* Supports */,
 				EC0F01F82E8512B700D7C216 /* Coordinators */,
 				EC0F01B42E7CEFA400D7C216 /* ViewControllers */,
@@ -966,6 +1000,7 @@
 			isa = PBXGroup;
 			children = (
 				ECD972772E3F71B100D94767 /* AuthUsecaseTests.swift */,
+				EC0F01FE2E85255500D7C216 /* PlaceUsecaseTests.swift */,
 			);
 			path = Usecases;
 			sourceTree = "<group>";
@@ -1413,16 +1448,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC0F020E2E853B1400D7C216 /* MockTokenRefresher.swift in Sources */,
 				EC0F01CA2E814C8600D7C216 /* MockHomeContentViewModel.swift in Sources */,
 				EC0F01F52E850A7400D7C216 /* MockVCFactory.swift in Sources */,
 				EC9A0A3F2E6B33AB00BB580E /* MockPlaceUsecase.swift in Sources */,
+				EC0F02082E85375E00D7C216 /* StubURLProtocol.swift in Sources */,
+				EC0F02012E8526AC00D7C216 /* MockPlaceRepository.swift in Sources */,
+				EC0F02032E8526E100D7C216 /* MockAuthRepository.swift in Sources */,
 				EC0F01FA2E8512DE00D7C216 /* BottomSheetCoordinatorTests.swift in Sources */,
 				ECD972892E47371900D94767 /* SearchReadyViewModelTests.swift in Sources */,
+				EC0F020C2E853AC700D7C216 /* MockTokenProvider.swift in Sources */,
 				EC0F01B12E7C261B00D7C216 /* AccountManagementBottomSheetViewModelTests.swift in Sources */,
 				EC0F01F32E850A3700D7C216 /* PresenterHostVC.swift in Sources */,
 				EC0F01BC2E7F7FE400D7C216 /* SpyMapView.swift in Sources */,
 				ECC49F7F2E4A1F000061B467 /* LoginBottomSheetViewModelTests.swift in Sources */,
 				ECD9727C2E3F8A0B00D94767 /* AuthApiServiceTests.swift in Sources */,
+				EC0F02102E853BB900D7C216 /* MockErrorHandler.swift in Sources */,
+				EC0F020A2E85399500D7C216 /* AlamofireSessionAdapter.swift in Sources */,
 				ECA94BB12D5082BA005B0428 /* BibleAtlasTests.swift in Sources */,
 				ECD972782E3F71B100D94767 /* AuthUsecaseTests.swift in Sources */,
 				ECD972842E4487CA00D94767 /* HomeContentViewModelTests.swift in Sources */,
@@ -1433,6 +1475,7 @@
 				EC64B9712DE3456900D3C8A7 /* PaginationTests.swift in Sources */,
 				EC9A0A382E6A8EB300BB580E /* ReportBottomSheetViewModelTests.swift in Sources */,
 				EC9A0A562E71B11A00BB580E /* BibleVerseDetailBottomSheetViewModelTests.swift in Sources */,
+				EC0F02062E85362300D7C216 /* AuthorizedApiClientTests.swift in Sources */,
 				EC0F01C62E81466800D7C216 /* MockSearchReadyViewModel.swift in Sources */,
 				EC0F01C02E7FE25900D7C216 /* PlaceDetailViewControllerTests.swift in Sources */,
 				ECD972822E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift in Sources */,
@@ -1445,6 +1488,7 @@
 				EC0F01CE2E81552100D7C216 /* PlaceDetailViewControllerScrollTests.swift in Sources */,
 				ECD972862E45EE5900D94767 /* SearchResultViewModelTests.swift in Sources */,
 				EC0F01CC2E81504500D7C216 /* MockSearchResultViewModel.swift in Sources */,
+				EC0F01FF2E85255500D7C216 /* PlaceUsecaseTests.swift in Sources */,
 				EC9A0A432E6C1EE400BB580E /* PlaceTypesBottomSheetViewModelTests.swift in Sources */,
 				ECD9727F2E3F92DA00D94767 /* AuthRepositoryTests.swift in Sources */,
 				EC9A0A3D2E6B2F1A00BB580E /* MockMapUsecase.swift in Sources */,

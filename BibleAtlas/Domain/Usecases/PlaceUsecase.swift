@@ -80,7 +80,7 @@ public struct PlaceUsecase:PlaceUsecaseProtocol{
     }
     
     func parseBible(verseString: String?) -> [Bible] {
-        guard let verseString, !verseString.isEmpty else { return [] }
+        guard let verseString, !verseString.isEmpty, !verseString.trimmingCharacters(in: .whitespaces).isEmpty else { return [] }
         
         let verses = verseString
             .split(separator: ",")
