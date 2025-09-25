@@ -128,3 +128,10 @@
 "PlaceModification.Title" = "Request Modification";
 "PlaceModification.Success" = "Your modification request has been submitted.";
 "PlaceModification.Placeholder" = "Tell us what needs to be corrected.";
+
+
+// recentSearches
+"RecentSearches.Title" = "Recent Searches";
+"RecentSearches.ClearAll" = "Clear All";
+"RecentSearches.Empty" = "No recent searches yet.";
+

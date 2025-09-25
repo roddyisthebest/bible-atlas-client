@@ -43,11 +43,11 @@ class RecentSearchesBottomSheetViewController: UIViewController {
     }()
     
     
-    private let headerLabel = HeaderLabel(text: "Recent Search");
+    private let headerLabel = HeaderLabel(text: L10n.RecentSearches.title);
     
     private let allClearButton = {
         let button = UIButton();
-        button.setTitle("Clear All", for: .normal)
+        button.setTitle(L10n.RecentSearches.clearAll, for: .normal)
         button.setTitleColor(.primaryBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15);
         return button;
@@ -77,7 +77,7 @@ class RecentSearchesBottomSheetViewController: UIViewController {
     
     private let footerLoadingView = LoadingView(style: .medium);
     
-    private let emptyLabel = EmptyLabel();
+    private let emptyLabel = EmptyLabel(text: L10n.RecentSearches.empty);
     
     private let errorRetryView = ErrorRetryView();
 

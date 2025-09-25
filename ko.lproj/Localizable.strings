@@ -124,3 +124,9 @@
 "PlaceModification.Title" = "수정 요청";
 "PlaceModification.Success" = "수정이 요청되었습니다.";
 "PlaceModification.Placeholder" = "어떤 부분을 수정해야 하는지 알려주세요.";
+
+
+// recentSearches
+"RecentSearches.Title" = "최근 검색어";
+"RecentSearches.ClearAll" = "전체 삭제";
+"RecentSearches.Empty" = "최근 검색 기록이 없습니다.";

@@ -286,6 +286,18 @@ enum L10n {
         static var success: String { successMessageKey.localized }
         static var placeholder: String { placeholderKey.localized }
     }
+    
+    
+    enum RecentSearches {
+        static let titleKey = "RecentSearches.Title"
+        static let clearAllKey = "RecentSearches.ClearAll"
+        static let emptyKey = "RecentSearches.Empty"
+
+        static var title: String { titleKey.localized }
+        static var clearAll: String { clearAllKey.localized }
+        static var empty: String { emptyKey.localized }
+    }
+    
 }
 
 
