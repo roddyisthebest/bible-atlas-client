@@ -54,6 +54,8 @@
 "Common.Retry" = "다시 시도";
 "Common.DefaultErrorMessage" = "에러가 발생했습니다.";
 "Common.Close" = "닫기";
+"Common.ErrorTitle" = "오류";
+"Common.Ok" = "확인";
 
 // placeDetail
 "PlaceDetail.Back" = "뒤로";
@@ -92,3 +94,14 @@
 // placesByCharacter
 "PlacesByCharacter.Title" = "%@ 기준 정렬";
 "PlacesByCharacter.Empty" = "표시할 장소가 없습니다.";
+
+
+// auth
+"Auth.Title" = "로그인";
+"Auth.Local" = "로컬";
+"Auth.Google" = "구글";
+"Auth.Apple" = "애플";
+"Auth.ContinueWith.Local" = "로컬로 계속";
+"Auth.ContinueWith.Google" = "Google로 계속";
+"Auth.ContinueWith.Apple" = "Apple로 계속";
+

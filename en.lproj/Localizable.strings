@@ -57,7 +57,8 @@
 "Common.Retry" = "Retry";
 "Common.DefaultErrorMessage" = "An error has occurred.";
 "Common.Close" = "Close";
-
+"Common.ErrorTitle" = "Error";
+"Common.Ok" = "OK";
 
 // placeDetail
 "PlaceDetail.Back" = "Back";
@@ -99,5 +100,12 @@
 "PlacesByCharacter.Empty" = "No places found.";
 
 
-
+// auth
+"Auth.Title" = "Login";
+"Auth.Local" = "Local";
+"Auth.Google" = "Google";
+"Auth.Apple" = "Apple";
+"Auth.ContinueWith.Local" = "Continue with Local";
+"Auth.ContinueWith.Google" = "Continue with Google";
+"Auth.ContinueWith.Apple" = "Continue with Apple";
 

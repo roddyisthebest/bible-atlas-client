@@ -118,6 +118,12 @@ enum L10n {
         static var closeKey = "Common.Close"
         static var close: String { closeKey.localized }
         
+        static let errorTitleKey = "Common.ErrorTitle"
+        static var errorTitle: String { errorTitleKey.localized }
+        
+        static let okKey = "Common.Ok"
+        static var ok: String { okKey.localized }
+        
         // Count (stringsdict로 복수형 처리)
         static func placesCount(_ n: Int) -> String {
             // "Home.PlacesCount" = "%d places" | "장소 %d개" 등
@@ -209,6 +215,30 @@ enum L10n {
         // Values
         static func title(_ char: String) -> String { titleKey.localized(char) }
         static var empty: String { emptyKey.localized }
+        
+    }
+    
+    enum Auth {
+        
+        static let titleKey = "Auth.Title" // 로그인 시트 헤더
+        static var title: String { titleKey.localized }
+
+        static let localKey = "Auth.Local"
+        static let googleKey = "Auth.Google"
+        static let appleKey = "Auth.Apple"
+        static var local: String { localKey.localized }
+        static var google: String { googleKey.localized }
+        static var apple: String { appleKey.localized }
+
+        // 더 자연스러운 버튼 문구(선택)
+        static let continueWithGoogleKey = "Auth.ContinueWith.Google"
+        static let continueWithAppleKey = "Auth.ContinueWith.Apple"
+        static let continueWithLocalKey = "Auth.ContinueWith.Local"
+
+        static var continueWithGoogle: String { continueWithGoogleKey.localized }
+        static var continueWithApple: String { continueWithAppleKey.localized }
+        static var continueWithLocal: String { continueWithLocalKey.localized }
+        
         
     }
 }
