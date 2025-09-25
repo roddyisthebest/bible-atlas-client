@@ -147,3 +147,13 @@
 "MyPageMenu.AccountManagement" = "Account Management";
 "MyPageMenu.AppVersion" = "App Version";
 
+// accountManagement
+"AccountManagement.Title" = "Account Management";
+"AccountManagement.ContactSupport" = "Contact Support";
+"AccountManagement.Logout" = "Log out";
+"AccountManagement.Withdraw" = "Delete Account";
+
+"AccountManagement.WithdrawConfirmTitle" = "Delete your account?";
+"AccountManagement.WithdrawConfirmMessage" = "All of your data, including account information, will be permanently removed.";
+"AccountManagement.WithdrawCompleteTitle" = "Account deleted";
+"AccountManagement.WithdrawCompleteMessage" = "Your account has been deleted successfully.";

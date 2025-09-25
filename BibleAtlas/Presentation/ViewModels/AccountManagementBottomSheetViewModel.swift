@@ -47,11 +47,11 @@ final class AccountManagementBottomSheetViewModel:AccountManagementBottomSheetVi
     
     
     public let menuItems:[SimpleMenuItem] = [
-        SimpleMenuItem(id: .navigateCS, nameText: "고객센터 문의하기", isMovable: true),
-//        SimpleMenuItem(id: .navigatePROFILE, nameText: "프로필 수정", isMovable: true),
-        SimpleMenuItem(id: .logout, nameText: "로그아웃", isMovable: false),
-        SimpleMenuItem(id: .withdrawal, nameText: "회원탈퇴", isMovable: false, textColor: .primaryRed)
-    ]
+           SimpleMenuItem(id: .navigateCS,   nameText: L10n.AccountManagement.contactSupport, isMovable: true),
+           // SimpleMenuItem(id: .navigatePROFILE, nameText: L10n.AccountManagement.profileEdit, isMovable: true), // 추후 필요시
+           SimpleMenuItem(id: .logout,       nameText: L10n.AccountManagement.logout, isMovable: false),
+           SimpleMenuItem(id: .withdrawal,   nameText: L10n.AccountManagement.withdraw, isMovable: false, textColor: .primaryRed)
+       ]
     
     
     init(navigator: BottomSheetNavigator?, appStore: AppStoreProtocol?, appCoordinator:AppCoordinatorProtocol?, authUsecase:AuthUsecaseProtocol?) {

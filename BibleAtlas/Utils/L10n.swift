@@ -322,7 +322,30 @@ enum L10n {
         static var appVersion: String { appVersionKey.localized }
     }
     
-    
+    enum AccountManagement {
+          static let titleKey = "AccountManagement.Title"
+          static var title: String { titleKey.localized }
+
+          // 메뉴 라벨
+          static let contactSupportKey = "AccountManagement.ContactSupport"
+          static let logoutKey         = "AccountManagement.Logout"
+          static let withdrawKey       = "AccountManagement.Withdraw"
+
+          static var contactSupport: String { contactSupportKey.localized }
+          static var logout: String         { logoutKey.localized }
+          static var withdraw: String       { withdrawKey.localized }
+
+          // 탈퇴 알럿
+          static let withdrawConfirmTitleKey = "AccountManagement.WithdrawConfirmTitle"
+          static let withdrawConfirmMsgKey   = "AccountManagement.WithdrawConfirmMessage"
+          static let withdrawCompleteTitleKey = "AccountManagement.WithdrawCompleteTitle"
+          static let withdrawCompleteMsgKey   = "AccountManagement.WithdrawCompleteMessage"
+
+          static var withdrawConfirmTitle: String { withdrawConfirmTitleKey.localized }
+          static var withdrawConfirmMessage: String { withdrawConfirmMsgKey.localized }
+          static var withdrawCompleteTitle: String { withdrawCompleteTitleKey.localized }
+          static var withdrawCompleteMessage: String { withdrawCompleteMsgKey.localized }
+      }
     
 }
 

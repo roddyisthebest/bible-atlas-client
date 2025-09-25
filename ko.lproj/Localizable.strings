@@ -141,3 +141,15 @@
 "MyPage.MenuEmpty" = "표시할 메뉴가 없습니다.";
 "MyPageMenu.AccountManagement" = "계정관리";
 "MyPageMenu.AppVersion" = "앱 버전";
+
+
+// accountManagement
+"AccountManagement.Title" = "계정 관리";
+"AccountManagement.ContactSupport" = "고객센터 문의하기";
+"AccountManagement.Logout" = "로그아웃";
+"AccountManagement.Withdraw" = "회원탈퇴";
+
+"AccountManagement.WithdrawConfirmTitle" = "정말 탈퇴하시겠어요?";
+"AccountManagement.WithdrawConfirmMessage" = "회원 정보를 포함한 모든 데이터가 삭제됩니다.";
+"AccountManagement.WithdrawCompleteTitle" = "탈퇴 완료";
+"AccountManagement.WithdrawCompleteMessage" = "회원 탈퇴가 정상적으로 처리되었습니다.";
