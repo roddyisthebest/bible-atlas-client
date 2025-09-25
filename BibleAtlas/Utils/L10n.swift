@@ -124,6 +124,13 @@ enum L10n {
         static let okKey = "Common.Ok"
         static var ok: String { okKey.localized }
         
+        static let cancelKey = "Common.Cancel"
+        static var cancel: String { cancelKey.localized }
+
+        static let doneKey = "Common.Done" // 완료
+        static var done: String { doneKey.localized }
+        
+        
         // Count (stringsdict로 복수형 처리)
         static func placesCount(_ n: Int) -> String {
             // "Home.PlacesCount" = "%d places" | "장소 %d개" 등
@@ -241,6 +248,21 @@ enum L10n {
         
         
     }
+    
+    
+    enum Memo {
+        static let addTitleKey = "Memo.AddTitle"       // "Add Memo"
+        static let updateTitleKey = "Memo.UpdateTitle" // "Update Memo"
+        static let deleteKey = "Memo.Delete"           // "Delete Memo"
+        static let placeholderKey = "Memo.Placeholder" // (선택) "Write your memo..."
+
+        static var addTitle: String { addTitleKey.localized }
+        static var updateTitle: String { updateTitleKey.localized }
+        static var delete: String { deleteKey.localized }
+        static var placeholder: String { placeholderKey.localized }
+    }
+    
+    
 }
 
 

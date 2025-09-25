@@ -56,6 +56,8 @@
 "Common.Close" = "닫기";
 "Common.ErrorTitle" = "오류";
 "Common.Ok" = "확인";
+"Common.Cancel" = "취소";
+"Common.Done" = "완료";
 
 // placeDetail
 "PlaceDetail.Back" = "뒤로";
@@ -105,3 +107,8 @@
 "Auth.ContinueWith.Google" = "Google로 계속";
 "Auth.ContinueWith.Apple" = "Apple로 계속";
 
+// memo
+"Memo.AddTitle" = "메모 추가";
+"Memo.UpdateTitle" = "메모 수정";
+"Memo.Delete" = "메모 삭제";
+"Memo.Placeholder" = "메모를 입력하세요...";

@@ -59,6 +59,8 @@
 "Common.Close" = "Close";
 "Common.ErrorTitle" = "Error";
 "Common.Ok" = "OK";
+"Common.Cancel" = "Cancel";
+"Common.Done" = "Done";
 
 // placeDetail
 "PlaceDetail.Back" = "Back";
@@ -109,3 +111,8 @@
 "Auth.ContinueWith.Google" = "Continue with Google";
 "Auth.ContinueWith.Apple" = "Continue with Apple";
 
+// memo
+"Memo.AddTitle" = "Add Memo";
+"Memo.UpdateTitle" = "Update Memo";
+"Memo.Delete" = "Delete Memo";
+"Memo.Placeholder" = "Write your memo...";
