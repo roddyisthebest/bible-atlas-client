@@ -116,3 +116,9 @@
 "Memo.UpdateTitle" = "Update Memo";
 "Memo.Delete" = "Delete Memo";
 "Memo.Placeholder" = "Write your memo...";
+
+// myCollection
+"MyCollection.Favorites" = "Favorites";
+"MyCollection.Memos" = "Memos";
+"MyCollection.Saves" = "Saves";
+"MyCollection.Empty" = "No places yet.";

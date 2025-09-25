@@ -16,7 +16,7 @@
 "HomeContent.Recent" = "최근 검색어";
 "HomeContent.MyGuides" = "내 가이드";
 
-"HomeContent.Favorites" = "즐겨찾기";
+"HomeContent.Favorites" = "좋아요";
 "HomeContent.Bookmarks" = "북마크";
 "HomeContent.Memos" = "메모";
 
@@ -112,3 +112,10 @@
 "Memo.UpdateTitle" = "메모 수정";
 "Memo.Delete" = "메모 삭제";
 "Memo.Placeholder" = "메모를 입력하세요...";
+
+
+// myCollection
+"MyCollection.Favorites" = "좋아하는 장소";
+"MyCollection.Memos" = "메모한 장소";
+"MyCollection.Saves" = "저장한 장소";
+"MyCollection.Empty" = "아직 장소가 없어요.";

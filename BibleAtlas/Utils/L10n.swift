@@ -263,6 +263,18 @@ enum L10n {
     }
     
     
+    enum MyCollection {
+        static let favoritesKey = "MyCollection.Favorites"
+        static let memosKey = "MyCollection.Memos"
+        static let savesKey = "MyCollection.Saves"
+        static let emptyKey = "MyCollection.Empty"
+
+        static var favorites: String { favoritesKey.localized }
+        static var memos: String { memosKey.localized }
+        static var saves: String { savesKey.localized }
+        static var empty: String { emptyKey.localized }
+
+    }
 }
 
 

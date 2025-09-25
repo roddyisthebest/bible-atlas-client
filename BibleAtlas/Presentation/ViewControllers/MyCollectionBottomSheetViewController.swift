@@ -62,7 +62,7 @@ final class MyCollectionBottomSheetViewController: UIViewController {
     
     private let footerLoadingView = LoadingView(style: .medium);
     
-    private let emptyLabel = EmptyLabel();
+    private let emptyLabel = EmptyLabel(text: L10n.MyCollection.empty);
     
     private let errorRetryView = ErrorRetryView();
 
@@ -128,11 +128,11 @@ final class MyCollectionBottomSheetViewController: UIViewController {
             [weak self] filter in
                 switch(filter){
                 case .like:
-                    self?.headerLabel.text = "Favorite"
+                    self?.headerLabel.text = L10n.MyCollection.favorites
                 case .memo:
-                    self?.headerLabel.text = "Memo"
+                    self?.headerLabel.text = L10n.MyCollection.memos
                 case .save:
-                    self?.headerLabel.text = "Save"
+                    self?.headerLabel.text = L10n.MyCollection.saves
                 }
             
           
