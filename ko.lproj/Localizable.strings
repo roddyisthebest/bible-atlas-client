@@ -153,3 +153,17 @@
 "AccountManagement.WithdrawConfirmMessage" = "회원 정보를 포함한 모든 데이터가 삭제됩니다.";
 "AccountManagement.WithdrawCompleteTitle" = "탈퇴 완료";
 "AccountManagement.WithdrawCompleteMessage" = "회원 탈퇴가 정상적으로 처리되었습니다.";
+
+
+// report
+"Report.Title" = "장소 신고";
+"Report.Success" = "신고가 접수되었습니다.";
+"Report.ReasonPlaceholder" = "문제가 무엇인지 작성해 주세요.";
+
+"ReportType.Spam" = "스팸";
+"ReportType.Inappropriate" = "부적절한 내용";
+"ReportType.HateSpeech" = "혐오 발언";
+"ReportType.FalseInfo" = "거짓 정보";
+"ReportType.PersonalInfo" = "개인정보 노출";
+"ReportType.Etc" = "기타";
+

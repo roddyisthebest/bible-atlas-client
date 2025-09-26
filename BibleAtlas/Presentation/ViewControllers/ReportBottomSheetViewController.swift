@@ -46,21 +46,21 @@ final class ReportBottomSheetViewController: UIViewController {
     
     private let cancelButton = {
         let button = UIButton(type: .system);
-        button.setTitle("취소", for: .normal)
+        button.setTitle(L10n.Common.cancel, for: .normal)
         button.setTitleColor(.primaryBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
         return button;
     }()
     
     private let headerLabel = {
-        let label = HeaderLabel(text: "Place Report");
+        let label = HeaderLabel(text: L10n.Report.title);
         label.font = .boldSystemFont(ofSize: 18);
         return label;
     }()
     
     private let confirmButton = {
         let button = UIButton(type: .system);
-        button.setTitle("완료", for: .normal)
+        button.setTitle(L10n.Common.done, for: .normal)
         button.setTitleColor(.primaryBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
         return button;
@@ -288,7 +288,7 @@ final class ReportBottomSheetViewController: UIViewController {
                     return;
                 }
                 
-                self?.showDefaultAlert(message: "리포트가 접수되었습니다.", buttonTitle: "확인", animated: true, completion: nil, handler: self?.handleSuccessionAlertComplete)
+                self?.showDefaultAlert(message: L10n.Report.success, buttonTitle: L10n.Common.ok, animated: true, completion: nil, handler: self?.handleSuccessionAlertComplete)
                 
             }.disposed(by: disposeBag)
         

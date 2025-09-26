@@ -157,3 +157,17 @@
 "AccountManagement.WithdrawConfirmMessage" = "All of your data, including account information, will be permanently removed.";
 "AccountManagement.WithdrawCompleteTitle" = "Account deleted";
 "AccountManagement.WithdrawCompleteMessage" = "Your account has been deleted successfully.";
+
+
+// report
+
+"Report.Title" = "Report Place";
+"Report.Success" = "Your report has been submitted.";
+"Report.ReasonPlaceholder" = "Please describe the issue.";
+
+"ReportType.Spam" = "Spam";
+"ReportType.Inappropriate" = "Inappropriate content";
+"ReportType.HateSpeech" = "Hate speech";
+"ReportType.FalseInfo" = "False information";
+"ReportType.PersonalInfo" = "Personal information";
+"ReportType.Etc" = "Other";

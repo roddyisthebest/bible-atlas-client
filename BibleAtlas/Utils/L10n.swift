@@ -347,6 +347,33 @@ enum L10n {
           static var withdrawCompleteMessage: String { withdrawCompleteMsgKey.localized }
       }
     
+    enum Report {
+           static let titleKey = "Report.Title" // 상단 헤더
+           static var title: String { titleKey.localized }
+
+           static let successKey = "Report.Success" // 성공 알럿 메시지
+           static var success: String { successKey.localized }
+
+           static let reasonPlaceholderKey = "Report.ReasonPlaceholder" // 사유 placeholder
+           static var reasonPlaceholder: String { reasonPlaceholderKey.localized }
+
+           enum Types {
+               static let spamKey = "ReportType.Spam"
+               static let inappropriateKey = "ReportType.Inappropriate"
+               static let hateSpeechKey = "ReportType.HateSpeech"
+               static let falseInfoKey = "ReportType.FalseInfo"
+               static let personalInfoKey = "ReportType.PersonalInfo"
+               static let etcKey = "ReportType.Etc"
+
+               static var spam: String { spamKey.localized }
+               static var inappropriate: String { inappropriateKey.localized }
+               static var hateSpeech: String { hateSpeechKey.localized }
+               static var falseInfo: String { falseInfoKey.localized }
+               static var personalInfo: String { personalInfoKey.localized }
+               static var etc: String { etcKey.localized }
+           }
+       }
+    
 }
 
 

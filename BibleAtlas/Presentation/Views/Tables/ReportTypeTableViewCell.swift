@@ -63,18 +63,18 @@ final class ReportTypeTableViewCell: UITableViewCell {
     func setReportType(report: PlaceReportType, isCheck:Bool) {
         var text = ""
         switch report {
-        case .spam:
-            text = "스팸"
-        case .inappropriate:
-            text = "부적절한 내용"
-        case .hateSpeech:
-            text = "혐오 발언"
-        case .falseInfomation:
-            text = "거짓 정보"
-        case .personalInfomation:
-            text = "개인적인 정보"
-        case .etc:
-            text = "기타"
+            case .spam:
+                text = L10n.Report.Types.spam
+            case .inappropriate:
+                text = L10n.Report.Types.inappropriate
+            case .hateSpeech:
+                text = L10n.Report.Types.hateSpeech
+            case .falseInfomation:     // enum 네이밍 그대로 사용
+                text = L10n.Report.Types.falseInfo
+            case .personalInfomation:  // enum 네이밍 그대로 사용
+                text = L10n.Report.Types.personalInfo
+            case .etc:
+                text = L10n.Report.Types.etc
         }
 
         label.text = text;
