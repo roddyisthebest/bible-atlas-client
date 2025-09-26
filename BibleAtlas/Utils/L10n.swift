@@ -374,6 +374,23 @@ enum L10n {
            }
        }
     
+    enum AppGate {
+            static let retryKey = "AppGate.Retry"
+            static let checkingKey = "AppGate.Checking"           // "Checking server status…"
+            static let restoringKey = "AppGate.Restoring"         // "Restoring session…"
+            static let maintenanceKey = "AppGate.Maintenance"     // "Under maintenance."
+            static let restrictedKey = "AppGate.Restricted"       // "Access is restricted."
+            static let timeoutKey = "AppGate.Timeout"             // "Request timed out. ..."
+            static let networkErrorFmtKey = "AppGate.NetworkErrorFmt" // "Network error: %@"
+
+            static var retry: String { retryKey.localized }
+            static var checking: String { checkingKey.localized }
+            static var restoring: String { restoringKey.localized }
+            static var maintenance: String { maintenanceKey.localized }
+            static var restricted: String { restrictedKey.localized }
+            static var timeout: String { timeoutKey.localized }
+            static func networkError(_ msg: String) -> String { networkErrorFmtKey.localized(msg) }
+        }
 }
 
 

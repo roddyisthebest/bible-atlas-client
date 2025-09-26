@@ -171,3 +171,13 @@
 "ReportType.FalseInfo" = "False information";
 "ReportType.PersonalInfo" = "Personal information";
 "ReportType.Etc" = "Other";
+
+// appGate
+
+"AppGate.Retry" = "Retry";
+"AppGate.Checking" = "Checking server status…";
+"AppGate.Restoring" = "Restoring session…";
+"AppGate.Maintenance" = "Under maintenance.";
+"AppGate.Restricted" = "Access is restricted.";
+"AppGate.Timeout" = "Request timed out. Please check your connection and try again.";
+"AppGate.NetworkErrorFmt" = "Network error: %@";

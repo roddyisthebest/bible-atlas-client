@@ -39,14 +39,14 @@ final class AppGateViewController: UIViewController {
         let bt = UIButton(type: .system)
         if #available(iOS 15.0, *) {
             var config = UIButton.Configuration.filled()
-            config.title = "Retry"
+            config.title = L10n.AppGate.retry
             config.baseBackgroundColor = .systemIndigo
             config.baseForegroundColor = .white
             config.cornerStyle = .large
             config.contentInsets = .init(top: 10, leading: 16, bottom: 10, trailing: 16)
             bt.configuration = config
         } else {
-            bt.setTitle("Retry", for: .normal)
+            bt.setTitle(L10n.AppGate.retry, for: .normal)
             bt.setTitleColor(.white, for: .normal)
             bt.backgroundColor = .systemIndigo
             bt.layer.cornerRadius = 12
@@ -160,7 +160,7 @@ final class AppGateViewController: UIViewController {
         if loading {
             spinner.startAnimating()
             retryButton.isHidden = true
-            messageLabel.text = text ?? "Checking server status…"
+            messageLabel.text = text ?? L10n.AppGate.checking
             messageLabel.textColor = .secondaryLabel
         } else {
             spinner.stopAnimating()
@@ -178,23 +178,23 @@ final class AppGateViewController: UIViewController {
                 switch status {
                 case .ok:
                     isPassing = true
-                    setLoading(true, text: "Restoring session…")
+                    setLoading(true, text: L10n.AppGate.restoring)
                     onPassed() // Coordinator/Main 전환
                 case .maintenance(let msg):
                     setLoading(false)
-                    showInfo(msg.isEmpty ? "Under maintenance." : msg)
+                    showInfo(msg.isEmpty ? L10n.AppGate.maintenance : msg)
                 case .blocked(let msg):
                     setLoading(false)
-                    showError(msg.isEmpty ? "Access is restricted." : msg)
+                    showError(msg.isEmpty ? L10n.AppGate.restricted : msg)
                 }
             } catch {
                 setLoading(false)
                 let nsErr = error as NSError
                 let msg: String
                 if nsErr.domain == NSURLErrorDomain, nsErr.code == URLError.timedOut.rawValue {
-                    msg = "Request timed out. Please check your connection and try again."
+                    msg = L10n.AppGate.timeout
                 } else {
-                    msg = "Network error: \(error.localizedDescription)"
+                    msg = L10n.AppGate.networkError(error.localizedDescription)
                 }
                 showError(msg)
             }
