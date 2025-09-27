@@ -29,6 +29,7 @@ final class MainViewController: UIViewController, Presentable  {
     
     private let isPainting$ = BehaviorRelay<Bool>(value: false);
 
+    private let delta = 0.25
     
     private var mapView = {
         let mv = MKMapView();
@@ -135,13 +136,7 @@ final class MainViewController: UIViewController, Presentable  {
             })
             .disposed(by: disposeBag)
         
-        output?.zoomOutMapView$
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self]  in
-                self?.zoomOut();
-            })
-            .disposed(by: disposeBag)
-        
+
     }
     
     private func bindObservable(){
@@ -165,9 +160,10 @@ final class MainViewController: UIViewController, Presentable  {
         mapView.removeAnnotations(mapView.annotations)
     }
     
+    
     private func setFirstRegion() {
         let initialCenter = CLLocationCoordinate2D(latitude: 31.7683, longitude: 35.2137)
-        let initialSpan = MKCoordinateSpan(latitudeDelta: 2.0, longitudeDelta: 2.0)
+        let initialSpan = MKCoordinateSpan(latitudeDelta: delta, longitudeDelta: delta)
         
         let shiftRatio: CLLocationDegrees = 0.5  // 위로 50% 이동
         let shiftedLatitude = initialCenter.latitude - initialSpan.latitudeDelta * shiftRatio
@@ -201,7 +197,7 @@ final class MainViewController: UIViewController, Presentable  {
     
     private func zoomOut() {
         let center = mapView.centerCoordinate
-        let span = MKCoordinateSpan(latitudeDelta: 2.0, longitudeDelta: 2.0)
+        let span = MKCoordinateSpan(latitudeDelta: delta, longitudeDelta: 2.0)
         let region = MKCoordinateRegion(center: center, span: span)
         
         let mapRect = MKMapRect(for: region) // ✅ 핵심 수정 부분
