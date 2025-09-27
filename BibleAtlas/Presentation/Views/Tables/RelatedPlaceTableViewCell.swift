@@ -50,7 +50,10 @@ class RelatedPlaceTableViewCell: UITableViewCell {
     private lazy var titleContainer = {
         let v = UIView();
         v.addSubview(titleLabel);
+        v.addSubview(stereoBadge)
         v.addSubview(percentBadge)
+
+        
         return v;
     }()
 
@@ -63,13 +66,25 @@ class RelatedPlaceTableViewCell: UITableViewCell {
         label.text = "정말 정말 긴 "
         return label
     }()
-
+    
     private let percentBadge: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("100%", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 12, weight: .semibold)
         button.backgroundColor = .oneHunnitPercentBadgeBkg
+        button.layer.cornerRadius = 8
+        button.layer.masksToBounds = true
+        button.isUserInteractionEnabled = false
+        return button
+    }()
+    
+    private let stereoBadge: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle(L10n.PlaceDetail.ancient, for: .normal)
+        button.setTitleColor(.ancientBadgeText, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 12, weight: .semibold)
+        button.backgroundColor = .ancientBadgeBkg
         button.layer.cornerRadius = 8
         button.layer.masksToBounds = true
         button.isUserInteractionEnabled = false
@@ -110,8 +125,16 @@ class RelatedPlaceTableViewCell: UITableViewCell {
             make.trailing.lessThanOrEqualToSuperview()
         }
         
-        percentBadge.snp.makeConstraints { make in
+        stereoBadge.snp.makeConstraints { make in
             make.leading.equalTo(titleLabel.snp.trailing).offset(5)
+            make.centerY.equalToSuperview()
+            make.trailing.lessThanOrEqualToSuperview()
+            make.width.equalTo(40)
+            make.height.equalTo(20)
+        }
+        
+        percentBadge.snp.makeConstraints { make in
+            make.leading.equalTo(stereoBadge.snp.trailing).offset(5)
             make.centerY.equalToSuperview()
             make.trailing.lessThanOrEqualToSuperview()
             make.width.equalTo(40)
@@ -150,6 +173,19 @@ class RelatedPlaceTableViewCell: UITableViewCell {
         descriptionLabel.text = relation.place.description;
         
         percentBadge.setTitle("\(relation.possibility)%", for: .normal)
+
+        if(relation.place.isModern){
+            stereoBadge.backgroundColor = .modernBadgeBkg
+            stereoBadge.setTitleColor(.modernBadgeText, for: .normal)
+            stereoBadge.setTitle(L10n.PlaceDetail.modern, for: .normal)
+        }
+        else{
+            stereoBadge.backgroundColor = .ancientBadgeBkg
+            stereoBadge.setTitleColor(.ancientBadgeText, for: .normal)
+            stereoBadge.setTitle(L10n.PlaceDetail.ancient, for: .normal)
+
+        }
+        
         
         let hasOneType = relation.place.types.count == 1;
 
@@ -161,6 +197,7 @@ class RelatedPlaceTableViewCell: UITableViewCell {
         }
         
         placeIcon.image = UIImage(named:"ground")
+        
         
     }
 

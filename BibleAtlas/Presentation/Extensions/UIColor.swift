@@ -56,8 +56,15 @@ extension UIColor {
     static let primaryViolet = UIColor(hex: "#8144FC")
     
     static let oneHunnitPercentBadgeBkg = UIColor(hex: "#8144FC")
-    
     static let fiftyPercentBadgeBkg = UIColor(hex:"#44C2FC")
+
+    
+    static let ancientBadgeBkg = UIColor(hex:"#FFE7CC")
+    static let ancientBadgeText = UIColor(hex:"#FF9F0A")
+
+
+    static let modernBadgeBkg = UIColor(hex:"#DAF5E6")
+    static let modernBadgeText = UIColor(hex:"#34C759")
 
     
     static let collectionCircle = UIColor { traitCollection in
