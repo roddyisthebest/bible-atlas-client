@@ -54,7 +54,10 @@ enum PlaceTypeName: String, Decodable {
     case hall
     case intersection
     case cliff
+    case forest
+    case room
 }
+
 
 
 enum PlaceSort: String, Decodable {

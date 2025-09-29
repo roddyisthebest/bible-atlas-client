@@ -72,7 +72,7 @@ class RelatedPlaceTableViewCell: UITableViewCell {
         button.setTitle("100%", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 12, weight: .semibold)
-        button.backgroundColor = .oneHunnitPercentBadgeBkg
+        button.backgroundColor = .badge100
         button.layer.cornerRadius = 8
         button.layer.masksToBounds = true
         button.isUserInteractionEnabled = false
@@ -167,13 +167,27 @@ class RelatedPlaceTableViewCell: UITableViewCell {
         titleLabel.text = text
     }
     
-    func setRelation(relation:PlaceRelation){
-        
-        titleLabel.text = relation.place.name;
-        descriptionLabel.text = relation.place.description;
-        
+    func setPercentageBadge(relation:PlaceRelation){
         percentBadge.setTitle("\(relation.possibility)%", for: .normal)
+        
+        switch(relation.possibility){
+            case 100:
+                percentBadge.backgroundColor = .badge100
+                return
+           case 70...99:
+                percentBadge.backgroundColor = .badge90to70
+                return
+           case 40...69:
+                percentBadge.backgroundColor = .badge60to40
+                return
+           default:
+                percentBadge.backgroundColor = .badge30to0
+                return
+           }
 
+    }
+    
+    func setStereoBadge(relation:PlaceRelation){
         if(relation.place.isModern){
             stereoBadge.backgroundColor = .modernBadgeBkg
             stereoBadge.setTitleColor(.modernBadgeText, for: .normal)
@@ -185,6 +199,15 @@ class RelatedPlaceTableViewCell: UITableViewCell {
             stereoBadge.setTitle(L10n.PlaceDetail.ancient, for: .normal)
 
         }
+    }
+    
+    func setRelation(relation:PlaceRelation){
+        
+        titleLabel.text = relation.place.name;
+        descriptionLabel.text = relation.place.description;
+        
+        setPercentageBadge(relation: relation)
+        setStereoBadge(relation: relation)
         
         
         let hasOneType = relation.place.types.count == 1;

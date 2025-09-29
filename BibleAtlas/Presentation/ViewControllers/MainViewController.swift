@@ -388,9 +388,25 @@ extension MainViewController: MKMapViewDelegate {
 
                    // 말풍선 서브타이틀(퍼센트가 있을 때만)
                    if let p = possibility {
-                       // i18n: "Confidence %d%%" / "신뢰도 %d%%"
+                       
+                       
                        let subtitleEn = "Confidence \(p)%"
                        ann.subtitle = Locale.current.languageCode == "ko" ? "신뢰도 \(p)%" : subtitleEn
+                       switch(p){
+                       case 100:
+                           view.markerTintColor = .badge100
+                           break
+                       case 70...99:
+                           view.markerTintColor = .badge90to70
+                           break
+                       case 40...69:
+                           view.markerTintColor = .badge60to40
+                           break
+                       default:
+                           view.markerTintColor = .badge30to0
+                           break
+                       }
+                       
                    } else {
                        ann.subtitle = nil
                    }

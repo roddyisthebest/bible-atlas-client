@@ -55,17 +55,39 @@ extension UIColor {
     
     static let primaryViolet = UIColor(hex: "#8144FC")
     
-    static let oneHunnitPercentBadgeBkg = UIColor(hex: "#8144FC")
-    static let fiftyPercentBadgeBkg = UIColor(hex:"#44C2FC")
+    // 100%
+    static let badge100 = UIColor(hex: "#8144FC")
+    // 90–70%
+    static let badge90to70 = UIColor(hex: "#44C2FC") // 시안블루
+    // 60–40%
+    static let badge60to40 = UIColor(hex: "#FFC857") // 앰버(밝음)
+    // 30–0%
+    static let badge30to0 = UIColor(hex: "#FF3B30")  // 레드
 
     
-    static let ancientBadgeBkg = UIColor(hex:"#FFE7CC")
-    static let ancientBadgeText = UIColor(hex:"#FF9F0A")
+    static let ancientBadgeBkg = UIColor { traitCollection in
+            return traitCollection.userInterfaceStyle == .dark
+            ? UIColor(hex: "#78716C") // 더 밝은 웜그레이(다크 배경에서 또렷)
+            : UIColor(hex: "#FFE7CC")
+        }
 
+        static let ancientBadgeText = UIColor { traitCollection in
+            return traitCollection.userInterfaceStyle == .dark
+            ? UIColor(hex: "#FFFFFF")  // 밝은 배경 아니므로 화이트 유지
+            : UIColor(hex: "#FF9F0A")
+        }
 
-    static let modernBadgeBkg = UIColor(hex:"#DAF5E6")
-    static let modernBadgeText = UIColor(hex:"#34C759")
+        static let modernBadgeBkg = UIColor { traitCollection in
+            return traitCollection.userInterfaceStyle == .dark
+            ? UIColor(hex: "#6B7280") // 밝은 쿨그레이(ancient와 톤 분리)
+            : UIColor(hex: "#DAF5E6")
+        }
 
+        static let modernBadgeText = UIColor { traitCollection in
+            return traitCollection.userInterfaceStyle == .dark
+            ? UIColor(hex: "#FFFFFF")
+            : UIColor(hex: "#34C759")
+        }
     
     static let collectionCircle = UIColor { traitCollection in
         return traitCollection.userInterfaceStyle == .dark ? UIColor(hex: "#49494B") : UIColor(hex: "#EBEBEB")

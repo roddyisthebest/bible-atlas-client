@@ -31,6 +31,7 @@ class PlaceTypeCell: UICollectionViewCell {
     
     private let placeIcon:UIImageView = {
         let icon = UIImageView(image: UIImage(named: "ground"));
+        icon.contentMode = .scaleAspectFit
         return icon;
     }()
     
@@ -93,7 +94,7 @@ class PlaceTypeCell: UICollectionViewCell {
         
         placeIcon.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.width.height.equalTo(30)
+            make.width.height.equalToSuperview()
         }
     }
     

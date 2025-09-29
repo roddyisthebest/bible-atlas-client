@@ -81,7 +81,7 @@ class PlaceTableViewCell: UITableViewCell {
         
         placeIcon.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.width.height.equalTo(25)
+            make.width.height.equalToSuperview()
         }
         
         backgroundColor = .mainItemBkg;
