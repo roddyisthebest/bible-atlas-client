@@ -83,7 +83,7 @@ class RecentSearchTableViewCell: UITableViewCell {
 //        }
 //    }
 
-    func setText(text: String) {
-        searchLabel.text = text
+    func setText(text: String, koreanText:String) {
+        searchLabel.text = L10n.isEnglish ? text : koreanText
     }
 }

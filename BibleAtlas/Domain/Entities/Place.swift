@@ -86,6 +86,7 @@ struct PlaceMemo:Decodable{
 struct Place: Decodable {
     var id: String
     var name: String
+    var koreanName: String
     var isModern: Bool
     var description: String
     var koreanDescription: String

@@ -799,8 +799,8 @@ final class PlaceDetailViewController: UIViewController {
                 self.sheetPresentationController?.selectedDetentIdentifier = .medium
             }
             
-            self.titleLabel.text = place.name
-            self.descriptionTextView.text = place.koreanDescription
+            self.titleLabel.text = L10n.isEnglish ?  place.name: place.koreanName
+            self.descriptionTextView.text =  L10n.isEnglish ? place.description : place.koreanDescription
             
                 
             self.generationLabel.text = place.isModern ? L10n.PlaceDetail.modern : L10n.PlaceDetail.ancient

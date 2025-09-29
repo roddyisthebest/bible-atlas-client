@@ -15,6 +15,37 @@ extension String {
 
 enum L10n {
     
+    /// 번들에 실제 포함된 언어 기준의 우선 언어 식별자 (예: "ko", "en", "en-GB")
+    static var languageIdentifier: String {
+        // 번들에 포함된 로컬라이즈(=Localizations)에 한정해 우선순위를 계산
+        if let first = Bundle.main.preferredLocalizations.first {
+            return first
+        }
+        // 기기 전체 선호 언어(번들 외) – 폴백
+        return Locale.preferredLanguages.first ?? "en"
+    }
+
+    /// ISO 언어 코드 (예: "ko", "en")
+    static var languageCode: String {
+        let id = languageIdentifier
+        // "en-GB" -> "en"
+        return Locale(identifier: id).region?.identifier ?? id.split(separator: "-").first.map(String.init) ?? "en"
+    }
+
+    /// 지역 코드 (예: "KR", "US") – 없을 수도 있음
+    static var regionCode: String? {
+        Locale(identifier: languageIdentifier).region?.identifier
+    }
+
+    /// 한국어 환경인가?
+    static var isKorean: Bool { languageCode == "ko" }
+
+    /// 영어 환경인가? (en 계열 모두)
+    static var isEnglish: Bool { languageCode == "en" }
+    
+    
+    
+    
     enum Home{
         static let searchPlaceholderKey = "Home.SearchPlaceholder"
         static let loginKey = "Home.Login"

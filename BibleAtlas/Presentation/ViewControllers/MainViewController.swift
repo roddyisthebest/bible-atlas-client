@@ -176,7 +176,7 @@ final class MainViewController: UIViewController, Presentable  {
     
     private func renderPlaces(places:[Place]){
         isPainting$.accept(true)
-        var annotations: [MKAnnotation] = places.map{
+        let annotations: [MKAnnotation] = places.map{
             let annotation = CustomPointAnnotation()
   
             annotation.coordinate = CLLocationCoordinate2D(latitude: $0.latitude ?? 0, longitude: $0.longitude ?? 0)
@@ -186,7 +186,7 @@ final class MainViewController: UIViewController, Presentable  {
             }
             
 
-            annotation.title = $0.name
+            annotation.title = L10n.isEnglish ? $0.name : $0.koreanName
 
             return annotation
         }
@@ -389,9 +389,9 @@ extension MainViewController: MKMapViewDelegate {
                    // 말풍선 서브타이틀(퍼센트가 있을 때만)
                    if let p = possibility {
                        
-                       
+                       let subtitleKr = "신뢰도 \(p)%"
                        let subtitleEn = "Confidence \(p)%"
-                       ann.subtitle = Locale.current.languageCode == "ko" ? "신뢰도 \(p)%" : subtitleEn
+                       ann.subtitle = L10n.isKorean ? subtitleKr : subtitleEn
                        switch(p){
                        case 100:
                            view.markerTintColor = .badge100

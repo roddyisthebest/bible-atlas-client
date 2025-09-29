@@ -98,7 +98,7 @@ final class SearchTableViewCell: UITableViewCell {
     }
 
     func setCotent(recentSearchItem: RecentSearchItem) {
-        searchLabel.text = recentSearchItem.name
+        searchLabel.text = L10n.isEnglish ? recentSearchItem.name : recentSearchItem.koreanName
         typeLabel.text = recentSearchItem.type
     }
 }

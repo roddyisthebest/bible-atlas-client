@@ -228,7 +228,7 @@ extension RecentSearchesBottomSheetViewController:UITableViewDelegate, UITableVi
             return UITableViewCell()
         }
 
-        cell.setText(text: recentSearches[indexPath.row].name)
+        cell.setText(text: recentSearches[indexPath.row].name, koreanText: recentSearches[indexPath.row].koreanName)
         if indexPath.row == recentSearches.count - 1 {
                cell.separatorInset = UIEdgeInsets(top: 0, left: tableView.bounds.width, bottom: 0, right: 0)
            } else {
