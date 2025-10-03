@@ -181,3 +181,17 @@
 "AppGate.Restricted" = "Access is restricted.";
 "AppGate.Timeout" = "Request timed out. Please check your connection and try again.";
 "AppGate.NetworkErrorFmt" = "Network error: %@";
+
+
+// VerseListSheet
+"VerstListSheet.DefaultTitle" = "Bible verses";
+"VerseListSheet.Title" = "Bible verses of %@";
+"VerseListSheet.SelectBookPrompt" = "Please select a book.";
+"VerseListSheet.SelectBookMenuTitle" = "Select Bible Book";
+"VerseListSheet.SearchPlaceholder" = "Search books or verses";
+"VerseListSheet.Empty" = "No verses to display.";
+"VerseListSheet.FetchErrorMessage" = "Failed to load data. Please try again.";
+"VerseListSheet.VersesCountFmt" = "%d verse(s)";
+"VerseListSheet.BooksCountFmt" = "%d book(s)";
+"VerseListSheet.MoreVersesFmt" = "Show %d more verse(s)";
+"VerseListSheet.MoreBooksFmt" = "Show %d more book(s)";

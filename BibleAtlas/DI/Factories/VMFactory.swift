@@ -60,6 +60,9 @@ protocol VMFactoryProtocol {
     
     func makeReportBottomSheetVM(placeId:String, reportType:PlaceReportType) -> ReportBottomSheetViewModelProtocol
     
+    func makeBibleBookVerseListBottomSheetVM(placeId:String, bibleBook:BibleBook?) -> BibleBookVerseListBottomSheetViewModelProtocol
+    
+    
     func makeMainVM() -> MainViewModelProtocol
     
     
@@ -196,6 +199,11 @@ final class VMFactory:VMFactoryProtocol{
         let vm = ReportBottomSheetViewModel(navigator: navigator, reportType: reportType, placeUsecase: usecases?.place, placeId: placeId)
         
         return vm;
+    }
+    
+    func makeBibleBookVerseListBottomSheetVM(placeId:String, bibleBook:BibleBook?) -> BibleBookVerseListBottomSheetViewModelProtocol{
+        let vm = BibleBookVerseListBottomSheetViewModel(navigator: navigator, placeId: placeId, bibleBook: bibleBook, placeUsecase: usecases?.place)
+        return vm
     }
     
     func makeMainVM() -> MainViewModelProtocol {

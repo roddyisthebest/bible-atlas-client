@@ -10,7 +10,8 @@ import UIKit
 final class VersedItemCell: UICollectionViewCell {
     
     static let identifier = "versedItemCell"
-
+    
+    private var verse:Verse?
     private var verseText: String? {
         didSet{
             label.text = verseText
@@ -49,8 +50,14 @@ final class VersedItemCell: UICollectionViewCell {
         contentView.addGestureRecognizer(tap)
     }
     
-    func configure(text: String) {
-        verseText = text;
+    func configure(verse: Verse) {
+        self.verse = verse
+        switch(verse){
+            case .def(let text):
+                verseText = text;
+            case .more(let restCount):
+                verseText = "\(restCount)절 더보기"
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -58,10 +65,12 @@ final class VersedItemCell: UICollectionViewCell {
     }
     
     @objc private func handleTap() {
-        guard let text = verseText else { return }
-        verseTappedHandler?(text)
+        
+        guard let verse = verse else { return }
+        
+        verseTappedHandler?(verse)
     }
 
-    var verseTappedHandler: ((String) -> Void)?
+    var verseTappedHandler: ((Verse) -> Void)?
 }
 

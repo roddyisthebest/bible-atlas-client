@@ -11,7 +11,15 @@ import SnapKit
 
 protocol RelatedVerseTableViewCellDelegate: AnyObject {
     func didTapVerse(bibleBook:BibleBook, keyword: String, in cell: RelatedVerseTableViewCell)
+    func didTapMoreButton(bibleBook:BibleBook?, in cell: RelatedVerseTableViewCell)
 }
+
+enum Verse {
+    case def(String)
+    case more(Int)
+}
+
+
 
 final class RelatedVerseTableViewCell: UITableViewCell {
 
@@ -20,13 +28,15 @@ final class RelatedVerseTableViewCell: UITableViewCell {
     private var collectionViewHeightConstraint: Constraint?
 
 
-    private var verses: [String] = [];
+    private var verses: [Verse] = [];
     
     private var bibleBook: BibleBook = .Etc {
         didSet{
             titleLabel.text = bibleBook.title()
         }
     }
+    
+    private var contentSizeObs: NSKeyValueObservation?
 
     static let identifier = "relatedVerseCell"
 
@@ -79,7 +89,7 @@ final class RelatedVerseTableViewCell: UITableViewCell {
         }
         
         collectionView.snp.makeConstraints { make in
-              self.collectionViewHeightConstraint = make.height.equalTo(1).priority(.low).constraint
+            make.height.equalTo(1).priority(.high)
         }
         
     }
@@ -95,6 +105,7 @@ final class RelatedVerseTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupConstraints();
         setupStyle();
+        
     }
 
     required init?(coder: NSCoder) {
@@ -102,28 +113,30 @@ final class RelatedVerseTableViewCell: UITableViewCell {
         setupConstraints();
         setupStyle();
     }
-
+    private let maxVerseCount = 15;
+    
     func configure(with verses: [String], bibleBook: BibleBook) {
-        self.verses = verses
+        let restVerseCount = max(verses.count - maxVerseCount, 0)
+        self.verses = Array(verses.prefix(maxVerseCount)).map{.def($0)}
+        
+        if(restVerseCount>0){
+            self.verses.append(.more(restVerseCount))
+        }
+        
         self.bibleBook = bibleBook
    
-         collectionView.reloadData()
-         collectionView.collectionViewLayout.invalidateLayout()
-         collectionView.layoutIfNeeded()
+        collectionView.reloadData()
+        collectionView.collectionViewLayout.invalidateLayout()
+        collectionView.layoutIfNeeded()
+            
+        let height = collectionView.collectionViewLayout.collectionViewContentSize.height
+        
+        collectionView.snp.updateConstraints { make in
+            make.height.equalTo(height).priority(.high)
+        }
 
-         let height = collectionView.collectionViewLayout.collectionViewContentSize.height
-         collectionViewHeightConstraint?.update(offset: height)
     }
-    
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//
-//        collectionView.collectionViewLayout.invalidateLayout()
-//        collectionView.layoutIfNeeded()
-//
-//        let height = collectionView.collectionViewLayout.collectionViewContentSize.height
-//        collectionViewHeightConstraint?.update(offset: height)
-//    }
+
 
 }
 
@@ -136,12 +149,17 @@ extension RelatedVerseTableViewCell: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VersedItemCell.identifier, for: indexPath) as! VersedItemCell
         
-        cell.configure(text: verses[indexPath.item])
+        cell.configure(verse: verses[indexPath.item])
         
         cell.verseTappedHandler = { [weak self] tappedVerse in
             guard let self = self else { return }
 
-            delegate?.didTapVerse(bibleBook: bibleBook, keyword: tappedVerse, in: self)
+            switch(tappedVerse){
+                case .def(let keyword):
+                    delegate?.didTapVerse(bibleBook: bibleBook, keyword: keyword, in: self)
+                case .more:
+                    delegate?.didTapMoreButton(bibleBook: bibleBook, in: self)
+            }
         }
         
         return cell

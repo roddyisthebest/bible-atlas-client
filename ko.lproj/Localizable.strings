@@ -169,7 +169,6 @@
 
 
 // appGate
-
 "AppGate.Retry" = "다시 시도";
 "AppGate.Checking" = "서버 상태를 확인하는 중…";
 "AppGate.Restoring" = "세션을 복원하는 중…";
@@ -177,3 +176,17 @@
 "AppGate.Restricted" = "접근이 제한되었습니다.";
 "AppGate.Timeout" = "요청 시간이 초과되었어요. 네트워크를 확인한 뒤 다시 시도해 주세요.";
 "AppGate.NetworkErrorFmt" = "네트워크 오류: %@";
+
+
+// verseList
+"VerstListSheet.DefaultTitle" = "성경 구절";
+"VerseListSheet.Title" = "%@의 성경 구절";
+"VerseListSheet.SelectBookPrompt" = "책을 선택해주세요.";
+"VerseListSheet.SelectBookMenuTitle" = "성경 선택";
+"VerseListSheet.SearchPlaceholder" = "책 또는 구절 검색";
+"VerseListSheet.Empty" = "표시할 구절이 없습니다.";
+"VerseListSheet.FetchErrorMessage" = "데이터를 불러오지 못했습니다. 잠시 후 다시 시도해주세요.";
+"VerseListSheet.VersesCountFmt" = "%d절";
+"VerseListSheet.BooksCountFmt" = "%d권";
+"VerseListSheet.MoreVersesFmt" = "%d절 더보기";
+"VerseListSheet.MoreBooksFmt" = "%d권 더보기";

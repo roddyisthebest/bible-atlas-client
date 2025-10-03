@@ -9,6 +9,8 @@ import UIKit
 import RxSwift
 import RxRelay
 import Kingfisher
+import SnapKit
+
 
 final class Bible {
     var verses:[String] = []
@@ -38,7 +40,8 @@ final class PlaceDetailViewController: UIViewController {
         
     private let placeCellTapped$ = PublishRelay<String>();
     private let verseCellTapped$ = PublishRelay<(BibleBook, String)>();
-    
+    private let moreVerseButtonTapped$ = PublishRelay<BibleBook?>();
+
     private let reportButtonTapped$ = PublishRelay<PlaceReportType>();
     
     
@@ -50,6 +53,11 @@ final class PlaceDetailViewController: UIViewController {
     private let placeDetailViewLoaded$ = PublishRelay<Void>();
         
     private let placeId:String
+
+    private var didFixPlaceTableHeight = false
+    private var verseTableHeight = 0.0
+    
+
     
     private lazy var bodyView = {
         let v = UIView();
@@ -398,7 +406,7 @@ final class PlaceDetailViewController: UIViewController {
     }()
     
     private lazy var relatedVerseStackView = {
-        let sv = UIStackView(arrangedSubviews: [relatedVerseLabel, relatedVerseTable, relatedVerseEmptyView]);
+        let sv = UIStackView(arrangedSubviews: [relatedVerseLabelStackView, relatedVerseTable, relatedVerseEmptyView]);
         sv.axis = .vertical;
         sv.distribution = .fill
         sv.alignment = .fill;
@@ -406,6 +414,23 @@ final class PlaceDetailViewController: UIViewController {
         return sv;
     }()
     
+    private lazy var relatedVerseLabelStackView = {
+        let sv = UIStackView(arrangedSubviews: [relatedVerseLabel, relatedVerseMoreButton])
+        sv.axis = .horizontal
+        sv.distribution = .equalSpacing
+        sv.alignment = .center
+        
+        return sv;
+    }()
+    
+    private let relatedVerseMoreButton = {
+        let button = UIButton();
+        button.setTitleColor(.primaryBlue, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 15)
+        button.isHidden = true
+        
+        return button;
+    }()
     private let relatedVerseLabel = {
         let label = HeaderLabel(text: L10n.PlaceDetail.relatedVerses)
         label.font = .systemFont(ofSize: 20, weight: .semibold)
@@ -431,7 +456,7 @@ final class PlaceDetailViewController: UIViewController {
         tv.register(RelatedVerseTableViewCell.self, forCellReuseIdentifier: RelatedVerseTableViewCell.identifier);
         tv.delegate = self;
         tv.dataSource = self;
-        tv.isScrollEnabled = false;
+        tv.isScrollEnabled = true;
         
         tv.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
 
@@ -440,7 +465,7 @@ final class PlaceDetailViewController: UIViewController {
         tv.layer.masksToBounds = true;
   
         tv.rowHeight = UITableView.automaticDimension
-        tv.estimatedRowHeight = 100
+//        tv.estimatedRowHeight = 100
         return tv;
     }()
     
@@ -511,29 +536,6 @@ final class PlaceDetailViewController: UIViewController {
         })
         
     }
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        relatedPlaceTable.reloadData()
-        relatedPlaceTable.layoutIfNeeded()
-
-        let relatedPlaceTableHeight = relatedPlaceTable.contentSize.height
-        relatedPlaceTable.snp.updateConstraints {
-            $0.height.equalTo(relatedPlaceTableHeight)
-        }
-        
-        relatedVerseTable.reloadData()
-        relatedVerseTable.layoutIfNeeded();
-        
-        let relatedVerseTableHeight = relatedVerseTable.contentSize.height;
-        
-        relatedVerseTable.snp.updateConstraints {
-            $0.height.equalTo(relatedVerseTableHeight)
-        }
-        
-        
-    }
-    
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -663,11 +665,7 @@ final class PlaceDetailViewController: UIViewController {
             make.leading.equalToSuperview().offset(20);
             make.trailing.equalToSuperview().offset(-20);
             make.bottom.equalToSuperview().offset(-20)
-            
         }
-        
-        
-
         
         loadingView.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -694,6 +692,14 @@ final class PlaceDetailViewController: UIViewController {
             make.center.equalToSuperview()
         }
         
+        relatedPlaceTable.snp.makeConstraints { make in
+            make.height.equalTo(1)
+        }
+        
+        relatedVerseTable.snp.makeConstraints { make in
+            make.height.equalTo(verseTableHeight)
+        }
+        
         likeLoadingView.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
@@ -703,7 +709,34 @@ final class PlaceDetailViewController: UIViewController {
         view.backgroundColor = .mainBkg;
     }
     
+    
+    private func recalcPlaceTableHeight() {
+        relatedPlaceTable.reloadData()
+        relatedPlaceTable.layoutIfNeeded()
+        
+        if(verseTableHeight == relatedPlaceTable.contentSize.height){
+            return;
+        }
+        verseTableHeight = relatedPlaceTable.contentSize.height
+        relatedPlaceTable.snp.updateConstraints{ make in
+            make.height.equalTo(verseTableHeight)
+        }
+        view.layoutIfNeeded()
+    }
+    
+    
 
+    private func recalcVerseTableHeight() {
+        relatedVerseTable.reloadData()
+        relatedVerseTable.layoutIfNeeded()
+        
+
+        
+        relatedVerseTable.snp.updateConstraints{ make in
+            make.height.equalTo(relatedVerseTable.contentSize.height)
+        }
+
+    }
     
     
     private func bindViewModel(){
@@ -726,9 +759,12 @@ final class PlaceDetailViewController: UIViewController {
             self?.memoButtonTapped$.accept(Void())})
         .disposed(by: disposeBag)
         
+        relatedVerseMoreButton.rx.tap
+            .map { nil as BibleBook? }
+            .bind(to: moreVerseButtonTapped$)
+            .disposed(by: disposeBag)
         
-        
-        let output = placeDetailViewModel?.transform(input: PlaceDetailViewModel.Input(viewLoaded$: placeDetailViewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$, closeButtonTapped$: closeButtonTapped$, backButtonTapped$: backButtonTapped$, likeButtonTapped$: likeButtonTapped$, placeModificationButtonTapped$: placeModificationButtonTapped$.asObservable(), memoButtonTapped$: memoButtonTapped$.asObservable(), placeCellTapped$: placeCellTapped$.asObservable(), refetchButtonTapped$: refetchButtonTapped$.asObservable(), verseCellTapped$: verseCellTapped$.asObservable(), reportButtonTapped$: reportButtonTapped$.asObservable()))
+        let output = placeDetailViewModel?.transform(input: PlaceDetailViewModel.Input(viewLoaded$: placeDetailViewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$, closeButtonTapped$: closeButtonTapped$, backButtonTapped$: backButtonTapped$, likeButtonTapped$: likeButtonTapped$, placeModificationButtonTapped$: placeModificationButtonTapped$.asObservable(), memoButtonTapped$: memoButtonTapped$.asObservable(), placeCellTapped$: placeCellTapped$.asObservable(), refetchButtonTapped$: refetchButtonTapped$.asObservable(), verseCellTapped$: verseCellTapped$.asObservable(), moreVerseButtonTapped$: moreVerseButtonTapped$.asObservable(), reportButtonTapped$: reportButtonTapped$.asObservable()))
         
         output?.isSaving$.observe(on: MainScheduler.instance).bind{
             [weak self] isSaving in
@@ -809,6 +845,7 @@ final class PlaceDetailViewController: UIViewController {
             let parentRelations = place.parentRelations ?? []
 
             self.relations = childRelations + parentRelations;
+            self.recalcPlaceTableHeight();
             
             if(self.relations.count == 0) {
                 self.relatedPlaceTable.isHidden = true;
@@ -831,10 +868,23 @@ final class PlaceDetailViewController: UIViewController {
         
         
         output?.bibles$.observe(on: MainScheduler.instance).bind{
-            [weak self] bibles in
-            self?.bibles = bibles;
+            [weak self] (bibles, restBiblesCount) in
+            self?.bibles = bibles
             self?.relatedVerseTable.isHidden = bibles.isEmpty;
             self?.relatedVerseEmptyView.isHidden = !bibles.isEmpty;
+            
+            if(restBiblesCount>0){
+                self?.relatedVerseMoreButton.isHidden = false;
+                self?.relatedVerseMoreButton.setTitle("\(restBiblesCount)권 더보기", for: .normal)
+            }else{
+                self?.relatedVerseMoreButton.isHidden = true;
+            }
+            
+            self?.relatedVerseTable.reloadData()
+            self?.relatedVerseTable.performBatchUpdates(nil) { _ in
+                self?.recalcVerseTableHeight()
+            }
+         
             
             
             
@@ -1016,7 +1066,16 @@ extension PlaceDetailViewController:UISheetPresentationControllerDelegate{
     func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
           let isLarge = sheetPresentationController.selectedDetentIdentifier == .large
           scrollView.isScrollEnabled = isLarge
+        
+        // 시스템이 사이즈 조정/레이아웃을 끝낸 "다음 틱"에 재측정
+        DispatchQueue.main.async{ [weak self] in
+            self?.recalcVerseTableHeight()
+            self?.recalcPlaceTableHeight();
+        }
+        
       }
+    
+    
 }
 
 
@@ -1060,7 +1119,6 @@ extension PlaceDetailViewController:UITableViewDelegate, UITableViewDataSource {
             let bible = bibles[indexPath.row];
             
             cell.configure(with: bible.verses, bibleBook: bible.bookName)
-
             cell.delegate = self;
             if indexPath.row == bibles.count - 1 {
                    cell.separatorInset = UIEdgeInsets(top: 0, left: tableView.bounds.width, bottom: 0, right: 0)
@@ -1095,6 +1153,10 @@ extension PlaceDetailViewController:UITableViewDelegate, UITableViewDataSource {
 extension PlaceDetailViewController: RelatedVerseTableViewCellDelegate {
     func didTapVerse(bibleBook: BibleBook, keyword: String, in cell: RelatedVerseTableViewCell) {
         verseCellTapped$.accept((bibleBook, keyword))
+    }
+    func didTapMoreButton(bibleBook: BibleBook?, in cell: RelatedVerseTableViewCell) {
+        moreVerseButtonTapped$.accept(bibleBook)
+
     }
 }
 

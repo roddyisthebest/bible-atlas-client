@@ -422,6 +422,41 @@ enum L10n {
             static var timeout: String { timeoutKey.localized }
             static func networkError(_ msg: String) -> String { networkErrorFmtKey.localized(msg) }
         }
+    
+    
+    // 성경 책 선택 + 구절 리스트 BottomSheet 전용
+        enum VerseListSheet {
+            // Keys
+            
+            static let defaultTitleKey = "VerseListSheet.defaultTitle"
+            
+            static let titleKey = "VerseListSheet.Title"                   // 헤더 타이틀: "%@의 성경 구절"
+            static let selectBookPromptKey = "VerseListSheet.SelectBookPrompt"        // 버튼 기본 타이틀: "책을 선택해주세요."
+            static let selectBookMenuTitleKey = "VerseListSheet.SelectBookMenuTitle"     // UIMenu 타이틀: "성경 선택"
+            static let searchPlaceholderKey = "VerseListSheet.SearchPlaceholder"       // (옵션) 검색 자리표시자
+            static let emptyKey = "VerseListSheet.Empty"                   // 데이터 없음
+            static let fetchErrorMessageKey = "VerseListSheet.FetchErrorMessage"       // 네트워크/기타 오류
+            static let versesCountFmtKey = "VerseListSheet.VersesCountFmt"          // "%d절"
+            static let booksCountFmtKey  = "VerseListSheet.BooksCountFmt"           // "%d권"
+            static let moreVersesFmtKey = "VerseListSheet.MoreVersesFmt"           // "%d절 더보기"
+            static let moreBooksFmtKey = "VerseListSheet.MoreBooksFmt"            // "%d권 더보기"
+
+            // Values
+            
+            static var defaultTitle:String{
+                defaultTitleKey.localized
+            }
+            static func title(_ placeName: String) -> String { titleKey.localized(placeName) }
+            static var selectBookPrompt: String { selectBookPromptKey.localized }
+            static var selectBookMenuTitle: String { selectBookMenuTitleKey.localized }
+            static var searchPlaceholder: String { searchPlaceholderKey.localized }
+            static var empty: String { emptyKey.localized }
+            static var fetchErrorMessage: String { fetchErrorMessageKey.localized }
+            static func versesCount(_ n: Int) -> String { versesCountFmtKey.localized(n) }   // stringsdict 권장
+            static func booksCount(_ n: Int) -> String { booksCountFmtKey.localized(n) }     // stringsdict 권장
+            static func moreVerses(_ n: Int) -> String { moreVersesFmtKey.localized(n) }     // stringsdict 권장
+            static func moreBooks(_ n: Int) -> String { moreBooksFmtKey.localized(n) }       // stringsdict 권장
+        }
 }
 
 

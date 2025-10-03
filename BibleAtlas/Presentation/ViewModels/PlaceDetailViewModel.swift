@@ -27,7 +27,7 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
          return place$.value
      }
     
-    private let bibles$ = BehaviorRelay<[Bible]>(value:[]);
+    private let bibles$ = BehaviorRelay<([Bible],Int)>(value:([],0));
     
     private var placeId:String
     
@@ -49,6 +49,7 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
     
     private var hasPrevPlaceId$ = BehaviorRelay<Bool>(value:false)
     
+    private let maxPlaceCount = 3;
     
     
     
@@ -73,8 +74,12 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
                 switch(response){
                 case.success(let response):
                     self.place$.accept(response);
-                    let bibles = self.placeUsecase?.parseBible(verseString: response.verse)
-                    self.bibles$.accept(bibles ?? [])
+                    guard let bibles = self.placeUsecase?.parseBible(verseString: response.verse) else{
+                        self.bibles$.accept(([], 0))
+                        return
+                    }
+                    let restBiblesCount = max(bibles.count - self.maxPlaceCount ,0)
+                    self.bibles$.accept((Array(bibles.prefix(self.maxPlaceCount)), restBiblesCount))
                 case .failure(let error):
                     self.loadError$.accept(error)
                 case .none:
@@ -206,6 +211,14 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
         input.verseCellTapped$.subscribe(onNext: {[weak self] (bibleBook, keyword) in self?.navigator?.present(.bibleVerseDetail(bibleBook, keyword))
         }).disposed(by: disposeBag)
         
+        input.moreVerseButtonTapped$.subscribe(onNext:{ [weak self] bibleBook in
+            guard let placeId = self?.placeId else{
+                return
+            }
+            
+            self?.navigator?.present(.bibleBookVerseList(placeId, bibleBook))
+        }).disposed(by: disposeBag)
+        
         input.reportButtonTapped$.bind{
             [weak self] reportType in
             
@@ -216,6 +229,8 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
             self?.navigator?.present(.placeReport(placeId, reportType))
             
         }.disposed(by: disposeBag)
+        
+        
         
         
         return Output(place$: place$.asObservable(), bibles$: bibles$.asObservable(), loadError$: loadError$.asObservable(), interactionError$: interactionError$.asObservable(), isLoading$: isLoading$.asObservable(),isSaving$: isSaving$.asObservable(), isLiking$: isLiking$.asObservable(),isLoggedIn$: isLoggedIn$.asObservable(),profile$: profile$.asObservable(), hasPrevPlaceId$: hasPrevPlaceId$.asObservable())
@@ -258,6 +273,7 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
            
                 let prevPlaceId = object["prevPlaceId"] ?? nil
                 self.placeId = placeId
+                print(placeId)
                 self.hasPrevPlaceId$.accept(prevPlaceId != nil)
                 self.refetch();
 
@@ -277,6 +293,12 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
             switch response {
             case .success(let place):
                 place$.accept(place)
+                guard let bibles = self.placeUsecase?.parseBible(verseString: place.verse) else{
+                    self.bibles$.accept(([], 0))
+                    return
+                }
+                let restBiblesCount = max(bibles.count - self.maxPlaceCount ,0)
+                self.bibles$.accept((Array(bibles.prefix(self.maxPlaceCount)), restBiblesCount))
             case .failure(let error):
                 loadError$.accept(error)
             case .none:
@@ -293,7 +315,6 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
          schedular:SchedulerType = MainScheduler.instance){
         self.navigator = navigator
         self.placeId = placeId;
-        
         self.placeUsecase = placeUsecase
         
         self.appStore = appStore
@@ -319,12 +340,13 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
         let placeCellTapped$:Observable<String>
         let refetchButtonTapped$:Observable<Void>
         let verseCellTapped$:Observable<(BibleBook, String)>
+        let moreVerseButtonTapped$:Observable<BibleBook?>
         let reportButtonTapped$:Observable<PlaceReportType>
     }
     
     public struct Output{
         let place$:Observable<Place?>
-        let bibles$:Observable<[Bible]>
+        let bibles$:Observable<([Bible], Int)>
         let loadError$:Observable<NetworkError?>
         let interactionError$:Observable<NetworkError?>
         let isLoading$:Observable<Bool>

@@ -48,6 +48,8 @@
 		EC0F020C2E853AC700D7C216 /* MockTokenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F020B2E853AC700D7C216 /* MockTokenProvider.swift */; };
 		EC0F020E2E853B1400D7C216 /* MockTokenRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F020D2E853B1400D7C216 /* MockTokenRefresher.swift */; };
 		EC0F02102E853BB900D7C216 /* MockErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F020F2E853BB900D7C216 /* MockErrorHandler.swift */; };
+		EC1B2DC92E8ED0B00073EBE3 /* BibleBookVerseListBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1B2DC82E8ED0B00073EBE3 /* BibleBookVerseListBottomSheetViewModel.swift */; };
+		EC1B2DCB2E8FB0F90073EBE3 /* BibleBookVerseListBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1B2DCA2E8FB0F90073EBE3 /* BibleBookVerseListBottomSheetViewController.swift */; };
 		EC386DF42E06C4A700251FC6 /* HomeContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF32E06C4A700251FC6 /* HomeContentViewModel.swift */; };
 		EC386DF62E06C60600251FC6 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF52E06C60600251FC6 /* SearchResultViewModel.swift */; };
 		EC386DF92E06C77A00251FC6 /* HomeContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF82E06C77A00251FC6 /* HomeContentViewController.swift */; };
@@ -270,6 +272,8 @@
 		EC0F020B2E853AC700D7C216 /* MockTokenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTokenProvider.swift; sourceTree = "<group>"; };
 		EC0F020D2E853B1400D7C216 /* MockTokenRefresher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTokenRefresher.swift; sourceTree = "<group>"; };
 		EC0F020F2E853BB900D7C216 /* MockErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockErrorHandler.swift; sourceTree = "<group>"; };
+		EC1B2DC82E8ED0B00073EBE3 /* BibleBookVerseListBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleBookVerseListBottomSheetViewModel.swift; sourceTree = "<group>"; };
+		EC1B2DCA2E8FB0F90073EBE3 /* BibleBookVerseListBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleBookVerseListBottomSheetViewController.swift; sourceTree = "<group>"; };
 		EC386DF32E06C4A700251FC6 /* HomeContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewModel.swift; sourceTree = "<group>"; };
 		EC386DF52E06C60600251FC6 /* SearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModel.swift; sourceTree = "<group>"; };
 		EC386DF82E06C77A00251FC6 /* HomeContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewController.swift; sourceTree = "<group>"; };
@@ -954,6 +958,7 @@
 				EC9A0A482E6F051F00BB580E /* AppGateViewController.swift */,
 				EC0F01D12E81929300D7C216 /* BiblesBottomSheetViewController.swift */,
 				EC0F01EC2E828D9400D7C216 /* PlacesByBibleBottomSheetViewController.swift */,
+				EC1B2DCA2E8FB0F90073EBE3 /* BibleBookVerseListBottomSheetViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -981,6 +986,7 @@
 				ECD9726A2E307AE300D94767 /* ReportBottomSheetViewModel.swift */,
 				EC0F01CF2E81921E00D7C216 /* BiblesBottomSheetViewModel.swift */,
 				EC0F01EA2E828C0500D7C216 /* PlacesByBibleBottomSheetViewModel.swift */,
+				EC1B2DC82E8ED0B00073EBE3 /* BibleBookVerseListBottomSheetViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1386,6 +1392,8 @@
 				EC64B9912DEC3D1A00D3C8A7 /* EmptyLabel.swift in Sources */,
 				EC70587B2DB39629002D47DF /* MainViewController.swift in Sources */,
 				ECD972582E27E8B800D94767 /* MyPageBottomSheetViewModel.swift in Sources */,
+				EC1B2DC92E8ED0B00073EBE3 /* BibleBookVerseListBottomSheetViewModel.swift in Sources */,
+				EC1B2DCB2E8FB0F90073EBE3 /* BibleBookVerseListBottomSheetViewController.swift in Sources */,
 				EC386DF42E06C4A700251FC6 /* HomeContentViewModel.swift in Sources */,
 				EC70589C2DBC7C4D002D47DF /* CircleButton.swift in Sources */,
 				EC77CE322DCF34110030DEF5 /* VersedItemCell.swift in Sources */,

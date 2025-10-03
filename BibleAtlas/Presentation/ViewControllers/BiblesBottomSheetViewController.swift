@@ -157,8 +157,9 @@ final class BiblesBottomSheetViewController: UIViewController {
     
     
     init(vm:BiblesBottomSheetViewModelProtocol){
-        self.biblesBottomSheetViewModel = vm
         super.init(nibName: nil, bundle: nil)
+        self.biblesBottomSheetViewModel = vm
+        self.bindViewModel()
     }
     
     required init?(coder: NSCoder) {
@@ -170,7 +171,7 @@ final class BiblesBottomSheetViewController: UIViewController {
         setupUI();
         setupStyle()
         setupConstraints()
-        bindViewModel()
+
         viewLoaded$.accept(Void())
     }
     

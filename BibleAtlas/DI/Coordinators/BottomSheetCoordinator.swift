@@ -25,6 +25,7 @@ enum BottomSheetType:Equatable {
     case placesByBible(BibleBook)
     case placeReport(String, PlaceReportType)
     case bibleVerseDetail(BibleBook, String)
+    case bibleBookVerseList(String, BibleBook?)
     case recentSearches
     case popularPlaces
     case myPage
@@ -303,6 +304,12 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             let vm = vmFactory.makeReportBottomSheetVM(placeId: placeId, reportType: reportType)
             
             let vc = vcFactory.makeReportBottomSheetVC(vm: vm)
+            
+            presentFromTopVC(vc)
+            
+        case .bibleBookVerseList(let placeId, let bibleBook):
+            let vm = vmFactory.makeBibleBookVerseListBottomSheetVM(placeId: placeId, bibleBook: bibleBook)
+            let vc = vcFactory.makeBibleBookVerseListBottomSheetVC(vm: vm);
             
             presentFromTopVC(vc)
             
