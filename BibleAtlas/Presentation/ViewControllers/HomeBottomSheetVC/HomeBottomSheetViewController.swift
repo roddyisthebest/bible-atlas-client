@@ -255,6 +255,10 @@ final class HomeBottomSheetViewController: UIViewController{
             make.leading.trailing.bottom.equalToSuperview()
         }
         newVC.didMove(toParent: self)
+        
+        let current = sheetPresentationController?.selectedDetentIdentifier
+        (newVC as? SheetDetentControllable)?.sheetDetentDidChange(to: current)
+        
     }
     
     
@@ -332,6 +336,12 @@ extension HomeBottomSheetViewController: UITextFieldDelegate {
     }
 }
 
+
+extension HomeBottomSheetViewController:SheetDetentControllable{
+    func sheetDetentDidChange(to id: UISheetPresentationController.Detent.Identifier?) {
+        (children.first as? SheetDetentControllable)?.sheetDetentDidChange(to: id)
+    }
+}
 
 
 #if DEBUG

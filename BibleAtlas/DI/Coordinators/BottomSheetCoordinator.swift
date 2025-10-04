@@ -129,6 +129,8 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
                         weakVC?.sheetPresentationController?.largestUndimmedDetentIdentifier = .medium;
                         weakVC?.sheetPresentationController?.selectedDetentIdentifier = .medium
                     }
+                    
+                    (weakVC as? SheetDetentControllable)?.sheetDetentDidChange(to: .medium)
                  
                 }
                 let vm = self.vmFactory.makePlaceDetailBottomSheetVM(placeId: placeId);

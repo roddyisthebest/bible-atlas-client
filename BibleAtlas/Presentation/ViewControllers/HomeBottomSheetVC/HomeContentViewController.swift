@@ -10,6 +10,10 @@ import RxSwift
 import RxCocoa
 
 
+protocol SheetDetentControllable: AnyObject {
+    func sheetDetentDidChange(to id: UISheetPresentationController.Detent.Identifier?)
+}
+
 final class HomeContentViewController: UIViewController {
 
     private var homeContentViewModel:HomeContentViewModelProtocol?
@@ -407,10 +411,11 @@ final class HomeContentViewController: UIViewController {
 
 extension HomeContentViewController:UISheetPresentationControllerDelegate{
     func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
-                
         let isLarge = sheetPresentationController.selectedDetentIdentifier == .large
         scrollView.isScrollEnabled = isLarge
       }
+    
+    
 }
 
 
@@ -447,4 +452,12 @@ extension HomeContentViewController:UITableViewDelegate, UITableViewDataSource{
         recentSearchCellTapped$.accept(recentSearches[indexPath.row].id)
     }
     
+}
+
+
+extension HomeContentViewController:SheetDetentControllable{
+    func sheetDetentDidChange(to id: UISheetPresentationController.Detent.Identifier?) {
+        let isLarge = id == .large
+        scrollView.isScrollEnabled = isLarge
+    }
 }
