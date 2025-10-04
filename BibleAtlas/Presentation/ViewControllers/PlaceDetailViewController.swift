@@ -62,6 +62,7 @@ final class PlaceDetailViewController: UIViewController {
     private lazy var bodyView = {
         let v = UIView();
         v.isHidden = true
+        v.addSubview(headerStackView)
         v.addSubview(scrollView);
         return v;
     }()
@@ -69,6 +70,7 @@ final class PlaceDetailViewController: UIViewController {
     private lazy var scrollView = {
         let sv = UIScrollView();
         sv.isScrollEnabled = false
+        sv.delegate = self;
         sv.addSubview(contentView)
         return sv;
     }()
@@ -76,7 +78,6 @@ final class PlaceDetailViewController: UIViewController {
     
     private lazy var contentView = {
         let v = UIView()
-        v.addSubview(headerStackView);
         v.addSubview(subInfoStackView)
         v.addSubview(likeAndMoreButtonsStackView)
         v.addSubview(imageButton)
@@ -95,13 +96,25 @@ final class PlaceDetailViewController: UIViewController {
         sv.distribution = .fill;
         sv.alignment = .fill;
         sv.spacing = 10;
-        return sv;
+        sv.isLayoutMarginsRelativeArrangement = true
+        sv.directionalLayoutMargins = .init(top: 0, leading: 20, bottom: 12, trailing: 20)
+
+
+        sv.addSubview(headerBottomBorder)
+        return sv
     }()
     
     
+    private lazy var headerBottomBorder: UIView = {
+        let v = UIView()
+        v.backgroundColor = UIColor.label.withAlphaComponent(0.15) // 얇은 헤어라인 느낌
+        v.alpha = 0 // 초기에 숨김
+        return v
+    }()
+    
     private let backButton: UIButton = {
         let button = UIButton(type: .system)
-        
+    
         let image = UIImage(systemName: "chevron.left")
         button.setImage(image, for: .normal)
         button.setTitle(L10n.PlaceDetail.back, for: .normal)
@@ -153,6 +166,9 @@ final class PlaceDetailViewController: UIViewController {
         sv.distribution = .fill
         sv.alignment = .center
         sv.spacing = 8;
+        sv.isLayoutMarginsRelativeArrangement = true
+        sv.directionalLayoutMargins = .zero
+        sv.preservesSuperviewLayoutMargins = false
         return sv;
     }()
     
@@ -160,10 +176,31 @@ final class PlaceDetailViewController: UIViewController {
         let button = UIButton();
         button.setTitle("Type of Body", for: .normal)
         button.setTitleColor(.primaryBlue, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
+        let font = UIFont.systemFont(ofSize: 10, weight: .medium)
+
+        
+        if #available(iOS 15.0, *) {
+            var config = UIButton.Configuration.plain()
+            config.contentInsets = .zero
+            config.baseForegroundColor = .primaryBlue
+
+            var attr = AttributeContainer()
+            attr.font = font
+            config.attributedTitle = AttributedString("Type of Body", attributes: attr)
+
+            button.configuration = config
+        } else {
+            button.setTitle("Type of Body", for: .normal)
+            button.setTitleColor(.primaryBlue, for: .normal)
+            button.titleLabel?.font = font
+            button.contentEdgeInsets = .zero
+            button.titleEdgeInsets = .zero
+            button.titleLabel?.font = font
+        }
+        
+
         button.setContentHuggingPriority(.required, for: .horizontal)
         button.setContentCompressionResistancePriority(.required, for: .horizontal)
-
         return button;
     }()
     
@@ -179,6 +216,19 @@ final class PlaceDetailViewController: UIViewController {
         let label = UILabel();
         label.text = L10n.PlaceDetail.ancient
         label.textColor = .mainText
+        
+        // ✅ 텍스트 한 줄, 줄바꿈 없음
+        label.numberOfLines = 1
+        label.lineBreakMode = .byTruncatingTail
+
+        // ✅ 세로로 절대 늘어나지 않게 (intrinsic height 유지)
+        label.setContentHuggingPriority(.required, for: .vertical)
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
+
+        // (가로로도 글자 잘 안찡기게 하고 싶다면)
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
+
+        
         label.font = .systemFont(ofSize: 14, weight: .medium)
         return label;
     }()
@@ -576,7 +626,7 @@ final class PlaceDetailViewController: UIViewController {
         }
         
         subInfoStackView.snp.makeConstraints { make in
-            make.top.equalTo(headerStackView.snp.bottom).offset(0);
+            make.top.equalToSuperview()
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().offset(-20);
         }
@@ -610,7 +660,8 @@ final class PlaceDetailViewController: UIViewController {
         }
         
         scrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(headerStackView.snp.bottom)
+            make.bottom.trailing.leading.equalToSuperview()
         }
         
         contentView.snp.makeConstraints { make in
@@ -619,8 +670,14 @@ final class PlaceDetailViewController: UIViewController {
         }
         
         headerStackView.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().offset(-20);
+            make.top.equalToSuperview().offset(20);
+            make.leading.trailing.equalToSuperview()
+        }
+        
+        let onePixel = 1.0 / UIScreen.main.scale
+        headerBottomBorder.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+            make.height.equalTo(onePixel)
         }
         
         filledCircleView.snp.makeConstraints { make in
@@ -754,6 +811,11 @@ final class PlaceDetailViewController: UIViewController {
 
         let refetchButtonTapped$ = errorRetryView.refetchTapped$;
         
+        
+        backButtonTapped$.subscribe(onNext:{
+            [weak self] in
+            self?.scrollView.setContentOffset(.zero, animated: true)
+        }).disposed(by: disposeBag)
         
         memoButton.rx.tap.subscribe(onNext: {[weak self] in
             self?.memoButtonTapped$.accept(Void())})
@@ -1165,6 +1227,36 @@ extension PlaceDetailViewController: IdentifiableBottomSheet {
     var bottomSheetIdentity: BottomSheetType {
         .placeDetail(self.placeId)
     }
+}
+
+extension PlaceDetailViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+            guard scrollView === self.scrollView else { return }
+
+            let y = scrollView.contentOffset.y
+
+            // 히스테리시스: 보이는 임계값과 숨기는 임계값을 달리해서 깜빡임 방지
+            let showThreshold: CGFloat = 4   // 이 이상 내려가면 보이기
+            let hideThreshold: CGFloat = 2   // 이 이하 올라오면 숨기기
+
+            if headerBottomBorder.alpha == 0, y > showThreshold {
+                showHeaderBorder(true)
+            } else if headerBottomBorder.alpha == 1, y < hideThreshold {
+                showHeaderBorder(false)
+            }
+        }
+
+    private func showHeaderBorder(_ show: Bool) {
+
+        titleLabel.lineBreakMode = show ? .byTruncatingTail : .byWordWrapping
+        titleLabel.numberOfLines = show ? 1 : 0
+        UIView.animate(withDuration: 0.18) {
+              self.headerBottomBorder.alpha = show ? 1 : 0
+        }
+        
+        
+        
+      }
 }
 
 
