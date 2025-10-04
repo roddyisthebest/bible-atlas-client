@@ -77,16 +77,17 @@ final class PlaceDetailViewController: UIViewController {
     
     
     private lazy var contentView = {
-        let v = UIView()
-        v.addSubview(subInfoStackView)
-        v.addSubview(likeAndMoreButtonsStackView)
-        v.addSubview(imageButton)
-        v.addSubview(descriptionStackView)
-        v.addSubview(relatedLocationStackView)
-        v.addSubview(relatedVerseStackView)
-        v.addSubview(memoButton)
-        v.addSubview(reportIssueButton)
-        return v
+        let sv = UIStackView(arrangedSubviews: [subInfoStackView, likeAndMoreButtonsStackView, memoButton, imageButton, descriptionStackView, relatedLocationStackView, relatedVerseStackView, reportIssueButton])
+     
+        sv.axis = .vertical
+        sv.spacing = 18
+        sv.alignment = .fill
+        sv.distribution = .fill
+        
+
+        
+        
+        return sv
     }()
     
     
@@ -456,7 +457,7 @@ final class PlaceDetailViewController: UIViewController {
     }()
     
     private lazy var relatedVerseStackView = {
-        let sv = UIStackView(arrangedSubviews: [relatedVerseLabelStackView, relatedVerseTable, relatedVerseEmptyView]);
+        let sv = UIStackView(arrangedSubviews: [relatedVerseLabelStackView, relatedVerseTable]);
         sv.axis = .vertical;
         sv.distribution = .fill
         sv.alignment = .fill;
@@ -487,18 +488,6 @@ final class PlaceDetailViewController: UIViewController {
         return label
     }()
     
-    
-    private lazy var relatedVerseEmptyView:UIView = {
-        let v = UIView();
-        v.addSubview(relatedVerseEmptyLabel)
-        v.backgroundColor = .mainItemBkg
-        v.layer.cornerRadius = 10;
-        v.layer.masksToBounds = true;
-        v.isHidden = true;
-        return v;
-    }()
-    
-    private let relatedVerseEmptyLabel = EmptyLabel(text:L10n.PlaceDetail.relatedVersesEmpty)
     
     
     private lazy var relatedVerseTable:UITableView = {
@@ -568,8 +557,18 @@ final class PlaceDetailViewController: UIViewController {
     }
     
     private func setPlaceImage(imageTitle:String?){
+        
+        
+        
         let imageEndpoint = "https://a.openbible.info/geo/images/512"
-        guard let imageTitle = imageTitle else {return}
+        guard let imageTitle = imageTitle else {
+            placeImageView.image = nil
+            imageButton.isHidden = true
+            
+            return
+        }
+        imageButton.isHidden = false
+
         guard let url = URL(string: "\(imageEndpoint)/\(imageTitle)") else {return}
         
         
@@ -625,29 +624,14 @@ final class PlaceDetailViewController: UIViewController {
             make.edges.equalToSuperview()
         }
         
-        subInfoStackView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20);
-        }
-        
         likeAndMoreButtonsStackView.snp.makeConstraints { make in
-            make.top.equalTo(subInfoStackView.snp.bottom).offset(10);
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20);
             make.height.equalTo(40)
         }
-        
+
         
         avatarImageView.snp.makeConstraints { $0.edges.equalToSuperview() }
         placeImageView.snp.makeConstraints { $0.edges.equalToSuperview() }
-        
-        memoButton.snp.makeConstraints { make in
-            make.top.equalTo(likeAndMoreButtonsStackView.snp.bottom).offset(20);
-            make.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().offset(-20);
-        }
-        
+                
         memoStackView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(15)
             make.bottom.equalToSuperview().offset(-15)
@@ -665,8 +649,9 @@ final class PlaceDetailViewController: UIViewController {
         }
         
         contentView.snp.makeConstraints { make in
-            make.edges.equalTo(scrollView.contentLayoutGuide)
-            make.width.equalTo(scrollView.frameLayoutGuide)
+            make.top.bottom.equalTo(scrollView.contentLayoutGuide)             // 세로
+              make.leading.trailing.equalTo(scrollView.frameLayoutGuide).inset(20) // 가로 패딩
+            
         }
         
         headerStackView.snp.makeConstraints { make in
@@ -689,40 +674,17 @@ final class PlaceDetailViewController: UIViewController {
         }
         
         imageButton.snp.makeConstraints { make in
-            make.top.equalTo(memoButton.snp.bottom).offset(20)
-            make.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().offset(-150);
-            make.height.equalTo(300)
+            make.height.equalTo(350)
+//            make.width.equalToSuperview().dividedBy(2.25)
         }
-    
-        descriptionStackView.snp.makeConstraints { make in
-            make.top.equalTo(imageButton.snp.bottom).offset(30)
-            make.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().offset(-20);
-        }
+
         
         descriptionTextView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        relatedLocationStackView.snp.makeConstraints { make in
-            make.top.equalTo(descriptionStackView.snp.bottom).offset(30)
-            make.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().offset(-20);
-        }
+
         
-        relatedVerseStackView.snp.makeConstraints { make in
-            make.top.equalTo(relatedLocationStackView.snp.bottom).offset(30)
-            make.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().offset(-20);
-        }
-     
-        reportIssueButton.snp.makeConstraints { make in
-            make.top.equalTo(relatedVerseStackView.snp.bottom).offset(20)
-            make.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().offset(-20);
-            make.bottom.equalToSuperview().offset(-20)
-        }
         
         loadingView.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -741,13 +703,6 @@ final class PlaceDetailViewController: UIViewController {
             make.center.equalToSuperview()
         }
         
-        relatedVerseEmptyView.snp.makeConstraints { make in
-            make.height.equalTo(80)
-        }
-        
-        relatedVerseEmptyLabel.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-        }
         
         relatedPlaceTable.snp.makeConstraints { make in
             make.height.equalTo(1)
@@ -768,6 +723,7 @@ final class PlaceDetailViewController: UIViewController {
     
     
     private func recalcPlaceTableHeight() {
+        
         relatedPlaceTable.reloadData()
         relatedPlaceTable.layoutIfNeeded()
         
@@ -778,6 +734,8 @@ final class PlaceDetailViewController: UIViewController {
         relatedPlaceTable.snp.updateConstraints{ make in
             make.height.equalTo(verseTableHeight)
         }
+        
+        
         view.layoutIfNeeded()
     }
     
@@ -932,9 +890,8 @@ final class PlaceDetailViewController: UIViewController {
         output?.bibles$.observe(on: MainScheduler.instance).bind{
             [weak self] (bibles, restBiblesCount) in
             self?.bibles = bibles
-            self?.relatedVerseTable.isHidden = bibles.isEmpty;
-            self?.relatedVerseEmptyView.isHidden = !bibles.isEmpty;
-            
+            self?.relatedVerseStackView.isHidden = bibles.isEmpty;
+
             if(restBiblesCount>0){
                 self?.relatedVerseMoreButton.isHidden = false;
                 self?.relatedVerseMoreButton.setTitle("\(restBiblesCount)권 더보기", for: .normal)
@@ -942,10 +899,15 @@ final class PlaceDetailViewController: UIViewController {
                 self?.relatedVerseMoreButton.isHidden = true;
             }
             
-            self?.relatedVerseTable.reloadData()
-            self?.relatedVerseTable.performBatchUpdates(nil) { _ in
-                self?.recalcVerseTableHeight()
+            DispatchQueue.main.async {
+                self?.relatedVerseTable.reloadData()
+                self?.relatedVerseTable.performBatchUpdates(nil) { _ in
+                    self?.recalcVerseTableHeight()
+                }
             }
+            
+         
+            
          
             
             
@@ -1081,22 +1043,22 @@ final class PlaceDetailViewController: UIViewController {
     
     private func hideMemoButton(){
         memoButton.isHidden = true;
-        imageButton.snp.remakeConstraints { make in
-            make.top.equalTo(likeAndMoreButtonsStackView.snp.bottom).offset(20)
-            make.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().offset(-150);
-            make.height.equalTo(300)
-        }
+//        imageButton.snp.remakeConstraints { make in
+//            make.top.equalTo(likeAndMoreButtonsStackView.snp.bottom).offset(20)
+//            make.leading.equalToSuperview().offset(20);
+//            make.trailing.equalToSuperview().offset(-150);
+//            make.height.equalTo(300)
+//        }
     }
     
     private func showMemoButton(){
         memoButton.isHidden = false;
-        imageButton.snp.remakeConstraints { make in
-            make.top.equalTo(memoButton.snp.bottom).offset(20)
-            make.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().offset(-150);
-            make.height.equalTo(300)
-        }
+//        imageButton.snp.remakeConstraints { make in
+//            make.top.equalTo(memoButton.snp.bottom).offset(20)
+//            make.leading.equalToSuperview().offset(20);
+//            make.trailing.equalToSuperview().offset(-150);
+//            make.height.equalTo(300)
+//        }
         
     }
     
@@ -1271,8 +1233,8 @@ extension PlaceDetailViewController {
 
     var _test_isRelatedPlaceTableVisible: Bool { !relatedPlaceTable.isHidden }
     var _test_isRelatedVerseTableVisible: Bool { !relatedVerseTable.isHidden }
-    var _test_isRelatedVerseEmptyViewVisible: Bool { !relatedVerseEmptyView.isHidden }
 
+    
     var _test_isLikeLoadingVisible: Bool { !likeLoadingView.isHidden && likeLoadingView.isAnimating }
 
     
