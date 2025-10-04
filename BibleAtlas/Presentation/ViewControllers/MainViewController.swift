@@ -227,41 +227,51 @@ final class MainViewController: UIViewController, Presentable  {
         for feature in features {
             for geometry in feature.geometry {
                 var id: String?
-                var possibility:Int?
-                var isParent:Bool?
+                var possibility: Int?
+                var isParent: Bool?
 
                 if let propertiesData = feature.properties {
-                     do {
-                         let props = try JSONDecoder().decode(GeoJsonFeatureProperties.self, from: propertiesData)
-                         id = props.id
-                         possibility = props.possibility
-                         isParent = props.isParent
-                     } catch {
-                         print("⚠️ properties decode 실패:", error)
-                     }
-                 }
-                
+                    do {
+                        let props = try JSONDecoder().decode(GeoJsonFeatureProperties.self, from: propertiesData)
+                        id = props.id
+                        possibility = props.possibility
+                        isParent = props.isParent
+                    } catch {
+                        print("⚠️ properties decode 실패:", error)
+                    }
+                }
+
                 if let point = geometry as? MKPointAnnotation {
-                    
-                    
-                    let annotation = CustomPointAnnotation()
-                    annotation.coordinate = geometry.coordinate
-                    annotation.placeId = id?.split(separator: ".").first.map { String($0) }
-                    annotation.possibility = possibility
-                    annotation.isParent = isParent
+                    // GeoJSON은 MKPoint가 옴 (MKPointAnnotation 아님!)
+                    let ann = CustomPointAnnotation()
+                    ann.coordinate = point.coordinate
+                    ann.placeId = id?.split(separator: ".").first.map { String($0) }
+                    ann.possibility = possibility
+                    ann.isParent = isParent
+                    annotations.append(ann)
 
-                    annotations.append(annotation)
+                    let r = MKMapRect(origin: MKMapPoint(ann.coordinate),
+                                      size: MKMapSize(width: 10, height: 10))
+                    boundingMapRect = boundingMapRect.union(r)
 
-                    let pointRect = MKMapRect(origin: MKMapPoint(annotation.coordinate), size: MKMapSize(width: 10, height: 10))
-                    boundingMapRect = boundingMapRect.union(pointRect)
                 } else if let polyline = geometry as? MKPolyline {
                     overlays.append(polyline)
                     boundingMapRect = boundingMapRect.union(polyline.boundingMapRect)
+
+                } else if let multipolyline = geometry as? MKMultiPolyline {
+                    overlays.append(multipolyline)
+                    boundingMapRect = boundingMapRect.union(multipolyline.boundingMapRect)
+
                 } else if let polygon = geometry as? MKPolygon {
                     overlays.append(polygon)
                     boundingMapRect = boundingMapRect.union(polygon.boundingMapRect)
+
+                } else if let multipolygon = geometry as? MKMultiPolygon {
+                    overlays.append(multipolygon)
+                    boundingMapRect = boundingMapRect.union(multipolygon.boundingMapRect)
                 }
             }
+
         }
 
         mapView.addOverlays(overlays)
@@ -317,23 +327,40 @@ final class MainViewController: UIViewController, Presentable  {
 
 extension MainViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        if let polyline = overlay as? MKPolyline {
-            let renderer = MKPolylineRenderer(polyline: polyline)
-            renderer.strokeColor = .blue
-            renderer.lineWidth = 2
-            return renderer
+
+        if let multiPolygon = overlay as? MKMultiPolygon {
+            let r = MKMultiPolygonRenderer(multiPolygon: multiPolygon)
+            r.lineWidth = 1
+            r.strokeColor = UIColor.label.withAlphaComponent(0.6)
+            r.fillColor = UIColor.systemBlue.withAlphaComponent(0.15)
+            return r
         }
 
         if let polygon = overlay as? MKPolygon {
-            let renderer = MKPolygonRenderer(polygon: polygon)
-            renderer.strokeColor = .red
-            renderer.fillColor = UIColor.red.withAlphaComponent(0.3)
-            renderer.lineWidth = 1
-            return renderer
+            let r = MKPolygonRenderer(polygon: polygon)
+            r.lineWidth = 1
+            r.strokeColor = UIColor.label.withAlphaComponent(0.6)
+            r.fillColor = UIColor.systemBlue.withAlphaComponent(0.15)
+            return r
         }
 
-        return MKOverlayRenderer()
+        if let multiPolyline = overlay as? MKMultiPolyline {
+            let r = MKMultiPolylineRenderer(multiPolyline: multiPolyline)
+            r.lineWidth = 2
+            r.strokeColor = UIColor.primaryBlue
+            return r
+        }
+
+        if let polyline = overlay as? MKPolyline {
+            let r = MKPolylineRenderer(polyline: polyline)
+            r.lineWidth = 2
+            r.strokeColor = UIColor.primaryBlue
+            return r
+        }
+
+        return MKOverlayRenderer(overlay: overlay)
     }
+
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
            guard !(annotation is MKUserLocation) else { return nil }
@@ -426,6 +453,8 @@ extension MainViewController: MKMapViewDelegate {
             print("❓ placeId가 없음 (아마도 일반 참고용 위치)")
         }
     }
+    
+    
     
 }
 
