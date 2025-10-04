@@ -148,7 +148,16 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
         input.placeModificationButtonTapped$.subscribe(onNext: {
             [weak self] in
             guard let placeId = self?.placeId else { return }
-            self?.navigator?.present(.placeModification(placeId))
+            let isLoggedIn = self?.appStore?.state$.value.isLoggedIn ?? false
+            
+            if(isLoggedIn){
+                self?.navigator?.present(.placeModification(placeId))
+            }
+            else{
+                self?.navigator?.present(.login)
+            }
+            
+
         }).disposed(by: disposeBag)
         
         
@@ -201,7 +210,16 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
         input.memoButtonTapped$.subscribe(onNext: {
             [weak self] in
             guard let placeId = self?.placeId else { return }
-            self?.navigator?.present(.memo(placeId))
+            
+            let isLoggedIn = self?.appStore?.state$.value.isLoggedIn ?? false
+            
+            if(isLoggedIn){
+                self?.navigator?.present(.memo(placeId))
+            }else{
+                self?.navigator?.present(.login)
+            }
+            
+
         }).disposed(by: disposeBag)
         
         input.placeCellTapped$.subscribe(onNext: {[weak self] (placeId) in

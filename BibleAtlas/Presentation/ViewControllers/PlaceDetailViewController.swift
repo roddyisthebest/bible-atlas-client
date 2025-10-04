@@ -802,6 +802,9 @@ final class PlaceDetailViewController: UIViewController {
             .bind{
                 [weak self] isLiking, place in
                 guard let place = place else {
+                    self?.likeButton.backgroundColor = .circleButtonBkg
+                    self?.likeButton.setTitleColor(.mainText, for: .normal)
+                    self?.likeButton.tintColor = .mainText
                     return;
                 }
                 
