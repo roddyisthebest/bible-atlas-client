@@ -238,13 +238,7 @@ final class VCFactory:VCFactoryProtocol {
             sheet.isModalInPresentation = true
         
             
-        case .memo:
-            if let sheet = sheet.sheetPresentationController {
-                sheet.detents = [.large()] // 높이 조절 가능 (중간, 전체 화면)
-                sheet.prefersScrollingExpandsWhenScrolledToEdge = false // 스크롤 시 확장 가능
-                sheet.prefersGrabberVisible = false // 위쪽 핸들 표시
-            }
-        case .placeModification, .placeReport:
+        case .memo, .placeModification, .placeReport, .bibleBookVerseList:
             if let sheet = sheet.sheetPresentationController {
                 sheet.detents = [.large()] // 높이 조절 가능 (중간, 전체 화면)
                 sheet.prefersScrollingExpandsWhenScrolledToEdge = false // 스크롤 시 확장 가능

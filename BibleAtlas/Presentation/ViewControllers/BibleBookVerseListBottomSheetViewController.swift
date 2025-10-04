@@ -87,7 +87,7 @@ final class BibleBookVerseListBottomSheetViewController: UIViewController {
         cv.dataSource = self
         cv.register(VersedItemCell.self, forCellWithReuseIdentifier: VersedItemCell.identifier)
         cv.backgroundColor = .clear
-        cv.isScrollEnabled = false
+    
         return cv
     }()
     
@@ -221,7 +221,8 @@ final class BibleBookVerseListBottomSheetViewController: UIViewController {
         
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(selectButton.snp.bottom).offset(20)
-            make.leading.trailing.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview().inset(20)
         }
             
         loadingView.snp.makeConstraints { make in
