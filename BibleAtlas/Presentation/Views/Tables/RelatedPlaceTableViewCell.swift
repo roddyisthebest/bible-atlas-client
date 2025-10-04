@@ -87,7 +87,10 @@ class RelatedPlaceTableViewCell: UITableViewCell {
         button.backgroundColor = .ancientBadgeBkg
         button.layer.cornerRadius = 8
         button.layer.masksToBounds = true
-        button.isUserInteractionEnabled = false
+     
+        button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8) // ✅ 내부 패딩
+
+
         return button
     }()
     
@@ -129,7 +132,6 @@ class RelatedPlaceTableViewCell: UITableViewCell {
             make.leading.equalTo(titleLabel.snp.trailing).offset(5)
             make.centerY.equalToSuperview()
             make.trailing.lessThanOrEqualToSuperview()
-            make.width.equalTo(40)
             make.height.equalTo(20)
         }
         
@@ -203,8 +205,8 @@ class RelatedPlaceTableViewCell: UITableViewCell {
     
     func setRelation(relation:PlaceRelation){
         
-        titleLabel.text = relation.place.name;
-        descriptionLabel.text = relation.place.description;
+        titleLabel.text = L10n.isEnglish ? relation.place.name: relation.place.koreanName;
+        descriptionLabel.text = L10n.isEnglish ? relation.place.description : relation.place.koreanDescription;
         
         setPercentageBadge(relation: relation)
         setStereoBadge(relation: relation)
