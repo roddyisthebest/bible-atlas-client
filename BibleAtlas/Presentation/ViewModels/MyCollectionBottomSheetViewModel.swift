@@ -25,6 +25,8 @@ final class MyCollectionBottomSheetViewModel:MyCollectionBottomSheetViewModelPro
     private let isInitialLoading$ = BehaviorRelay<Bool>(value: true);
     private let isFetchingNext$ = BehaviorRelay<Bool>(value: false);
     
+    private var forceMedium$ = PublishRelay<Void>()
+    private var restoreDetents$ = PublishRelay<Void>()
     
     private let userUsecase:UserUsecaseProtocol?
     
@@ -34,16 +36,40 @@ final class MyCollectionBottomSheetViewModel:MyCollectionBottomSheetViewModelPro
 
     private let schedular:SchedulerType
 
+    private var notificationService: RxNotificationServiceProtocol?
     
     init(navigator:BottomSheetNavigator?, filter:PlaceFilter, userUsecase:UserUsecaseProtocol?,
-         schedular:SchedulerType = MainScheduler.instance){
+         schedular:SchedulerType = MainScheduler.instance, notificationService:RxNotificationServiceProtocol?){
         self.navigator = navigator
         self.filter = filter;
         self.userUsecase = userUsecase;
         
         self.filter$ = BehaviorRelay(value: filter)
         self.schedular = schedular
+        self.notificationService = notificationService
+        
+        bindNotificationService();
     }
+    
+    private func bindNotificationService(){
+        
+        notificationService?.observe(.sheetCommand)
+            .compactMap { $0.object as? SheetCommand }
+            .subscribe(onNext: { [weak self] sheetCommand in
+                
+                switch(sheetCommand){
+                case .forceMedium:
+                    self?.forceMedium$.accept(())
+                case .restoreDetents:
+                    self?.restoreDetents$.accept(())
+                }
+
+            }).disposed(by: disposeBag)
+        
+
+    }
+    
+    
         
     func transform(input:Input) -> Output{
         
@@ -157,7 +183,7 @@ final class MyCollectionBottomSheetViewModel:MyCollectionBottomSheetViewModelPro
                       error$: error$.asObservable(),
                       filter$: filter$.asObservable(),
                       isInitialLoading$: isInitialLoading$.asObservable(),
-                      isFetchingNext$:isFetchingNext$.asObservable())
+                      isFetchingNext$:isFetchingNext$.asObservable(), forceMedium$: forceMedium$.asObservable(), restoreDetents$: restoreDetents$.asObservable())
         
     }
     
@@ -176,5 +202,7 @@ final class MyCollectionBottomSheetViewModel:MyCollectionBottomSheetViewModelPro
         let filter$:Observable<PlaceFilter>;
         let isInitialLoading$:Observable<Bool>
         let isFetchingNext$:Observable<Bool>
+        let forceMedium$:Observable<Void>
+        let restoreDetents$:Observable<Void>
     }
 }

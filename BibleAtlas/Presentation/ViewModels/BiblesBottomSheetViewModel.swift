@@ -28,10 +28,37 @@ final class BiblesBottomSheetViewModel:BiblesBottomSheetViewModelProtocol{
 
     private let isInitialLoading$ = BehaviorRelay<Bool>(value: true);
     
+    private var forceMedium$ = PublishRelay<Void>()
+    private var restoreDetents$ = PublishRelay<Void>()
     
-    init(navigator:BottomSheetNavigator?, placeUsecase:PlaceUsecaseProtocol?){
+    
+    private var notificationService: RxNotificationServiceProtocol?
+    
+    init(navigator:BottomSheetNavigator?, placeUsecase:PlaceUsecaseProtocol?, notificationService:RxNotificationServiceProtocol?){
         self.navigator = navigator
         self.placeUsecase = placeUsecase
+        self.notificationService = notificationService
+        
+        bindNotificationService();
+    }
+    
+    
+    private func bindNotificationService(){
+        
+        notificationService?.observe(.sheetCommand)
+            .compactMap { $0.object as? SheetCommand }
+            .subscribe(onNext: { [weak self] sheetCommand in
+                
+                switch(sheetCommand){
+                case .forceMedium:
+                    self?.forceMedium$.accept(())
+                case .restoreDetents:
+                    self?.restoreDetents$.accept(())
+                }
+
+            }).disposed(by: disposeBag)
+        
+
     }
     
     func transform(input: Input) -> Output {
@@ -100,7 +127,10 @@ final class BiblesBottomSheetViewModel:BiblesBottomSheetViewModelProtocol{
             
         }).disposed(by: disposeBag)
         
-        return Output(bibleBookCounts$: bibleBookCounts$.asObservable(), error$: error$.asObservable(), isInitialLoading$: isInitialLoading$.asObservable())
+        return Output(bibleBookCounts$: bibleBookCounts$.asObservable(), error$: error$.asObservable(), isInitialLoading$: isInitialLoading$.asObservable(),
+                      forceMedium$: forceMedium$.asObservable(),
+                      restoreDetents$: restoreDetents$.asObservable()
+        )
 
     }
     
@@ -115,6 +145,8 @@ final class BiblesBottomSheetViewModel:BiblesBottomSheetViewModelProtocol{
         let bibleBookCounts$:Observable<[BibleBookCount]>
         let error$:Observable<NetworkError?>
         let isInitialLoading$:Observable<Bool>
+        let forceMedium$:Observable<Void>
+        let restoreDetents$:Observable<Void>
     }
     
 }

@@ -10,10 +10,6 @@ import RxSwift
 import RxCocoa
 
 
-protocol SheetDetentControllable: AnyObject {
-    func sheetDetentDidChange(to id: UISheetPresentationController.Detent.Identifier?)
-}
-
 final class HomeContentViewController: UIViewController {
 
     private var homeContentViewModel:HomeContentViewModelProtocol?
@@ -381,6 +377,12 @@ final class HomeContentViewController: UIViewController {
                 }
                 
             }.disposed(by: disposeBag)
+        
+         output?.forceMedium$.subscribe(onNext:{
+             @MainActor [weak self] in
+             self?.scrollView.isScrollEnabled = false
+            }
+         ).disposed(by: disposeBag)
     
     }
 
@@ -455,9 +457,4 @@ extension HomeContentViewController:UITableViewDelegate, UITableViewDataSource{
 }
 
 
-extension HomeContentViewController:SheetDetentControllable{
-    func sheetDetentDidChange(to id: UISheetPresentationController.Detent.Identifier?) {
-        let isLarge = id == .large
-        scrollView.isScrollEnabled = isLarge
-    }
-}
+

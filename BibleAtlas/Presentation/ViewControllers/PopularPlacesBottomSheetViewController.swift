@@ -22,6 +22,7 @@ class PopularPlacesBottomSheetViewController: UIViewController {
     
     private var places:[Place] = []
     
+    private var myDetents:[UISheetPresentationController.Detent] = []
     
     private lazy var headerStackView = {
         let sv = UIStackView(arrangedSubviews: [headerLabel, buttonStackView]);
@@ -80,7 +81,7 @@ class PopularPlacesBottomSheetViewController: UIViewController {
         view.addSubview(loadingView)
         view.addSubview(emptyLabel)
         view.addSubview(errorRetryView)
-
+        self.myDetents = self.sheetPresentationController?.detents ?? []
     }
     
     private func setupStyle(){
@@ -180,6 +181,25 @@ class PopularPlacesBottomSheetViewController: UIViewController {
                 
             }.disposed(by: disposeBag)
         
+        output?.forceMedium$.subscribe(onNext:{
+            @MainActor [weak self] in
+            self?.sheetPresentationController?.animateChanges{
+                
+                self?.sheetPresentationController?.detents = [.medium()]
+                self?.sheetPresentationController?.largestUndimmedDetentIdentifier = .medium
+                self?.sheetPresentationController?.selectedDetentIdentifier = .medium
+            }
+           
+            
+        }).disposed(by: disposeBag)
+        
+        
+        output?.restoreDetents$.subscribe(onNext:{
+            @MainActor [weak self] in
+            self?.sheetPresentationController?.animateChanges{
+                self?.sheetPresentationController?.detents = self?.myDetents ?? []
+            }
+        }).disposed(by: disposeBag)
         
     }
     

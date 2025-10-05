@@ -26,19 +26,46 @@ final class PlacesByCharacterBottomSheetViewModel:PlacesByCharacterBottomSheetVi
     private let isInitialLoading$ = BehaviorRelay<Bool>(value: true);
     private let isFetchingNext$ = BehaviorRelay<Bool>(value: false);
     
+    private var forceMedium$ = PublishRelay<Void>()
+    private var restoreDetents$ = PublishRelay<Void>()
+    
     private var pagination = Pagination(pageSize: 10)
     
     private let placeUsecase:PlaceUsecaseProtocol?
     
+    private var notificationService: RxNotificationServiceProtocol?
+    
     private var character:String
     
-    init(navigator:BottomSheetNavigator?, character:String,placeUsecase:PlaceUsecaseProtocol?){
+    init(navigator:BottomSheetNavigator?, character:String,placeUsecase:PlaceUsecaseProtocol?,
+         notificationService: RxNotificationServiceProtocol?){
         self.navigator = navigator;
         self.character = character;
         self.placeUsecase = placeUsecase
+        self.notificationService = notificationService
         self.character$.accept(character)
         
+        bindNotificationService()
     }
+    
+    private func bindNotificationService(){
+        
+        notificationService?.observe(.sheetCommand)
+            .compactMap { $0.object as? SheetCommand }
+            .subscribe(onNext: { [weak self] sheetCommand in
+                
+                switch(sheetCommand){
+                case .forceMedium:
+                    self?.forceMedium$.accept(())
+                case .restoreDetents:
+                    self?.restoreDetents$.accept(())
+                }
+
+            }).disposed(by: disposeBag)
+        
+
+    }
+    
     
     func transform(input: Input) -> Output {
         input.viewLoaded$.subscribe(onNext: {
@@ -147,7 +174,7 @@ final class PlacesByCharacterBottomSheetViewModel:PlacesByCharacterBottomSheetVi
         
         
 
-        return Output(places$: places$.asObservable(), error$: error$.asObservable(), character$: character$.asObservable(), isInitialLoading$: isInitialLoading$.asObservable(), isFetchingNext$: isFetchingNext$.asObservable())
+        return Output(places$: places$.asObservable(), error$: error$.asObservable(), character$: character$.asObservable(), isInitialLoading$: isInitialLoading$.asObservable(), isFetchingNext$: isFetchingNext$.asObservable(), forceMedium$: forceMedium$.asObservable(), restoreDetents$: restoreDetents$.asObservable())
         
     }
 
@@ -166,7 +193,8 @@ final class PlacesByCharacterBottomSheetViewModel:PlacesByCharacterBottomSheetVi
         let character$:Observable<String>
         let isInitialLoading$:Observable<Bool>
         let isFetchingNext$:Observable<Bool>
-        
+        let forceMedium$:Observable<Void>
+        let restoreDetents$:Observable<Void>
     }
     
     

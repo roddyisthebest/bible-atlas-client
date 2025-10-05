@@ -34,14 +34,39 @@ final class PopularPlacesBottomSheetViewModel:PopularPlacesBottomSheetViewModelP
     
     private var pagination = Pagination(pageSize: 15)
     
+    private var forceMedium$ = PublishRelay<Void>()
+    private var restoreDetents$ = PublishRelay<Void>()
     
-    init(navigator:BottomSheetNavigator?, placeUsecase:PlaceUsecaseProtocol?, schedular:SchedulerType = MainScheduler.instance){
+    private var notificationService: RxNotificationServiceProtocol?
+    
+    init(navigator:BottomSheetNavigator?, placeUsecase:PlaceUsecaseProtocol?, schedular:SchedulerType = MainScheduler.instance,notificationService:RxNotificationServiceProtocol?){
         self.navigator = navigator
         self.placeUsecase = placeUsecase;
         self.schedular = schedular
+        self.notificationService = notificationService
+        
+        bindNotificationService();
     }
         
     
+    
+    private func bindNotificationService(){
+        
+        notificationService?.observe(.sheetCommand)
+            .compactMap { $0.object as? SheetCommand }
+            .subscribe(onNext: { [weak self] sheetCommand in
+                
+                switch(sheetCommand){
+                case .forceMedium:
+                    self?.forceMedium$.accept(())
+                case .restoreDetents:
+                    self?.restoreDetents$.accept(())
+                }
+
+            }).disposed(by: disposeBag)
+        
+
+    }
     
     func transform(input:Input) -> Output{
     
@@ -124,7 +149,7 @@ final class PopularPlacesBottomSheetViewModel:PopularPlacesBottomSheetViewModelP
             self?.navigator?.present(.placeDetail(placeId))
         }).disposed(by:disposeBag)
         
-        return Output(places$: places$.asObservable(), error$: error$.asObservable(), isInitialLoading$: isInitialLoading$.asObservable(), isFetchingNext$: isFetchingNext$.asObservable())
+        return Output(places$: places$.asObservable(), error$: error$.asObservable(), isInitialLoading$: isInitialLoading$.asObservable(), isFetchingNext$: isFetchingNext$.asObservable(), forceMedium$: forceMedium$.asObservable(), restoreDetents$: restoreDetents$.asObservable())
     }
     
     
@@ -145,6 +170,8 @@ final class PopularPlacesBottomSheetViewModel:PopularPlacesBottomSheetViewModelP
         let error$:Observable<NetworkError?>
         let isInitialLoading$:Observable<Bool>
         let isFetchingNext$:Observable<Bool>
+        let forceMedium$:Observable<Void>
+        let restoreDetents$:Observable<Void>
     }
      
 }

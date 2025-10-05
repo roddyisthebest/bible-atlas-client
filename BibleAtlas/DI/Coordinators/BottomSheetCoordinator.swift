@@ -82,8 +82,11 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
     func presentFromTopVC(_ vc: UIViewController){
         DispatchQueue.main.async {
             guard let baseVC = self.presenter else { return }
-             let topVC = baseVC.topMostViewController()
-             topVC.present(vc, animated: true)
+            let topVC = baseVC.topMostViewController()
+                
+
+            
+            topVC.present(vc, animated: true)
         }
     }
     
@@ -100,9 +103,7 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
         return stack
     }
     
-    
-    private var prevDetents:[[UISheetPresentationController.Detent]] = []
-    
+
     private let lowDetent = UISheetPresentationController.Detent.custom { context in
         return UIScreen.main.bounds.height * 0.2;
     }
@@ -111,28 +112,11 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
     
         DispatchQueue.main.async {
             guard let baseVC = self.presenter as? UIViewController else { return }
-            let stack = self.presentedVCStack(from: baseVC)
+
             let topVC = baseVC.topMostViewController()
 
             guard let currentPlaceId = self.currentPlaceId else {
-                stack.forEach { vc in
-            
-                    weak var weakVC = vc
-
-                    weakVC?.sheetPresentationController?.animateChanges {
-                        guard let detents = weakVC?.sheetPresentationController?.detents else{
-                            return
-                        }
-                        self.prevDetents.append(detents)
-
-                        weakVC?.sheetPresentationController?.detents = [.medium()]
-                        weakVC?.sheetPresentationController?.largestUndimmedDetentIdentifier = .medium;
-                        weakVC?.sheetPresentationController?.selectedDetentIdentifier = .medium
-                    }
-                    
-                    (weakVC as? SheetDetentControllable)?.sheetDetentDidChange(to: .medium)
-                 
-                }
+                self.notificationService?.post(.sheetCommand, object: SheetCommand.forceMedium)
                 let vm = self.vmFactory.makePlaceDetailBottomSheetVM(placeId: placeId);
                 let vc = self.vcFactory.makePlaceDetailBottomSheetVC(vm: vm, placeId: placeId);
                 
@@ -155,26 +139,13 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
     }
     
     func dismissFromDetail(animated: Bool){
-        guard let baseVC = self.presenter as? UIViewController else { return }
-        
         DispatchQueue.main.async {
-            
-            
-            let stack = self.presentedVCStack(from: baseVC)
-            
-
-            for i in 0..<stack.count-1{
-                let vc = stack[i];
-                vc.sheetPresentationController?.animateChanges {
-                    vc.sheetPresentationController?.detents = self.prevDetents[i]
-                }
-            }
+    
+            self.notificationService?.post(.sheetCommand, object: SheetCommand.restoreDetents)
             
             self.dismiss(animated: animated)
-            self.prevDetents = []
             self.placeHistory = []
             self.currentPlaceId = nil
-
             
         }
         
@@ -183,8 +154,6 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
     
     private func backDetail(){
      
-        
-        
         guard let newPlaceId = self.placeHistory.popLast() else {
             return;
         }

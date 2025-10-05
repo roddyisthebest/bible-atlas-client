@@ -21,6 +21,10 @@ final class PlaceTypesBottomSheetViewModel:PlaceTypesBottomSheetViewModelProtoco
     
     private let placeTypes$ = BehaviorRelay<[PlaceTypeWithPlaceCount]>(value:[])
     private let error$ = BehaviorRelay<NetworkError?>(value: nil)
+    
+    private var forceMedium$ = PublishRelay<Void>()
+    private var restoreDetents$ = PublishRelay<Void>()
+    
 
     private let isInitialLoading$ = BehaviorRelay<Bool>(value: true);
     private let isFetchingNext$ = BehaviorRelay<Bool>(value: false);
@@ -29,13 +33,18 @@ final class PlaceTypesBottomSheetViewModel:PlaceTypesBottomSheetViewModelProtoco
     
     private let schedular:SchedulerType
 
+    private var notificationService: RxNotificationServiceProtocol?
     
     
-    init(navigator:BottomSheetNavigator?,placeUsecase:PlaceUsecaseProtocol?, schedular:SchedulerType = MainScheduler.instance
+    init(navigator:BottomSheetNavigator?,placeUsecase:PlaceUsecaseProtocol?, schedular:SchedulerType = MainScheduler.instance,
+         notificationService: RxNotificationServiceProtocol?
     ){
         self.navigator = navigator
         self.placeUsecase = placeUsecase
         self.schedular = schedular
+        self.notificationService = notificationService
+    
+        bindNotificationService()
     }
     
     
@@ -134,8 +143,26 @@ final class PlaceTypesBottomSheetViewModel:PlaceTypesBottomSheetViewModelProtoco
             
         }).disposed(by: disposeBag)
         
-        return Output(placeTypes$: placeTypes$.asObservable(), error$: error$.asObservable(), isInitialLoading$: isInitialLoading$.asObservable(), isFetchingNext$: isFetchingNext$.asObservable())
+        return Output(placeTypes$: placeTypes$.asObservable(), error$: error$.asObservable(), isInitialLoading$: isInitialLoading$.asObservable(), isFetchingNext$: isFetchingNext$.asObservable() ,forceMedium$: forceMedium$.asObservable(), restoreDetents$: restoreDetents$.asObservable())
         
+    }
+    
+    private func bindNotificationService(){
+        
+        notificationService?.observe(.sheetCommand)
+            .compactMap { $0.object as? SheetCommand }
+            .subscribe(onNext: { [weak self] sheetCommand in
+                
+                switch(sheetCommand){
+                case .forceMedium:
+                    self?.forceMedium$.accept(())
+                case .restoreDetents:
+                    self?.restoreDetents$.accept(())
+                }
+
+            }).disposed(by: disposeBag)
+        
+
     }
     
     
@@ -152,6 +179,8 @@ final class PlaceTypesBottomSheetViewModel:PlaceTypesBottomSheetViewModelProtoco
         let error$:Observable<NetworkError?>
         let isInitialLoading$:Observable<Bool>
         let isFetchingNext$:Observable<Bool>
+        let forceMedium$:Observable<Void>
+        let restoreDetents$:Observable<Void>
     }
     
 }

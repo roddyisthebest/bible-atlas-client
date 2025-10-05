@@ -38,22 +38,30 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
     
     private var recentSearchService: RecentSearchServiceProtocol?
     
+    private var notificationService: RxNotificationServiceProtocol?
+    
     private var isLoggedIn$ = BehaviorRelay<Bool>(value:false)
     
     private var profile$ = BehaviorRelay<User?>(value:nil)
     
     private var screenMode$ = BehaviorRelay<HomeScreenMode>(value: .home)
+
+    private var forceMedium$ = PublishRelay<Void>()
+    private var restoreDetents$ = PublishRelay<Void>()
+
     
     public let isSearchingMode$ = BehaviorRelay<Bool>(value: false);
     public let keyword$ = BehaviorRelay<String>(value: "");
     public let cancelButtonTapped$ = PublishRelay<Void>();
-
-    init(navigator:BottomSheetNavigator?, appStore:AppStoreProtocol?, authUseCase:AuthUsecaseProtocol?, recentSearchService:RecentSearchServiceProtocol?){
+    
+    init(navigator:BottomSheetNavigator?, appStore:AppStoreProtocol?, authUseCase:AuthUsecaseProtocol?, recentSearchService:RecentSearchServiceProtocol?, notificationService: RxNotificationServiceProtocol?){
         self.navigator = navigator
         self.appStore = appStore
         self.authUsecase = authUseCase
         self.recentSearchService = recentSearchService;
+        self.notificationService = notificationService;
         bindAppStore();
+        bindNotificationService();
     }
     
     func transform(input: Input) -> Output{
@@ -101,7 +109,7 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
             }
             .disposed(by: disposeBag)
             
-        return Output(profile$: profile$.asObservable(), isLoggedIn$: isLoggedIn$.asObservable(), screenMode$: screenMode$.asObservable(), keyword$: keyword$, keywordText$: keyword$.asDriver(onErrorJustReturn: ""), isSearchingMode$: isSearchingMode$.asObservable())
+        return Output(profile$: profile$.asObservable(), isLoggedIn$: isLoggedIn$.asObservable(), screenMode$: screenMode$.asObservable(), keyword$: keyword$, keywordText$: keyword$.asDriver(onErrorJustReturn: ""), isSearchingMode$: isSearchingMode$.asObservable(), forceMedium$: forceMedium$.asObservable(), restoreDetents$: restoreDetents$.asObservable())
         
     }
     
@@ -113,6 +121,23 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
         .disposed(by: disposeBag)
     }
     
+    private func bindNotificationService(){
+        
+        notificationService?.observe(.sheetCommand)
+            .compactMap { $0.object as? SheetCommand }
+            .subscribe(onNext: { [weak self] sheetCommand in
+                
+                switch(sheetCommand){
+                case .forceMedium:
+                    self?.forceMedium$.accept(())
+                case .restoreDetents:
+                    self?.restoreDetents$.accept(())
+                }
+
+            }).disposed(by: disposeBag)
+        
+
+    }
     
     public struct Input {
         let avatarButtonTapped$:Observable<Void>
@@ -128,8 +153,8 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
         let keyword$: BehaviorRelay<String>
         let keywordText$: Driver<String>
         let isSearchingMode$:Observable<Bool>
-
-        
+        let forceMedium$:Observable<Void>
+        let restoreDetents$:Observable<Void>
     }
     
   

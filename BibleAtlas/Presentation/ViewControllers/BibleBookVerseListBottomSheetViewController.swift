@@ -32,11 +32,17 @@ final class BibleBookVerseListBottomSheetViewController: UIViewController {
         let sv = UIStackView(arrangedSubviews: [headerLabel, closeButton]);
         sv.axis = .horizontal;
         sv.distribution = .fill;
-        sv.alignment = .center
+        sv.alignment = .leading
+        sv.spacing = 20
         return sv
     }()
     
-    private let headerLabel = HeaderLabel(text: L10n.VerseListSheet.defaultTitle)
+    private let headerLabel = {
+        let label = HeaderLabel(text: L10n.VerseListSheet.defaultTitle);
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        return label
+    }()
     
     private let closeButton = CircleButton(iconSystemName: "xmark")
     

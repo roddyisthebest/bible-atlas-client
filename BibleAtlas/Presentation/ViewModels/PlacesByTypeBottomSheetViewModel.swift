@@ -26,20 +26,49 @@ final class PlacesByTypeBottomSheetViewModel:PlacesByTypeBottomSheetViewModelPro
     
     private let isInitialLoading$ = BehaviorRelay<Bool>(value: true);
     private let isFetchingNext$ = BehaviorRelay<Bool>(value: false);
+
+    private var forceMedium$ = PublishRelay<Void>()
+    private var restoreDetents$ = PublishRelay<Void>()
+    
     
     private var pagination = Pagination(pageSize: 10)
     
     private let placeUsecase:PlaceUsecaseProtocol?
 
+    private var notificationService: RxNotificationServiceProtocol?
 
     
     init(navigator:BottomSheetNavigator?,
          placeUsecase:PlaceUsecaseProtocol?,
-         placeTypeName:PlaceTypeName){
+         placeTypeName:PlaceTypeName, notificationService:RxNotificationServiceProtocol?){
         self.navigator = navigator;
         self.placeUsecase = placeUsecase
+        self.notificationService = notificationService
         self.placeTypeName$.accept(placeTypeName);
+        
+        bindNotificationService()
     }
+    
+    
+    
+    private func bindNotificationService(){
+        
+        notificationService?.observe(.sheetCommand)
+            .compactMap { $0.object as? SheetCommand }
+            .subscribe(onNext: { [weak self] sheetCommand in
+                
+                switch(sheetCommand){
+                case .forceMedium:
+                    self?.forceMedium$.accept(())
+                case .restoreDetents:
+                    self?.restoreDetents$.accept(())
+                }
+
+            }).disposed(by: disposeBag)
+        
+
+    }
+    
     
     
     func transform(input: Input) -> Output {
@@ -73,7 +102,9 @@ final class PlacesByTypeBottomSheetViewModel:PlacesByTypeBottomSheetViewModelPro
         
 
         
-        return Output(places$: places$.asObservable(), error$: error$.asObservable(), typeName$: placeTypeName$.asObservable(), isInitialLoading$: isInitialLoading$.asObservable(), isFetchingNext$: isFetchingNext$.asObservable())
+        return Output(places$: places$.asObservable(), error$: error$.asObservable(), typeName$: placeTypeName$.asObservable(), isInitialLoading$: isInitialLoading$.asObservable(), isFetchingNext$: isFetchingNext$.asObservable(), forceMedium$: forceMedium$.asObservable(),
+                      restoreDetents$: restoreDetents$.asObservable()
+        )
     }
     
     private func getInitialPlaces(){
@@ -149,6 +180,8 @@ final class PlacesByTypeBottomSheetViewModel:PlacesByTypeBottomSheetViewModelPro
         let typeName$:Observable<PlaceTypeName?>
         let isInitialLoading$:Observable<Bool>
         let isFetchingNext$:Observable<Bool>
+        let forceMedium$:Observable<Void>
+        let restoreDetents$:Observable<Void>
     }
     
     

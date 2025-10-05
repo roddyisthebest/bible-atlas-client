@@ -17,7 +17,7 @@ final class HomeBottomSheetViewController: UIViewController{
     private let searchReadyViewController: SearchReadyViewController
     private let searchResultViewController: SearchResultViewController
     
-    
+    private var myDetents:[UISheetPresentationController.Detent] = []
     
     private let disposeBag = DisposeBag()
     
@@ -51,6 +51,7 @@ final class HomeBottomSheetViewController: UIViewController{
         
         input.autocorrectionType = .no
         input.spellCheckingType = .no
+        
         input.translatesAutoresizingMaskIntoConstraints = false
         
         return input
@@ -101,9 +102,8 @@ final class HomeBottomSheetViewController: UIViewController{
 
     private func setupUI(){
         view.addSubview(bodyView);
+        self.myDetents = self.sheetPresentationController?.detents ?? []
     }
-    
-    
     
     private func bindViewModel(){
         let cancelButtonTapped$ = cancelButton.rx.tap.asObservable();
@@ -138,12 +138,12 @@ final class HomeBottomSheetViewController: UIViewController{
                   
                          
                          sheet.detents = [.large()]
-       
+                         myDetents = [.large()]
                          
                      } else {
 
                          sheet.detents = [.large(), .medium(), lowDetent]
-                         
+                         myDetents =  [.large(), .medium(), lowDetent]
                          
                          self.searchTextField.resignFirstResponder()
                          UIView.animate(withDuration: 0.3) {
@@ -159,8 +159,7 @@ final class HomeBottomSheetViewController: UIViewController{
         
         output?.screenMode$
             .distinctUntilChanged()
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] mode in
+            .subscribe(onNext: { @MainActor [weak self] mode in
                 guard let self = self else { return }
                 switch mode {
                 case .home:
@@ -180,6 +179,27 @@ final class HomeBottomSheetViewController: UIViewController{
             .disposed(by: disposeBag)
         
 
+            
+        output?.forceMedium$.subscribe(onNext:{
+            @MainActor [weak self] in
+            self?.sheetPresentationController?.animateChanges{
+                
+                self?.sheetPresentationController?.detents = [.medium()]
+                self?.sheetPresentationController?.largestUndimmedDetentIdentifier = .medium
+                self?.sheetPresentationController?.selectedDetentIdentifier = .medium
+            }
+           
+            
+        }).disposed(by: disposeBag)
+        
+        
+        output?.restoreDetents$.subscribe(onNext:{
+            @MainActor [weak self] in
+            self?.sheetPresentationController?.animateChanges{
+                self?.sheetPresentationController?.detents = self?.myDetents ?? []
+            }
+        }).disposed(by: disposeBag)
+        
         
         Observable
             .combineLatest(output!.isLoggedIn$, output!.profile$)
@@ -235,7 +255,6 @@ final class HomeBottomSheetViewController: UIViewController{
         setupUI();
         setupStyle();
         setupConstraints();
-        setupSheet();
         bindViewModel()
         setupDismissKeyboardOnTap();
     }
@@ -255,10 +274,7 @@ final class HomeBottomSheetViewController: UIViewController{
             make.leading.trailing.bottom.equalToSuperview()
         }
         newVC.didMove(toParent: self)
-        
-        let current = sheetPresentationController?.selectedDetentIdentifier
-        (newVC as? SheetDetentControllable)?.sheetDetentDidChange(to: current)
-        
+    
     }
     
     
@@ -282,13 +298,6 @@ final class HomeBottomSheetViewController: UIViewController{
         )
 
     }
-    
-    private func setupSheet(){
-//        if let sheet = self.sheetPresentationController {
-//            sheet.delegate = self
-//        }
-    }
-    
     
     private func setupStyle(){
         view.backgroundColor = .mainBkg;
@@ -317,31 +326,61 @@ final class HomeBottomSheetViewController: UIViewController{
         
     }
     
+    private var shouldFocusAfterExpand = false
+    private var shouldFocusOutAfterHide = false
+
 }
 
-
-//
-//extension HomeBottomSheetViewController:UISheetPresentationControllerDelegate{
-//    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
-//          let isLarge = sheetPresentationController.selectedDetentIdentifier == .large
-//        .isScrollEnabled = isLarge
-//      }
-//}
 
 
 extension HomeBottomSheetViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
+    // should focus and then keyboard show up?
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        guard let sheet = sheetPresentationController else { return true }
+
+        // 이미 large면 바로 편집
+        if sheet.selectedDetentIdentifier == .large { return true }
+
+        // 1) 먼저 expand
+        shouldFocusAfterExpand = true
+        sheet.animateChanges {
+            sheet.detents = [.large()]
+            sheet.selectedDetentIdentifier = .large
+        }
+
+        // 2) 다음 틱(혹은 약간의 딜레이)에서 포커스
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
+            guard let self = self, self.shouldFocusAfterExpand else { return }
+            textField.becomeFirstResponder()
+            self.shouldFocusAfterExpand = false
+        }
+        return false // 지금은 편집 시작하지 않음(키보드는 아직)
     }
+    
+//    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+//        guard let sheet = sheetPresentationController else { return true }
+//        // 이미 large면 바로 편집
+//        if sheet.selectedDetentIdentifier == .large { return true }
+//        shouldFocusOutAfterHide = true
+//        sheet.animateChanges {
+//            sheet.detents = [.large()]
+//            sheet.selectedDetentIdentifier = .large
+//        }
+//        
+//        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
+//            guard let self = self, self.shouldFocusOutAfterHide else { return }
+//            textField.resignFirstResponder()
+//            self.shouldFocusOutAfterHide = false
+//        }
+//        
+//        return false
+//    }
+    
 }
 
 
-extension HomeBottomSheetViewController:SheetDetentControllable{
-    func sheetDetentDidChange(to id: UISheetPresentationController.Detent.Identifier?) {
-        (children.first as? SheetDetentControllable)?.sheetDetentDidChange(to: id)
-    }
-}
+
 
 
 #if DEBUG

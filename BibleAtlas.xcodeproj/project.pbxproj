@@ -134,7 +134,6 @@
 		EC940EAA2DF7198C00406944 /* MapRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940EA92DF7198C00406944 /* MapRepositoryProtocol.swift */; };
 		EC940EAC2DF71A8100406944 /* MapUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940EAB2DF71A8100406944 /* MapUsecase.swift */; };
 		EC940EAE2DF7229800406944 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940EAD2DF7229800406944 /* MainViewModel.swift */; };
-		EC940EB02E01950D00406944 /* SearchBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940EAF2E01950D00406944 /* SearchBottomSheetViewModel.swift */; };
 		EC9A0A382E6A8EB300BB580E /* ReportBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9A0A372E6A8EB300BB580E /* ReportBottomSheetViewModelTests.swift */; };
 		EC9A0A3A2E6ACCB400BB580E /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9A0A392E6ACCB400BB580E /* MainViewModelTests.swift */; };
 		EC9A0A3D2E6B2F1A00BB580E /* MockMapUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9A0A3C2E6B2F1A00BB580E /* MockMapUsecase.swift */; };
@@ -356,7 +355,6 @@
 		EC940EA92DF7198C00406944 /* MapRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRepositoryProtocol.swift; sourceTree = "<group>"; };
 		EC940EAB2DF71A8100406944 /* MapUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapUsecase.swift; sourceTree = "<group>"; };
 		EC940EAD2DF7229800406944 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
-		EC940EAF2E01950D00406944 /* SearchBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		EC9A0A372E6A8EB300BB580E /* ReportBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
 		EC9A0A392E6ACCB400BB580E /* MainViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelTests.swift; sourceTree = "<group>"; };
 		EC9A0A3C2E6B2F1A00BB580E /* MockMapUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMapUsecase.swift; sourceTree = "<group>"; };
@@ -978,7 +976,6 @@
 				EC77CE512DD5C8950030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift */,
 				EC940E9E2DF0828200406944 /* BibleVerseDetailBottomSheetViewModel.swift */,
 				EC940EAD2DF7229800406944 /* MainViewModel.swift */,
-				EC940EAF2E01950D00406944 /* SearchBottomSheetViewModel.swift */,
 				ECCB51DB2E1E4B04007E4AB7 /* RecentSearchesBottomSheetViewModel.swift */,
 				ECD9724F2E21040000D94767 /* PopularPlacesBottomSheetViewModel.swift */,
 				ECD972572E27E8B800D94767 /* MyPageBottomSheetViewModel.swift */,
@@ -1358,7 +1355,6 @@
 				EC64B9602DDAEDFA00D3C8A7 /* AppInitializer.swift in Sources */,
 				EC77CE3E2DD09AD30030DEF5 /* PlaceModificationBottomSheetViewModel.swift in Sources */,
 				EC64B9792DE44B6700D3C8A7 /* Constants.swift in Sources */,
-				EC940EB02E01950D00406944 /* SearchBottomSheetViewModel.swift in Sources */,
 				EC7058A72DBFA570002D47DF /* HomeBottomSheetViewModel.swift in Sources */,
 				EC386DF62E06C60600251FC6 /* SearchResultViewModel.swift in Sources */,
 				EC77CE382DCF79800030DEF5 /* IconTextButton.swift in Sources */,
