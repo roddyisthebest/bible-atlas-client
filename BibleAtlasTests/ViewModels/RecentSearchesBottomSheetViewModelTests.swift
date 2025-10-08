@@ -20,6 +20,7 @@ final class RecentSearchesBottomSheetViewModelTests: XCTestCase {
     private var recentSearchService:MockRecentSearchService!
     private var disposeBag: DisposeBag!
     private var scheduler: TestScheduler!
+    private var notificationService: MockNotificationService!
 
     override func setUp(){
         super.setUp()
@@ -27,12 +28,13 @@ final class RecentSearchesBottomSheetViewModelTests: XCTestCase {
         self.recentSearchService = MockRecentSearchService()
         self.disposeBag = DisposeBag()
         self.scheduler = TestScheduler(initialClock: 0)
+        self.notificationService = MockNotificationService()
     }
     
     private var items:[RecentSearchItem] = [
-        RecentSearchItem(id: "asdsss", name: "fofo", type: "region"),
-        RecentSearchItem(id: "asdsss2", name: "fofo2", type: "region"),
-        RecentSearchItem(id: "asdsss3", name: "fofo3", type: "region"),
+        RecentSearchItem(id: "asdsss", name: "fofo", koreanName: "포포", type: "region"),
+        RecentSearchItem(id: "asdsss2", name: "fofo2", koreanName: "포포2",  type: "region"),
+        RecentSearchItem(id: "asdsss3", name: "fofo3", koreanName: "포포3", type: "region"),
 
     ]
     
@@ -45,7 +47,7 @@ final class RecentSearchesBottomSheetViewModelTests: XCTestCase {
         recentSearchService.resultExp = exp;
         
         
-        let vm = RecentSearchesBottomSheetViewModel(navigator: navigator, recentSearchService: recentSearchService);
+        let vm = RecentSearchesBottomSheetViewModel(navigator: navigator, recentSearchService: recentSearchService, notificationService: notificationService);
         
         let viewLoaded$ = PublishRelay<Void>();
         
@@ -105,7 +107,7 @@ final class RecentSearchesBottomSheetViewModelTests: XCTestCase {
         recentSearchService.resultExp = exp;
         
         
-        let vm = RecentSearchesBottomSheetViewModel(navigator: navigator, recentSearchService: recentSearchService);
+        let vm = RecentSearchesBottomSheetViewModel(navigator: navigator, recentSearchService: recentSearchService, notificationService: notificationService);
         
         let viewLoaded$ = PublishRelay<Void>();
         
@@ -165,7 +167,7 @@ final class RecentSearchesBottomSheetViewModelTests: XCTestCase {
         recentSearchService.resultExp = exp;
         
         
-        let vm = RecentSearchesBottomSheetViewModel(navigator: navigator, recentSearchService: recentSearchService, schedular: scheduler);
+        let vm = RecentSearchesBottomSheetViewModel(navigator: navigator, recentSearchService: recentSearchService, schedular: scheduler, notificationService: notificationService);
         
         let viewLoaded$ = PublishRelay<Void>();
         let bottomReached$ = PublishRelay<Void>();
@@ -221,7 +223,7 @@ final class RecentSearchesBottomSheetViewModelTests: XCTestCase {
         recentSearchService.resultExp = exp;
         
         
-        let vm = RecentSearchesBottomSheetViewModel(navigator: navigator, recentSearchService: recentSearchService, schedular: scheduler);
+        let vm = RecentSearchesBottomSheetViewModel(navigator: navigator, recentSearchService: recentSearchService, schedular: scheduler, notificationService: notificationService);
         
         let viewLoaded$ = PublishRelay<Void>();
         let bottomReached$ = PublishRelay<Void>();
@@ -253,7 +255,7 @@ final class RecentSearchesBottomSheetViewModelTests: XCTestCase {
     
     func test_cellSelected_presentsPlaceDetail(){
         
-        let vm = RecentSearchesBottomSheetViewModel(navigator: navigator, recentSearchService: recentSearchService);
+        let vm = RecentSearchesBottomSheetViewModel(navigator: navigator, recentSearchService: recentSearchService, notificationService: notificationService);
  
         
         let cellSelected$ = PublishRelay<String>();
@@ -270,7 +272,7 @@ final class RecentSearchesBottomSheetViewModelTests: XCTestCase {
     func test_closeButtonTapped_dismisses(){
         
         
-        let vm = RecentSearchesBottomSheetViewModel(navigator: navigator, recentSearchService: recentSearchService);
+        let vm = RecentSearchesBottomSheetViewModel(navigator: navigator, recentSearchService: recentSearchService, notificationService: notificationService);
         
         let closeButtonTapped$ = PublishRelay<Void>();
         
@@ -294,7 +296,7 @@ final class RecentSearchesBottomSheetViewModelTests: XCTestCase {
         recentSearchService.resultExp = exp;
         
         
-        let vm = RecentSearchesBottomSheetViewModel(navigator: navigator, recentSearchService: recentSearchService, schedular: scheduler);
+        let vm = RecentSearchesBottomSheetViewModel(navigator: navigator, recentSearchService: recentSearchService, schedular: scheduler, notificationService: notificationService);
         
         let viewLoaded$ = PublishRelay<Void>();
         let allClearButtonTapped$ = PublishRelay<Void>();
@@ -350,7 +352,7 @@ final class RecentSearchesBottomSheetViewModelTests: XCTestCase {
         recentSearchService.resultExp = exp;
         
         
-        let vm = RecentSearchesBottomSheetViewModel(navigator: navigator, recentSearchService: recentSearchService, schedular: scheduler);
+        let vm = RecentSearchesBottomSheetViewModel(navigator: navigator, recentSearchService: recentSearchService, schedular: scheduler, notificationService: notificationService);
         
         let viewLoaded$ = PublishRelay<Void>();
         let allClearButtonTapped$ = PublishRelay<Void>();

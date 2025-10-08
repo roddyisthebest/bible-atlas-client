@@ -675,7 +675,6 @@ final class PlaceDetailViewController: UIViewController {
         
         imageButton.snp.makeConstraints { make in
             make.height.equalTo(350)
-//            make.width.equalToSuperview().dividedBy(2.25)
         }
 
         
@@ -1235,7 +1234,7 @@ extension PlaceDetailViewController {
     var _test_isErrorVisible: Bool { !errorRetryView.isHidden }
 
     var _test_isRelatedPlaceTableVisible: Bool { !relatedPlaceTable.isHidden }
-    var _test_isRelatedVerseTableVisible: Bool { !relatedVerseTable.isHidden }
+    var _test_isRelatedVerseTableVisible: Bool { !relatedVerseStackView.isHidden }
 
     
     var _test_isLikeLoadingVisible: Bool { !likeLoadingView.isHidden && likeLoadingView.isAnimating }
@@ -1245,6 +1244,15 @@ extension PlaceDetailViewController {
     var _test_generationText: String? { generationLabel.text }
     var _test_descriptionText: String? { descriptionTextView.text }
 
+    var _relatedVerseMoreButtonText:String? {
+        relatedVerseMoreButton.currentTitle
+    }
+    
+    var _relatedVerseMoreButtonVisible:Bool {
+        !relatedVerseMoreButton.isHidden
+    }
+    
+    
     var _test_likeButtonTitle: String? { likeButton.title(for: .normal) }
     var _test_likeButtonEnabled: Bool { likeButton.isEnabled }
     var _test_likeButtonImage: UIImage? { likeButton.image(for: .normal)}
@@ -1283,6 +1291,25 @@ extension PlaceDetailViewController {
             return relatedVerseTable.dataSource?
                 .tableView(relatedVerseTable, cellForRowAt: idx) as? RelatedVerseTableViewCell
     }
+    
+    
+    
+    /// headerBottomBorder 현재 알파
+    var _test_headerBorderAlpha: CGFloat { headerBottomBorder.alpha }
+
+    /// 제목이 단일 라인(말줄임) 상태인지
+    var _test_isTitleSingleLine: Bool {
+        titleLabel.numberOfLines == 1 && titleLabel.lineBreakMode == .byTruncatingTail
+    }
+
+    /// 스크롤 오프셋을 강제로 설정하고 델리게이트를 태움
+    func _test_scroll(toY y: CGFloat) {
+        scrollView.setContentOffset(CGPoint(x: 0, y: y), animated: false)
+        // delegate를 직접 호출(실전과 동일하게 동작하도록)
+        scrollView.delegate?.scrollViewDidScroll?(scrollView)
+    }
+    
+    
     
     
 }

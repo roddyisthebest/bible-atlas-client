@@ -22,6 +22,8 @@ final class MockHomeBottomSheetViewModel: HomeBottomSheetViewModelProtocol {
     let _profile$ = BehaviorRelay<User?>(value: nil)
     let _isLoggedIn$ = BehaviorRelay<Bool>(value: false)
     let _screenMode$ = BehaviorRelay<HomeScreenMode>(value: .home)
+    let _forceMedium$ = PublishRelay<Void>();
+    let _restoreDetents$ = PublishRelay<Void>()
 
     struct IO {
         let profile$: Observable<User?>
@@ -40,7 +42,9 @@ final class MockHomeBottomSheetViewModel: HomeBottomSheetViewModelProtocol {
             screenMode$: _screenMode$.asObservable(),
             keyword$: keyword$,
             keywordText$: keyword$.asDriver(onErrorJustReturn: ""),
-            isSearchingMode$: isSearchingMode$.asObservable()
+            isSearchingMode$: isSearchingMode$.asObservable(),
+            forceMedium$: _forceMedium$.asObservable(),
+            restoreDetents$: _restoreDetents$.asObservable()
         )
     }
 }

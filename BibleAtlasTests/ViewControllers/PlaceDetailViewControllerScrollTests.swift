@@ -22,6 +22,9 @@ final class PlaceDetailViewControllerScrollTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
+        
+        UIView.setAnimationsEnabled(false)
+        
         vm = MockPlaceDetailViewModel()
         vc = PlaceDetailViewController(placeDetailViewModel: vm, placeId: "test-id")
 
@@ -95,6 +98,51 @@ final class PlaceDetailViewControllerScrollTests: XCTestCase {
 
          XCTAssertFalse(vc._test_isScrollEnabled)
      }
+    
+    /// 스크롤을 조금 내리면 border가 나타난다
+    func test_headerBorder_shows_when_scrolling_down() {
+        // 초기값: 맨 위 → 숨김 상태여야 함
+        XCTAssertEqual(vc._test_headerBorderAlpha, 0, accuracy: 0.001)
+        XCTAssertFalse(vc._test_isTitleSingleLine)
 
+        // 약간 아래로 스크롤(임계값 4 초과를 보장하기 위해 8로)
+        vc._test_scroll(toY: 8)
+        pump(0.01) // 애니메이션 껐지만, 런루프 한 틱
+
+        XCTAssertEqual(vc._test_headerBorderAlpha, 1, accuracy: 0.001)
+        XCTAssertTrue(vc._test_isTitleSingleLine)
+    }
+    
+    func test_headerBorder_hides_when_scrolling_back_to_top() {
+          // 먼저 보이게 만든 뒤…
+          vc._test_scroll(toY: 8)
+          pump(0.01)
+          XCTAssertEqual(vc._test_headerBorderAlpha, 1, accuracy: 0.001)
+
+          // 다시 맨 위로
+          vc._test_scroll(toY: 0)
+          pump(0.01)
+
+          XCTAssertEqual(vc._test_headerBorderAlpha, 0, accuracy: 0.001)
+          XCTAssertFalse(vc._test_isTitleSingleLine)
+      }
+
+
+    func test_headerBorder_hysteresis_behavior() {
+            // 보이게 만들기
+            vc._test_scroll(toY: 6) // > 4
+            pump(0.01)
+            XCTAssertEqual(vc._test_headerBorderAlpha, 1, accuracy: 0.001)
+
+            // 3은 hideThreshold(2)보다 큼 → 계속 보이는 상태 유지
+            vc._test_scroll(toY: 3)
+            pump(0.01)
+            XCTAssertEqual(vc._test_headerBorderAlpha, 1, accuracy: 0.001)
+
+            // 1은 hideThreshold(2)보다 작음 → 숨김
+            vc._test_scroll(toY: 1)
+            pump(0.01)
+            XCTAssertEqual(vc._test_headerBorderAlpha, 0, accuracy: 0.001)
+        }
     
 }

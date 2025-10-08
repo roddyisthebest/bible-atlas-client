@@ -50,6 +50,10 @@
 		EC0F02102E853BB900D7C216 /* MockErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F020F2E853BB900D7C216 /* MockErrorHandler.swift */; };
 		EC1B2DC92E8ED0B00073EBE3 /* BibleBookVerseListBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1B2DC82E8ED0B00073EBE3 /* BibleBookVerseListBottomSheetViewModel.swift */; };
 		EC1B2DCB2E8FB0F90073EBE3 /* BibleBookVerseListBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1B2DCA2E8FB0F90073EBE3 /* BibleBookVerseListBottomSheetViewController.swift */; };
+		EC1B2DCF2E9613690073EBE3 /* SearchResultViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1B2DCE2E9613690073EBE3 /* SearchResultViewModelTests.swift */; };
+		EC1B2DD12E9634C30073EBE3 /* BibleBookVerseListBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1B2DD02E9634C30073EBE3 /* BibleBookVerseListBottomSheetViewModelTests.swift */; };
+		EC1B2DD32E964A360073EBE3 /* MockBibleBookVerseListBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1B2DD22E964A360073EBE3 /* MockBibleBookVerseListBottomSheetViewModel.swift */; };
+		EC1B2DD52E964A880073EBE3 /* BibleBookVerseListBottomSheetViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1B2DD42E964A880073EBE3 /* BibleBookVerseListBottomSheetViewControllerTests.swift */; };
 		EC386DF42E06C4A700251FC6 /* HomeContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF32E06C4A700251FC6 /* HomeContentViewModel.swift */; };
 		EC386DF62E06C60600251FC6 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF52E06C60600251FC6 /* SearchResultViewModel.swift */; };
 		EC386DF92E06C77A00251FC6 /* HomeContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF82E06C77A00251FC6 /* HomeContentViewController.swift */; };
@@ -200,7 +204,6 @@
 		ECD9727F2E3F92DA00D94767 /* AuthRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9727E2E3F92DA00D94767 /* AuthRepositoryTests.swift */; };
 		ECD972822E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972812E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift */; };
 		ECD972842E4487CA00D94767 /* HomeContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972832E4487CA00D94767 /* HomeContentViewModelTests.swift */; };
-		ECD972862E45EE5900D94767 /* SearchResultViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972852E45EE5900D94767 /* SearchResultViewModelTests.swift */; };
 		ECD972892E47371900D94767 /* SearchReadyViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972882E47371900D94767 /* SearchReadyViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -273,6 +276,10 @@
 		EC0F020F2E853BB900D7C216 /* MockErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockErrorHandler.swift; sourceTree = "<group>"; };
 		EC1B2DC82E8ED0B00073EBE3 /* BibleBookVerseListBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleBookVerseListBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		EC1B2DCA2E8FB0F90073EBE3 /* BibleBookVerseListBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleBookVerseListBottomSheetViewController.swift; sourceTree = "<group>"; };
+		EC1B2DCE2E9613690073EBE3 /* SearchResultViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchResultViewModelTests.swift; path = ../../../../../.Trash/SearchResultViewModelTests.swift; sourceTree = "<group>"; };
+		EC1B2DD02E9634C30073EBE3 /* BibleBookVerseListBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleBookVerseListBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
+		EC1B2DD22E964A360073EBE3 /* MockBibleBookVerseListBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockBibleBookVerseListBottomSheetViewModel.swift; sourceTree = "<group>"; };
+		EC1B2DD42E964A880073EBE3 /* BibleBookVerseListBottomSheetViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleBookVerseListBottomSheetViewControllerTests.swift; sourceTree = "<group>"; };
 		EC386DF32E06C4A700251FC6 /* HomeContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewModel.swift; sourceTree = "<group>"; };
 		EC386DF52E06C60600251FC6 /* SearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModel.swift; sourceTree = "<group>"; };
 		EC386DF82E06C77A00251FC6 /* HomeContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewController.swift; sourceTree = "<group>"; };
@@ -426,7 +433,6 @@
 		ECD9727E2E3F92DA00D94767 /* AuthRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryTests.swift; sourceTree = "<group>"; };
 		ECD972812E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
 		ECD972832E4487CA00D94767 /* HomeContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewModelTests.swift; sourceTree = "<group>"; };
-		ECD972852E45EE5900D94767 /* SearchResultViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModelTests.swift; sourceTree = "<group>"; };
 		ECD972882E47371900D94767 /* SearchReadyViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReadyViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -477,6 +483,7 @@
 				EC0F01BF2E7FE25900D7C216 /* PlaceDetailViewControllerTests.swift */,
 				EC0F01C72E81486400D7C216 /* HomeBottomSheetViewControllerTests.swift */,
 				EC0F01CD2E81552100D7C216 /* PlaceDetailViewControllerScrollTests.swift */,
+				EC1B2DD42E964A880073EBE3 /* BibleBookVerseListBottomSheetViewControllerTests.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -752,6 +759,7 @@
 				EC0F020B2E853AC700D7C216 /* MockTokenProvider.swift */,
 				EC0F020D2E853B1400D7C216 /* MockTokenRefresher.swift */,
 				EC0F020F2E853BB900D7C216 /* MockErrorHandler.swift */,
+				EC1B2DD22E964A360073EBE3 /* MockBibleBookVerseListBottomSheetViewModel.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -1029,8 +1037,8 @@
 			children = (
 				ECD972812E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift */,
 				ECD972832E4487CA00D94767 /* HomeContentViewModelTests.swift */,
-				ECD972852E45EE5900D94767 /* SearchResultViewModelTests.swift */,
 				ECD972882E47371900D94767 /* SearchReadyViewModelTests.swift */,
+				EC1B2DCE2E9613690073EBE3 /* SearchResultViewModelTests.swift */,
 				ECC49F842E506BED0061B467 /* PlaceModificationBottomSheetViewModelTests.swift */,
 				ECC49F7E2E4A1F000061B467 /* LoginBottomSheetViewModelTests.swift */,
 				ECC49F802E4CC3C10061B467 /* MyCollectionBottomSheetViewModelTests.swift */,
@@ -1045,6 +1053,7 @@
 				EC9A0A592E76EE4B00BB580E /* PopularPlacesBottomSheetViewModelTests.swift */,
 				EC0F01AE2E7B9AE600D7C216 /* MyPageBottomSheetViewModelTests.swift */,
 				EC0F01B02E7C261B00D7C216 /* AccountManagementBottomSheetViewModelTests.swift */,
+				EC1B2DD02E9634C30073EBE3 /* BibleBookVerseListBottomSheetViewModelTests.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1455,7 +1464,9 @@
 				EC0F020E2E853B1400D7C216 /* MockTokenRefresher.swift in Sources */,
 				EC0F01CA2E814C8600D7C216 /* MockHomeContentViewModel.swift in Sources */,
 				EC0F01F52E850A7400D7C216 /* MockVCFactory.swift in Sources */,
+				EC1B2DCF2E9613690073EBE3 /* SearchResultViewModelTests.swift in Sources */,
 				EC9A0A3F2E6B33AB00BB580E /* MockPlaceUsecase.swift in Sources */,
+				EC1B2DD52E964A880073EBE3 /* BibleBookVerseListBottomSheetViewControllerTests.swift in Sources */,
 				EC0F02082E85375E00D7C216 /* StubURLProtocol.swift in Sources */,
 				EC0F02012E8526AC00D7C216 /* MockPlaceRepository.swift in Sources */,
 				EC0F02032E8526E100D7C216 /* MockAuthRepository.swift in Sources */,
@@ -1490,11 +1501,11 @@
 				EC9A0A412E6C0AF000BB580E /* MemoBottomSheetViewModelTests.swift in Sources */,
 				EC9A0A5A2E76EE4B00BB580E /* PopularPlacesBottomSheetViewModelTests.swift in Sources */,
 				EC0F01CE2E81552100D7C216 /* PlaceDetailViewControllerScrollTests.swift in Sources */,
-				ECD972862E45EE5900D94767 /* SearchResultViewModelTests.swift in Sources */,
 				EC0F01CC2E81504500D7C216 /* MockSearchResultViewModel.swift in Sources */,
 				EC0F01FF2E85255500D7C216 /* PlaceUsecaseTests.swift in Sources */,
 				EC9A0A432E6C1EE400BB580E /* PlaceTypesBottomSheetViewModelTests.swift in Sources */,
 				ECD9727F2E3F92DA00D94767 /* AuthRepositoryTests.swift in Sources */,
+				EC1B2DD12E9634C30073EBE3 /* BibleBookVerseListBottomSheetViewModelTests.swift in Sources */,
 				EC9A0A3D2E6B2F1A00BB580E /* MockMapUsecase.swift in Sources */,
 				ECC49F832E4F25090061B467 /* PlaceDetailBottomSheetViewModelTests.swift in Sources */,
 				EC0F01B32E7C26C500D7C216 /* MockAppCoordinator.swift in Sources */,
@@ -1503,6 +1514,7 @@
 				EC0F01B82E7CF09700D7C216 /* MockMainViewModel.swift in Sources */,
 				ECC49F852E506BED0061B467 /* PlaceModificationBottomSheetViewModelTests.swift in Sources */,
 				EC0F01B62E7CEFBC00D7C216 /* MainViewControllerTests.swift in Sources */,
+				EC1B2DD32E964A360073EBE3 /* MockBibleBookVerseListBottomSheetViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1665,6 +1677,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;

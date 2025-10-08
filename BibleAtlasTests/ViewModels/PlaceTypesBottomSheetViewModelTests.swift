@@ -21,6 +21,8 @@ final class PlaceTypesBottomSheetViewModelTests: XCTestCase {
     
     private var disposeBag:DisposeBag!
     private var scheduler: TestScheduler!
+    
+    private var notificationService: MockNotificationService!
 
     
     override func setUp(){
@@ -30,7 +32,8 @@ final class PlaceTypesBottomSheetViewModelTests: XCTestCase {
         self.navigator = MockBottomSheetNavigator();
         self.disposeBag = DisposeBag();
         self.scheduler = TestScheduler(initialClock: 0)
-
+        self.notificationService = MockNotificationService()
+        
     }
     
     func test_viewLoaded_success_shouldToggleInitialLoading_andSetFirstPage_andKeepErrorNil(){
@@ -43,7 +46,7 @@ final class PlaceTypesBottomSheetViewModelTests: XCTestCase {
         placeUsecase.placeTypesResult = .success(ListResponse(total: 2, page: 0, limit: 10, data: placeTypes))
         placeUsecase.placeTypesExp = exp;
         
-        let vm = PlaceTypesBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase)
+        let vm = PlaceTypesBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase, notificationService: notificationService)
         let viewLoaded$ = PublishRelay<Void>();
         
         let output = vm.transform(input: PlaceTypesBottomSheetViewModel.Input(placeTypeCellTapped$: .empty(), closeButtonTapped$: .empty(), viewLoaded$: viewLoaded$.asObservable(), bottomReached$: .empty(), refetchButtonTapped$: .empty()))
@@ -94,7 +97,7 @@ final class PlaceTypesBottomSheetViewModelTests: XCTestCase {
         placeUsecase.placeTypesResult = .failure(error)
         placeUsecase.placeTypesExp = exp;
         
-        let vm = PlaceTypesBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase)
+        let vm = PlaceTypesBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase, notificationService: notificationService)
         let viewLoaded$ = PublishRelay<Void>();
         
         let output = vm.transform(input: PlaceTypesBottomSheetViewModel.Input(placeTypeCellTapped$: .empty(), closeButtonTapped$: .empty(), viewLoaded$: viewLoaded$.asObservable(), bottomReached$: .empty(), refetchButtonTapped$: .empty()))
@@ -145,7 +148,8 @@ final class PlaceTypesBottomSheetViewModelTests: XCTestCase {
         let vm = PlaceTypesBottomSheetViewModel(
             navigator: navigator,
             placeUsecase: placeUsecase,
-            schedular: scheduler     // ← 주입!
+            schedular: scheduler,
+            notificationService: notificationService
         )
 
         let viewLoaded$ = PublishRelay<Void>()
@@ -216,7 +220,8 @@ final class PlaceTypesBottomSheetViewModelTests: XCTestCase {
         let vm = PlaceTypesBottomSheetViewModel(
             navigator: navigator,
             placeUsecase: placeUsecase,
-            schedular: scheduler
+            schedular: scheduler,
+            notificationService: notificationService
         )
 
         let viewLoaded$ = PublishRelay<Void>()
@@ -278,7 +283,8 @@ final class PlaceTypesBottomSheetViewModelTests: XCTestCase {
 
         let vm = PlaceTypesBottomSheetViewModel(
             navigator: navigator,
-            placeUsecase: placeUsecase
+            placeUsecase: placeUsecase,
+            notificationService: notificationService
         )
 
         let viewLoaded$ = PublishRelay<Void>()

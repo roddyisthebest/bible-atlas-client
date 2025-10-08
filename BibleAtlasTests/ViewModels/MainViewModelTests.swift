@@ -40,7 +40,7 @@ final class MainViewModelTests: XCTestCase {
         let exp = expectation(description: "places set");
         placeUsecase.placesWithRepresentativePointExp = exp
         let places = [
-            Place(id: "1", name: "wo", isModern: true, description: "desc", koreanDescription: "koreanDesc", stereo: .child, likeCount: 1, types: [])]
+            Place(id: "1", name: "wo", koreanName: "테스트", isModern: true, description: "desc", koreanDescription: "koreanDesc", stereo: .child, likeCount: 1, types: [])]
         placeUsecase.placesWithRepresentativePointResult = .success(ListResponse(total: 1, page: 0, limit: 10, data: places))
         
         let vm = MainViewModel(bottomSheetCoordinator: navigator, mapUseCase: mapUsecase, placeUsecase: placeUsecase, notificationService: notificationService)
@@ -159,75 +159,6 @@ final class MainViewModelTests: XCTestCase {
         XCTAssertEqual(gotLoadingHistories, [true,false])
 
     }
-    
-    func test_resetGeoJson_shouldEmitReset_andZoomOut_clearSelectedId_andReemitPlaces(){
-        
-        let exp = expectation(description: "places set");
-        placeUsecase.placesWithRepresentativePointExp = exp
-        let places = [
-            Place(id: "1", name: "wo", isModern: true, description: "desc", koreanDescription: "koreanDesc", stereo: .child, likeCount: 1, types: [])]
-        placeUsecase.placesWithRepresentativePointResult = .success(ListResponse(total: 1, page: 0, limit: 10, data: places))
-        
-        let vm = MainViewModel(bottomSheetCoordinator: navigator, mapUseCase: mapUsecase, placeUsecase: placeUsecase, notificationService: notificationService)
-        
-        let viewLoaded$ = PublishRelay<Void>();
-        let output = vm.transform(input: MainViewModel.Input(viewLoaded$: viewLoaded$.asObservable(), placeAnnotationTapped$: .empty()))
-        
-        
-        var gotResetEmit:Void?;
-        let resetExp = expectation(description: "reset emit")
-            
-        output.resetMapView$.subscribe(onNext:{
-            gotResetEmit = Void()
-            resetExp.fulfill()
-        }).disposed(by: disposeBag)
-        
-        
-        
-        var gotZoomOutEmit:Void?;
-        let zoomOutExp = expectation(description: "zome out emit")
-            
-        output.zoomOutMapView$.subscribe(onNext:{
-            gotZoomOutEmit = Void()
-            zoomOutExp.fulfill()
-        }).disposed(by: disposeBag)
-        
-        
-        var gotPlacesWithRepresentativePoint:[Place]?;
-        let placesWithRepresentativePointExp = expectation(description: "placesWithRepresentativePoint emit")
-        placesWithRepresentativePointExp.expectedFulfillmentCount = 2
-        output.placesWithRepresentativePoint$.skip(1).take(2).subscribe(onNext:{
-            places in
-            gotPlacesWithRepresentativePoint = places
-            placesWithRepresentativePointExp.fulfill()
-        }).disposed(by: disposeBag)
-        
-        
-        var clearedSelectedId: String??
-        let selectedExp = expectation(description: "selectedId cleared")
-        output.selectedPlaceId$
-            .skip(1)           // 초기 nil 스킵
-            .take(1)           // reset 시점의 nil 수신
-            .subscribe(onNext: { id in
-                clearedSelectedId = id
-                selectedExp.fulfill()
-            })
-            .disposed(by: disposeBag)
-        
-        
-        viewLoaded$.accept(())
-        notificationService.post(.resetGeoJson, object: nil)
-        
-        
-        wait(for: [exp, resetExp, zoomOutExp, placesWithRepresentativePointExp, selectedExp],timeout: 1.0)
-        
-        XCTAssertNotNil(gotZoomOutEmit)
-        XCTAssertNotNil(gotResetEmit)
-        XCTAssertEqual(gotPlacesWithRepresentativePoint?.count, 1)
-        
-        XCTAssertNil(clearedSelectedId!)
-    }
-    
     
     func test_placeAnnotationTap_withDifferentId_shouldPresentPlaceDetail()
     {

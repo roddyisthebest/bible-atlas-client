@@ -39,11 +39,11 @@ final class MainViewControllerTests: XCTestCase {
         // then: Region 대략 검증 (예: 위도/경도/스팬이 기대 범위)
         let r = vc._test_mapView.region
         XCTAssertEqual(r.center.longitude, 35.2137, accuracy: 0.1)
-        XCTAssertEqual(r.center.latitude, 31.7683 - 2.0*0.5, accuracy: 0.1)
+        XCTAssertEqual(r.center.latitude, 31.7683 - 0.25 * 0.5, accuracy: 0.1)
 
         // span: lon은 2.0±0.3, lat은 2.0 이상 정도로만
-        XCTAssertEqual(r.span.longitudeDelta, 2.0, accuracy: 0.3)
-        XCTAssertTrue(r.span.latitudeDelta >= 2.0 && r.span.latitudeDelta <= 5.0)
+        XCTAssertEqual(r.span.longitudeDelta, 0.25, accuracy: 0.3)
+        XCTAssertTrue(r.span.latitudeDelta >= 0.25 && r.span.latitudeDelta <= 5.0)
         // viewLoaded$가 한 번 이상 호출됐는지(입력 캡처 카운트)
         XCTAssertEqual(vm.viewLoadedCount, 1)
     }
@@ -178,7 +178,8 @@ final class MainViewControllerTests: XCTestCase {
         return (0..<count).map { i in
             Place(
                 id: UUID().uuidString,
-                name: "Place \(i)",
+                name: "Place \(i)", 
+                koreanName: "장소이름",
                 isModern: Bool.random(),
                 description: "desc \(i)",
                 koreanDescription: "ko desc \(i)",

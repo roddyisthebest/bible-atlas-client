@@ -128,28 +128,12 @@ final class HomeBottomSheetViewController: UIViewController{
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {[weak self] isSearchingMode in
                 guard let self = self, let sheet = self.sheetPresentationController else { return }
-                     if isSearchingMode {
-                         UIView.animate(withDuration: 0.3) {
-                             sheet.animateChanges {
-                                 sheet.selectedDetentIdentifier = .large
-                             }
-                            
-                         }
-                  
-                         
-                         sheet.detents = [.large()]
-                         myDetents = [.large()]
-                         
-                     } else {
-
+                     if !isSearchingMode {
                          sheet.detents = [.large(), .medium(), lowDetent]
                          myDetents =  [.large(), .medium(), lowDetent]
-                         
                          self.searchTextField.resignFirstResponder()
-                         UIView.animate(withDuration: 0.3) {
-                             sheet.animateChanges {
-                                 sheet.selectedDetentIdentifier = .medium
-                             }
+                         sheet.animateChanges {
+                             sheet.selectedDetentIdentifier = .medium
                          }
                          
                      }
@@ -256,24 +240,42 @@ final class HomeBottomSheetViewController: UIViewController{
         setupStyle();
         setupConstraints();
         bindViewModel()
-        setupDismissKeyboardOnTap();
+        setupDismissTextFieldOnTap();
+
     }
     
+    
+    private func setupDismissTextFieldOnTap(){
+        let tapGesture = UITapGestureRecognizer(target: self, action:#selector(dismissTextField))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func dismissTextField(){
+        self.searchTextField.resignFirstResponder()
+    }
 
     private func swapToChildVC(_ newVC: UIViewController) {
-        children.forEach {
-            $0.willMove(toParent: nil)
-            $0.view.removeFromSuperview()
-            $0.removeFromParent()
-        }
+        DispatchQueue.main.async{ [weak self] in
+            guard let self = self else {
+                return
+            }
+            children.forEach {
+                $0.willMove(toParent: nil)
+                $0.view.removeFromSuperview()
+                $0.removeFromParent()
+            }
 
-        addChild(newVC)
-        view.insertSubview(newVC.view, belowSubview: headerStackView)
-        newVC.view.snp.makeConstraints { make in
-            make.top.equalTo(headerStackView.snp.bottom).offset(0)
-            make.leading.trailing.bottom.equalToSuperview()
+            addChild(newVC)
+            view.insertSubview(newVC.view, belowSubview: headerStackView)
+            newVC.view.snp.makeConstraints { make in
+                make.top.equalTo(self.headerStackView.snp.bottom).offset(0)
+                make.leading.trailing.bottom.equalToSuperview()
+            }
+            newVC.didMove(toParent: self)
         }
-        newVC.didMove(toParent: self)
+       
+        
     
     }
     
@@ -334,6 +336,12 @@ final class HomeBottomSheetViewController: UIViewController{
 
 
 extension HomeBottomSheetViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true;
+    }
+    
     // should focus and then keyboard show up?
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         guard let sheet = sheetPresentationController else { return true }
@@ -356,26 +364,6 @@ extension HomeBottomSheetViewController: UITextFieldDelegate {
         }
         return false // 지금은 편집 시작하지 않음(키보드는 아직)
     }
-    
-//    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-//        guard let sheet = sheetPresentationController else { return true }
-//        // 이미 large면 바로 편집
-//        if sheet.selectedDetentIdentifier == .large { return true }
-//        shouldFocusOutAfterHide = true
-//        sheet.animateChanges {
-//            sheet.detents = [.large()]
-//            sheet.selectedDetentIdentifier = .large
-//        }
-//        
-//        
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
-//            guard let self = self, self.shouldFocusOutAfterHide else { return }
-//            textField.resignFirstResponder()
-//            self.shouldFocusOutAfterHide = false
-//        }
-//        
-//        return false
-//    }
     
 }
 

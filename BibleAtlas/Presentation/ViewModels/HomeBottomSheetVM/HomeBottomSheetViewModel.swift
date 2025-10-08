@@ -54,12 +54,17 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
     public let keyword$ = BehaviorRelay<String>(value: "");
     public let cancelButtonTapped$ = PublishRelay<Void>();
     
-    init(navigator:BottomSheetNavigator?, appStore:AppStoreProtocol?, authUseCase:AuthUsecaseProtocol?, recentSearchService:RecentSearchServiceProtocol?, notificationService: RxNotificationServiceProtocol?){
+    
+    private let schedular:SchedulerType
+
+    init(navigator:BottomSheetNavigator?, appStore:AppStoreProtocol?, authUseCase:AuthUsecaseProtocol?, recentSearchService:RecentSearchServiceProtocol?, notificationService: RxNotificationServiceProtocol?, schedular:SchedulerType = MainScheduler.instance){
         self.navigator = navigator
         self.appStore = appStore
         self.authUsecase = authUseCase
         self.recentSearchService = recentSearchService;
         self.notificationService = notificationService;
+        self.schedular = schedular
+
         bindAppStore();
         bindNotificationService();
     }
@@ -91,6 +96,7 @@ final class HomeBottomSheetViewModel:HomeBottomSheetViewModelProtocol {
                 return screenMode
             }
             .distinctUntilChanged()
+            .throttle(.milliseconds(150), scheduler:        schedular)
             .bind(to: screenMode$)
             .disposed(by: disposeBag)
         

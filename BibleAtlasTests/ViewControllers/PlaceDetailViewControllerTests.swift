@@ -71,19 +71,19 @@ final class PlaceDetailViewControllerTests: XCTestCase {
     
     func test_place_emit_updatesTitleDescriptionGeneration_andShowsBody(){
         
-        let place = Place(id: "test", name: "test", isModern: true, description: "street yo", koreanDescription: "요요", stereo: .child, likeCount: 2, types: [])
+        let place = Place(id: "test", name: "test", koreanName: "테스트", isModern: true, description: "street yo", koreanDescription: "요요", stereo: .child, likeCount: 2, types: [])
         vm.emit(place: place)
         
         RunLoop.current.run(until: Date().addingTimeInterval(0.01))
 
         XCTAssertEqual(vc._test_titleText, place.name)
-        XCTAssertEqual(vc._test_descriptionText, place.koreanDescription)
+        XCTAssertEqual(vc._test_descriptionText, place.description)
         
     }
     
     
     func test_place_withNoRelations_showsRelatedPlaceEmptyView(){
-        let place = Place(id: "test", name: "test", isModern: true, description: "street yo", koreanDescription: "요요", stereo: .child, likeCount: 2, types: [])
+        let place = Place(id: "test", name: "test", koreanName: "테스트", isModern: true, description: "street yo", koreanDescription: "요요", stereo: .child, likeCount: 2, types: [])
         vm.emit(place: place)
         
         RunLoop.current.run(until: Date().addingTimeInterval(0.01))
@@ -96,18 +96,17 @@ final class PlaceDetailViewControllerTests: XCTestCase {
     func test_bibles_emit_showsOrHidesRelatedVerseEmptyView(){
         let bibles = [Bible(bookName: .Acts, verses: ["12:21"]), Bible(bookName: .Chr1, verses: ["12:31","21:21"])]
         
-        vm.emit(bibles: bibles)
+        vm.emit(bibles:(bibles,0))
         
         RunLoop.current.run(until: Date().addingTimeInterval(0.01))
 
         XCTAssertTrue(vc._test_isRelatedVerseTableVisible)
-        XCTAssertFalse(vc._test_isRelatedVerseEmptyViewVisible)
     }
     
     func test_like_isLiking_true_disablesButton_showsSpinner_hidesTitleImage(){
         
         vm.setLiking(true)
-        let place = Place(id: "test", name: "test", isModern: true, description: "street yo", koreanDescription: "요요", stereo: .child, likeCount: 2, types: [])
+        let place = Place(id: "test", name: "test", koreanName: "test", isModern: true, description: "street yo", koreanDescription: "요요", stereo: .child, likeCount: 2, types: [])
         vm.emit(place: place)
         
         RunLoop.current.run(until: Date().addingTimeInterval(0.01))
@@ -121,7 +120,7 @@ final class PlaceDetailViewControllerTests: XCTestCase {
     
     
     func test_like_isLiking_false_enablesButton_showsTitleImage(){
-        let place = Place(id: "test", name: "test", isModern: true, description: "street yo", koreanDescription: "요요", stereo: .child, likeCount: 2, types: [])
+        let place = Place(id: "test", name: "test", koreanName: "test", isModern: true, description: "street yo", koreanDescription: "요요", stereo: .child, likeCount: 2, types: [])
         vm.emit(place: place)
         vm.setLiking(false)
         
@@ -135,7 +134,7 @@ final class PlaceDetailViewControllerTests: XCTestCase {
     
     func test_like_placeLiked_true_appliesActiveStyle_andTitleCount(){
         
-        let place = Place(id: "test", name: "test", isModern: true, description: "street yo", koreanDescription: "요요", stereo: .child, likeCount: 2, types: [], isLiked:true)
+        let place = Place(id: "test", name: "test", koreanName: "테스트", isModern: true, description: "street yo", koreanDescription: "요요", stereo: .child, likeCount: 2, types: [], isLiked:true)
         vm.emit(place: place)
         
         
@@ -150,7 +149,7 @@ final class PlaceDetailViewControllerTests: XCTestCase {
     
     func test_like_placeLiked_false_appliesInactiveStyle_andTitleCount(){
         
-        let place = Place(id: "test", name: "test", isModern: true, description: "street yo", koreanDescription: "요요", stereo: .child, likeCount: 2, types: [], isLiked:false)
+        let place = Place(id: "test", name: "test", koreanName: "테스트", isModern: true, description: "street yo", koreanDescription: "요요", stereo: .child, likeCount: 2, types: [], isLiked:false)
         
         vm.emit(place: place)
         
@@ -187,7 +186,7 @@ final class PlaceDetailViewControllerTests: XCTestCase {
     
     
     func test_memo_visible_whenLoggedIn_andPlaceHasMemo(){
-        let place = Place(id: "test", name: "test", isModern: true, description: "street yo", koreanDescription: "요요", stereo: .child, likeCount: 2, types: [], memo:PlaceMemo(user: 3, place: "tes", text: "nocap"))
+        let place = Place(id: "test", name: "test", koreanName: "테스트", isModern: true, description: "street yo", koreanDescription: "요요", stereo: .child, likeCount: 2, types: [], memo:PlaceMemo(user: 3, place: "tes", text: "nocap"))
         vm.setLoggedIn(true)
         vm.emit(place: place)
         
@@ -199,7 +198,7 @@ final class PlaceDetailViewControllerTests: XCTestCase {
     }
     func test_memo_hidden_whenLoggedOut_orNoMemo(){
         
-        let place = Place(id: "test", name: "test", isModern: true, description: "street yo", koreanDescription: "요요", stereo: .child, likeCount: 2, types: [])
+        let place = Place(id: "test", name: "test", koreanName: "테스트", isModern: true, description: "street yo", koreanDescription: "요요", stereo: .child, likeCount: 2, types: [])
         vm.setLoggedIn(true)
         vm.emit(place: place)
         
@@ -232,10 +231,10 @@ final class PlaceDetailViewControllerTests: XCTestCase {
     
     func test_selectRelatedPlaceRow_emitsPlaceId_toViewModelInput(){
         let dummyPlaceId = "relation-test"
-        let dummyPlace = Place(id: dummyPlaceId, name: "test", isModern: true, description: "street yo", koreanDescription: "요요", stereo: .child, likeCount: 2, types: [])
+        let dummyPlace = Place(id: dummyPlaceId, name: "test", koreanName: "테스트", isModern: true, description: "street yo", koreanDescription: "요요", stereo: .child, likeCount: 2, types: [])
         
         
-        let place = Place(id: "test", name: "test", isModern: true, description: "street yo", koreanDescription: "요요", stereo: .child, likeCount: 2, types: [], childRelations: [PlaceRelation(id: 12, place: dummyPlace, possibility: 20)])
+        let place = Place(id: "test", name: "test", koreanName: "테스트", isModern: true, description: "street yo", koreanDescription: "요요", stereo: .child, likeCount: 2, types: [], childRelations: [PlaceRelation(id: 12, place: dummyPlace, possibility: 20)])
         
         vm.emit(place: place)
         
@@ -249,7 +248,7 @@ final class PlaceDetailViewControllerTests: XCTestCase {
     
     func test_tapVerseCell_emitsVerse_toViewModelInput(){
         
-        vm.emit(bibles: [Bible(bookName: .Acts, verses: ["12:21","12:23"])])
+        vm.emit(bibles: ([Bible(bookName: .Acts, verses: ["12:21","12:23"])],0))
             
         RunLoop.current.run(until: Date().addingTimeInterval(0.01))
         guard let cell = vc._test_makeVerseCell(row: 0) else { XCTFail("cell nil"); return }
@@ -260,4 +259,14 @@ final class PlaceDetailViewControllerTests: XCTestCase {
         XCTAssertEqual(vm.tappedVerses.last, "gen 12:21")
         
     }
+    
+    func test_moreButton_visible_whenExceedBookCount(){
+    
+        vm.emit(bibles: ([], 3))
+        RunLoop.current.run(until: Date().addingTimeInterval(0.01))
+
+        XCTAssertTrue(vc._relatedVerseMoreButtonVisible)
+    }
+    
+    
 }

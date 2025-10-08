@@ -14,7 +14,7 @@ import RxCocoa
 
 final class MockHomeContentViewModel: HomeContentViewModelProtocol {
     func transform(input: BibleAtlas.HomeContentViewModel.Input) -> BibleAtlas.HomeContentViewModel.Output {
-        .init(profile$: .just(nil), isLoggedIn$: .just(false), likePlacesCount$: .just(1), savePlacesCount$: .just(1), memoPlacesCount$: .just(1), recentSearches$: .just([]), errorToFetchRecentSearches$: .just(nil), loading$: .just(false))
+        .init(profile$: .just(nil), isLoggedIn$: .just(false), likePlacesCount$: .just(1), savePlacesCount$: .just(1), memoPlacesCount$: .just(1), recentSearches$: .just([]), errorToFetchRecentSearches$: .just(nil), loading$: .just(false), forceMedium$: .just(()), restoreDetents$: .just(()) )
     }
 }
 

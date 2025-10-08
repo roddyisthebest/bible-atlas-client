@@ -45,7 +45,7 @@ final class HomeBottomSheetViewControllerTests: XCTestCase {
     
     func test_homeMode_showsHomeContent_and_buttonsVisibility() {
         vm._screenMode$.accept(.home)
-        pump()
+        pump(0.5)
 
         XCTAssertTrue(vc.children.first is HomeContentViewController)
         XCTAssertFalse(vc._test_isUserAvatarHidden)
@@ -69,6 +69,23 @@ final class HomeBottomSheetViewControllerTests: XCTestCase {
         XCTAssertTrue(vc._test_isUserAvatarHidden)
         XCTAssertFalse(vc._test_isCancelHidden)
     }
+    
+    func test_detentChanges_whenForceMediumAndRestore_emits(){
+        
+        vm._forceMedium$.accept(())
+        pump(1.0)
+        
+        XCTAssertEqual(vc._test_selectedDetentIdentifier, .medium)
+        XCTAssertEqual(vc._test_detentsCount, 1)
+        
+        
+        vm._restoreDetents$.accept(())
+        pump(1.0)
+        XCTAssertEqual(vc._test_detentsCount, 3)
+        
+    }
+    
+    
 
     
     

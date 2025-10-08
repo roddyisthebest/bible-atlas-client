@@ -40,7 +40,7 @@ final class MemoBottomSheetViewModelTests: XCTestCase {
         
         let exp = expectation(description: "place from server set")
         let memoText = "hello tester! so what do we do. maybe we have to move to the next step"
-        let place = Place(id: placeId, name: "test", isModern: false, description: "hello", koreanDescription: "안녕", stereo: .child, likeCount: 0, types: [], memo:PlaceMemo(user: -1, place: placeId, text: memoText))
+        let place = Place(id: placeId, name: "test", koreanName: "장소이름", isModern: false, description: "hello", koreanDescription: "안녕", stereo: .child, likeCount: 0, types: [], memo:PlaceMemo(user: -1, place: placeId, text: memoText))
         
         placeUsecase.detailResultToReturn = .success(place)
         placeUsecase.completedDetailExp = exp;

@@ -14,7 +14,7 @@ import RxRelay
 final class MockPlaceDetailViewModel: PlaceDetailViewModelProtocol {
     // MARK: - Outputs (테스트에서 주입/발행용)
     let place$          = BehaviorRelay<Place?>(value: nil)
-    let bibles$         = BehaviorRelay<[Bible]>(value: [])
+    let bibles$         = BehaviorRelay<([Bible],Int)>(value: ([],0))
     let loadError$      = BehaviorRelay<NetworkError?>(value: nil)
     let interactionErr$ = BehaviorRelay<NetworkError?>(value: nil)
     let isLoading$      = BehaviorRelay<Bool>(value: false)
@@ -106,7 +106,7 @@ final class MockPlaceDetailViewModel: PlaceDetailViewModelProtocol {
 
     // MARK: - 편의 주입 함수
     func emit(place: Place?)                   { place$.accept(place) }
-    func emit(bibles: [Bible])                 { bibles$.accept(bibles) }
+    func emit(bibles: ([Bible], Int))                 { bibles$.accept(bibles) }
     func setLoading(_ v: Bool)                 { isLoading$.accept(v) }
     func setSaving(_ v: Bool)                  { isSaving$.accept(v) }
     func setLiking(_ v: Bool)                  { isLiking$.accept(v) }

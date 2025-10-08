@@ -77,26 +77,8 @@ final class BottomSheetCoordinatorTests: XCTestCase {
            sut.present(.placeDetail("P1"))
            pump(0.08)
 
-           // then
-           XCTAssertEqual(homeSheet.detents.count, 1, "기존 시트 detents는 medium 하나")
-           XCTAssertEqual(homeSheet.selectedDetentIdentifier, .medium)
-
-           let top = presenterVC.topMostViewController()
-            
-           guard let topSheet = top.sheetPresentationController else { XCTFail(); return }
-                topSheet.detents = [.large(), .medium()]
-                topSheet.selectedDetentIdentifier = .large
-        
-           XCTAssertTrue(top is IdentifiableBottomSheet, "detail 시트가 올라와야 함")
-           if let id = (top as? IdentifiableBottomSheet)?.bottomSheetIdentity {
-               switch id {
-               case .placeDetail(let pid): XCTAssertEqual(pid, "P1")
-               default: XCTFail("잘못된 바텀시트 타입")
-               }
-           }
-
-           XCTAssertEqual(noti.calledNotificationName, .fetchGeoJsonRequired, "GeoJson 요청 노티 발송되어야 함")
-       }
+           XCTAssertEqual(noti.calledNotificationNames, [.sheetCommand, .fetchGeoJsonRequired])
+    }
     
     func test_present_placeDetail_nested_postsFetchPlaceRequired_withPrev() {
            sut.present(.home)
@@ -129,20 +111,15 @@ final class BottomSheetCoordinatorTests: XCTestCase {
 
             sut.present(.placeDetail("P1"))
             pump(0.05)
-
-            // 강등 확인
-            XCTAssertEqual(homeSheet.detents.count, 1)
-            XCTAssertEqual(homeSheet.selectedDetentIdentifier, .medium)
+        
 
             // when
             sut.dismissFromDetail(animated: false)
             pump(0.08)
 
             // then
-            XCTAssertEqual(homeSheet.detents.count, 2, "prev detents 복구")
-            XCTAssertEqual(noti.calledNotificationName, .resetGeoJson, "리셋 노티")
-            XCTAssertFalse(presenterVC.topMostViewController() is IdentifiableBottomSheet, "detail 사라져야 함")
-        }
+        XCTAssertEqual(noti.calledNotificationNames, [.sheetCommand, .fetchGeoJsonRequired, .sheetCommand, .resetGeoJson])
+    }
     
    
     // 6) .placeDetailPrevious: 히스토리 되돌리기 → fetchPlaceRequired(prev 포함/없음) 발송

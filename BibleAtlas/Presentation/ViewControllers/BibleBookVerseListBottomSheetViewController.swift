@@ -291,3 +291,40 @@ extension BibleBookVerseListBottomSheetViewController:UICollectionViewDelegate, 
         return cell
     }
 }
+
+
+#if DEBUG
+extension BibleBookVerseListBottomSheetViewController {
+    // read-only states
+    var _test_headerText: String? {
+        headerLabel.text
+    }
+    var _test_selectTitleText: String? {
+        // iOS15 UIButton.Configuration 대응
+        selectButton.titleLabel?.text ?? selectButton.configuration?.title
+    }
+    var _test_menuItemTitles: [String] {
+        (selectButton.menu?.children.compactMap { ($0 as? UIAction)?.title }) ?? []
+    }
+    var _test_isBodyHidden: Bool { bodyView.isHidden }
+    var _test_isEmptyVisible: Bool { !emptyLabel.isHidden }
+    var _test_isErrorVisible: Bool { !errorRetryView.isHidden }
+    var _test_isLoadingVisible: Bool { !loadingView.isHidden }
+    var _test_numberOfVerses: Int { collectionView.numberOfItems(inSection: 0) }
+
+    // interactions
+    func _test_selectBook(_ book: BibleBook) {
+        bibleBookChanged$.accept(book)
+    }
+    func _test_emitVerseTap(_ verse: Verse) {
+        verseCellTapped$.accept(verse)
+    }
+    func _test_tapClose() {
+        closeButton.sendActions(for: .touchUpInside)
+    }
+    func _test_tapRefetch() {
+        // ErrorRetryView가 public relay를 노출한다고 가정
+        refetchButtonTapped$.accept(())
+    }
+}
+#endif

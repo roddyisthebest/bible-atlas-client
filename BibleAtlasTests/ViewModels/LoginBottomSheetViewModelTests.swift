@@ -56,6 +56,7 @@ final class MockNotificationService: RxNotificationServiceProtocol {
 
     // 테스트용 추적
     var calledNotificationName: Notification.Name?
+    var calledNotificationNames: [Notification.Name] = []
 
     // 이름별 Subject 풀
     private var subjects: [Notification.Name: PublishSubject<Notification>] = [:]
@@ -71,6 +72,7 @@ final class MockNotificationService: RxNotificationServiceProtocol {
     // 실제 트리거: observe 구독자들에게 이벤트 전달
     func post(_ name: Notification.Name, object: Any?) {
         calledNotificationName = name
+        calledNotificationNames.append(name)
         subject(for: name).onNext(Notification(name: name, object: object))
     }
 

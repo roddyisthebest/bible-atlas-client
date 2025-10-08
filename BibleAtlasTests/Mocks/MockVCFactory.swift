@@ -49,6 +49,10 @@ final class FakeMainVC: UIViewController, Presentable {
 }
 
 final class MockVCFactory: VCFactoryProtocol {
+    func makeBibleBookVerseListBottomSheetVC(vm: BibleAtlas.BibleBookVerseListBottomSheetViewModelProtocol) -> UIViewController {
+        FakeSheetVC("verseList")
+    }
+    
 
     // 호출 기록
     struct Call { let name: String }

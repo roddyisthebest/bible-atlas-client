@@ -128,6 +128,7 @@ final class HomeContentViewModelTests: XCTestCase {
     let appState = AppState(profile:nil, isLoggedIn: false)
     var scheduler: TestScheduler!
     var disposeBag: DisposeBag!
+    var notificationService: MockNotificationService!
 
     override func setUp() {
         super.setUp()
@@ -153,7 +154,8 @@ final class HomeContentViewModelTests: XCTestCase {
                 userUsecase: mockUserUsecase,
                 authUseCase: nil,
                 recentSearchService: nil,
-                schedular: scheduler
+                schedular: scheduler,
+                notificationService: notificationService
             )
 
             let output = viewModel.transform(input: .init(
@@ -205,7 +207,8 @@ final class HomeContentViewModelTests: XCTestCase {
             userUsecase: nil,
             authUseCase: nil,
             recentSearchService: nil,
-            schedular: scheduler
+            schedular: scheduler,
+            notificationService: notificationService
         )
         
         let collectionButtonTapped$ = PublishRelay<PlaceFilter>();
@@ -258,7 +261,8 @@ final class HomeContentViewModelTests: XCTestCase {
             collectionStore: mockCollectionStore,
             userUsecase: nil,
             authUseCase: nil,
-            recentSearchService: nil
+            recentSearchService: nil,
+            notificationService: nil
         )
         
         let output = viewModel.transform(input: .init(
@@ -284,8 +288,8 @@ final class HomeContentViewModelTests: XCTestCase {
 
         let mockRecent = MockRecentSearchService()
         mockRecent.resultToReturn = .success(RecentSearchFetchResult(items:[
-            RecentSearchItem(id:"1", name:"jelusalem",type:"test"),
-            RecentSearchItem(id:"2", name:"jelusalem2",type:"test"),
+            RecentSearchItem(id:"1", name:"jelusalem", koreanName: "테스트", type:"test"),
+            RecentSearchItem(id:"2", name:"jelusalem2", koreanName: "테스트", type:"test"),
         ], total:2, page:0))
 
         let viewModel = HomeContentViewModel(
@@ -294,7 +298,8 @@ final class HomeContentViewModelTests: XCTestCase {
             collectionStore: mockCollectionStore,
             userUsecase: nil,
             authUseCase: nil,
-            recentSearchService: mockRecent
+            recentSearchService: mockRecent,
+            notificationService: notificationService
         )
         
         let output = viewModel.transform(input: .init(

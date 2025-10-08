@@ -64,7 +64,6 @@ final class MockMainViewModel: MainViewModelProtocol {
             isLoading$: isLoadingRelay.asObservable(),
             geoJsonRender$: geoJsonRenderRelay.asObservable(),
             resetMapView$: resetMapViewRelay.asObservable(),
-            zoomOutMapView$: zoomOutMapViewRelay.asObservable(),
             selectedPlaceId$: selectedPlaceIdRelay.asObservable(),
             placesWithRepresentativePoint$: placesWithRepresentativePointRelay.asObservable()
         )

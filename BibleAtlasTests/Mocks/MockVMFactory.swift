@@ -11,6 +11,10 @@ import RxRelay
 @testable import BibleAtlas
 
 final class MockVMFactory: VMFactoryProtocol {
+    func makeBibleBookVerseListBottomSheetVM(placeId: String, bibleBook: BibleAtlas.BibleBook?) -> BibleAtlas.BibleBookVerseListBottomSheetViewModelProtocol {
+        fatalError()
+    }
+    
     // 호출 기록(간단)
     private(set) var made: [String] = []
 
@@ -46,7 +50,6 @@ final class MockVMFactory: VMFactoryProtocol {
     }
 
     // 이하 테스트에 불필요 → 명시적 중단
-    func makeSearchBottomSheetVM() -> SearchBottomSheetViewModelProtocol { fatalError() }
     func makeMyCollectionBottomSheetVM(filter: PlaceFilter) -> MyCollectionBottomSheetViewModelProtocol { fatalError() }
     func makeMemoBottomSheetVM(placeId: String) -> MemoBottomSheetViewModelProtocol { fatalError() }
     func makePlaceModificationBottomSheerVM(placeId: String) -> PlaceModificationBottomSheetViewModelProtocol { fatalError() }
@@ -74,6 +77,10 @@ final class StubHomeBottomSheetVM: HomeBottomSheetViewModelProtocol {
     let isSearchingMode$ = BehaviorRelay<Bool>(value: false)
     let keyword$ = BehaviorRelay<String>(value: "")
     let cancelButtonTapped$ = PublishRelay<Void>()
+
+    let forceMedium$ = PublishRelay<Void>()
+    let restoreDetents$ = PublishRelay<Void>()
+
     func transform(input: HomeBottomSheetViewModel.Input) -> HomeBottomSheetViewModel.Output {
         return .init(
             profile$: .just(nil),
@@ -81,7 +88,9 @@ final class StubHomeBottomSheetVM: HomeBottomSheetViewModelProtocol {
             screenMode$: Observable.just(.home),
             keyword$: keyword$,
             keywordText$: keyword$.asDriver(),
-            isSearchingMode$: isSearchingMode$.asObservable()
+            isSearchingMode$: isSearchingMode$.asObservable(),
+            forceMedium$: forceMedium$.asObservable(),
+            restoreDetents$: restoreDetents$.asObservable()
         )
     }
 }

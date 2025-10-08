@@ -128,8 +128,9 @@ final class MockPlaceusecase: PlaceUsecaseProtocol {
         return .failure(.clientError("not-implemented"))
     }
 
+    var parsedBible:[Bible]?
     // 파서
-    func parseBible(verseString: String?) -> [Bible] { return [] }
+    func parseBible(verseString: String?) -> [Bible] { return parsedBible ?? [] }
 
     // MARK: - 토글 저장/좋아요
     var saveResultToReturn: Result<TogglePlaceSaveResponse, NetworkError>?
