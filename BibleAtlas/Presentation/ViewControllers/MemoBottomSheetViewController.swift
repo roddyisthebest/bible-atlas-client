@@ -28,21 +28,21 @@ final class MemoBottomSheetViewController: UIViewController {
     
     private let cancelButton = {
         let button = UIButton(type: .system);
-        button.setTitle("취소", for: .normal)
+        button.setTitle(L10n.Common.cancel, for: .normal)
         button.setTitleColor(.primaryBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
         return button;
     }()
     
     private let headerLabel = {
-        let label = HeaderLabel(text: "Add Memo");
+        let label = HeaderLabel(text: L10n.Memo.addTitle);
         label.font = .boldSystemFont(ofSize: 18);
         return label;
     }()
     
     private lazy var confirmButton = {
         let button = UIButton(type: .system);
-        button.setTitle("완료", for: .normal)
+        button.setTitle(L10n.Common.done, for: .normal)
         button.setTitleColor(.primaryBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
 
@@ -71,7 +71,7 @@ final class MemoBottomSheetViewController: UIViewController {
     
     
     private lazy var deleteMemoButton = {
-        let button = IconTextButton(iconSystemName: "trash.fill", color: .primaryRed, labelText: "Delete Memo");
+        let button = IconTextButton(iconSystemName: "trash.fill", color: .primaryRed, labelText: L10n.Memo.delete);
         button.isEnabled = true
         return button;
     }()
@@ -154,7 +154,7 @@ final class MemoBottomSheetViewController: UIViewController {
             else{
                 self?.confirmButton.isHidden = false;
                 self?.confirmLoadingView.stop()
-                self?.confirmButton.setTitle("완료", for: .normal)
+                self?.confirmButton.setTitle(L10n.Common.done, for: .normal)
                 self?.deleteMemoButton.isEnabled = true;
 
 
@@ -217,11 +217,11 @@ final class MemoBottomSheetViewController: UIViewController {
                 
                 if(memo.isEmpty){
                     self.deleteMemoButton.isHidden = true
-                    self.headerLabel.text = "Add Memo"
+                    self.headerLabel.text = L10n.Memo.addTitle
                 }
                 else{
                     self.descriptionTextView.text = memo
-                    self.headerLabel.text = "Update Memo"
+                    self.headerLabel.text = L10n.Memo.updateTitle
                     self.deleteMemoButton.isHidden = false
                     
                 }
@@ -238,7 +238,7 @@ final class MemoBottomSheetViewController: UIViewController {
             guard let self = self, self.view.window != nil else { return }
             
             let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+            let okAction = UIAlertAction(title: L10n.Common.ok, style: .default, handler: nil)
             alert.addAction(okAction)
             self.present(alert, animated: true)
         }

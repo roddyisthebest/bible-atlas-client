@@ -20,7 +20,8 @@ final class PlaceCharactersBottomSheetViewModelTests: XCTestCase {
     private var navigator: MockBottomSheetNavigator!
     private var disposeBag:DisposeBag!
     private var scheduler: TestScheduler!
-        
+    private var notificationService: MockNotificationService!
+    
     private var character:String = "A"
     
     override func setUp() {
@@ -41,7 +42,7 @@ final class PlaceCharactersBottomSheetViewModelTests: XCTestCase {
                                 PlacePrefix(prefix: "B", placeCount: "10")])
         )
 
-        let vm = PlaceCharactersBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase)
+        let vm = PlaceCharactersBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase, notificationService: notificationService)
         let viewLoaded$ = PublishRelay<Void>()
 
         let output = vm.transform(input: .init(
@@ -49,6 +50,7 @@ final class PlaceCharactersBottomSheetViewModelTests: XCTestCase {
             closeButtonTapped$: .empty(),
             viewLoaded$: viewLoaded$.asObservable(),
             refetchButtonTapped$: .empty()
+        
         ))
 
         // 1) 로딩 토글: [true, false]를 정확히 2번 받도록
@@ -103,7 +105,7 @@ final class PlaceCharactersBottomSheetViewModelTests: XCTestCase {
         placeUsecase.prefixExp = apiExp
         placeUsecase.prefixResult = .failure(.clientError("test-error"))
 
-        let vm = PlaceCharactersBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase)
+        let vm = PlaceCharactersBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase, notificationService: notificationService)
         let viewLoaded$ = PublishRelay<Void>()
 
         let output = vm.transform(input: .init(
@@ -170,7 +172,7 @@ final class PlaceCharactersBottomSheetViewModelTests: XCTestCase {
                                 PlacePrefix(prefix: "B", placeCount: "10")])
         )
 
-        let vm = PlaceCharactersBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase)
+        let vm = PlaceCharactersBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase, notificationService: notificationService)
         let refetchButtonTapped$ = PublishRelay<Void>()
 
         let output = vm.transform(input: .init(
@@ -233,7 +235,7 @@ final class PlaceCharactersBottomSheetViewModelTests: XCTestCase {
         placeUsecase.prefixExp = apiExp
         placeUsecase.prefixResult = .failure(.clientError("test-error"))
 
-        let vm = PlaceCharactersBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase)
+        let vm = PlaceCharactersBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase, notificationService: notificationService)
         let refetchButtonTapped$ = PublishRelay<Void>()
 
         let output = vm.transform(input: .init(
@@ -292,7 +294,7 @@ final class PlaceCharactersBottomSheetViewModelTests: XCTestCase {
     
     
     func test_placeCharacterCellTapped_presentsPlacesByCharacter(){
-        let vm = PlaceCharactersBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase)
+        let vm = PlaceCharactersBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase, notificationService: notificationService)
         let placeCharacterCellTapped$ = PublishRelay<String>()
 
         let output = vm.transform(input: .init(
@@ -313,7 +315,7 @@ final class PlaceCharactersBottomSheetViewModelTests: XCTestCase {
     
     func test_closeButtonTapped_dismisses(){
         
-        let vm = PlaceCharactersBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase)
+        let vm = PlaceCharactersBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase, notificationService: notificationService)
         let closeButtonTapped$ = PublishRelay<Void>()
 
         let output = vm.transform(input: .init(

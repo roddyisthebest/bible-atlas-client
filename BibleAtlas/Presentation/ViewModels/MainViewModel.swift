@@ -27,7 +27,7 @@ final class MainViewModel: MainViewModelProtocol {
     private let selectedPlaceId$ = BehaviorRelay<String?>(value: nil);
     
     private let resetMapView$ = PublishRelay<Void>()
-    private let zoomOutMapView$ = PublishRelay<Void>();
+
     
     private var placesWithRepresentativePoint$ = BehaviorRelay<[Place]>(value: []);
     
@@ -61,7 +61,7 @@ final class MainViewModel: MainViewModelProtocol {
 
         }).disposed(by: disposeBag)
         
-        return Output(error$: error$.asObservable(), isLoading$: isLoading$.asObservable(), geoJsonRender$: geoJsonRender$.asObservable(), resetMapView$: resetMapView$.asObservable(), zoomOutMapView$: zoomOutMapView$.asObservable(), selectedPlaceId$: selectedPlaceId$.asObservable(), placesWithRepresentativePoint$: placesWithRepresentativePoint$.asObservable())
+        return Output(error$: error$.asObservable(), isLoading$: isLoading$.asObservable(), geoJsonRender$: geoJsonRender$.asObservable(), resetMapView$: resetMapView$.asObservable(), selectedPlaceId$: selectedPlaceId$.asObservable(), placesWithRepresentativePoint$: placesWithRepresentativePoint$.asObservable())
     }
 
     
@@ -102,7 +102,6 @@ final class MainViewModel: MainViewModelProtocol {
         self.notificationService?.observe(.resetGeoJson)
             .subscribe(onNext: { [weak self] _ in
                 self?.resetMapView$.accept(Void())
-                self?.zoomOutMapView$.accept(Void())
                 self?.selectedPlaceId$.accept(nil)
                 if let places = self?.placesWithRepresentativePoint$.value {
                     self?.placesWithRepresentativePoint$.accept(places)
@@ -157,7 +156,7 @@ final class MainViewModel: MainViewModelProtocol {
         let isLoading$:Observable<Bool>
         let geoJsonRender$:Observable<[MKGeoJSONFeature]>
         let resetMapView$:Observable<Void>
-        let zoomOutMapView$:Observable<Void>
+
         let selectedPlaceId$:Observable<String?>
         let placesWithRepresentativePoint$:Observable<[Place]>
         

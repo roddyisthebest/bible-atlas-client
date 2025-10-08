@@ -27,7 +27,7 @@ final class LoginBottomSheetViewController: UIViewController {
     }()
     
     
-    private let headerLabel = HeaderLabel(text: "Login");
+    private let headerLabel = HeaderLabel(text: L10n.Auth.title);
     private let closeButton = CircleButton(iconSystemName: "xmark" );
     
     private let googleTokenReceived$ = BehaviorRelay<String?>(value: nil);
@@ -42,14 +42,14 @@ final class LoginBottomSheetViewController: UIViewController {
         return sv;
     }()
     
-    private let localButton = GuideButton(titleText: "Local");
+    private let localButton = GuideButton(titleText: L10n.Auth.continueWithLocal);
     private let googleButton = {
-        let button = GuideButton(titleText: "Google");
+        let button = GuideButton(titleText: L10n.Auth.continueWithGoogle);
         button.addTarget(self, action: #selector(googleLoginButtonTapped), for: .touchUpInside)
         return button;
     }()
     private let appleButton = {
-        let button = GuideButton(titleText: "Apple");
+        let button = GuideButton(titleText: L10n.Auth.continueWithApple);
         button.addTarget(self, action: #selector(appleLoginButtonTapped), for: .touchUpInside)
         return button;
     }()
@@ -74,7 +74,7 @@ final class LoginBottomSheetViewController: UIViewController {
         let localButtonTapped$ = localButton.rx.tap.asObservable();
         
         
-        let output = loginBottomSheetViewModel?.transform(input: LoginBottomSheetViewModel.Input(localButtonTapped$: localButtonTapped$.asObservable(), googleTokenReceived$: googleTokenReceived$.asObservable(), appleTokenReceived$: appleTokenReceived$.asObservable()))
+        let output = loginBottomSheetViewModel?.transform(input: LoginBottomSheetViewModel.Input(localButtonTapped$: localButtonTapped$, googleTokenReceived$: googleTokenReceived$.asObservable(), appleTokenReceived$: appleTokenReceived$.asObservable(), closeButtonTapped$: closeButtonTapped$))
         
         
         output?.error$.subscribe(onNext: { [weak self] error in
@@ -165,8 +165,8 @@ final class LoginBottomSheetViewController: UIViewController {
     }
     
     private func showAlert(message: String) {
-        let alert = UIAlertController(title: "오류", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        let alert = UIAlertController(title: L10n.Common.errorTitle, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: L10n.Common.ok, style: .default))
         DispatchQueue.main.async {
             self.present(alert, animated: true)
         }

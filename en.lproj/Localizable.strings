@@ -1,0 +1,197 @@
+/* 
+  Localizable.strings
+  BibleAtlas
+
+  Created by 배성연 on 9/23/25.
+  
+*/
+
+// home
+"Home.SearchPlaceholder" = "Search places...";
+"Home.Login" = "Login";
+"Home.Cancel" = "Cancel";
+ 
+// homeContent
+"HomeContent.Collections" = "Collections";
+"HomeContent.Recent" = "Recent";
+"HomeContent.MyGuides" = "My Guides";
+
+"HomeContent.Favorites" = "Favorites";
+"HomeContent.Bookmarks" = "Bookmarks";
+"HomeContent.Memos" = "Memos";
+
+"HomeContent.More" = "More";
+"HomeContent.RecentEmpty" = "No recent searches.";
+
+"HomeContent.ExplorePlaces" = "Explore Places";
+"HomeContent.ExploreMenu.Title" = "Explore Places";
+"HomeContent.ExploreMenu.AZ" = "A–Z";
+"HomeContent.ExploreMenu.ByType" = "By Type";
+"HomeContent.ExploreMenu.ByBible" = "By Bible";
+
+"HomeContent.Places" = "Places";
+
+
+// searchResult
+"SearchResult.Empty" = "No places found.";
+"SearchResult.Error.Title" = "Something went wrong";
+"SearchResult.Error.Message" = "We couldn’t load places. Please try again.";
+
+
+// searchReady
+"SearchReady.Popular" = "Popular";
+"SearchReady.PopularEmpty" = "No popular places.";
+"SearchReady.Recent" = "Recent";
+"SearchReady.More" = "More";
+
+// bibles
+"Bibles.Title" = "Select Bible";
+"Bibles.Empty" = "No books available.";
+"Bibles.FetchErrorMessage" = "We couldn’t load the list. Please try again.";
+
+// placesByBible
+"PlacesByBible.Title" = "Places in %@";
+"PlacesByBible.Empty" = "No places found for this book.";
+
+// common
+"Common.Retry" = "Retry";
+"Common.DefaultErrorMessage" = "An error has occurred.";
+"Common.Close" = "Close";
+"Common.ErrorTitle" = "Error";
+"Common.Ok" = "OK";
+"Common.Cancel" = "Cancel";
+"Common.Done" = "Done";
+
+// placeDetail
+"PlaceDetail.Back" = "Back";
+"PlaceDetail.PlaceType" = "Place type";
+"PlaceDetail.Ancient" = "Ancient";
+"PlaceDetail.Modern" = "Modern";
+
+"PlaceDetail.Description" = "Description";
+"PlaceDetail.RelatedPlaces" = "Related places";
+"PlaceDetail.RelatedPlacesEmpty" = "No related places.";
+"PlaceDetail.RelatedVerses" = "Related verses";
+"PlaceDetail.RelatedVersesEmpty" = "No related verses.";
+
+"PlaceDetail.ReportIssue" = "Report an issue";
+"PlaceDetail.AddMemo" = "Add memo";
+"PlaceDetail.RequestEdit" = "Request edit";
+
+"PlaceDetail.ReportMenuTitle" = "Report issue";
+"PlaceDetail.Report.Spam" = "Spam";
+"PlaceDetail.Report.Inappropriate" = "Inappropriate";
+"PlaceDetail.Report.FalseInfo" = "False information";
+"PlaceDetail.Report.Other" = "Other";
+
+"PlaceDetail.OK" = "OK";
+"PlaceDetail.LikesFmt" = "%d Likes";
+
+
+// placeTypes
+"PlaceTypes.Title" = "Select The Type";
+"PlaceTypes.Empty" = "No types available.";
+
+// placeCharacters
+"PlaceCharacters.Title" = "Select The Character";
+"PlaceCharacters.Empty" = "No characters available.";
+
+
+// placesByCharacter
+"PlacesByCharacter.Title" = "Sorted by %@";
+"PlacesByCharacter.Empty" = "No places found.";
+
+
+// auth
+"Auth.Title" = "Login";
+"Auth.Local" = "Local";
+"Auth.Google" = "Google";
+"Auth.Apple" = "Apple";
+"Auth.ContinueWith.Local" = "Continue with Local";
+"Auth.ContinueWith.Google" = "Continue with Google";
+"Auth.ContinueWith.Apple" = "Continue with Apple";
+
+// memo
+"Memo.AddTitle" = "Add Memo";
+"Memo.UpdateTitle" = "Update Memo";
+"Memo.Delete" = "Delete Memo";
+"Memo.Placeholder" = "Write your memo...";
+
+// myCollection
+"MyCollection.Favorites" = "Favorites";
+"MyCollection.Memos" = "Memos";
+"MyCollection.Saves" = "Saves";
+"MyCollection.Empty" = "No places yet.";
+
+
+// placeModification
+"PlaceModification.Title" = "Request Modification";
+"PlaceModification.Success" = "Your modification request has been submitted.";
+"PlaceModification.Placeholder" = "Tell us what needs to be corrected.";
+
+
+// recentSearches
+"RecentSearches.Title" = "Recent Searches";
+"RecentSearches.ClearAll" = "Clear All";
+"RecentSearches.Empty" = "No recent searches yet.";
+
+// popularPlaces
+"PopularPlaces.Title" = "Popular Places";
+"PopularPlaces.Empty" = "No popular places yet.";
+
+
+// myPage
+"MyPage.GuestName" = "Guest";
+"MyPage.EmailHidden" = "Email hidden";
+"MyPage.MenuEmpty" = "No menu items available.";
+"MyPageMenu.AccountManagement" = "Account Management";
+"MyPageMenu.AppVersion" = "App Version";
+
+// accountManagement
+"AccountManagement.Title" = "Account Management";
+"AccountManagement.ContactSupport" = "Contact Support";
+"AccountManagement.Logout" = "Log out";
+"AccountManagement.Withdraw" = "Delete Account";
+
+"AccountManagement.WithdrawConfirmTitle" = "Delete your account?";
+"AccountManagement.WithdrawConfirmMessage" = "All of your data, including account information, will be permanently removed.";
+"AccountManagement.WithdrawCompleteTitle" = "Account deleted";
+"AccountManagement.WithdrawCompleteMessage" = "Your account has been deleted successfully.";
+
+
+// report
+
+"Report.Title" = "Report Place";
+"Report.Success" = "Your report has been submitted.";
+"Report.ReasonPlaceholder" = "Please describe the issue.";
+
+"ReportType.Spam" = "Spam";
+"ReportType.Inappropriate" = "Inappropriate content";
+"ReportType.HateSpeech" = "Hate speech";
+"ReportType.FalseInfo" = "False information";
+"ReportType.PersonalInfo" = "Personal information";
+"ReportType.Etc" = "Other";
+
+// appGate
+
+"AppGate.Retry" = "Retry";
+"AppGate.Checking" = "Checking server status…";
+"AppGate.Restoring" = "Restoring session…";
+"AppGate.Maintenance" = "Under maintenance.";
+"AppGate.Restricted" = "Access is restricted.";
+"AppGate.Timeout" = "Request timed out. Please check your connection and try again.";
+"AppGate.NetworkErrorFmt" = "Network error: %@";
+
+
+// VerseListSheet
+"VerstListSheet.DefaultTitle" = "Bible verses";
+"VerseListSheet.Title" = "Bible verses of %@";
+"VerseListSheet.SelectBookPrompt" = "Please select a book.";
+"VerseListSheet.SelectBookMenuTitle" = "Select Bible Book";
+"VerseListSheet.SearchPlaceholder" = "Search books or verses";
+"VerseListSheet.Empty" = "No verses to display.";
+"VerseListSheet.FetchErrorMessage" = "Failed to load data. Please try again.";
+"VerseListSheet.VersesCountFmt" = "%d verse(s)";
+"VerseListSheet.BooksCountFmt" = "%d book(s)";
+"VerseListSheet.MoreVersesFmt" = "Show %d more verse(s)";
+"VerseListSheet.MoreBooksFmt" = "Show %d more book(s)";

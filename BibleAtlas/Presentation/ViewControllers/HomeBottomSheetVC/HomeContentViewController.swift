@@ -18,6 +18,8 @@ final class HomeContentViewController: UIViewController {
     
     private let placesByCharacterButtonTapped$ = PublishRelay<Void>();
     
+    private let placesByBibleButtonTapped$ = PublishRelay<Void>();
+    
     private let recentSearchCellTapped$ = PublishRelay<String>();
     
     private let disposeBag = DisposeBag()
@@ -56,7 +58,7 @@ final class HomeContentViewController: UIViewController {
         return sv;
     }();
     
-    private let collectionLabel = MainLabel(text:"Collections")
+    private let collectionLabel = MainLabel(text:L10n.HomeContent.collections)
     
     private lazy var collectionDynamicContainer = {
         let sv = UIStackView(arrangedSubviews: [collectionContentStackView])
@@ -82,7 +84,7 @@ final class HomeContentViewController: UIViewController {
     private lazy var favoriteButton = {
         let button = CollectionButton(
             iconSystemName: "hand.thumbsup.fill",
-            mainText: "Favorites",
+            mainText: L10n.HomeContent.favorites,
             subText: "0 places"
         )
         
@@ -92,7 +94,7 @@ final class HomeContentViewController: UIViewController {
     private lazy var bookmarkButton = {
         let button = CollectionButton(
             iconSystemName: "bookmark.fill",
-            mainText: "Bookmarks",
+            mainText: L10n.HomeContent.bookmarks,
             subText: "0 places"
         );
         return button;
@@ -101,7 +103,7 @@ final class HomeContentViewController: UIViewController {
     private lazy var memoButton = {
         let button = CollectionButton(
             iconSystemName: "note.text",
-            mainText: "Memos",
+            mainText: L10n.HomeContent.memos,
             subText: "0 places"
         );
         return button;
@@ -128,7 +130,7 @@ final class HomeContentViewController: UIViewController {
     
     private let emptyLabel = {
         let label = UILabel();
-        label.text = "최근 검색어가 없습니다."
+        label.text = L10n.HomeContent.recentEmpty
         label.textColor = .mainLabelText
         label.font = .boldSystemFont(ofSize: 15)
         return label;
@@ -163,11 +165,11 @@ final class HomeContentViewController: UIViewController {
         return tv
     }()
     
-    private let recentLabel = MainLabel(text:"Recent")
+    private let recentLabel = MainLabel(text:L10n.HomeContent.recent)
     
     private let moreRecentSearchesButton = {
         let button = UIButton();
-        button.setTitle("More", for: .normal)
+        button.setTitle(L10n.HomeContent.more, for: .normal)
         button.setTitleColor(.primaryBlue, for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 14)
         button.contentHorizontalAlignment = .right
@@ -184,7 +186,7 @@ final class HomeContentViewController: UIViewController {
         return sv;
     }();
     
-    private let myGuidesLabel = MainLabel(text:"My Guides")
+    private let myGuidesLabel = MainLabel(text:L10n.HomeContent.myGuides)
     
     private lazy var guideButtonsStackView = {
         let sv = UIStackView(arrangedSubviews: [explorePlacesButton]);
@@ -196,14 +198,12 @@ final class HomeContentViewController: UIViewController {
     }()
     
     private lazy var explorePlacesButton = {
-        let button = GuideButton(titleText: "Explore Places")
+        let button = GuideButton(titleText: L10n.HomeContent.explorePlaces)
         button.menu = buildPlacesMenu();
         button.showsMenuAsPrimaryAction = true
 
         return button;
     }()
-    
-
     
     private var recentSearches:[RecentSearchItem] = [];
     
@@ -227,6 +227,7 @@ final class HomeContentViewController: UIViewController {
         setupUI();
         setupStyle();
         setupConstraints();
+        setupSheet()
         bindViewModel();
     }
     
@@ -235,18 +236,13 @@ final class HomeContentViewController: UIViewController {
         view.addSubview(loadingView);
     }
     
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//
-//        recentSearchTableView.reloadData()
-//        recentSearchTableView.layoutIfNeeded()
-//
-//        let height = recentSearchTableView.contentSize.height
-//        recentSearchTableView.snp.updateConstraints {
-//            $0.height.equalTo(height)
-//        }
-//    }
-    
+    private func setupSheet(){
+        if let sheet = self.sheetPresentationController {
+            sheet.delegate = self
+        }else{
+            print("mo daizobu")
+        }
+    }
     
     private func setupStyle(){
         view.backgroundColor = .mainBkg;
@@ -264,6 +260,7 @@ final class HomeContentViewController: UIViewController {
         
         
         contentView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView.contentLayoutGuide)
             make.width.equalTo(scrollView.frameLayoutGuide)
         }
         
@@ -320,15 +317,16 @@ final class HomeContentViewController: UIViewController {
         
         let moreRecentSearchesButtonTapped$ = moreRecentSearchesButton.rx.tap.asObservable();
         
-        let output = homeContentViewModel?.transform(input: HomeContentViewModel.Input(collectionButtonTapped$: collectionButtonTapped$.asObservable(), placesByTypeButtonTapped$: placesByTypeButtonTapped$.asObservable(), placesByCharacterButtonTapped$: placesByCharacterButtonTapped$.asObservable(), recentSearchCellTapped$: recentSearchCellTapped$.asObservable(), moreRecentSearchesButtonTapped$: moreRecentSearchesButtonTapped$));
+        let output = homeContentViewModel?.transform(input: HomeContentViewModel.Input(collectionButtonTapped$: collectionButtonTapped$.asObservable(), placesByTypeButtonTapped$: placesByTypeButtonTapped$.asObservable(), placesByCharacterButtonTapped$: placesByCharacterButtonTapped$.asObservable(), placesByBibleButtonTapped$: placesByBibleButtonTapped$.asObservable(), recentSearchCellTapped$: recentSearchCellTapped$.asObservable(), moreRecentSearchesButtonTapped$: moreRecentSearchesButtonTapped$));
         
 
         
 
         Observable.combineLatest(output!.likePlacesCount$,output!.savePlacesCount$, output!.memoPlacesCount$).observe(on: MainScheduler.instance).subscribe { (likePlacesCount, savePlacesCount, memoPlacesCount) in
-            self.favoriteButton.setSubLabelText(subText: "\(likePlacesCount) places")
-            self.bookmarkButton.setSubLabelText(subText: "\(savePlacesCount) places")
-            self.memoButton.setSubLabelText(subText: "\(memoPlacesCount) places")
+            self.favoriteButton.setSubLabelText(subText: L10n.Common.placesCount(likePlacesCount))
+
+            self.bookmarkButton.setSubLabelText(subText: L10n.Common.placesCount(savePlacesCount))
+            self.memoButton.setSubLabelText(subText: L10n.Common.placesCount(memoPlacesCount))
             
         }.disposed(by: disposeBag)
         
@@ -379,26 +377,46 @@ final class HomeContentViewController: UIViewController {
                 }
                 
             }.disposed(by: disposeBag)
+        
+         output?.forceMedium$.subscribe(onNext:{
+             @MainActor [weak self] in
+             self?.scrollView.isScrollEnabled = false
+            }
+         ).disposed(by: disposeBag)
     
     }
 
     private func buildPlacesMenu() -> UIMenu{
         
-        let action1 = UIAction(title: "A-Z", image: UIImage(systemName: "character.phonetic")) { _ in
+        let action1 = UIAction(title: L10n.HomeContent.menuAZ, image: UIImage(systemName: "character.phonetic")) { _ in
             self.placesByCharacterButtonTapped$.accept(Void())
         }
-        let action2 = UIAction(title: "By Type", image: UIImage(systemName: "mappin.and.ellipse")) { _ in
+        let action2 = UIAction(title: L10n.HomeContent.menuByType, image: UIImage(systemName: "mappin.and.ellipse")) { _ in
             self.placesByTypeButtonTapped$.accept(Void())
 
         }
+        
+        let action3 = UIAction(title:L10n.HomeContent.menuByBible, image: UIImage(systemName: "book.pages")){_ in
+            self.placesByBibleButtonTapped$.accept(())
+        }
                
-        let menu = UIMenu(title: "Explore Places", children: [action1, action2])
+        let menu = UIMenu(title: L10n.HomeContent.explorePlaces, children: [action1, action2, action3])
         
         return menu
         
     }
     
    
+    
+}
+
+
+extension HomeContentViewController:UISheetPresentationControllerDelegate{
+    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
+        let isLarge = sheetPresentationController.selectedDetentIdentifier == .large
+        scrollView.isScrollEnabled = isLarge
+      }
+    
     
 }
 
@@ -415,7 +433,7 @@ extension HomeContentViewController:UITableViewDelegate, UITableViewDataSource{
             return UITableViewCell()
         }
 
-        cell.setText(text: recentSearches[indexPath.row].name)
+        cell.setText(text: recentSearches[indexPath.row].name, koreanText:  recentSearches[indexPath.row].koreanName)
         
         if indexPath.row == recentSearches.count - 1 {
             cell.separatorInset = UIEdgeInsets(top: 0, left: tableView.bounds.width, bottom: 0, right: 0)
@@ -427,7 +445,6 @@ extension HomeContentViewController:UITableViewDelegate, UITableViewDataSource{
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    
         return 80;
     }
     
@@ -438,3 +455,6 @@ extension HomeContentViewController:UITableViewDelegate, UITableViewDataSource{
     }
     
 }
+
+
+

@@ -21,6 +21,7 @@ final class MyCollectionBottomSheetViewModelTests: XCTestCase{
     private var userUsecase:MockUserUsecase!
     private var disposeBag: DisposeBag!
     private var scheduler: TestScheduler!
+    private var notificationService: MockNotificationService!
 
     override func setUp(){
         super.setUp()
@@ -29,17 +30,18 @@ final class MyCollectionBottomSheetViewModelTests: XCTestCase{
         userUsecase = MockUserUsecase();
         navigator = MockBottomSheetNavigator();
         scheduler = TestScheduler(initialClock: 0)
+        notificationService = MockNotificationService();
     }
     
     func test_initialLoad_success_setsPlaces_andUpdatesPagination() throws {
         // given
-        let places = [Place(id: "123", name: "test", isModern: true, description: "test",
+        let places = [Place(id: "123", name: "test", koreanName: "장소이름", isModern: true, description: "test",
                             koreanDescription: "test", stereo: .child, likeCount: 1, types: [])]
         userUsecase.placesResultToReturn = .success(
             ListResponse(total: 1, page: 0, limit: 10, data: places)
         )
 
-        let vm = MyCollectionBottomSheetViewModel(navigator: navigator, filter: filter, userUsecase: userUsecase)
+        let vm = MyCollectionBottomSheetViewModel(navigator: navigator, filter: filter, userUsecase: userUsecase, notificationService: notificationService)
         let viewLoaded$ = PublishRelay<Void>()
         let output = vm.transform(input: .init(
             myCollectionViewLoaded$: viewLoaded$.asObservable(),
@@ -87,7 +89,7 @@ final class MyCollectionBottomSheetViewModelTests: XCTestCase{
         
         userUsecase.placesResultToReturn = .failure(.clientError("test-error"))
 
-        let vm = MyCollectionBottomSheetViewModel(navigator: navigator, filter: filter, userUsecase: userUsecase)
+        let vm = MyCollectionBottomSheetViewModel(navigator: navigator, filter: filter, userUsecase: userUsecase, notificationService: notificationService)
         let viewLoaded$ = PublishRelay<Void>()
         let output = vm.transform(input: .init(
             myCollectionViewLoaded$: viewLoaded$.asObservable(),

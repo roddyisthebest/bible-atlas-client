@@ -11,6 +11,7 @@ import RxSwift
 struct RecentSearchItem {
     let id: String
     let name: String
+    let koreanName: String
     let type: String
 }
 
@@ -103,6 +104,7 @@ final class RecentSearchService: RecentSearchServiceProtocol{
                 RecentSearchItem(
                     id: $0.id ?? "",
                     name: $0.name ?? "",
+                    koreanName: $0.koreanName ?? "",
                     type: $0.type ?? ""
                 )
             }
@@ -127,6 +129,7 @@ final class RecentSearchService: RecentSearchServiceProtocol{
                 let entity = RecentSearchEntity(context: context)
                 entity.id = place.id
                 entity.name = place.name
+                entity.koreanName = place.koreanName
                 entity.type = place.types.first?.name.rawValue ?? ""
                 entity.timestamp = Date()
             }

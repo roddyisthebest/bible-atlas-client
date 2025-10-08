@@ -25,6 +25,8 @@ final class PlaceCharactersBottomSheetViewController: UIViewController {
     
     private let dummyCharacters:[String] = (65...90).map { String(UnicodeScalar($0)!) }
     
+    private var myDetents:[UISheetPresentationController.Detent] = []
+    
     private lazy var headerStackView = {
         let sv = UIStackView(arrangedSubviews: [headerLabel, closeButton]);
         sv.axis = .horizontal;
@@ -34,7 +36,7 @@ final class PlaceCharactersBottomSheetViewController: UIViewController {
     }()
     
     
-    private let headerLabel = HeaderLabel(text: "Places By A-Z");
+    private let headerLabel = HeaderLabel(text: L10n.PlaceCharacters.title);
     private let closeButton = CircleButton(iconSystemName: "xmark");
 
     
@@ -53,7 +55,7 @@ final class PlaceCharactersBottomSheetViewController: UIViewController {
     
     private let loadingView = LoadingView();
     
-    private let emptyLabel = EmptyLabel();
+    private let emptyLabel = EmptyLabel(text:L10n.PlaceCharacters.empty);
     
     private let errorRetryView = ErrorRetryView();
     
@@ -65,6 +67,8 @@ final class PlaceCharactersBottomSheetViewController: UIViewController {
         view.addSubview(loadingView)
         view.addSubview(emptyLabel);
         view.addSubview(errorRetryView)
+        
+        self.myDetents = self.sheetPresentationController?.detents ?? []
     }
     
     private func setupStyle(){
@@ -153,6 +157,29 @@ final class PlaceCharactersBottomSheetViewController: UIViewController {
 
                     
             }.disposed(by: disposeBag)
+        
+        output?.forceMedium$.subscribe(onNext:{
+            @MainActor [weak self] in
+            self?.sheetPresentationController?.animateChanges{
+                
+                self?.sheetPresentationController?.detents = [.medium()]
+                self?.sheetPresentationController?.largestUndimmedDetentIdentifier = .medium
+                self?.sheetPresentationController?.selectedDetentIdentifier = .medium
+            }
+           
+            
+        }).disposed(by: disposeBag)
+        
+        
+        output?.restoreDetents$.subscribe(onNext:{
+            @MainActor [weak self] in
+            self?.sheetPresentationController?.animateChanges{
+                self?.sheetPresentationController?.detents = self?.myDetents ?? []
+            }
+        }).disposed(by: disposeBag)
+        
+        
+        
     }
     
     

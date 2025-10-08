@@ -81,3 +81,15 @@ final class ToggleCircleButton: UIButton {
     }
 
 }
+
+
+#if DEBUG
+
+extension ToggleCircleButton {
+    // 읽기 전용 상태/뷰 확인용
+  
+    var _test_loadingView:UIActivityIndicatorView {
+        loadingView
+    }
+}
+#endif

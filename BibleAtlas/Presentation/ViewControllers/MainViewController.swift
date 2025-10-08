@@ -29,8 +29,9 @@ final class MainViewController: UIViewController, Presentable  {
     
     private let isPainting$ = BehaviorRelay<Bool>(value: false);
 
+    private let delta = 0.25
     
-    private let mapView = {
+    private var mapView = {
         let mv = MKMapView();
         return mv;
     }()
@@ -123,10 +124,8 @@ final class MainViewController: UIViewController, Presentable  {
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] geoJson in
                 self?.renderGeoJson(features: geoJson)
-
             })
             .disposed(by: disposeBag)
-        
         
         
         
@@ -137,13 +136,7 @@ final class MainViewController: UIViewController, Presentable  {
             })
             .disposed(by: disposeBag)
         
-        output?.zoomOutMapView$
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self]  in
-                self?.zoomOut();
-            })
-            .disposed(by: disposeBag)
-        
+
     }
     
     private func bindObservable(){
@@ -167,9 +160,10 @@ final class MainViewController: UIViewController, Presentable  {
         mapView.removeAnnotations(mapView.annotations)
     }
     
+    
     private func setFirstRegion() {
         let initialCenter = CLLocationCoordinate2D(latitude: 31.7683, longitude: 35.2137)
-        let initialSpan = MKCoordinateSpan(latitudeDelta: 2.0, longitudeDelta: 2.0)
+        let initialSpan = MKCoordinateSpan(latitudeDelta: delta, longitudeDelta: delta)
         
         let shiftRatio: CLLocationDegrees = 0.5  // 위로 50% 이동
         let shiftedLatitude = initialCenter.latitude - initialSpan.latitudeDelta * shiftRatio
@@ -182,7 +176,7 @@ final class MainViewController: UIViewController, Presentable  {
     
     private func renderPlaces(places:[Place]){
         isPainting$.accept(true)
-        var annotations: [MKAnnotation] = places.map{
+        let annotations: [MKAnnotation] = places.map{
             let annotation = CustomPointAnnotation()
   
             annotation.coordinate = CLLocationCoordinate2D(latitude: $0.latitude ?? 0, longitude: $0.longitude ?? 0)
@@ -190,8 +184,9 @@ final class MainViewController: UIViewController, Presentable  {
             if let placeType = $0.types.first{
                 annotation.placeTypeName = placeType.name
             }
+            
 
-            annotation.title = $0.name
+            annotation.title = L10n.isEnglish ? $0.name : $0.koreanName
 
             return annotation
         }
@@ -202,7 +197,7 @@ final class MainViewController: UIViewController, Presentable  {
     
     private func zoomOut() {
         let center = mapView.centerCoordinate
-        let span = MKCoordinateSpan(latitudeDelta: 2.0, longitudeDelta: 2.0)
+        let span = MKCoordinateSpan(latitudeDelta: delta, longitudeDelta: 2.0)
         let region = MKCoordinateRegion(center: center, span: span)
         
         let mapRect = MKMapRect(for: region) // ✅ 핵심 수정 부분
@@ -210,9 +205,9 @@ final class MainViewController: UIViewController, Presentable  {
         let height = mapView.bounds.height
 
         let padding = UIEdgeInsets(
-            top: height * 0.05,
+            top: height * 0.25,
             left: 0,
-            bottom: height * 0.25,
+            bottom: height * 0.75,
             right: 0
         )
 
@@ -232,35 +227,51 @@ final class MainViewController: UIViewController, Presentable  {
         for feature in features {
             for geometry in feature.geometry {
                 var id: String?
+                var possibility: Int?
+                var isParent: Bool?
 
                 if let propertiesData = feature.properties {
-                     do {
-                         let props = try JSONDecoder().decode(GeoJsonFeatureProperties.self, from: propertiesData)
-                         id = props.id
-                     } catch {
-                         print("⚠️ properties decode 실패:", error)
-                     }
-                 }
-                
+                    do {
+                        let props = try JSONDecoder().decode(GeoJsonFeatureProperties.self, from: propertiesData)
+                        id = props.id
+                        possibility = props.possibility
+                        isParent = props.isParent
+                    } catch {
+                        print("⚠️ properties decode 실패:", error)
+                    }
+                }
+
                 if let point = geometry as? MKPointAnnotation {
-                    
-                    
-                    let annotation = CustomPointAnnotation()
-                    annotation.coordinate = geometry.coordinate
-                    annotation.placeId = id?.split(separator: ".").first.map { String($0) }
+                    // GeoJSON은 MKPoint가 옴 (MKPointAnnotation 아님!)
+                    let ann = CustomPointAnnotation()
+                    ann.coordinate = point.coordinate
+                    ann.placeId = id?.split(separator: ".").first.map { String($0) }
+                    ann.possibility = possibility
+                    ann.isParent = isParent
+                    annotations.append(ann)
 
-                    annotations.append(annotation)
+                    let r = MKMapRect(origin: MKMapPoint(ann.coordinate),
+                                      size: MKMapSize(width: 10, height: 10))
+                    boundingMapRect = boundingMapRect.union(r)
 
-                    let pointRect = MKMapRect(origin: MKMapPoint(annotation.coordinate), size: MKMapSize(width: 10, height: 10))
-                    boundingMapRect = boundingMapRect.union(pointRect)
                 } else if let polyline = geometry as? MKPolyline {
                     overlays.append(polyline)
                     boundingMapRect = boundingMapRect.union(polyline.boundingMapRect)
+
+                } else if let multipolyline = geometry as? MKMultiPolyline {
+                    overlays.append(multipolyline)
+                    boundingMapRect = boundingMapRect.union(multipolyline.boundingMapRect)
+
                 } else if let polygon = geometry as? MKPolygon {
                     overlays.append(polygon)
                     boundingMapRect = boundingMapRect.union(polygon.boundingMapRect)
+
+                } else if let multipolygon = geometry as? MKMultiPolygon {
+                    overlays.append(multipolygon)
+                    boundingMapRect = boundingMapRect.union(multipolygon.boundingMapRect)
                 }
             }
+
         }
 
         mapView.addOverlays(overlays)
@@ -278,8 +289,8 @@ final class MainViewController: UIViewController, Presentable  {
                 right: paddingValue
             )
             
-            let minWidth: Double = 10000    // 최소 가로 10km
-            let minHeight: Double = 10000   // 최소 세로 10km
+            let minWidth: Double = 12_500    // 최소 가로 12.5km
+            let minHeight: Double = 12_500   // 최소 세로 12.5km
 
             var safeRect = boundingMapRect
 
@@ -297,12 +308,8 @@ final class MainViewController: UIViewController, Presentable  {
                     size: MKMapSize(width: newWidth, height: newHeight)
                 )
             }
-            
-            
+                        
             mapView.setVisibleMapRect(safeRect, edgePadding: edgePadding, animated: true)
-
-            
-      
 
         }
         
@@ -320,74 +327,121 @@ final class MainViewController: UIViewController, Presentable  {
 
 extension MainViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        if let polyline = overlay as? MKPolyline {
-            let renderer = MKPolylineRenderer(polyline: polyline)
-            renderer.strokeColor = .blue
-            renderer.lineWidth = 2
-            return renderer
+
+        if let multiPolygon = overlay as? MKMultiPolygon {
+            let r = MKMultiPolygonRenderer(multiPolygon: multiPolygon)
+            r.lineWidth = 1
+            r.strokeColor = UIColor.label.withAlphaComponent(0.6)
+            r.fillColor = UIColor.systemBlue.withAlphaComponent(0.15)
+            return r
         }
 
         if let polygon = overlay as? MKPolygon {
-            let renderer = MKPolygonRenderer(polygon: polygon)
-            renderer.strokeColor = .red
-            renderer.fillColor = UIColor.red.withAlphaComponent(0.3)
-            renderer.lineWidth = 1
-            return renderer
+            let r = MKPolygonRenderer(polygon: polygon)
+            r.lineWidth = 1
+            r.strokeColor = UIColor.label.withAlphaComponent(0.6)
+            r.fillColor = UIColor.systemBlue.withAlphaComponent(0.15)
+            return r
         }
 
-        return MKOverlayRenderer()
+        if let multiPolyline = overlay as? MKMultiPolyline {
+            let r = MKMultiPolylineRenderer(multiPolyline: multiPolyline)
+            r.lineWidth = 2
+            r.strokeColor = UIColor.primaryBlue
+            return r
+        }
+
+        if let polyline = overlay as? MKPolyline {
+            let r = MKPolylineRenderer(polyline: polyline)
+            r.lineWidth = 2
+            r.strokeColor = UIColor.primaryBlue
+            return r
+        }
+
+        return MKOverlayRenderer(overlay: overlay)
     }
+
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is MKUserLocation {
-            return nil
-        }
+           guard !(annotation is MKUserLocation) else { return nil }
 
-        let identifier = "CustomMarker"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
+           let id = "CustomMarker"
+           let view = (mapView.dequeueReusableAnnotationView(withIdentifier: id) as? MKMarkerAnnotationView)
+               ?? MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: id)
+           view.annotation = annotation
+           view.canShowCallout = true
 
-        if annotationView == nil {
-            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView?.canShowCallout = true
-        } else {
-            annotationView?.annotation = annotation
-        }
+           // 재사용 대비 초기화
+           view.glyphImage = nil
+           view.glyphText = nil
+           view.glyphTintColor = .white
+           view.markerTintColor = .systemGray3
+           view.displayPriority = .defaultLow
+           view.titleVisibility = .adaptive
+           view.subtitleVisibility = .adaptive
 
-        // ✅ cast to our custom annotation
-        let config = UIImage.SymbolConfiguration(pointSize: 15, weight: .medium)
+           let config = UIImage.SymbolConfiguration(pointSize: 15, weight: .medium)
 
+           if let ann = annotation as? CustomPointAnnotation {
+               // 선택 상태 우선 처리
+               if let placeId = ann.placeId, placeId == selectedPlaceId {
+                   view.glyphImage = UIImage(systemName: "checkmark.circle", withConfiguration: config)
+                   view.markerTintColor = .systemIndigo
+                   view.displayPriority = .required
+               } else {
+                   let isHistorical = (ann.isParent == true)
+                   let possibility = ann.possibility
 
-        
-        if let customAnnotation = annotation as? CustomPointAnnotation {
-            let placeType = customAnnotation.placeTypeName
+                   if isHistorical {
+                       // 과거 추정: 보조 톤 + 시계 아이콘
+                       view.markerTintColor = .systemOrange   // 또는 .systemGray3
+                       view.glyphImage = UIImage(systemName: "clock", withConfiguration: config)
+                       view.displayPriority = .defaultLow
+                   } else {
+                       // 현재 추정: 강조 + 퍼센트
+                       view.markerTintColor = .systemGreen
+                       if let p = possibility {
+                           view.glyphText = "\(p)%"
+                       } else {
+                           view.glyphImage = UIImage(systemName: "questionmark", withConfiguration: config)
+                       }
+                       view.displayPriority = .required
+                   }
 
-            if let placeId = customAnnotation.placeId {
-                
-                if(selectedPlaceId == placeId){
-                    annotationView?.glyphImage = UIImage(systemName: "checkmark.circle", withConfiguration: config)
-                }
-                
-                else{
-                    if let placeTypeName = customAnnotation.placeTypeName?.rawValue {
-                        annotationView?.glyphImage = UIImage(named:placeTypeName)
+                   // 타입 아이콘을 꼭 쓰고 싶다면(퍼센트 대신):
+                    if let name = ann.placeTypeName?.rawValue, let img = UIImage(named: name) {
+                        view.glyphImage = img
                     }
-                    else{
-                        annotationView?.glyphImage = UIImage(systemName: "questionmark.circle", withConfiguration: config)
-                    }
-                   
 
-                }
-            }   else {
+                   // 말풍선 서브타이틀(퍼센트가 있을 때만)
+                   if let p = possibility {
+                       
+                       let subtitleKr = "신뢰도 \(p)%"
+                       let subtitleEn = "Confidence \(p)%"
+                       ann.subtitle = L10n.isKorean ? subtitleKr : subtitleEn
+                       switch(p){
+                       case 100:
+                           view.markerTintColor = .badge100
+                           break
+                       case 70...99:
+                           view.markerTintColor = .badge90to70
+                           break
+                       case 40...69:
+                           view.markerTintColor = .badge60to40
+                           break
+                       default:
+                           view.markerTintColor = .badge30to0
+                           break
+                       }
+                       
+                   } else {
+                       ann.subtitle = nil
+                   }
+               }
+           }
 
-                annotationView?.glyphImage = UIImage(systemName: "record.circle", withConfiguration: config)
-
-            }
-        }
-
-        annotationView?.markerTintColor = .white
-        annotationView?.glyphTintColor = .primaryViolet
-        return annotationView
-    }
+           return view
+       }
     
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -400,12 +454,37 @@ extension MainViewController: MKMapViewDelegate {
         }
     }
     
+    
+    
 }
 
 final class CustomPointAnnotation: MKPointAnnotation {
     var placeId: String?
     var placeTypeName: PlaceTypeName?
-
+    var possibility:Int?
+    var isParent:Bool?
 }
+
+
+
+#if DEBUG
+extension MainViewController {
+    var _test_mapView: MKMapView { mapView }
+    var _test_isLoadingAnimating: Bool { loadingView.isAnimating }
+    
+    func _test_replaceMapView(_ mv: MKMapView) {
+          // 기존 맵 제거 & 새 맵 삽입 (프레임/오토리사이즈 일치)
+          mapView.removeFromSuperview()
+          view.addSubview(mv)
+          mv.frame = mapView.frame
+          mv.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+          mv.delegate = self
+          mapView = mv
+      }
+    
+}
+
+
+#endif
 
 

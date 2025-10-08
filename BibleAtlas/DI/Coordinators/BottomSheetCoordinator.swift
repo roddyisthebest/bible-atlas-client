@@ -19,10 +19,13 @@ enum BottomSheetType:Equatable {
     case placeModification(String)
     case placeTypes
     case placeCharacters
+    case bibles
     case placesByType(PlaceTypeName)
     case placesByCharacter(String)
+    case placesByBible(BibleBook)
     case placeReport(String, PlaceReportType)
-    case bibleVerseDetail(String)
+    case bibleVerseDetail(BibleBook, String)
+    case bibleBookVerseList(String, BibleBook?)
     case recentSearches
     case popularPlaces
     case myPage
@@ -40,7 +43,6 @@ protocol BottomSheetNavigator: AnyObject {
     func present(_ type: BottomSheetType)
     func dismiss(animated:Bool)
     func dismissFromDetail(animated:Bool)
-    func replace(with type: BottomSheetType)
     func setPresenter(_ presenter: Presentable?)
     
 }
@@ -80,8 +82,11 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
     func presentFromTopVC(_ vc: UIViewController){
         DispatchQueue.main.async {
             guard let baseVC = self.presenter else { return }
-             let topVC = baseVC.topMostViewController()
-             topVC.present(vc, animated: true)
+            let topVC = baseVC.topMostViewController()
+                
+
+            
+            topVC.present(vc, animated: true)
         }
     }
     
@@ -98,9 +103,7 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
         return stack
     }
     
-    
-    private var prevDetents:[[UISheetPresentationController.Detent]] = []
-    
+
     private let lowDetent = UISheetPresentationController.Detent.custom { context in
         return UIScreen.main.bounds.height * 0.2;
     }
@@ -109,26 +112,11 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
     
         DispatchQueue.main.async {
             guard let baseVC = self.presenter as? UIViewController else { return }
-            let stack = self.presentedVCStack(from: baseVC)
+
             let topVC = baseVC.topMostViewController()
 
             guard let currentPlaceId = self.currentPlaceId else {
-                stack.forEach { vc in
-            
-                    weak var weakVC = vc
-
-                    weakVC?.sheetPresentationController?.animateChanges {
-                        guard let detents = weakVC?.sheetPresentationController?.detents else{
-                            return
-                        }
-                        self.prevDetents.append(detents)
-
-                        weakVC?.sheetPresentationController?.detents = [.medium()]
-                        weakVC?.sheetPresentationController?.largestUndimmedDetentIdentifier = .medium;
-                        weakVC?.sheetPresentationController?.selectedDetentIdentifier = .medium
-                    }
-                 
-                }
+                self.notificationService?.post(.sheetCommand, object: SheetCommand.forceMedium)
                 let vm = self.vmFactory.makePlaceDetailBottomSheetVM(placeId: placeId);
                 let vc = self.vcFactory.makePlaceDetailBottomSheetVC(vm: vm, placeId: placeId);
                 
@@ -151,26 +139,13 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
     }
     
     func dismissFromDetail(animated: Bool){
-        guard let baseVC = self.presenter as? UIViewController else { return }
-        
         DispatchQueue.main.async {
-            
-            
-            let stack = self.presentedVCStack(from: baseVC)
-            
-
-            for i in 0..<stack.count-1{
-                let vc = stack[i];
-                vc.sheetPresentationController?.animateChanges {
-                    vc.sheetPresentationController?.detents = self.prevDetents[i]
-                }
-            }
+    
+            self.notificationService?.post(.sheetCommand, object: SheetCommand.restoreDetents)
             
             self.dismiss(animated: animated)
-            self.prevDetents = []
             self.placeHistory = []
             self.currentPlaceId = nil
-
             
         }
         
@@ -179,8 +154,6 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
     
     private func backDetail(){
      
-        
-        
         guard let newPlaceId = self.placeHistory.popLast() else {
             return;
         }
@@ -253,6 +226,11 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             let vc = vcFactory.makePlaceCharactersBottomSheetVC(vm: vm);
             presentFromTopVC(vc)
             
+        case .bibles:
+            let vm = vmFactory.makeBiblesBottomSheetVM();
+            let vc = vcFactory.makeBiblesBottomSheetVC(vm: vm);
+            presentFromTopVC(vc)
+            
         case .placesByType(let placeTypeName):
             let vm = vmFactory.makePlacesByTypeBottomSheetVM(placeTypeName: placeTypeName);
             let vc = vcFactory.makePlacesByTypeBottomSheetVC(vm: vm, placeTypeName: placeTypeName);
@@ -264,8 +242,13 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             let vc = vcFactory.makePlacesByCharacterBottomSheetVC(vm: vm, character: character);
             presentFromTopVC(vc)
             
-        case .bibleVerseDetail(let keyword):
-            let vm = vmFactory.makeBibleVerseDetailBottomSheetVM(keyword: keyword);
+        case .placesByBible(let bibleBook):
+            let vm = vmFactory.makePlacesByBibleBottomSheetVM(bible: bibleBook)
+            let vc = vcFactory.makePlacesByBibleBottomSheetVC(vm: vm, bibleBook: bibleBook)
+            presentFromTopVC(vc)
+            
+        case .bibleVerseDetail(let bibleBook, let keyword):
+            let vm = vmFactory.makeBibleVerseDetailBottomSheetVM(bibleBook:bibleBook, keyword: keyword);
             let vc = vcFactory.makeBibleVerseDetailBottomSheetVC(vm: vm, keyword: keyword);
             presentFromTopVC(vc)
             
@@ -295,6 +278,12 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             
             presentFromTopVC(vc)
             
+        case .bibleBookVerseList(let placeId, let bibleBook):
+            let vm = vmFactory.makeBibleBookVerseListBottomSheetVM(placeId: placeId, bibleBook: bibleBook)
+            let vc = vcFactory.makeBibleBookVerseListBottomSheetVC(vm: vm);
+            
+            presentFromTopVC(vc)
+            
         }
     
     }
@@ -313,9 +302,6 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
     
     
     
-    func replace(with type: BottomSheetType) {
-        self.dismiss(animated: false)
-        self.present(type)
-    }
+
     
 }

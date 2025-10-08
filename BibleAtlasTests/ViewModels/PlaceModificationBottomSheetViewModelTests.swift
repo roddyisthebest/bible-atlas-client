@@ -33,7 +33,7 @@ final class PlaceModificationBottomSheetViewModelTests:XCTestCase{
     
     func test_confirm_success_togglesCreating_setsSuccessTrue_and_noError(){
         
-        let place = Place(id: "test", name: "test", isModern: true, description: "test", koreanDescription: "테스트", stereo: .child, likeCount: 1, types: [])
+        let place = Place(id: "test", name: "test", koreanName: "테스트", isModern: true, description: "test", koreanDescription: "테스트", stereo: .child, likeCount: 1, types: [])
         
         let proposalExp = expectation(description: "create proposal")
         
@@ -94,7 +94,7 @@ final class PlaceModificationBottomSheetViewModelTests:XCTestCase{
     
     func test_confirm_failure_togglesCreating_emitsInteractionError_and_successRemainsNil(){
         
-        let place = Place(id: "test", name: "test", isModern: true, description: "test", koreanDescription: "테스트", stereo: .child, likeCount: 1, types: [])
+        let place = Place(id: "test", name: "test", koreanName: "테스트", isModern: true, description: "test", koreanDescription: "테스트", stereo: .child, likeCount: 1, types: [])
         
         let proposalExp = expectation(description: "create proposal")
         
@@ -253,7 +253,7 @@ final class PlaceModificationBottomSheetViewModelTests:XCTestCase{
 
     
     func test_confirm_retry_afterFailure_succeeds_and_setsSuccessTrue(){
-        let place = Place(id: "test", name: "test", isModern: true, description: "test", koreanDescription: "테스트", stereo: .child, likeCount: 1, types: [])
+        let place = Place(id: "test", name: "test", koreanName: "테스트", isModern: true, description: "test", koreanDescription: "테스트", stereo: .child, likeCount: 1, types: [])
         
         let proposalExp1 = expectation(description: "create proposal1")
         

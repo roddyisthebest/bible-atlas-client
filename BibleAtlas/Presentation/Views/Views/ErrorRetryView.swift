@@ -18,7 +18,7 @@ final class ErrorRetryView: UIStackView {
     // MARK: - Private UI
     private let errorLabel: UILabel = {
         let label = UILabel()
-        label.text = "에러가 발생했습니다."
+        label.text = L10n.Common.defaultErrorMessage
         label.textColor = .mainLabelText
         label.font = .systemFont(ofSize: 16)
         label.textAlignment = .center
@@ -35,7 +35,7 @@ final class ErrorRetryView: UIStackView {
 
         let icon = UIImage(systemName: "arrow.clockwise")
         button.setImage(icon, for: .normal)
-        button.setTitle("다시 불러오기", for: .normal)
+        button.setTitle(L10n.Common.retry, for: .normal)
         button.setTitleColor(.invertedMainText, for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 14)
         button.tintColor = .invertedMainText
@@ -61,7 +61,7 @@ final class ErrorRetryView: UIStackView {
 
         let icon = UIImage(systemName: "xmark")
         button.setImage(icon, for: .normal)
-        button.setTitle("닫기", for: .normal)
+        button.setTitle(L10n.Common.close, for: .normal)
         button.setTitleColor(.invertedMainText, for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 14)
         button.tintColor = .invertedMainText

@@ -37,13 +37,19 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
     
     private let loading$ = BehaviorRelay<Bool>(value:false);
     
+    private var forceMedium$ = PublishRelay<Void>()
+    private var restoreDetents$ = PublishRelay<Void>()
+    
     private let recentSearches$ = BehaviorRelay<[RecentSearchItem]>(value: []);
     private let errorToFetchRecentSearches$ = BehaviorRelay<RecentSearchError?>(value: nil)
+    
+    private var notificationService: RxNotificationServiceProtocol?
     
     private let scheduler:SchedulerType;
     
     init(navigator:BottomSheetNavigator?, appStore:AppStoreProtocol?, collectionStore:CollectionStoreProtocol? ,userUsecase:UserUsecaseProtocol?, authUseCase:AuthUsecaseProtocol?,
-         recentSearchService:RecentSearchServiceProtocol?, schedular:SchedulerType = MainScheduler.asyncInstance
+         recentSearchService:RecentSearchServiceProtocol?, schedular:SchedulerType = MainScheduler.asyncInstance,
+         notificationService: RxNotificationServiceProtocol?
     
     ){
         self.navigator = navigator
@@ -53,11 +59,13 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
         self.authUsecase = authUseCase
         self.recentSearchService = recentSearchService
         self.scheduler = schedular;
+        self.notificationService = notificationService
         
         bindStores();
         bindCollectionStore();
         bindRecentSearchService();
         getRecentSearchItems();
+        bindNotificationService();
     }
     
     func bindStores(){
@@ -115,6 +123,24 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
     }
     
     
+    private func bindNotificationService(){
+        
+        notificationService?.observe(.sheetCommand)
+            .compactMap { $0.object as? SheetCommand }
+            .subscribe(onNext: { [weak self] sheetCommand in
+                
+                switch(sheetCommand){
+                case .forceMedium:
+                    self?.forceMedium$.accept(())
+                case .restoreDetents:
+                    self?.restoreDetents$.accept(())
+                }
+
+            }).disposed(by: disposeBag)
+        
+
+    }
+    
    
     
     
@@ -145,6 +171,7 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
         let collectionButtonTapped$:Observable<PlaceFilter>
         let placesByTypeButtonTapped$:Observable<Void>
         let placesByCharacterButtonTapped$:Observable<Void>
+        let placesByBibleButtonTapped$:Observable<Void>
         let recentSearchCellTapped$:Observable<String>
         let moreRecentSearchesButtonTapped$:Observable<Void>
     }
@@ -158,6 +185,8 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
         let recentSearches$:Observable<[RecentSearchItem]>
         let errorToFetchRecentSearches$:Observable<RecentSearchError?>
         let loading$:Observable<Bool>
+        let forceMedium$:Observable<Void>
+        let restoreDetents$:Observable<Void>
         
     }
     
@@ -186,6 +215,10 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
             self?.navigator?.present(.placeCharacters)
         }).disposed(by: disposeBag)
         
+        input.placesByBibleButtonTapped$.subscribe(onNext: {[weak self] in
+            self?.navigator?.present(.bibles)
+        }).disposed(by: disposeBag)
+        
         input.recentSearchCellTapped$.bind{[weak self] placeId in
             self?.navigator?.present(.placeDetail(placeId))
         }.disposed(by: disposeBag)
@@ -194,7 +227,7 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
             self?.navigator?.present(.recentSearches)
         }.disposed(by: disposeBag)
         
-        return Output(profile$: profile$.asObservable(), isLoggedIn$: isLoggedIn$.asObservable(), likePlacesCount$: likePlacesCount$.asObservable(), savePlacesCount$: savePlacesCount$.asObservable(), memoPlacesCount$: memoPlacesCount$.asObservable(), recentSearches$: recentSearches$.asObservable(), errorToFetchRecentSearches$: errorToFetchRecentSearches$.asObservable(), loading$: loading$.asObservable())
+        return Output(profile$: profile$.asObservable(), isLoggedIn$: isLoggedIn$.asObservable(), likePlacesCount$: likePlacesCount$.asObservable(), savePlacesCount$: savePlacesCount$.asObservable(), memoPlacesCount$: memoPlacesCount$.asObservable(), recentSearches$: recentSearches$.asObservable(), errorToFetchRecentSearches$: errorToFetchRecentSearches$.asObservable(), loading$: loading$.asObservable(), forceMedium$: forceMedium$.asObservable(), restoreDetents$: restoreDetents$.asObservable())
     }
     
 }

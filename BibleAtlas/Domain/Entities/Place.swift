@@ -54,7 +54,10 @@ enum PlaceTypeName: String, Decodable {
     case hall
     case intersection
     case cliff
+    case forest
+    case room
 }
+
 
 
 enum PlaceSort: String, Decodable {
@@ -83,6 +86,7 @@ struct PlaceMemo:Decodable{
 struct Place: Decodable {
     var id: String
     var name: String
+    var koreanName: String
     var isModern: Bool
     var description: String
     var koreanDescription: String
@@ -106,6 +110,8 @@ struct PlacePrefix:Decodable {
     var prefix: String;
     var placeCount: String;
 }
+
+
 
 struct PlaceRelation:Decodable{
     var id:Int;
@@ -159,6 +165,8 @@ enum BibleVersion: String, Decodable {
 struct GeoJsonFeatureProperties: Codable {
     let id: String?
     let role: String?
+    let isParent: Bool?
+    let possibility: Int?
 }
 
 struct MyCollectionPlaceIds:Equatable, Decodable{

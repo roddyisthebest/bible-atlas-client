@@ -9,11 +9,13 @@ import UIKit
 import RxSwift
 import RxRelay
 import Kingfisher
+import SnapKit
+
 
 final class Bible {
     var verses:[String] = []
-    var bookName:String = "창세기"
-    init(bookName:String, verses:[String]){
+    var bookName:BibleBook
+    init(bookName:BibleBook, verses:[String]){
         self.bookName = bookName
         self.verses = verses;
     }
@@ -37,8 +39,9 @@ final class PlaceDetailViewController: UIViewController {
     private let placeModificationButtonTapped$ = PublishRelay<Void>();
         
     private let placeCellTapped$ = PublishRelay<String>();
-    private let verseCellTapped$ = PublishRelay<String>();
-    
+    private let verseCellTapped$ = PublishRelay<(BibleBook, String)>();
+    private let moreVerseButtonTapped$ = PublishRelay<BibleBook?>();
+
     private let reportButtonTapped$ = PublishRelay<PlaceReportType>();
     
     
@@ -50,10 +53,16 @@ final class PlaceDetailViewController: UIViewController {
     private let placeDetailViewLoaded$ = PublishRelay<Void>();
         
     private let placeId:String
+
+    private var didFixPlaceTableHeight = false
+    private var verseTableHeight = 0.0
+    
+
     
     private lazy var bodyView = {
         let v = UIView();
         v.isHidden = true
+        v.addSubview(headerStackView)
         v.addSubview(scrollView);
         return v;
     }()
@@ -61,23 +70,24 @@ final class PlaceDetailViewController: UIViewController {
     private lazy var scrollView = {
         let sv = UIScrollView();
         sv.isScrollEnabled = false
+        sv.delegate = self;
         sv.addSubview(contentView)
         return sv;
     }()
     
     
     private lazy var contentView = {
-        let v = UIView()
-        v.addSubview(headerStackView);
-        v.addSubview(subInfoStackView)
-        v.addSubview(likeAndMoreButtonsStackView)
-        v.addSubview(imageButton)
-        v.addSubview(descriptionStackView)
-        v.addSubview(relatedLocationStackView)
-        v.addSubview(relatedVerseStackView)
-        v.addSubview(memoButton)
-        v.addSubview(reportIssueButton)
-        return v
+        let sv = UIStackView(arrangedSubviews: [subInfoStackView, likeAndMoreButtonsStackView, memoButton, imageButton, descriptionStackView, relatedLocationStackView, relatedVerseStackView, reportIssueButton])
+     
+        sv.axis = .vertical
+        sv.spacing = 18
+        sv.alignment = .fill
+        sv.distribution = .fill
+        
+
+        
+        
+        return sv
     }()
     
     
@@ -87,16 +97,28 @@ final class PlaceDetailViewController: UIViewController {
         sv.distribution = .fill;
         sv.alignment = .fill;
         sv.spacing = 10;
-        return sv;
+        sv.isLayoutMarginsRelativeArrangement = true
+        sv.directionalLayoutMargins = .init(top: 0, leading: 20, bottom: 12, trailing: 20)
+
+
+        sv.addSubview(headerBottomBorder)
+        return sv
     }()
     
     
+    private lazy var headerBottomBorder: UIView = {
+        let v = UIView()
+        v.backgroundColor = UIColor.label.withAlphaComponent(0.15) // 얇은 헤어라인 느낌
+        v.alpha = 0 // 초기에 숨김
+        return v
+    }()
+    
     private let backButton: UIButton = {
         let button = UIButton(type: .system)
-        
+    
         let image = UIImage(systemName: "chevron.left")
         button.setImage(image, for: .normal)
-        button.setTitle("back", for: .normal)
+        button.setTitle(L10n.PlaceDetail.back, for: .normal)
         button.setTitleColor(.primaryBlue, for: .normal)
         button.tintColor = .primaryBlue
         button.contentHorizontalAlignment = .leading // 필요 시 정렬
@@ -145,6 +167,9 @@ final class PlaceDetailViewController: UIViewController {
         sv.distribution = .fill
         sv.alignment = .center
         sv.spacing = 8;
+        sv.isLayoutMarginsRelativeArrangement = true
+        sv.directionalLayoutMargins = .zero
+        sv.preservesSuperviewLayoutMargins = false
         return sv;
     }()
     
@@ -152,10 +177,31 @@ final class PlaceDetailViewController: UIViewController {
         let button = UIButton();
         button.setTitle("Type of Body", for: .normal)
         button.setTitleColor(.primaryBlue, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
+        let font = UIFont.systemFont(ofSize: 10, weight: .medium)
+
+        
+        if #available(iOS 15.0, *) {
+            var config = UIButton.Configuration.plain()
+            config.contentInsets = .zero
+            config.baseForegroundColor = .primaryBlue
+
+            var attr = AttributeContainer()
+            attr.font = font
+            config.attributedTitle = AttributedString("Type of Body", attributes: attr)
+
+            button.configuration = config
+        } else {
+            button.setTitle("Type of Body", for: .normal)
+            button.setTitleColor(.primaryBlue, for: .normal)
+            button.titleLabel?.font = font
+            button.contentEdgeInsets = .zero
+            button.titleEdgeInsets = .zero
+            button.titleLabel?.font = font
+        }
+        
+
         button.setContentHuggingPriority(.required, for: .horizontal)
         button.setContentCompressionResistancePriority(.required, for: .horizontal)
-
         return button;
     }()
     
@@ -169,8 +215,21 @@ final class PlaceDetailViewController: UIViewController {
     
     private let generationLabel = {
         let label = UILabel();
-        label.text = "ancient"
+        label.text = L10n.PlaceDetail.ancient
         label.textColor = .mainText
+        
+        // ✅ 텍스트 한 줄, 줄바꿈 없음
+        label.numberOfLines = 1
+        label.lineBreakMode = .byTruncatingTail
+
+        // ✅ 세로로 절대 늘어나지 않게 (intrinsic height 유지)
+        label.setContentHuggingPriority(.required, for: .vertical)
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
+
+        // (가로로도 글자 잘 안찡기게 하고 싶다면)
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
+
+        
         label.font = .systemFont(ofSize: 14, weight: .medium)
         return label;
     }()
@@ -192,7 +251,7 @@ final class PlaceDetailViewController: UIViewController {
         let image = UIImage(systemName: "hand.thumbsup.fill")
         
         button.setImage(image, for: .normal)
-        button.setTitle("7 Likes", for: .normal)
+        button.setTitle(L10n.PlaceDetail.likes(0), for: .normal)
         button.setTitleColor(.mainText, for: .normal)
         button.tintColor = .mainText
         button.backgroundColor = .primaryBlue
@@ -248,7 +307,7 @@ final class PlaceDetailViewController: UIViewController {
     }()
     
     private let descriptionLabel = {
-        let label = HeaderLabel(text: "Description")
+        let label = HeaderLabel(text: L10n.PlaceDetail.description)
         label.font = .systemFont(ofSize: 20, weight: .semibold)
         return label
     }()
@@ -270,8 +329,7 @@ final class PlaceDetailViewController: UIViewController {
         tv.textColor = .mainText
         tv.font = UIFont.systemFont(ofSize: 16)
         tv.isScrollEnabled = false
-        tv.isEditable = false  // ✅ 읽기 전용 (필요하면 true로 변경)
-        tv.text = "인사까지 연습했는데 거기까지 문제 없었는데 왜 니 앞에서면 바보처럼 웃게되 평소처럼만 하면 돼 음 자연스러웟어 우워 안녕안녕"
+        tv.isEditable = false
         tv.textContainerInset = UIEdgeInsets(top: 15, left: 10, bottom: 15, right: 10) // ✅ 내부 여백 추가
         tv.isSelectable = false
         return tv
@@ -287,7 +345,7 @@ final class PlaceDetailViewController: UIViewController {
     }()
     
     private let relatedLocationLabel = {
-        let label = HeaderLabel(text: "Related Locations")
+        let label = HeaderLabel(text: L10n.PlaceDetail.relatedPlaces)
         label.font = .systemFont(ofSize: 20, weight: .semibold)
         return label
     }()
@@ -319,8 +377,7 @@ final class PlaceDetailViewController: UIViewController {
         return v;
     }()
     
-    private let relatedPlaceEmptyLabel = EmptyLabel(text:"연관된 장소가 없습니다.")
-    
+    private let relatedPlaceEmptyLabel = EmptyLabel(text:L10n.PlaceDetail.relatedPlacesEmpty)
     
 
     
@@ -393,14 +450,14 @@ final class PlaceDetailViewController: UIViewController {
     }()
     
     private lazy var reportIssueButton = {
-        let button = IconTextButton(iconSystemName: "exclamationmark.bubble.fill", color: .primaryBlue, labelText: "Report an issue");
+        let button = IconTextButton(iconSystemName: "exclamationmark.bubble.fill", color: .primaryBlue, labelText: L10n.PlaceDetail.reportIssue);
         button.menu = buildIssueReportMenu();
         button.showsMenuAsPrimaryAction = true
         return button;
     }()
     
     private lazy var relatedVerseStackView = {
-        let sv = UIStackView(arrangedSubviews: [relatedVerseLabel, relatedVerseTable, relatedVerseEmptyView]);
+        let sv = UIStackView(arrangedSubviews: [relatedVerseLabelStackView, relatedVerseTable]);
         sv.axis = .vertical;
         sv.distribution = .fill
         sv.alignment = .fill;
@@ -408,24 +465,29 @@ final class PlaceDetailViewController: UIViewController {
         return sv;
     }()
     
+    private lazy var relatedVerseLabelStackView = {
+        let sv = UIStackView(arrangedSubviews: [relatedVerseLabel, relatedVerseMoreButton])
+        sv.axis = .horizontal
+        sv.distribution = .equalSpacing
+        sv.alignment = .center
+        
+        return sv;
+    }()
+    
+    private let relatedVerseMoreButton = {
+        let button = UIButton();
+        button.setTitleColor(.primaryBlue, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 15)
+        button.isHidden = true
+        
+        return button;
+    }()
     private let relatedVerseLabel = {
-        let label = HeaderLabel(text: "Related Verse")
+        let label = HeaderLabel(text: L10n.PlaceDetail.relatedVerses)
         label.font = .systemFont(ofSize: 20, weight: .semibold)
         return label
     }()
     
-    
-    private lazy var relatedVerseEmptyView:UIView = {
-        let v = UIView();
-        v.addSubview(relatedVerseEmptyLabel)
-        v.backgroundColor = .mainItemBkg
-        v.layer.cornerRadius = 10;
-        v.layer.masksToBounds = true;
-        v.isHidden = true;
-        return v;
-    }()
-    
-    private let relatedVerseEmptyLabel = EmptyLabel(text:"언급된 성경말씀이 없습니다.")
     
     
     private lazy var relatedVerseTable:UITableView = {
@@ -433,7 +495,7 @@ final class PlaceDetailViewController: UIViewController {
         tv.register(RelatedVerseTableViewCell.self, forCellReuseIdentifier: RelatedVerseTableViewCell.identifier);
         tv.delegate = self;
         tv.dataSource = self;
-        tv.isScrollEnabled = false;
+        tv.isScrollEnabled = true;
         
         tv.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
 
@@ -442,7 +504,7 @@ final class PlaceDetailViewController: UIViewController {
         tv.layer.masksToBounds = true;
   
         tv.rowHeight = UITableView.automaticDimension
-        tv.estimatedRowHeight = 100
+//        tv.estimatedRowHeight = 100
         return tv;
     }()
     
@@ -495,8 +557,18 @@ final class PlaceDetailViewController: UIViewController {
     }
     
     private func setPlaceImage(imageTitle:String?){
+        
+        
+        
         let imageEndpoint = "https://a.openbible.info/geo/images/512"
-        guard let imageTitle = imageTitle else {return}
+        guard let imageTitle = imageTitle else {
+            placeImageView.image = nil
+            imageButton.isHidden = true
+            
+            return
+        }
+        imageButton.isHidden = false
+
         guard let url = URL(string: "\(imageEndpoint)/\(imageTitle)") else {return}
         
         
@@ -513,29 +585,6 @@ final class PlaceDetailViewController: UIViewController {
         })
         
     }
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        relatedPlaceTable.reloadData()
-        relatedPlaceTable.layoutIfNeeded()
-
-        let relatedPlaceTableHeight = relatedPlaceTable.contentSize.height
-        relatedPlaceTable.snp.updateConstraints {
-            $0.height.equalTo(relatedPlaceTableHeight)
-        }
-        
-        relatedVerseTable.reloadData()
-        relatedVerseTable.layoutIfNeeded();
-        
-        let relatedVerseTableHeight = relatedVerseTable.contentSize.height;
-        
-        relatedVerseTable.snp.updateConstraints {
-            $0.height.equalTo(relatedVerseTableHeight)
-        }
-        
-        
-    }
-    
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -575,29 +624,14 @@ final class PlaceDetailViewController: UIViewController {
             make.edges.equalToSuperview()
         }
         
-        subInfoStackView.snp.makeConstraints { make in
-            make.top.equalTo(headerStackView.snp.bottom).offset(0);
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20);
-        }
-        
         likeAndMoreButtonsStackView.snp.makeConstraints { make in
-            make.top.equalTo(subInfoStackView.snp.bottom).offset(10);
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20);
             make.height.equalTo(40)
         }
-        
+
         
         avatarImageView.snp.makeConstraints { $0.edges.equalToSuperview() }
         placeImageView.snp.makeConstraints { $0.edges.equalToSuperview() }
-        
-        memoButton.snp.makeConstraints { make in
-            make.top.equalTo(likeAndMoreButtonsStackView.snp.bottom).offset(20);
-            make.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().offset(-20);
-        }
-        
+                
         memoStackView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(15)
             make.bottom.equalToSuperview().offset(-15)
@@ -610,17 +644,25 @@ final class PlaceDetailViewController: UIViewController {
         }
         
         scrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(headerStackView.snp.bottom)
+            make.bottom.trailing.leading.equalToSuperview()
         }
         
         contentView.snp.makeConstraints { make in
-            make.edges.equalTo(scrollView.contentLayoutGuide)
-            make.width.equalTo(scrollView.frameLayoutGuide)
+            make.top.bottom.equalTo(scrollView.contentLayoutGuide)             // 세로
+              make.leading.trailing.equalTo(scrollView.frameLayoutGuide).inset(20) // 가로 패딩
+            
         }
         
         headerStackView.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().offset(-20);
+            make.top.equalToSuperview().offset(20);
+            make.leading.trailing.equalToSuperview()
+        }
+        
+        let onePixel = 1.0 / UIScreen.main.scale
+        headerBottomBorder.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+            make.height.equalTo(onePixel)
         }
         
         filledCircleView.snp.makeConstraints { make in
@@ -632,44 +674,16 @@ final class PlaceDetailViewController: UIViewController {
         }
         
         imageButton.snp.makeConstraints { make in
-            make.top.equalTo(memoButton.snp.bottom).offset(20)
-            make.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().offset(-150);
-            make.height.equalTo(300)
+            make.height.equalTo(350)
         }
-    
-        descriptionStackView.snp.makeConstraints { make in
-            make.top.equalTo(imageButton.snp.bottom).offset(30)
-            make.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().offset(-20);
-        }
+
         
         descriptionTextView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        relatedLocationStackView.snp.makeConstraints { make in
-            make.top.equalTo(descriptionStackView.snp.bottom).offset(30)
-            make.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().offset(-20);
-        }
-        
-        relatedVerseStackView.snp.makeConstraints { make in
-            make.top.equalTo(relatedLocationStackView.snp.bottom).offset(30)
-            make.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().offset(-20);
-        }
-     
-        reportIssueButton.snp.makeConstraints { make in
-            make.top.equalTo(relatedVerseStackView.snp.bottom).offset(20)
-            make.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().offset(-20);
-            make.bottom.equalToSuperview().offset(-20)
-            
-        }
-        
-        
 
+        
         
         loadingView.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -688,12 +702,13 @@ final class PlaceDetailViewController: UIViewController {
             make.center.equalToSuperview()
         }
         
-        relatedVerseEmptyView.snp.makeConstraints { make in
-            make.height.equalTo(80)
+        
+        relatedPlaceTable.snp.makeConstraints { make in
+            make.height.equalTo(1)
         }
         
-        relatedVerseEmptyLabel.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+        relatedVerseTable.snp.makeConstraints { make in
+            make.height.equalTo(verseTableHeight)
         }
         
         likeLoadingView.snp.makeConstraints { make in
@@ -705,7 +720,37 @@ final class PlaceDetailViewController: UIViewController {
         view.backgroundColor = .mainBkg;
     }
     
+    
+    private func recalcPlaceTableHeight() {
+        
+        relatedPlaceTable.reloadData()
+        relatedPlaceTable.layoutIfNeeded()
+        
+        if(verseTableHeight == relatedPlaceTable.contentSize.height){
+            return;
+        }
+        verseTableHeight = relatedPlaceTable.contentSize.height
+        relatedPlaceTable.snp.updateConstraints{ make in
+            make.height.equalTo(verseTableHeight)
+        }
+        
+        
+        view.layoutIfNeeded()
+    }
+    
+    
 
+    private func recalcVerseTableHeight() {
+        relatedVerseTable.reloadData()
+        relatedVerseTable.layoutIfNeeded()
+        
+
+        
+        relatedVerseTable.snp.updateConstraints{ make in
+            make.height.equalTo(relatedVerseTable.contentSize.height)
+        }
+
+    }
     
     
     private func bindViewModel(){
@@ -724,13 +769,21 @@ final class PlaceDetailViewController: UIViewController {
         let refetchButtonTapped$ = errorRetryView.refetchTapped$;
         
         
+        backButtonTapped$.subscribe(onNext:{
+            [weak self] in
+            self?.scrollView.setContentOffset(.zero, animated: true)
+        }).disposed(by: disposeBag)
+        
         memoButton.rx.tap.subscribe(onNext: {[weak self] in
             self?.memoButtonTapped$.accept(Void())})
         .disposed(by: disposeBag)
         
+        relatedVerseMoreButton.rx.tap
+            .map { nil as BibleBook? }
+            .bind(to: moreVerseButtonTapped$)
+            .disposed(by: disposeBag)
         
-        
-        let output = placeDetailViewModel?.transform(input: PlaceDetailViewModel.Input(viewLoaded$: placeDetailViewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$, closeButtonTapped$: closeButtonTapped$, backButtonTapped$: backButtonTapped$, likeButtonTapped$: likeButtonTapped$, placeModificationButtonTapped$: placeModificationButtonTapped$.asObservable(), verseButtonTapped$: verseCellTapped$.asObservable(), memoButtonTapped$: memoButtonTapped$.asObservable(), placeCellTapped$: placeCellTapped$.asObservable(), refetchButtonTapped$: refetchButtonTapped$.asObservable(), verseCellTapped$: verseCellTapped$.asObservable(), reportButtonTapped$: reportButtonTapped$.asObservable()))
+        let output = placeDetailViewModel?.transform(input: PlaceDetailViewModel.Input(viewLoaded$: placeDetailViewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$, closeButtonTapped$: closeButtonTapped$, backButtonTapped$: backButtonTapped$, likeButtonTapped$: likeButtonTapped$, placeModificationButtonTapped$: placeModificationButtonTapped$.asObservable(), memoButtonTapped$: memoButtonTapped$.asObservable(), placeCellTapped$: placeCellTapped$.asObservable(), refetchButtonTapped$: refetchButtonTapped$.asObservable(), verseCellTapped$: verseCellTapped$.asObservable(), moreVerseButtonTapped$: moreVerseButtonTapped$.asObservable(), reportButtonTapped$: reportButtonTapped$.asObservable()))
         
         output?.isSaving$.observe(on: MainScheduler.instance).bind{
             [weak self] isSaving in
@@ -748,6 +801,9 @@ final class PlaceDetailViewController: UIViewController {
             .bind{
                 [weak self] isLiking, place in
                 guard let place = place else {
+                    self?.likeButton.backgroundColor = .circleButtonBkg
+                    self?.likeButton.setTitleColor(.mainText, for: .normal)
+                    self?.likeButton.tintColor = .mainText
                     return;
                 }
                 
@@ -772,7 +828,7 @@ final class PlaceDetailViewController: UIViewController {
                     
                 }
                 else{
-                    self?.likeButton.setTitle("\(place.likeCount) Likes", for: .normal)
+                    self?.likeButton.setTitle(L10n.PlaceDetail.likes(place.likeCount), for: .normal)
                     self?.likeButton.isEnabled = true;
                     self?.likeLoadingView.stop()
                     let image = UIImage(systemName: "hand.thumbsup.fill")
@@ -801,16 +857,17 @@ final class PlaceDetailViewController: UIViewController {
                 self.sheetPresentationController?.selectedDetentIdentifier = .medium
             }
             
-            self.titleLabel.text = place.name
-            self.descriptionTextView.text = place.koreanDescription
+            self.titleLabel.text = L10n.isEnglish ?  place.name: place.koreanName
+            self.descriptionTextView.text =  L10n.isEnglish ? place.description : place.koreanDescription
             
                 
-            self.generationLabel.text = place.isModern ? "modern" : "ancient"
+            self.generationLabel.text = place.isModern ? L10n.PlaceDetail.modern : L10n.PlaceDetail.ancient
             
             let childRelations = place.childRelations ?? []
             let parentRelations = place.parentRelations ?? []
 
             self.relations = childRelations + parentRelations;
+            self.recalcPlaceTableHeight();
             
             if(self.relations.count == 0) {
                 self.relatedPlaceTable.isHidden = true;
@@ -833,10 +890,27 @@ final class PlaceDetailViewController: UIViewController {
         
         
         output?.bibles$.observe(on: MainScheduler.instance).bind{
-            [weak self] bibles in
-            self?.bibles = bibles;
-            self?.relatedVerseTable.isHidden = bibles.isEmpty;
-            self?.relatedVerseEmptyView.isHidden = !bibles.isEmpty;
+            [weak self] (bibles, restBiblesCount) in
+            self?.bibles = bibles
+            self?.relatedVerseStackView.isHidden = bibles.isEmpty;
+
+            if(restBiblesCount>0){
+                self?.relatedVerseMoreButton.isHidden = false;
+                self?.relatedVerseMoreButton.setTitle("\(restBiblesCount)권 더보기", for: .normal)
+            }else{
+                self?.relatedVerseMoreButton.isHidden = true;
+            }
+            
+            DispatchQueue.main.async {
+                self?.relatedVerseTable.reloadData()
+                self?.relatedVerseTable.performBatchUpdates(nil) { _ in
+                    self?.recalcVerseTableHeight()
+                }
+            }
+            
+         
+            
+         
             
             
             
@@ -910,38 +984,38 @@ final class PlaceDetailViewController: UIViewController {
     
     private func showAlert(message: String?) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+        let okAction = UIAlertAction(title: L10n.PlaceDetail.ok, style: .default, handler: nil)
         alert.addAction(okAction)
         present(alert, animated: true)
     }
     
     private func buildMoreMenu() -> UIMenu {
-        let action1 = UIAction(title: "Add Memo", image: UIImage(systemName: "note.text.badge.plus")) { [weak self] _ in
+        let action1 = UIAction(title: L10n.PlaceDetail.addMemo, image: UIImage(systemName: "note.text.badge.plus")) { [weak self] _ in
             
             self?.memoButtonTapped$.accept(Void())
         }
 
-        let action2 = UIAction(title: "Request Modification", image: UIImage(systemName: "pencil.and.scribble")) { [weak self ]_ in
+        let action2 = UIAction(title: L10n.PlaceDetail.requestEdit, image: UIImage(systemName: "pencil.and.scribble")) { [weak self ]_ in
             self?.placeModificationButtonTapped$.accept(Void())
         }
 
         // 신고 타입별 submenu actions
         let reportActions: [UIAction] = [
-            UIAction(title: "Spam", image: UIImage(systemName: "exclamationmark.circle")) { [weak self] _ in
+            UIAction(title: L10n.PlaceDetail.reportSpam, image: UIImage(systemName: "exclamationmark.circle")) { [weak self] _ in
                 self?.reportButtonTapped$.accept(.spam)
             },
-            UIAction(title: "Inappropriate", image: UIImage(systemName: "hand.raised")) { [weak self] _ in
+            UIAction(title: L10n.PlaceDetail.reportInappropriate, image: UIImage(systemName: "hand.raised")) { [weak self] _ in
                 self?.reportButtonTapped$.accept(.inappropriate)
             },
-            UIAction(title: "False Information", image: UIImage(systemName: "questionmark.diamond")) { [weak self] _ in      self?.reportButtonTapped$.accept(.falseInfomation) },
-            UIAction(title: "Other", image: UIImage(systemName: "ellipsis")) { [weak self] _  in
+            UIAction(title: L10n.PlaceDetail.reportFalseInfo, image: UIImage(systemName: "questionmark.diamond")) { [weak self] _ in      self?.reportButtonTapped$.accept(.falseInfomation) },
+            UIAction(title: L10n.PlaceDetail.reportOther, image: UIImage(systemName: "ellipsis")) { [weak self] _  in
                 self?.reportButtonTapped$.accept(.etc)
             }
         ]
 
         // nested 메뉴
         let reportMenu = UIMenu(
-            title: "Report Issue",
+            title: L10n.PlaceDetail.reportIssue,
             image: UIImage(systemName: "exclamationmark.bubble"),
             options: .displayInline,
             children: reportActions
@@ -953,10 +1027,16 @@ final class PlaceDetailViewController: UIViewController {
     
     private func buildIssueReportMenu() -> UIMenu {
         let reportActions: [UIAction] = [
-            UIAction(title: "Spam", image: UIImage(systemName: "exclamationmark.circle")) { _ in print("Report: SPAM") },
-            UIAction(title: "Inappropriate", image: UIImage(systemName: "hand.raised")) { _ in print("Report: INAPPROPRIATE") },
-            UIAction(title: "False Information", image: UIImage(systemName: "questionmark.diamond")) { _ in print("Report: FALSE_INFORMATION") },
-            UIAction(title: "Other", image: UIImage(systemName: "ellipsis")) { _ in print("Report: ETC") }
+            UIAction(title:  L10n.PlaceDetail.reportSpam, image: UIImage(systemName: "exclamationmark.circle")) { [weak self] _ in                      self?.reportButtonTapped$.accept(.spam)
+                },
+            UIAction(title: L10n.PlaceDetail.reportInappropriate, image: UIImage(systemName: "hand.raised")) { [weak self ] _ in self?.reportButtonTapped$.accept(.inappropriate)
+            },
+            UIAction(title: L10n.PlaceDetail.reportFalseInfo, image: UIImage(systemName: "questionmark.diamond")) { [weak self] _ in self?.reportButtonTapped$.accept(.falseInfomation)
+            },
+            UIAction(title: L10n.PlaceDetail.reportOther, image: UIImage(systemName: "ellipsis")) { [weak self] _ in
+                self?.reportButtonTapped$.accept(.etc)
+                
+            }
         ]
         
         return UIMenu(title: "", children: reportActions)
@@ -965,22 +1045,22 @@ final class PlaceDetailViewController: UIViewController {
     
     private func hideMemoButton(){
         memoButton.isHidden = true;
-        imageButton.snp.remakeConstraints { make in
-            make.top.equalTo(likeAndMoreButtonsStackView.snp.bottom).offset(20)
-            make.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().offset(-150);
-            make.height.equalTo(300)
-        }
+//        imageButton.snp.remakeConstraints { make in
+//            make.top.equalTo(likeAndMoreButtonsStackView.snp.bottom).offset(20)
+//            make.leading.equalToSuperview().offset(20);
+//            make.trailing.equalToSuperview().offset(-150);
+//            make.height.equalTo(300)
+//        }
     }
     
     private func showMemoButton(){
         memoButton.isHidden = false;
-        imageButton.snp.remakeConstraints { make in
-            make.top.equalTo(memoButton.snp.bottom).offset(20)
-            make.leading.equalToSuperview().offset(20);
-            make.trailing.equalToSuperview().offset(-150);
-            make.height.equalTo(300)
-        }
+//        imageButton.snp.remakeConstraints { make in
+//            make.top.equalTo(memoButton.snp.bottom).offset(20)
+//            make.leading.equalToSuperview().offset(20);
+//            make.trailing.equalToSuperview().offset(-150);
+//            make.height.equalTo(300)
+//        }
         
     }
     
@@ -1012,7 +1092,16 @@ extension PlaceDetailViewController:UISheetPresentationControllerDelegate{
     func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
           let isLarge = sheetPresentationController.selectedDetentIdentifier == .large
           scrollView.isScrollEnabled = isLarge
+        
+        // 시스템이 사이즈 조정/레이아웃을 끝낸 "다음 틱"에 재측정
+        DispatchQueue.main.async{ [weak self] in
+            self?.recalcVerseTableHeight()
+            self?.recalcPlaceTableHeight();
+        }
+        
       }
+    
+    
 }
 
 
@@ -1055,9 +1144,7 @@ extension PlaceDetailViewController:UITableViewDelegate, UITableViewDataSource {
             
             let bible = bibles[indexPath.row];
             
-            
-            cell.configure(with: bible.verses, title: bible.bookName)
-
+            cell.configure(with: bible.verses, bibleBook: bible.bookName)
             cell.delegate = self;
             if indexPath.row == bibles.count - 1 {
                    cell.separatorInset = UIEdgeInsets(top: 0, left: tableView.bounds.width, bottom: 0, right: 0)
@@ -1090,8 +1177,12 @@ extension PlaceDetailViewController:UITableViewDelegate, UITableViewDataSource {
 }
 
 extension PlaceDetailViewController: RelatedVerseTableViewCellDelegate {
-    func didTapVerse(_ verse: String, in cell: RelatedVerseTableViewCell) {
-        verseCellTapped$.accept(verse)
+    func didTapVerse(bibleBook: BibleBook, keyword: String, in cell: RelatedVerseTableViewCell) {
+        verseCellTapped$.accept((bibleBook, keyword))
+    }
+    func didTapMoreButton(bibleBook: BibleBook?, in cell: RelatedVerseTableViewCell) {
+        moreVerseButtonTapped$.accept(bibleBook)
+
     }
 }
 
@@ -1101,3 +1192,125 @@ extension PlaceDetailViewController: IdentifiableBottomSheet {
         .placeDetail(self.placeId)
     }
 }
+
+extension PlaceDetailViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+            guard scrollView === self.scrollView else { return }
+
+            let y = scrollView.contentOffset.y
+
+            // 히스테리시스: 보이는 임계값과 숨기는 임계값을 달리해서 깜빡임 방지
+            let showThreshold: CGFloat = 4   // 이 이상 내려가면 보이기
+            let hideThreshold: CGFloat = 2   // 이 이하 올라오면 숨기기
+
+            if headerBottomBorder.alpha == 0, y > showThreshold {
+                showHeaderBorder(true)
+            } else if headerBottomBorder.alpha == 1, y < hideThreshold {
+                showHeaderBorder(false)
+            }
+        }
+
+    private func showHeaderBorder(_ show: Bool) {
+
+        titleLabel.lineBreakMode = show ? .byTruncatingTail : .byWordWrapping
+        titleLabel.numberOfLines = show ? 1 : 0
+        UIView.animate(withDuration: 0.18) {
+              self.headerBottomBorder.alpha = show ? 1 : 0
+        }
+        
+        
+        
+      }
+}
+
+
+
+#if DEBUG
+
+extension PlaceDetailViewController {
+    // 읽기 전용 상태/뷰 확인용
+    var _test_isBodyHidden: Bool { bodyView.isHidden }
+    var _test_isLoadingVisible: Bool { !loadingView.isHidden && loadingView.isAnimating }
+    var _test_isErrorVisible: Bool { !errorRetryView.isHidden }
+
+    var _test_isRelatedPlaceTableVisible: Bool { !relatedPlaceTable.isHidden }
+    var _test_isRelatedVerseTableVisible: Bool { !relatedVerseStackView.isHidden }
+
+    
+    var _test_isLikeLoadingVisible: Bool { !likeLoadingView.isHidden && likeLoadingView.isAnimating }
+
+    
+    var _test_titleText: String? { titleLabel.text }
+    var _test_generationText: String? { generationLabel.text }
+    var _test_descriptionText: String? { descriptionTextView.text }
+
+    var _relatedVerseMoreButtonText:String? {
+        relatedVerseMoreButton.currentTitle
+    }
+    
+    var _relatedVerseMoreButtonVisible:Bool {
+        !relatedVerseMoreButton.isHidden
+    }
+    
+    
+    var _test_likeButtonTitle: String? { likeButton.title(for: .normal) }
+    var _test_likeButtonEnabled: Bool { likeButton.isEnabled }
+    var _test_likeButtonImage: UIImage? { likeButton.image(for: .normal)}
+    var _test_likeButton:UIButton? {likeButton}
+    
+    var _test_saveButton:ToggleCircleButton? {saveButton}
+    
+    var _test_memoButton:UIButton? {memoButton}
+    var _test_memoLabel:UILabel? {memoLabel}
+
+    var _test_relatedPlaceCount: Int { relatedPlaceTable.numberOfRows(inSection: 0) }
+    var _test_relatedVerseCount: Int { relatedVerseTable.numberOfRows(inSection: 0) }
+
+    var _test_isScrollEnabled: Bool { scrollView.isScrollEnabled }
+    
+    // 사용자 상호작용 시뮬레이션
+    func _test_tapClose() { closeButton.sendActions(for: .touchUpInside) }
+    func _test_tapSave() { saveButton.sendActions(for: .touchUpInside) }
+    func _test_tapLike() { likeButton.sendActions(for: .touchUpInside) }
+    func _test_tapBack() { backButton.sendActions(for: .touchUpInside) }
+    func _test_tapMemo() { memoButton.sendActions(for: .touchUpInside) }
+
+    func _test_selectRelatedPlaceRow(_ row: Int) {
+        let indexPath = IndexPath(row: row, section: 0)
+        relatedPlaceTable.delegate?.tableView?(relatedPlaceTable, didSelectRowAt: indexPath)
+    }
+
+    func _test_selectRelatedVerseRow(_ row: Int) {
+        let indexPath = IndexPath(row: row, section: 0)
+        relatedVerseTable.delegate?.tableView?(relatedVerseTable, didSelectRowAt: indexPath)
+    }
+    
+    func _test_makeVerseCell(row: Int) -> RelatedVerseTableViewCell? {
+            let idx = IndexPath(row: row, section: 0)
+            // dataSource 경유로 VC의 cellForRowAt을 타서 delegate가 VC로 세팅됨
+            return relatedVerseTable.dataSource?
+                .tableView(relatedVerseTable, cellForRowAt: idx) as? RelatedVerseTableViewCell
+    }
+    
+    
+    
+    /// headerBottomBorder 현재 알파
+    var _test_headerBorderAlpha: CGFloat { headerBottomBorder.alpha }
+
+    /// 제목이 단일 라인(말줄임) 상태인지
+    var _test_isTitleSingleLine: Bool {
+        titleLabel.numberOfLines == 1 && titleLabel.lineBreakMode == .byTruncatingTail
+    }
+
+    /// 스크롤 오프셋을 강제로 설정하고 델리게이트를 태움
+    func _test_scroll(toY y: CGFloat) {
+        scrollView.setContentOffset(CGPoint(x: 0, y: y), animated: false)
+        // delegate를 직접 호출(실전과 동일하게 동작하도록)
+        scrollView.delegate?.scrollViewDidScroll?(scrollView)
+    }
+    
+    
+    
+    
+}
+#endif

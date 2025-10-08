@@ -41,7 +41,7 @@ final class DIContainer {
     lazy var authApiService = AuthApiService(apiClient: apiClient, url: env.baseURL.appendingPathComponent("auth").absoluteString)
     lazy var userApiService = UserApiService(apiClient: apiClient, url: env.baseURL.appendingPathComponent("user").absoluteString)
     lazy var placeApiService = PlaceApiService(apiClient: apiClient, url: env.baseURL.absoluteString)
-    lazy var mapApiService = MapApiService(apiClient: apiClient, baseURL: env.geoJSONURL.absoluteString)
+    lazy var mapApiService = MapApiService(apiClient: apiClient, url: env.baseURL.absoluteString)
 
     // Repositories
     lazy var authRepository = AuthRepository(authApiService: authApiService)

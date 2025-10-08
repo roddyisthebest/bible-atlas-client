@@ -56,7 +56,7 @@ final class SearchResultViewModel:SearchResultViewModelProtocol {
 
         let debouncedKeyword$ = keyword$
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .debounce(.microseconds(300), scheduler: schedular)
+            .debounce(.milliseconds(250), scheduler: schedular)
             .distinctUntilChanged()
    
         

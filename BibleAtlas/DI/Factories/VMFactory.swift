@@ -24,7 +24,6 @@ protocol VMFactoryProtocol {
     
     func makeSearchReadyVM() -> SearchReadyViewModelProtocol
     
-    func makeSearchBottomSheetVM() -> SearchBottomSheetViewModelProtocol;
     func makeLoginBottomSheetVM() -> LoginBottomSheetViewModelProtocol
     func makeMyCollectionBottomSheetVM(filter:PlaceFilter) -> MyCollectionBottomSheetViewModelProtocol
     
@@ -38,12 +37,16 @@ protocol VMFactoryProtocol {
     
     func makePlaceCharactersBottomSheetVM() -> PlaceCharactersBottomSheetViewModelProtocol
     
+    func makeBiblesBottomSheetVM() -> BiblesBottomSheetViewModelProtocol
+
     func makePlacesByTypeBottomSheetVM(placeTypeName:PlaceTypeName) -> PlacesByTypeBottomSheetViewModelProtocol
     
     func makePlacesByCharacterBottomSheetVM(character:String) ->
         PlacesByCharacterBottomSheetViewModelProtocol
     
-    func makeBibleVerseDetailBottomSheetVM(keyword:String) ->
+    func makePlacesByBibleBottomSheetVM(bible:BibleBook) -> PlacesByBibleBottomSheetViewModelProtocol
+    
+    func makeBibleVerseDetailBottomSheetVM(bibleBook:BibleBook, keyword:String) ->
         BibleVerseDetailBottomSheetViewModelProtocol
     
     func makeRecentSearchesBottomSheetVM() -> RecentSearchesBottomSheetViewModelProtocol
@@ -56,6 +59,9 @@ protocol VMFactoryProtocol {
     
     func makeReportBottomSheetVM(placeId:String, reportType:PlaceReportType) -> ReportBottomSheetViewModelProtocol
     
+    func makeBibleBookVerseListBottomSheetVM(placeId:String, bibleBook:BibleBook?) -> BibleBookVerseListBottomSheetViewModelProtocol
+    
+    
     func makeMainVM() -> MainViewModelProtocol
     
     
@@ -64,12 +70,12 @@ protocol VMFactoryProtocol {
 
 final class VMFactory:VMFactoryProtocol{
     func makeRecentSearchesBottomSheetVM() -> RecentSearchesBottomSheetViewModelProtocol {
-        let vm = RecentSearchesBottomSheetViewModel(navigator: navigator, recentSearchService: recentSearchService)
+        let vm = RecentSearchesBottomSheetViewModel(navigator: navigator, recentSearchService: recentSearchService, notificationService:  notificationService)
         return vm
     }
     
     func makeHomeContentVM() -> HomeContentViewModelProtocol {
-        let vm = HomeContentViewModel(navigator: navigator, appStore: appStore, collectionStore: collectionStore, userUsecase: usecases?.user, authUseCase: usecases?.auth, recentSearchService: recentSearchService)
+        let vm = HomeContentViewModel(navigator: navigator, appStore: appStore, collectionStore: collectionStore, userUsecase: usecases?.user, authUseCase: usecases?.auth, recentSearchService: recentSearchService, notificationService: notificationService)
         return vm;
     }
     
@@ -83,30 +89,28 @@ final class VMFactory:VMFactoryProtocol{
         return vm
     }
     
-    func makeSearchBottomSheetVM() -> SearchBottomSheetViewModelProtocol {
-        let vm = SearchBottomSheetViewModel(navigator: navigator, placeUsecase: usecases?.place)
+    func makeBibleVerseDetailBottomSheetVM(bibleBook:BibleBook, keyword: String) -> BibleVerseDetailBottomSheetViewModelProtocol {
+        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: bibleBook, keyword: keyword, placeUsecase: usecases?.place)
         return vm
     }
     
-    
-    
-    func makeBibleVerseDetailBottomSheetVM(keyword: String) -> BibleVerseDetailBottomSheetViewModelProtocol {
-        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, keyword: keyword, placeUsecase: usecases?.place)
+    func makeBiblesBottomSheetVM() -> BiblesBottomSheetViewModelProtocol {
+        let vm = BiblesBottomSheetViewModel(navigator: navigator, placeUsecase: usecases?.place, notificationService: notificationService)
         return vm
     }
     
     func makePlaceTypesBottomSheetVM() -> PlaceTypesBottomSheetViewModelProtocol {
-        let vm = PlaceTypesBottomSheetViewModel(navigator: navigator, placeUsecase: usecases?.place);
+        let vm = PlaceTypesBottomSheetViewModel(navigator: navigator, placeUsecase: usecases?.place, notificationService: notificationService);
         return vm
     }
     
     func makePlaceCharactersBottomSheetVM() -> PlaceCharactersBottomSheetViewModelProtocol {
-        let vm = PlaceCharactersBottomSheetViewModel(navigator: navigator,placeUsecase: usecases?.place);
+        let vm = PlaceCharactersBottomSheetViewModel(navigator: navigator,placeUsecase: usecases?.place, notificationService: notificationService);
         return vm;
     }
     
     func makePopularPlacesBottomSheetVM() -> PopularPlacesBottomSheetViewModelProtocol {
-        let vm = PopularPlacesBottomSheetViewModel(navigator: navigator, placeUsecase: usecases?.place)
+        let vm = PopularPlacesBottomSheetViewModel(navigator: navigator, placeUsecase: usecases?.place, notificationService: notificationService)
         return vm;
     }
     
@@ -129,7 +133,7 @@ final class VMFactory:VMFactoryProtocol{
     }
     
     func makeHomeBottomSheetVM() -> HomeBottomSheetViewModelProtocol {
-        let vm = HomeBottomSheetViewModel(navigator: navigator, appStore: appStore, authUseCase: usecases?.auth, recentSearchService: recentSearchService)
+        let vm = HomeBottomSheetViewModel(navigator: navigator, appStore: appStore, authUseCase: usecases?.auth, recentSearchService: recentSearchService, notificationService: notificationService)
         return vm;
     }
     
@@ -139,7 +143,7 @@ final class VMFactory:VMFactoryProtocol{
     }
     
     func makeMyCollectionBottomSheetVM(filter:PlaceFilter) -> MyCollectionBottomSheetViewModelProtocol {
-        let vm = MyCollectionBottomSheetViewModel(navigator: navigator, filter: filter, userUsecase: usecases?.user);
+        let vm = MyCollectionBottomSheetViewModel(navigator: navigator, filter: filter, userUsecase: usecases?.user, notificationService: notificationService);
         return vm;
     }
     
@@ -159,14 +163,21 @@ final class VMFactory:VMFactoryProtocol{
     }
     
     func makePlacesByTypeBottomSheetVM(placeTypeName:PlaceTypeName) -> PlacesByTypeBottomSheetViewModelProtocol {
-        let vm = PlacesByTypeBottomSheetViewModel(navigator:navigator, placeUsecase: usecases?.place, placeTypeName:placeTypeName)
+        let vm = PlacesByTypeBottomSheetViewModel(navigator:navigator, placeUsecase: usecases?.place, placeTypeName:placeTypeName, notificationService: notificationService)
         return vm;
     }
     
     func makePlacesByCharacterBottomSheetVM(character: String) -> PlacesByCharacterBottomSheetViewModelProtocol {
-        let vm = PlacesByCharacterBottomSheetViewModel(navigator: navigator, character: character,placeUsecase: usecases?.place);
+        let vm = PlacesByCharacterBottomSheetViewModel(navigator: navigator, character: character,placeUsecase: usecases?.place, notificationService: notificationService);
         return vm;
     }
+    
+    func makePlacesByBibleBottomSheetVM(bible:BibleBook) -> PlacesByBibleBottomSheetViewModelProtocol{
+        let vm = PlacesByBibleBottomSheetViewModel(navigator: navigator, bible: bible, placeUsecase: usecases?.place, notificationService: notificationService)
+        return vm
+    }
+
+    
     
     func makeMyPageBottomSheetVM() -> MyPageBottomSheetViewModelProtocol {
         let vm = MyPageBottomSheetViewModel(navigator: navigator, appStore: appStore)
@@ -182,6 +193,11 @@ final class VMFactory:VMFactoryProtocol{
         let vm = ReportBottomSheetViewModel(navigator: navigator, reportType: reportType, placeUsecase: usecases?.place, placeId: placeId)
         
         return vm;
+    }
+    
+    func makeBibleBookVerseListBottomSheetVM(placeId:String, bibleBook:BibleBook?) -> BibleBookVerseListBottomSheetViewModelProtocol{
+        let vm = BibleBookVerseListBottomSheetViewModel(navigator: navigator, placeId: placeId, bibleBook: bibleBook, placeUsecase: usecases?.place)
+        return vm
     }
     
     func makeMainVM() -> MainViewModelProtocol {

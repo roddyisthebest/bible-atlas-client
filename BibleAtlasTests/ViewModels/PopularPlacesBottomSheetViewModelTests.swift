@@ -20,11 +20,12 @@ final class PopularPlacesBottomSheetViewModelTests: XCTestCase {
     private var navigator: MockBottomSheetNavigator!
     private var disposeBag:DisposeBag!
     private var scheduler: TestScheduler!
+    private var notificationService: MockNotificationService!
 
     private let places:[Place] = [
-        Place(id: "test", name: "test", isModern: true, description: "hello", koreanDescription: "test", stereo: .parent, likeCount: 5, types: [PlaceType(id: 3, name: .altar)]),
-        Place(id: "test1", name: "test", isModern: true, description: "hello", koreanDescription: "test", stereo: .parent, likeCount: 5, types: [PlaceType(id: 3, name: .altar)]),
-        Place(id: "test2", name: "test", isModern: true, description: "hello", koreanDescription: "test", stereo: .parent, likeCount: 5, types: [PlaceType(id: 3, name: .altar)])
+        Place(id: "test", name: "test", koreanName: "테스트", isModern: true, description: "hello", koreanDescription: "test", stereo: .parent, likeCount: 5, types: [PlaceType(id: 3, name: .altar)]),
+        Place(id: "test1", name: "test", koreanName: "테스트", isModern: true, description: "hello", koreanDescription: "test", stereo: .parent, likeCount: 5, types: [PlaceType(id: 3, name: .altar)]),
+        Place(id: "test2", name: "test", koreanName: "테스트", isModern: true, description: "hello", koreanDescription: "test", stereo: .parent, likeCount: 5, types: [PlaceType(id: 3, name: .altar)])
     ]
     
     override func setUp(){
@@ -33,6 +34,7 @@ final class PopularPlacesBottomSheetViewModelTests: XCTestCase {
         self.navigator = MockBottomSheetNavigator();
         self.disposeBag = DisposeBag();
         self.scheduler = TestScheduler(initialClock: 0)
+        self.notificationService = MockNotificationService()
     }
     
     func test_viewLoaded_success_replacesPlaces_setsLoadingFalse_clearsError_updatesTotal(){
@@ -43,7 +45,7 @@ final class PopularPlacesBottomSheetViewModelTests: XCTestCase {
         placeUsecase.completedExp = exp;
         placeUsecase.resultToReturn = result;
         
-        let vm = PopularPlacesBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase);
+        let vm = PopularPlacesBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase, notificationService: notificationService);
         
         let viewLoaded$ = PublishRelay<Void>();
         
@@ -98,7 +100,7 @@ final class PopularPlacesBottomSheetViewModelTests: XCTestCase {
         placeUsecase.completedExp = exp;
         placeUsecase.resultToReturn = result;
         
-        let vm = PopularPlacesBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase);
+        let vm = PopularPlacesBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase, notificationService:notificationService);
         
         let viewLoaded$ = PublishRelay<Void>();
         
@@ -155,7 +157,7 @@ final class PopularPlacesBottomSheetViewModelTests: XCTestCase {
         placeUsecase.completedExp = exp;
         placeUsecase.resultToReturn = result;
         
-        let vm = PopularPlacesBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase, schedular: scheduler);
+        let vm = PopularPlacesBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase, schedular: scheduler, notificationService: notificationService);
         
         let viewLoaded$ = PublishRelay<Void>();
         let bottomReached$ = PublishRelay<Void>();
@@ -225,7 +227,7 @@ final class PopularPlacesBottomSheetViewModelTests: XCTestCase {
             0.2    // 다음 페이지 로드는 200ms 지연 -> 이 동안 연타 무시 검증
         ]
 
-        let vm = PopularPlacesBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase, schedular: scheduler)
+        let vm = PopularPlacesBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase, schedular: scheduler, notificationService: notificationService)
 
         let viewLoaded$    = PublishRelay<Void>()
         let bottomReached$ = PublishRelay<Void>()
@@ -309,7 +311,7 @@ final class PopularPlacesBottomSheetViewModelTests: XCTestCase {
         
         placeUsecase.resultToReturn =  .success(ListResponse(total: 10, page: 0, limit: 15, data: []))
 
-        let vm = PopularPlacesBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase, schedular: scheduler)
+        let vm = PopularPlacesBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase, schedular: scheduler, notificationService: notificationService)
 
 
         let viewLoaded$ = PublishRelay<Void>()
@@ -372,7 +374,7 @@ final class PopularPlacesBottomSheetViewModelTests: XCTestCase {
     
     func test_cellSelected_presentsPlaceDetail(){
         
-        let vm = PopularPlacesBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase);
+        let vm = PopularPlacesBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase, notificationService: notificationService);
         
         let cellSelected$ = PublishRelay<String>();
         
@@ -388,7 +390,7 @@ final class PopularPlacesBottomSheetViewModelTests: XCTestCase {
     }
     
     func test_closeButtonTapped_dismisses(){
-        let vm = PopularPlacesBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase);
+        let vm = PopularPlacesBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase, notificationService: notificationService);
         
         let closeButtonTapped$ = PublishRelay<Void>();
         
@@ -403,7 +405,7 @@ final class PopularPlacesBottomSheetViewModelTests: XCTestCase {
     private func makePlaces(count: Int, start: Int) -> [Place] {
         return (0..<count).map { i in
             Place(    id: "p\(start + i)",
-                      name: "Place \(start + i)", isModern: false, description: "hallo", koreanDescription: "안녕", stereo: .child, verse: "ㅁㄴ", likeCount: 22, unknownPlacePossibility: 12, types: [PlaceType(id: 1, name: .altar)], childRelations: [], parentRelations: [], isLiked: false, isSaved: false, memo: nil, imageTitle: nil)
+                      name: "Place \(start + i)", koreanName: "테스트2", isModern: false, description: "hallo", koreanDescription: "안녕", stereo: .child, verse: "ㅁㄴ", likeCount: 22, unknownPlacePossibility: 12, types: [PlaceType(id: 1, name: .altar)], childRelations: [], parentRelations: [], isLiked: false, isSaved: false, memo: nil, imageTitle: nil)
         }
     }
 

@@ -12,4 +12,6 @@ extension Notification.Name {
     static let fetchGeoJsonRequired = Notification.Name("fetchGeoJsonRequired")
     static let resetGeoJson = Notification.Name("resetGeoJson")
     static let fetchPlaceRequired = Notification.Name("fetchPlaceRequired")
+    static let sheetCommand = Notification.Name("sheetCommand")
 }
+

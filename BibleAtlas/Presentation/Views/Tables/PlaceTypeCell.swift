@@ -11,7 +11,7 @@ class PlaceTypeCell: UICollectionViewCell {
     static let identifier = "placeTypeCell"
     
     private lazy var containerStackView = {
-        let sv = UIStackView(arrangedSubviews: [iconWrapper, nameLabel,  numberLabel]);
+        let sv = UIStackView(arrangedSubviews: [iconWrapper, nameLabel, numberLabel]);
         sv.axis = .vertical;
         sv.distribution = .fill;
         sv.alignment = .center;
@@ -31,6 +31,7 @@ class PlaceTypeCell: UICollectionViewCell {
     
     private let placeIcon:UIImageView = {
         let icon = UIImageView(image: UIImage(named: "ground"));
+        icon.contentMode = .scaleAspectFit
         return icon;
     }()
     
@@ -61,7 +62,7 @@ class PlaceTypeCell: UICollectionViewCell {
     func setPlace(placeType:PlaceTypeWithPlaceCount){
         nameLabel.text = placeType.name.rawValue;
         placeIcon.image = UIImage(named: placeType.name.rawValue);
-        numberLabel.text =  "\(placeType.placeCount) Places"
+        numberLabel.text =  L10n.Common.placesCount(placeType.placeCount)
     }
     
     
@@ -93,7 +94,7 @@ class PlaceTypeCell: UICollectionViewCell {
         
         placeIcon.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.width.height.equalTo(30)
+            make.width.height.equalToSuperview()
         }
     }
     

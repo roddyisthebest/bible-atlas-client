@@ -9,6 +9,11 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+enum SheetCommand {
+    case forceMedium        // medium으로 접어
+    case restoreDetents     // 원래 detents 복구
+}
+
 
 protocol RxNotificationServiceProtocol:AnyObject {
     func post(_ name: Notification.Name, object: Any?)
@@ -25,3 +30,4 @@ final class RxNotificationService: RxNotificationServiceProtocol {
         NotificationCenter.default.rx.notification(name)
     }
 }
+

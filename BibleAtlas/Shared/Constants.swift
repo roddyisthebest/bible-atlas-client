@@ -12,6 +12,6 @@ final class Constants {
 
     private init() {}
 
-    let url: String = "http://localhost:4343"
+    let url: String = "http://192.168.123.107:4343"
     let geoJsonUrl: String = "https://a.openbible.info/geo/data"
 }

@@ -16,6 +16,10 @@ import RxBlocking
 
 
 final class MockPlaceusecase: PlaceUsecaseProtocol {
+    func getBibleBookCounts() async -> Result<BibleAtlas.ListResponse<BibleAtlas.BibleBookCount>, BibleAtlas.NetworkError> {
+        return .failure(.clientError("not-implemented"))
+    }
+    
 
     var resultToReturn: Result<ListResponse<Place>, NetworkError>?
     var resultsQueue: [Result<ListResponse<Place>, NetworkError>] = []
@@ -124,8 +128,9 @@ final class MockPlaceusecase: PlaceUsecaseProtocol {
         return .failure(.clientError("not-implemented"))
     }
 
+    var parsedBible:[Bible]?
     // 파서
-    func parseBible(verseString: String?) -> [Bible] { return [] }
+    func parseBible(verseString: String?) -> [Bible] { return parsedBible ?? [] }
 
     // MARK: - 토글 저장/좋아요
     var saveResultToReturn: Result<TogglePlaceSaveResponse, NetworkError>?

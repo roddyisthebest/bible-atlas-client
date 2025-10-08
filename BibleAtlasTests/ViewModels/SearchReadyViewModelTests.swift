@@ -42,9 +42,9 @@ final class SearchReadyViewModelTests: XCTestCase {
                                              recentSearchService: nil)
 
         let mockPlaces = [
-            Place(id: "12345", name: "test2", isModern: true, description: "test2",
+            Place(id: "12345", name: "test2", koreanName: "테스트2", isModern: true, description: "test2",
                   koreanDescription: "테스트2", stereo: .child, likeCount: 2, types: []),
-            Place(id: "1234", name: "test", isModern: true, description: "test",
+            Place(id: "1234", name: "test", koreanName: "테스트2", isModern: true, description: "test",
                   koreanDescription: "테스트", stereo: .child, likeCount: 1, types: [])
         ]
 
@@ -159,11 +159,11 @@ final class SearchReadyViewModelTests: XCTestCase {
     func test_init_loads_recentSearches_immediately(){
         
         mockRecentSearchService.resultToReturn = .success(RecentSearchFetchResult(items:[
-        RecentSearchItem(id: "test1", name: "test", type: "test"),
-        RecentSearchItem(id: "test2", name: "test", type: "test"),
-        RecentSearchItem(id: "test3", name: "test", type: "test"),
-        RecentSearchItem(id: "test4", name: "test", type: "test"),
-        RecentSearchItem(id: "test5", name: "test", type: "test"),
+            RecentSearchItem(id: "test1", name: "test", koreanName: "테스트1", type: "test"),
+            RecentSearchItem(id: "test2", name: "test", koreanName: "테스트2", type: "test"),
+            RecentSearchItem(id: "test3", name: "test", koreanName: "테스트3", type: "test"),
+            RecentSearchItem(id: "test4", name: "test", koreanName: "테스트4", type: "test"),
+            RecentSearchItem(id: "test5", name: "test", koreanName: "테스트5", type: "test"),
         ],total:5, page:0))
         
         let viewModel = SearchReadyViewModel(navigator: mockNavigator, placeUsecase: mockPlaceUsecase, recentSearchService: mockRecentSearchService)

@@ -56,6 +56,7 @@ final class MockNotificationService: RxNotificationServiceProtocol {
 
     // 테스트용 추적
     var calledNotificationName: Notification.Name?
+    var calledNotificationNames: [Notification.Name] = []
 
     // 이름별 Subject 풀
     private var subjects: [Notification.Name: PublishSubject<Notification>] = [:]
@@ -71,6 +72,7 @@ final class MockNotificationService: RxNotificationServiceProtocol {
     // 실제 트리거: observe 구독자들에게 이벤트 전달
     func post(_ name: Notification.Name, object: Any?) {
         calledNotificationName = name
+        calledNotificationNames.append(name)
         subject(for: name).onNext(Notification(name: name, object: object))
     }
 
@@ -131,7 +133,7 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
         
         let localButtonTapped$ = PublishRelay<Void>()
         
-        let _ = viewModel.transform(input: LoginBottomSheetViewModel.Input(localButtonTapped$: localButtonTapped$.asObservable(), googleTokenReceived$: .empty(), appleTokenReceived$: .empty()))
+        let _ = viewModel.transform(input: LoginBottomSheetViewModel.Input(localButtonTapped$: localButtonTapped$.asObservable(), googleTokenReceived$: .empty(), appleTokenReceived$: .empty(), closeButtonTapped$: .empty()))
         
         let stateExpectation = XCTestExpectation(description: "appStore state updated")
         
@@ -170,7 +172,7 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
         let output = vm.transform(input: .init(
             localButtonTapped$: localButtonTapped$.asObservable(),
             googleTokenReceived$: .empty(),
-            appleTokenReceived$: .empty()
+            appleTokenReceived$: .empty(), closeButtonTapped$: .empty()
         ))
 
         let exp = expectation(description: "error emitted")
@@ -198,7 +200,7 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
         
         let googleTokenReceived$ = PublishRelay<String?>();
         
-        let output = viewModel.transform(input: LoginBottomSheetViewModel.Input(localButtonTapped$: .empty(), googleTokenReceived$: googleTokenReceived$.asObservable(), appleTokenReceived$: .empty()))
+        let output = viewModel.transform(input: LoginBottomSheetViewModel.Input(localButtonTapped$: .empty(), googleTokenReceived$: googleTokenReceived$.asObservable(), appleTokenReceived$: .empty(), closeButtonTapped$: .empty()))
         
         
         

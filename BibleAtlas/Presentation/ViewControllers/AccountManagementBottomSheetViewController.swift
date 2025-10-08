@@ -32,7 +32,7 @@ final class AccountManagementBottomSheetViewController: UIViewController {
         return sv;
     }()
     
-    private let headerLabel = HeaderLabel(text: "Account Settings");
+    private let headerLabel = HeaderLabel(text: L10n.AccountManagement.title);
     
     private let closeButton = CircleButton(iconSystemName: "xmark")
     
@@ -157,21 +157,20 @@ final class AccountManagementBottomSheetViewController: UIViewController {
             .observe(on: MainScheduler.instance)
             .compactMap { $0 }
             .bind{ [weak self] error in
-            self?.showErrorAlert(message: error?.description)
+                self?.showErrorAlert(message: error?.description ?? L10n.Common.defaultErrorMessage)
         }.disposed(by: disposeBag)
         
     }
     
     private func showWithdrawalAlert() {
         let alert = UIAlertController(
-            title: "정말 탈퇴하시겠어요?",
-            message: "회원 정보를 포함한 모든 데이터가 삭제됩니다.",
-            preferredStyle: .alert
-        )
+              title: L10n.AccountManagement.withdrawConfirmTitle,
+              message: L10n.AccountManagement.withdrawConfirmMessage,
+              preferredStyle: .alert
+          )
         
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-        
-        alert.addAction(UIAlertAction(title: "탈퇴", style: .destructive) { [weak self] _ in
+        alert.addAction(UIAlertAction(title: L10n.Common.cancel, style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: L10n.AccountManagement.withdraw, style: .destructive) { [weak self] _ in
             self?.withdrawConfirmButtonTapped$.accept(())
         })
         
@@ -181,12 +180,12 @@ final class AccountManagementBottomSheetViewController: UIViewController {
     
     private func showWithdrawalCompleteAlert() {
         let alert = UIAlertController(
-            title: "탈퇴 완료",
-            message: "회원 탈퇴가 정상적으로 처리되었습니다.",
-            preferredStyle: .alert
-        )
+              title: L10n.AccountManagement.withdrawCompleteTitle,
+              message: L10n.AccountManagement.withdrawCompleteMessage,
+              preferredStyle: .alert
+          )
 
-        alert.addAction(UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+        alert.addAction(UIAlertAction(title: L10n.Common.ok, style: .default) { [weak self] _ in
             self?.withdrawCompleteConfirmButtonTapped$.accept(())
         })
 

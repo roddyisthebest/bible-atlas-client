@@ -81,7 +81,7 @@ class PlaceTableViewCell: UITableViewCell {
         
         placeIcon.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.width.height.equalTo(25)
+            make.width.height.equalToSuperview()
         }
         
         backgroundColor = .mainItemBkg;
@@ -111,8 +111,8 @@ class PlaceTableViewCell: UITableViewCell {
     
     func setPlace(place:Place){
         
-        titleLabel.text = place.name;
-        descriptionLabel.text = place.description;
+        titleLabel.text = L10n.isEnglish ? place.name: place.koreanName;
+        descriptionLabel.text = L10n.isEnglish ? place.description: place.koreanDescription;
 
         let hasOneType = place.types.count == 1;
         

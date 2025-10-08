@@ -16,6 +16,7 @@ struct PlaceParameters {
     var name:String?
     var prefix:String?
     var sort:PlaceSort?
+    var bible:BibleBook?
 }
 
 protocol PlaceApiServiceProtocol {
@@ -24,6 +25,8 @@ protocol PlaceApiServiceProtocol {
     func getPlacesWithRepresentativePoint() async -> Result<ListResponse<Place>, NetworkError>
     func getPlaceTypes(limit:Int?, page:Int?) async -> Result<ListResponse<PlaceTypeWithPlaceCount>,NetworkError>
     func getPrefixs() async -> Result<ListResponse<PlacePrefix>,NetworkError>
+    func getBibleBookCounts() async -> Result<ListResponse<BibleBookCount>,NetworkError>
+
     func getPlace(placeId:String) async -> Result<Place,NetworkError>
     func getRelatedUserInfo(placeId: String) async -> Result<RelatedUserInfo, NetworkError>
     func toggleSave(placeId:String) async -> Result<TogglePlaceSaveResponse, NetworkError>
@@ -66,9 +69,8 @@ final public class PlaceApiService: PlaceApiServiceProtocol{
             "prefix": parameters.prefix,
             "placeTypes": parameters.placeTypeName?.rawValue,
             "sort": parameters.sort?.rawValue,
+            "bibleBook":parameters.bible?.rawValue
         ]
-        
-        
 
         let params: Parameters = rawParams.reduce(into: [:]) { result, pair in
             if let value = pair.value {
@@ -102,6 +104,10 @@ final public class PlaceApiService: PlaceApiServiceProtocol{
         return await apiClient.getData(url: "\(url)/place/prefix-count", parameters: nil);
     }
     
+    func getBibleBookCounts() async ->  Result<ListResponse<BibleBookCount>,NetworkError> {
+        return await apiClient.getData(url:"\(url)/place/bible-book-count", parameters: nil)
+    }
+    
     
     func getPlace(placeId: String) async -> Result<Place, NetworkError> {
         return await apiClient.getData(url: "\(url)/place/\(placeId)", parameters: nil)
@@ -121,8 +127,10 @@ final public class PlaceApiService: PlaceApiServiceProtocol{
     
     
     func getBibleVerse(version:BibleVersion, book:String, chapter:String, verse:String) async -> Result<BibleVerseResponse, NetworkError> {
-        
-   
+            
+        print(chapter,"chapter")
+        print(verse,"verse")
+
         let params: Parameters = [
             "version": version.rawValue,
             "book": book,

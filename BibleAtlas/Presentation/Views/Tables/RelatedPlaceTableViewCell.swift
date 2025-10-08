@@ -50,7 +50,10 @@ class RelatedPlaceTableViewCell: UITableViewCell {
     private lazy var titleContainer = {
         let v = UIView();
         v.addSubview(titleLabel);
+        v.addSubview(stereoBadge)
         v.addSubview(percentBadge)
+
+        
         return v;
     }()
 
@@ -63,16 +66,31 @@ class RelatedPlaceTableViewCell: UITableViewCell {
         label.text = "정말 정말 긴 "
         return label
     }()
-
+    
     private let percentBadge: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("100%", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 12, weight: .semibold)
-        button.backgroundColor = .oneHunnitPercentBadgeBkg
+        button.backgroundColor = .badge100
         button.layer.cornerRadius = 8
         button.layer.masksToBounds = true
         button.isUserInteractionEnabled = false
+        return button
+    }()
+    
+    private let stereoBadge: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle(L10n.PlaceDetail.ancient, for: .normal)
+        button.setTitleColor(.ancientBadgeText, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 12, weight: .semibold)
+        button.backgroundColor = .ancientBadgeBkg
+        button.layer.cornerRadius = 8
+        button.layer.masksToBounds = true
+     
+        button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8) // ✅ 내부 패딩
+
+
         return button
     }()
     
@@ -110,8 +128,15 @@ class RelatedPlaceTableViewCell: UITableViewCell {
             make.trailing.lessThanOrEqualToSuperview()
         }
         
-        percentBadge.snp.makeConstraints { make in
+        stereoBadge.snp.makeConstraints { make in
             make.leading.equalTo(titleLabel.snp.trailing).offset(5)
+            make.centerY.equalToSuperview()
+            make.trailing.lessThanOrEqualToSuperview()
+            make.height.equalTo(20)
+        }
+        
+        percentBadge.snp.makeConstraints { make in
+            make.leading.equalTo(stereoBadge.snp.trailing).offset(5)
             make.centerY.equalToSuperview()
             make.trailing.lessThanOrEqualToSuperview()
             make.width.equalTo(40)
@@ -144,12 +169,48 @@ class RelatedPlaceTableViewCell: UITableViewCell {
         titleLabel.text = text
     }
     
+    func setPercentageBadge(relation:PlaceRelation){
+        percentBadge.setTitle("\(relation.possibility)%", for: .normal)
+        
+        switch(relation.possibility){
+            case 100:
+                percentBadge.backgroundColor = .badge100
+                return
+           case 70...99:
+                percentBadge.backgroundColor = .badge90to70
+                return
+           case 40...69:
+                percentBadge.backgroundColor = .badge60to40
+                return
+           default:
+                percentBadge.backgroundColor = .badge30to0
+                return
+           }
+
+    }
+    
+    func setStereoBadge(relation:PlaceRelation){
+        if(relation.place.isModern){
+            stereoBadge.backgroundColor = .modernBadgeBkg
+            stereoBadge.setTitleColor(.modernBadgeText, for: .normal)
+            stereoBadge.setTitle(L10n.PlaceDetail.modern, for: .normal)
+        }
+        else{
+            stereoBadge.backgroundColor = .ancientBadgeBkg
+            stereoBadge.setTitleColor(.ancientBadgeText, for: .normal)
+            stereoBadge.setTitle(L10n.PlaceDetail.ancient, for: .normal)
+
+        }
+    }
+    
     func setRelation(relation:PlaceRelation){
         
-        titleLabel.text = relation.place.name;
-        descriptionLabel.text = relation.place.description;
+        titleLabel.text = L10n.isEnglish ? relation.place.name: relation.place.koreanName;
+        descriptionLabel.text = L10n.isEnglish ? relation.place.description : relation.place.koreanDescription;
         
-        percentBadge.setTitle("\(relation.possibility)%", for: .normal)
+        setPercentageBadge(relation: relation)
+        setStereoBadge(relation: relation)
+        
         
         let hasOneType = relation.place.types.count == 1;
 
@@ -161,6 +222,7 @@ class RelatedPlaceTableViewCell: UITableViewCell {
         }
         
         placeIcon.image = UIImage(named:"ground")
+        
         
     }
 

@@ -22,6 +22,7 @@ class RecentSearchesBottomSheetViewController: UIViewController {
     
     private var recentSearches:[RecentSearchItem] = [];
     
+    private var myDetents:[UISheetPresentationController.Detent] = []
     
     
     private lazy var headerStackView = {
@@ -43,11 +44,11 @@ class RecentSearchesBottomSheetViewController: UIViewController {
     }()
     
     
-    private let headerLabel = HeaderLabel(text: "Recent Search");
+    private let headerLabel = HeaderLabel(text: L10n.RecentSearches.title);
     
     private let allClearButton = {
         let button = UIButton();
-        button.setTitle("Clear All", for: .normal)
+        button.setTitle(L10n.RecentSearches.clearAll, for: .normal)
         button.setTitleColor(.primaryBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15);
         return button;
@@ -77,7 +78,7 @@ class RecentSearchesBottomSheetViewController: UIViewController {
     
     private let footerLoadingView = LoadingView(style: .medium);
     
-    private let emptyLabel = EmptyLabel();
+    private let emptyLabel = EmptyLabel(text: L10n.RecentSearches.empty);
     
     private let errorRetryView = ErrorRetryView();
 
@@ -87,7 +88,7 @@ class RecentSearchesBottomSheetViewController: UIViewController {
         view.addSubview(loadingView)
         view.addSubview(emptyLabel)
         view.addSubview(errorRetryView)
-
+        self.myDetents = self.sheetPresentationController?.detents ?? []
     }
     
     
@@ -145,6 +146,27 @@ class RecentSearchesBottomSheetViewController: UIViewController {
                 self?.showErrorAlert(message: error?.description ?? "unknown error")
             }
             .disposed(by: disposeBag)
+        
+        
+        output?.forceMedium$.subscribe(onNext:{
+            @MainActor [weak self] in
+            self?.sheetPresentationController?.animateChanges{
+                
+                self?.sheetPresentationController?.detents = [.medium()]
+                self?.sheetPresentationController?.largestUndimmedDetentIdentifier = .medium
+                self?.sheetPresentationController?.selectedDetentIdentifier = .medium
+            }
+           
+            
+        }).disposed(by: disposeBag)
+        
+        
+        output?.restoreDetents$.subscribe(onNext:{
+            @MainActor [weak self] in
+            self?.sheetPresentationController?.animateChanges{
+                self?.sheetPresentationController?.detents = self?.myDetents ?? []
+            }
+        }).disposed(by: disposeBag)
         
         
         Observable.combineLatest(output!.isInitialLoading$, output!.errorToFetch$, output!.recentSearches$)
@@ -228,7 +250,7 @@ extension RecentSearchesBottomSheetViewController:UITableViewDelegate, UITableVi
             return UITableViewCell()
         }
 
-        cell.setText(text: recentSearches[indexPath.row].name)
+        cell.setText(text: recentSearches[indexPath.row].name, koreanText: recentSearches[indexPath.row].koreanName)
         if indexPath.row == recentSearches.count - 1 {
                cell.separatorInset = UIEdgeInsets(top: 0, left: tableView.bounds.width, bottom: 0, right: 0)
            } else {

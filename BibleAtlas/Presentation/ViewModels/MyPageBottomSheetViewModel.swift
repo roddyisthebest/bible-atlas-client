@@ -19,9 +19,8 @@ final class MyPageBottomSheetViewModel:MyPageBottomSheetViewModelProtocol{
     
     public let menuItems:[MenuItem] =
     [
-        MenuItem(nameText: "계정관리", iconImage: "person.fill", iconBackground: .mainText, bottomSheetType: .accountManagement),
-        MenuItem(nameText: "리포트", iconImage: "exclamationmark.bubble.fill", iconBackground: .primaryRed),
-        MenuItem(nameText:"앱 버전", iconImage: "v.circle.fill", iconBackground: .primaryViolet, contentText: "1.0.0")
+        MenuItem(nameText: L10n.MyPage.accountManagement, iconImage: "person.fill", iconBackground: .mainText, bottomSheetType: .accountManagement),
+        MenuItem(nameText: L10n.MyPage.appVersion, iconImage: "v.circle.fill", iconBackground: .primaryViolet, contentText: "1.0.0")
     ]
     
     private let disposeBag = DisposeBag();

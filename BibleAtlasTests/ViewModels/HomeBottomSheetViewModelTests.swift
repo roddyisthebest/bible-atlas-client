@@ -53,6 +53,8 @@ final class HomeBottomSheetViewModelTests:XCTestCase{
     private var navigator: MockBottomSheetNavigator!
     private var appStore: StubAppStore!
     
+    private var notificationService: MockNotificationService!
+    
     var disposeBag: DisposeBag!
     var scheduler: TestScheduler!
     
@@ -64,6 +66,8 @@ final class HomeBottomSheetViewModelTests:XCTestCase{
         
         navigator = MockBottomSheetNavigator()
         appStore = StubAppStore()
+        
+        notificationService = MockNotificationService()
       
     }
   
@@ -72,7 +76,9 @@ final class HomeBottomSheetViewModelTests:XCTestCase{
             navigator: navigator,
             appStore: appStore,
             authUseCase: nil,
-            recentSearchService: nil
+            recentSearchService: nil,
+            notificationService: notificationService,
+            schedular: scheduler
         )
     }
     
@@ -148,9 +154,15 @@ final class HomeBottomSheetViewModelTests:XCTestCase{
             .disposed(by: disposeBag)
         
         vm.isSearchingMode$.accept(true) // → .searchReady
+        scheduler.start();
+
         vm.keyword$.accept("abc") // → .searching
+        
+        scheduler.start();
+
         vm.isSearchingMode$.accept(false) // → .home
 
+        scheduler.start();
         
         let emitted = observer.events.compactMap { $0.value.element }
         XCTAssertEqual(emitted, [.home, .searchReady, .searching, .home])
@@ -229,6 +241,63 @@ final class HomeBottomSheetViewModelTests:XCTestCase{
         let result = try? output.keywordText$.toBlocking(timeout: 1).first()
         XCTAssertEqual(result, "hello world")
     }
+    
+//    let forceMedium$:Observable<Void>
+//    let restoreDetents$:Observable<Void>
 
+    func test_postCommandSheetWithForceMedium_emitForceMedium(){
+        let vm = makeViewModel()
+        let output = vm.transform(input: .init(
+            avatarButtonTapped$: .empty(),
+            cancelButtonTapped$: .empty(),
+            editingDidBegin$: .empty()
+        ))
+        
+
+        
+        let exp = expectation(description: "forceMedium emit")
+        var isEmitted = false
+        
+        
+        output.forceMedium$.subscribe(onNext:{
+            isEmitted = true
+            exp.fulfill()
+        }).disposed(by: disposeBag)
+        
+        
+        notificationService.post(.sheetCommand, object: SheetCommand.forceMedium)
+        wait(for: [exp])
+
+        XCTAssertTrue(isEmitted)
+        
+    }
+    
+    
+    func test_postCommandSheetWithRestoreDetents_emitRestoreDetents(){
+        let vm = makeViewModel()
+        let output = vm.transform(input: .init(
+            avatarButtonTapped$: .empty(),
+            cancelButtonTapped$: .empty(),
+            editingDidBegin$: .empty()
+        ))
+        
+
+        
+        let exp = expectation(description: "restoreDetents emit")
+        var isEmitted = false
+        
+        
+        output.restoreDetents$.subscribe(onNext:{
+            isEmitted = true
+            exp.fulfill()
+        }).disposed(by: disposeBag)
+        
+        
+        notificationService.post(.sheetCommand, object: SheetCommand.restoreDetents)
+        wait(for: [exp])
+
+        XCTAssertTrue(isEmitted)
+        
+    }
     
 }

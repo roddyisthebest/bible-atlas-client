@@ -17,7 +17,7 @@ final class HomeBottomSheetViewController: UIViewController{
     private let searchReadyViewController: SearchReadyViewController
     private let searchResultViewController: SearchResultViewController
     
-    
+    private var myDetents:[UISheetPresentationController.Detent] = []
     
     private let disposeBag = DisposeBag()
     
@@ -43,7 +43,7 @@ final class HomeBottomSheetViewController: UIViewController{
         let input = UISearchTextField()
         
         input.delegate = self;
-        input.placeholder = "search places..."
+        input.placeholder = L10n.Home.searchPlaceholder
         
         input.font = .systemFont(ofSize: 16)
         
@@ -51,6 +51,7 @@ final class HomeBottomSheetViewController: UIViewController{
         
         input.autocorrectionType = .no
         input.spellCheckingType = .no
+        
         input.translatesAutoresizingMaskIntoConstraints = false
         
         return input
@@ -64,7 +65,7 @@ final class HomeBottomSheetViewController: UIViewController{
         button.backgroundColor = .userAvatarBkg;
         button.layer.cornerRadius = 20;
         button.layer.masksToBounds = true;
-        button.setTitle("로그인", for: .normal)
+        button.setTitle(L10n.Home.login, for: .normal)
         
         button.setTitleColor(.primaryBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 12, weight: .medium)
@@ -85,7 +86,7 @@ final class HomeBottomSheetViewController: UIViewController{
     private let cancelButton = {
         let button =  UIButton(type: .system)
             
-        button.setTitle("Cancel", for: .normal)
+        button.setTitle(L10n.Home.cancel, for: .normal)
         button.setTitleColor(.primaryBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
 
@@ -101,9 +102,8 @@ final class HomeBottomSheetViewController: UIViewController{
 
     private func setupUI(){
         view.addSubview(bodyView);
+        self.myDetents = self.sheetPresentationController?.detents ?? []
     }
-    
-    
     
     private func bindViewModel(){
         let cancelButtonTapped$ = cancelButton.rx.tap.asObservable();
@@ -128,28 +128,12 @@ final class HomeBottomSheetViewController: UIViewController{
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {[weak self] isSearchingMode in
                 guard let self = self, let sheet = self.sheetPresentationController else { return }
-                     if isSearchingMode {
-                         UIView.animate(withDuration: 0.3) {
-                             sheet.animateChanges {
-                                 sheet.selectedDetentIdentifier = .large
-                             }
-                            
-                         }
-                  
-                         
-                         sheet.detents = [.large()]
-       
-                         
-                     } else {
-
+                     if !isSearchingMode {
                          sheet.detents = [.large(), .medium(), lowDetent]
-                         
-                         
+                         myDetents =  [.large(), .medium(), lowDetent]
                          self.searchTextField.resignFirstResponder()
-                         UIView.animate(withDuration: 0.3) {
-                             sheet.animateChanges {
-                                 sheet.selectedDetentIdentifier = .medium
-                             }
+                         sheet.animateChanges {
+                             sheet.selectedDetentIdentifier = .medium
                          }
                          
                      }
@@ -159,8 +143,7 @@ final class HomeBottomSheetViewController: UIViewController{
         
         output?.screenMode$
             .distinctUntilChanged()
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] mode in
+            .subscribe(onNext: { @MainActor [weak self] mode in
                 guard let self = self else { return }
                 switch mode {
                 case .home:
@@ -180,6 +163,27 @@ final class HomeBottomSheetViewController: UIViewController{
             .disposed(by: disposeBag)
         
 
+            
+        output?.forceMedium$.subscribe(onNext:{
+            @MainActor [weak self] in
+            self?.sheetPresentationController?.animateChanges{
+                
+                self?.sheetPresentationController?.detents = [.medium()]
+                self?.sheetPresentationController?.largestUndimmedDetentIdentifier = .medium
+                self?.sheetPresentationController?.selectedDetentIdentifier = .medium
+            }
+           
+            
+        }).disposed(by: disposeBag)
+        
+        
+        output?.restoreDetents$.subscribe(onNext:{
+            @MainActor [weak self] in
+            self?.sheetPresentationController?.animateChanges{
+                self?.sheetPresentationController?.detents = self?.myDetents ?? []
+            }
+        }).disposed(by: disposeBag)
+        
         
         Observable
             .combineLatest(output!.isLoggedIn$, output!.profile$)
@@ -198,7 +202,8 @@ final class HomeBottomSheetViewController: UIViewController{
                     return
                 }
                 
-                self?.userAvatarButton.setTitle("로그인", for: .normal)
+                let loginText = L10n.Home.login
+                self?.userAvatarButton.setTitle(loginText, for: .normal)
                 self?.userAvatarImageView.isHidden = true
                 
             })
@@ -234,26 +239,44 @@ final class HomeBottomSheetViewController: UIViewController{
         setupUI();
         setupStyle();
         setupConstraints();
-        setupSheet();
         bindViewModel()
-        setupDismissKeyboardOnTap();
+        setupDismissTextFieldOnTap();
+
     }
     
+    
+    private func setupDismissTextFieldOnTap(){
+        let tapGesture = UITapGestureRecognizer(target: self, action:#selector(dismissTextField))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func dismissTextField(){
+        self.searchTextField.resignFirstResponder()
+    }
 
     private func swapToChildVC(_ newVC: UIViewController) {
-        children.forEach {
-            $0.willMove(toParent: nil)
-            $0.view.removeFromSuperview()
-            $0.removeFromParent()
-        }
+        DispatchQueue.main.async{ [weak self] in
+            guard let self = self else {
+                return
+            }
+            children.forEach {
+                $0.willMove(toParent: nil)
+                $0.view.removeFromSuperview()
+                $0.removeFromParent()
+            }
 
-        addChild(newVC)
-        view.insertSubview(newVC.view, belowSubview: headerStackView)
-        newVC.view.snp.makeConstraints { make in
-            make.top.equalTo(headerStackView.snp.bottom).offset(0)
-            make.leading.trailing.bottom.equalToSuperview()
+            addChild(newVC)
+            view.insertSubview(newVC.view, belowSubview: headerStackView)
+            newVC.view.snp.makeConstraints { make in
+                make.top.equalTo(self.headerStackView.snp.bottom).offset(0)
+                make.leading.trailing.bottom.equalToSuperview()
+            }
+            newVC.didMove(toParent: self)
         }
-        newVC.didMove(toParent: self)
+       
+        
+    
     }
     
     
@@ -277,13 +300,6 @@ final class HomeBottomSheetViewController: UIViewController{
         )
 
     }
-    
-    private func setupSheet(){
-//        if let sheet = self.sheetPresentationController {
-//            sheet.delegate = self
-//        }
-    }
-    
     
     private func setupStyle(){
         view.backgroundColor = .mainBkg;
@@ -312,26 +328,108 @@ final class HomeBottomSheetViewController: UIViewController{
         
     }
     
+    private var shouldFocusAfterExpand = false
+    private var shouldFocusOutAfterHide = false
+
 }
 
-
-
-//extension HomeBottomSheetViewController:UISheetPresentationControllerDelegate{
-//    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
-//          let isLarge = sheetPresentationController.selectedDetentIdentifier == .large
-//        homeScrollView.isScrollEnabled = isLarge
-//      }
-//}
 
 
 extension HomeBottomSheetViewController: UITextFieldDelegate {
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        return true
+        return true;
     }
+    
+    // should focus and then keyboard show up?
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        guard let sheet = sheetPresentationController else { return true }
+
+        // 이미 large면 바로 편집
+        if sheet.selectedDetentIdentifier == .large { return true }
+
+        // 1) 먼저 expand
+        shouldFocusAfterExpand = true
+        sheet.animateChanges {
+            sheet.detents = [.large()]
+            sheet.selectedDetentIdentifier = .large
+        }
+
+        // 2) 다음 틱(혹은 약간의 딜레이)에서 포커스
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
+            guard let self = self, self.shouldFocusAfterExpand else { return }
+            textField.becomeFirstResponder()
+            self.shouldFocusAfterExpand = false
+        }
+        return false // 지금은 편집 시작하지 않음(키보드는 아직)
+    }
+    
 }
 
 
 
 
 
+#if DEBUG
+extension HomeBottomSheetViewController {
+    // ====== 읽기 전용 상태 ======
+    /// 현재 child VC의 클래스명 (예: "HomeContentViewController", "SearchReadyViewController", "SearchResultViewController")
+    var _test_currentChildClassName: String? {
+        return children.first.map { String(describing: type(of: $0)) }
+    }
+
+    /// 아바타 버튼/캔슬 버튼 가시성
+    var _test_isUserAvatarHidden: Bool { userAvatarButton.isHidden }
+    var _test_isCancelHidden: Bool { cancelButton.isHidden }
+
+    /// 검색 필드 텍스트
+    var _test_searchText: String? {
+        get { searchTextField.text }
+        set { searchTextField.text = newValue }
+    }
+
+    /// 현재 시트 detent 선택값 (nil이면 시트가 없거나 선택값 없음)
+    var _test_selectedDetentIdentifier: UISheetPresentationController.Detent.Identifier? {
+        sheetPresentationController?.selectedDetentIdentifier
+    }
+
+    /// 현재 시트 detents 개수 (nil이면 시트 없음)
+    var _test_detentsCount: Int? {
+        sheetPresentationController?.detents.count
+    }
+
+    // ====== 사용자 상호작용 시뮬레이터 ======
+    /// Cancel 버튼 탭 시뮬레이션
+    func _test_tapCancel() {
+        cancelButton.sendActions(for: .touchUpInside)
+    }
+
+    /// 아바타 버튼 탭 시뮬레이션
+    func _test_tapAvatar() {
+        userAvatarButton.sendActions(for: .touchUpInside)
+    }
+
+    /// 검색 필드 '편집 시작' 시그널 시뮬레이션
+    func _test_beginEditing() {
+        // delegate 경유 + controlEvent 둘 다 보내 안정적으로 트리거
+//        _ = textFieldShouldBeginEditing(searchTextField)
+        searchTextField.becomeFirstResponder()
+        searchTextField.sendActions(for: .editingDidBegin)
+    }
+
+    /// 검색 필드 '편집 종료' 시그널 시뮬레이션
+    func _test_endEditing() {
+//        _ = textFieldShouldEndEditing(searchTextField)
+        searchTextField.resignFirstResponder()
+        searchTextField.sendActions(for: .editingDidEnd)
+    }
+
+    /// 검색 텍스트 입력 시뮬레이션 (Rx 바인딩 타게 editingChanged 함께 보냄)
+    func _test_typeSearchText(_ text: String) {
+        searchTextField.text = text
+        searchTextField.sendActions(for: .editingChanged)
+    }
+}
+
+#endif

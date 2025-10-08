@@ -62,6 +62,7 @@ final class MyPageBottomSheetViewController: UIViewController {
         label.font = .boldSystemFont(ofSize: 20)
         label.numberOfLines = 1;
         label.lineBreakMode = .byTruncatingTail
+        label.text = L10n.MyPage.guestName
         return label
     }()
     
@@ -72,6 +73,7 @@ final class MyPageBottomSheetViewController: UIViewController {
         label.font = .systemFont(ofSize: 14)
         label.numberOfLines = 1;
         label.lineBreakMode = .byTruncatingTail
+        label.text = L10n.MyPage.emailHidden
         return label
     }()
         
@@ -176,8 +178,8 @@ final class MyPageBottomSheetViewController: UIViewController {
                 return
             }
             self?.setAvatarImage(urlString: profile.avatar)
-            self?.nameLabel.text = profile.name ?? "아무개"
-            self?.emailLabel.text = profile.email
+            self?.nameLabel.text = profile.name ?? L10n.MyPage.guestName
+            self?.emailLabel.text = profile.email ?? L10n.MyPage.emailHidden
             
         }.disposed(by: disposeBag)
         

@@ -1,0 +1,192 @@
+/* 
+  Localizable.strings
+  BibleAtlas
+
+  Created by 배성연 on 9/23/25.
+
+*/
+
+// home
+"Home.SearchPlaceholder" = "장소를 검색하세요…";
+"Home.Login" = "로그인";
+"Home.Cancel" = "취소";
+
+// homeContent
+"HomeContent.Collections" = "컬렉션";
+"HomeContent.Recent" = "최근 검색어";
+"HomeContent.MyGuides" = "내 가이드";
+
+"HomeContent.Favorites" = "좋아요";
+"HomeContent.Bookmarks" = "북마크";
+"HomeContent.Memos" = "메모";
+
+"HomeContent.More" = "더보기";
+"HomeContent.RecentEmpty" = "최근 검색어가 없습니다.";
+
+"HomeContent.ExplorePlaces" = "장소 탐색";
+"HomeContent.ExploreMenu.Title" = "장소 탐색";
+"HomeContent.ExploreMenu.AZ" = "A–Z";
+"HomeContent.ExploreMenu.ByType" = "유형별";
+"HomeContent.ExploreMenu.ByBible" = "성경별";
+
+
+// searchResult
+"SearchResult.Empty" = "장소가 없습니다.";
+"SearchResult.Error.Title" = "오류가 발생했어요";
+"SearchResult.Error.Message" = "장소 목록을 불러오지 못했습니다. 다시 시도해 주세요.";
+
+// searchReady
+"SearchReady.Popular" = "인기 장소";
+"SearchReady.PopularEmpty" = "인기 장소가 없습니다.";
+"SearchReady.Recent" = "최근 검색어";
+"SearchReady.More" = "더보기";
+
+// bibles
+"Bibles.Title" = "성경을 선택하세요.";
+"Bibles.Empty" = "성경 목록이 없습니다.";
+"Bibles.FetchErrorMessage" = "목록을 불러오지 못했습니다. 다시 시도해 주세요.";
+
+// placesByBible
+"PlacesByBible.Title" = "%@에 나오는 장소";
+"PlacesByBible.Empty" = "이 성경에 나오는 장소가 없습니다.";
+
+// common
+"Common.Retry" = "다시 시도";
+"Common.DefaultErrorMessage" = "에러가 발생했습니다.";
+"Common.Close" = "닫기";
+"Common.ErrorTitle" = "오류";
+"Common.Ok" = "확인";
+"Common.Cancel" = "취소";
+"Common.Done" = "완료";
+
+// placeDetail
+"PlaceDetail.Back" = "뒤로";
+"PlaceDetail.PlaceType" = "장소 유형";
+"PlaceDetail.Ancient" = "고대";
+"PlaceDetail.Modern" = "현대";
+
+"PlaceDetail.Description" = "설명";
+"PlaceDetail.RelatedPlaces" = "연관된 장소";
+"PlaceDetail.RelatedPlacesEmpty" = "연관된 장소가 없습니다.";
+"PlaceDetail.RelatedVerses" = "관련 성경 구절";
+"PlaceDetail.RelatedVersesEmpty" = "관련된 성경 구절이 없습니다.";
+
+"PlaceDetail.ReportIssue" = "문제 신고";
+"PlaceDetail.AddMemo" = "메모 추가";
+"PlaceDetail.RequestEdit" = "수정 요청";
+
+"PlaceDetail.ReportMenuTitle" = "문제 신고";
+"PlaceDetail.Report.Spam" = "스팸";
+"PlaceDetail.Report.Inappropriate" = "부적절함";
+"PlaceDetail.Report.FalseInfo" = "허위 정보";
+"PlaceDetail.Report.Other" = "기타";
+
+"PlaceDetail.OK" = "확인";
+"PlaceDetail.LikesFmt" = "좋아요 %d개";
+
+// placeTypes
+"PlaceTypes.Title" = "유형을 선택하세요.";
+"PlaceTypes.Empty" = "장소 타입/유형이 없습니다.";
+
+
+// placeCharacters
+"PlaceCharacters.Title" = "문자를 선택하세요.";
+"PlaceCharacters.Empty" = "선택 가능한 문자가 없습니다.";
+
+// placesByCharacter
+"PlacesByCharacter.Title" = "%@ 기준 정렬";
+"PlacesByCharacter.Empty" = "표시할 장소가 없습니다.";
+
+
+// auth
+"Auth.Title" = "로그인";
+"Auth.Local" = "로컬";
+"Auth.Google" = "구글";
+"Auth.Apple" = "애플";
+"Auth.ContinueWith.Local" = "로컬로 계속";
+"Auth.ContinueWith.Google" = "Google로 계속";
+"Auth.ContinueWith.Apple" = "Apple로 계속";
+
+// memo
+"Memo.AddTitle" = "메모 추가";
+"Memo.UpdateTitle" = "메모 수정";
+"Memo.Delete" = "메모 삭제";
+"Memo.Placeholder" = "메모를 입력하세요...";
+
+
+// myCollection
+"MyCollection.Favorites" = "좋아하는 장소";
+"MyCollection.Memos" = "메모한 장소";
+"MyCollection.Saves" = "저장한 장소";
+"MyCollection.Empty" = "아직 장소가 없어요.";
+
+// placeModification
+"PlaceModification.Title" = "수정 요청";
+"PlaceModification.Success" = "수정이 요청되었습니다.";
+"PlaceModification.Placeholder" = "어떤 부분을 수정해야 하는지 알려주세요.";
+
+
+// recentSearches
+"RecentSearches.Title" = "최근 검색어";
+"RecentSearches.ClearAll" = "전체 삭제";
+"RecentSearches.Empty" = "최근 검색 기록이 없습니다.";
+
+// popularPlaces
+"PopularPlaces.Title" = "인기 장소";
+"PopularPlaces.Empty" = "표시할 인기 장소가 없습니다.";
+
+// myPage
+"MyPage.GuestName" = "아무개";
+"MyPage.EmailHidden" = "이메일 비공개";
+"MyPage.MenuEmpty" = "표시할 메뉴가 없습니다.";
+"MyPageMenu.AccountManagement" = "계정관리";
+"MyPageMenu.AppVersion" = "앱 버전";
+
+
+// accountManagement
+"AccountManagement.Title" = "계정 관리";
+"AccountManagement.ContactSupport" = "고객센터 문의하기";
+"AccountManagement.Logout" = "로그아웃";
+"AccountManagement.Withdraw" = "회원탈퇴";
+
+"AccountManagement.WithdrawConfirmTitle" = "정말 탈퇴하시겠어요?";
+"AccountManagement.WithdrawConfirmMessage" = "회원 정보를 포함한 모든 데이터가 삭제됩니다.";
+"AccountManagement.WithdrawCompleteTitle" = "탈퇴 완료";
+"AccountManagement.WithdrawCompleteMessage" = "회원 탈퇴가 정상적으로 처리되었습니다.";
+
+
+// report
+"Report.Title" = "장소 신고";
+"Report.Success" = "신고가 접수되었습니다.";
+"Report.ReasonPlaceholder" = "문제가 무엇인지 작성해 주세요.";
+
+"ReportType.Spam" = "스팸";
+"ReportType.Inappropriate" = "부적절한 내용";
+"ReportType.HateSpeech" = "혐오 발언";
+"ReportType.FalseInfo" = "거짓 정보";
+"ReportType.PersonalInfo" = "개인정보 노출";
+"ReportType.Etc" = "기타";
+
+
+// appGate
+"AppGate.Retry" = "다시 시도";
+"AppGate.Checking" = "서버 상태를 확인하는 중…";
+"AppGate.Restoring" = "세션을 복원하는 중…";
+"AppGate.Maintenance" = "점검 중입니다.";
+"AppGate.Restricted" = "접근이 제한되었습니다.";
+"AppGate.Timeout" = "요청 시간이 초과되었어요. 네트워크를 확인한 뒤 다시 시도해 주세요.";
+"AppGate.NetworkErrorFmt" = "네트워크 오류: %@";
+
+
+// verseList
+"VerstListSheet.DefaultTitle" = "성경 구절";
+"VerseListSheet.Title" = "%@의 성경 구절";
+"VerseListSheet.SelectBookPrompt" = "책을 선택해주세요.";
+"VerseListSheet.SelectBookMenuTitle" = "성경 선택";
+"VerseListSheet.SearchPlaceholder" = "책 또는 구절 검색";
+"VerseListSheet.Empty" = "표시할 구절이 없습니다.";
+"VerseListSheet.FetchErrorMessage" = "데이터를 불러오지 못했습니다. 잠시 후 다시 시도해주세요.";
+"VerseListSheet.VersesCountFmt" = "%d절";
+"VerseListSheet.BooksCountFmt" = "%d권";
+"VerseListSheet.MoreVersesFmt" = "%d절 더보기";
+"VerseListSheet.MoreBooksFmt" = "%d권 더보기";

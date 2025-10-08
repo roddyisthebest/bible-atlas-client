@@ -26,7 +26,9 @@ final class RecentSearchesBottomSheetViewModel:RecentSearchesBottomSheetViewMode
     private let errorToInteract$ = BehaviorRelay<RecentSearchError?>(value: nil)
 
     private let schedular:SchedulerType
-
+    
+    private var forceMedium$ = PublishRelay<Void>()
+    private var restoreDetents$ = PublishRelay<Void>()
     
     private let isInitialLoading$ = BehaviorRelay<Bool>(value: true);
     private let isFetchingNext$ = BehaviorRelay<Bool>(value: false);
@@ -35,11 +37,34 @@ final class RecentSearchesBottomSheetViewModel:RecentSearchesBottomSheetViewMode
     
     private var pagination = Pagination(pageSize: 15)
 
+    private var notificationService: RxNotificationServiceProtocol?
     
-    init(navigator: BottomSheetNavigator?, recentSearchService: RecentSearchServiceProtocol?, schedular:SchedulerType = MainScheduler.instance) {
+    init(navigator: BottomSheetNavigator?, recentSearchService: RecentSearchServiceProtocol?, schedular:SchedulerType = MainScheduler.instance, notificationService:RxNotificationServiceProtocol?) {
         self.navigator = navigator
         self.recentSearchService = recentSearchService
         self.schedular = schedular
+        self.notificationService = notificationService
+        
+        bindNotificationService()
+    }
+    
+    
+    private func bindNotificationService(){
+        
+        notificationService?.observe(.sheetCommand)
+            .compactMap { $0.object as? SheetCommand }
+            .subscribe(onNext: { [weak self] sheetCommand in
+                
+                switch(sheetCommand){
+                case .forceMedium:
+                    self?.forceMedium$.accept(())
+                case .restoreDetents:
+                    self?.restoreDetents$.accept(())
+                }
+
+            }).disposed(by: disposeBag)
+        
+
     }
     
     func transform(input: Input) -> Output {
@@ -119,7 +144,7 @@ final class RecentSearchesBottomSheetViewModel:RecentSearchesBottomSheetViewMode
             
         }).disposed(by:disposeBag)
         
-        return Output(recentSearches$: recentSearches$.asObservable(), errorToFetch$: errorToFetch$.asObservable(), errorToInteract$: errorToInteract$.asObservable(), isInitialLoading$: isInitialLoading$.asObservable(), isFetchingNext$: isFetchingNext$.asObservable())
+        return Output(recentSearches$: recentSearches$.asObservable(), errorToFetch$: errorToFetch$.asObservable(), errorToInteract$: errorToInteract$.asObservable(), isInitialLoading$: isInitialLoading$.asObservable(), isFetchingNext$: isFetchingNext$.asObservable(), forceMedium$: forceMedium$.asObservable(), restoreDetents$: restoreDetents$.asObservable())
     }
 
     public struct Input {
@@ -137,6 +162,8 @@ final class RecentSearchesBottomSheetViewModel:RecentSearchesBottomSheetViewMode
         let errorToInteract$:Observable<RecentSearchError?>
         let isInitialLoading$:Observable<Bool>
         let isFetchingNext$:Observable<Bool>
+        let forceMedium$:Observable<Void>
+        let restoreDetents$:Observable<Void>
     }
     
     

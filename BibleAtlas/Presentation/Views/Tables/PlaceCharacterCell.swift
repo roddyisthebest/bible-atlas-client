@@ -56,7 +56,7 @@ class PlaceCharacterCell: UICollectionViewCell {
     
     func setPlaceCharacter(placeCharacter:PlacePrefix){
         characterLabel.text = placeCharacter.prefix.uppercased();
-        numberLabel.text = "\(placeCharacter.placeCount) Places"
+        numberLabel.text = L10n.Common.placesCount(Int(placeCharacter.placeCount) ?? 0)
     }
     
 

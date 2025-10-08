@@ -54,7 +54,7 @@ class SearchResultViewController: UIViewController {
     
     private let emptyLabel = {
         let label = UILabel();
-        label.text = "장소가 없습니다."
+        label.text = L10n.SearchResult.empty
         label.textColor = .mainLabelText
         label.font = .boldSystemFont(ofSize: 15)
         label.isHidden = true

@@ -16,6 +16,8 @@ protocol PlaceUsecaseProtocol {
     
     func getPrefixs() async -> Result<ListResponse<PlacePrefix>,NetworkError>
     
+    func getBibleBookCounts() async ->  Result<ListResponse<BibleBookCount>,NetworkError>
+    
     func getPlace(placeId:String) async -> Result<Place,NetworkError>
     
     func getRelatedUserInfo(placeId: String) async -> Result<RelatedUserInfo, NetworkError>
@@ -65,6 +67,10 @@ public struct PlaceUsecase:PlaceUsecaseProtocol{
         return await repository.getPrefixs();
     }
     
+    func getBibleBookCounts() async ->  Result<ListResponse<BibleBookCount>,NetworkError>{
+        return await repository.getBibleBookCounts()
+    }
+    
     func getPlace(placeId: String) async -> Result<Place, NetworkError> {
         return await repository.getPlace(placeId: placeId)
     }
@@ -74,7 +80,7 @@ public struct PlaceUsecase:PlaceUsecaseProtocol{
     }
     
     func parseBible(verseString: String?) -> [Bible] {
-        guard let verseString, !verseString.isEmpty else { return [] }
+        guard let verseString, !verseString.isEmpty, !verseString.trimmingCharacters(in: .whitespaces).isEmpty else { return [] }
         
         let verses = verseString
             .split(separator: ",")
@@ -85,11 +91,11 @@ public struct PlaceUsecase:PlaceUsecaseProtocol{
               }
         
         return grouped.map { book, fullVerses in
-                 let bodyVerses = fullVerses.map {
-                     $0.split(separator: ".").dropFirst().joined(separator: ".")
-                 }
-                 return Bible(bookName: book, verses: bodyVerses)
-             }
+            let bodyVerses = fullVerses.map {
+                $0.split(separator: ".").dropFirst().joined(separator: ".")
+            }
+            return Bible(bookName: BibleBook(parsing: book) ?? .Etc, verses: bodyVerses)
+        }
 
     }
     
