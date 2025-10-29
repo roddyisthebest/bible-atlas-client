@@ -56,6 +56,14 @@ enum PlaceTypeName: String, Decodable {
     case cliff
     case forest
     case room
+    case mine
+    case marsh
+    case plateau
+    case promontory
+    case probabilityCenterNToS = "probability center n-s"
+    case mouthOfRiver = "mouth of river"
+    case fortification = "fortification"
+    
 }
 
 

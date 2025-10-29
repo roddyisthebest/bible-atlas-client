@@ -1,0 +1,21 @@
+//
+//  Debug.xcconfig
+//  BibleAtlas
+//
+//  Created by 배성연 on 10/8/25.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include "Pods/Target Support Files/Pods-BibleAtlas/Pods-BibleAtlas.debug.xcconfig"
+#include "Base.xcconfig"
+
+PRODUCT_BUNDLE_IDENTIFIER = com.seongyeon.bibleatlas.dev
+INFOPLIST_KEY_CFBundleDisplayName = $(PRODUCT_NAME) Debug
+
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) DEBUG_ENV
+
+// 앱에서 읽어 쓸 커스텀 키
+INFOPLIST_KEY_ENV_NAME = debug
+INFOPLIST_KEY_API_BASE_URL = http:/$()/localhost:4343

@@ -357,7 +357,7 @@ extension HomeBottomSheetViewController: UITextFieldDelegate {
         }
 
         // 2) 다음 틱(혹은 약간의 딜레이)에서 포커스
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
+        DispatchQueue.main.async { [weak self] in
             guard let self = self, self.shouldFocusAfterExpand else { return }
             textField.becomeFirstResponder()
             self.shouldFocusAfterExpand = false

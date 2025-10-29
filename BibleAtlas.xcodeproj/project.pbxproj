@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1AA065047DE92DF69959A910 /* Pods_BibleAtlas_BibleAtlasUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA55ABE10F06790553768BDF /* Pods_BibleAtlas_BibleAtlasUITests.framework */; };
 		296CB238BA49943CA6B4BDF2 /* Pods_BibleAtlasTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EA6D60ADC15852CAC915A09 /* Pods_BibleAtlasTests.framework */; };
+		347B4EE5449375177C2F60E3 /* Pods_BibleAtlasUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81B5EBFD3CFA9C36E491E471 /* Pods_BibleAtlasUITests.framework */; };
 		39B9D8CDDF5E2F1957E7A42C /* Pods_BibleAtlas.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC275028A6E0F37DC7A90D5 /* Pods_BibleAtlas.framework */; };
 		EC0F01AF2E7B9AE600D7C216 /* MyPageBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01AE2E7B9AE600D7C216 /* MyPageBottomSheetViewModelTests.swift */; };
 		EC0F01B12E7C261B00D7C216 /* AccountManagementBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01B02E7C261B00D7C216 /* AccountManagementBottomSheetViewModelTests.swift */; };
@@ -54,6 +54,7 @@
 		EC1B2DD12E9634C30073EBE3 /* BibleBookVerseListBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1B2DD02E9634C30073EBE3 /* BibleBookVerseListBottomSheetViewModelTests.swift */; };
 		EC1B2DD32E964A360073EBE3 /* MockBibleBookVerseListBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1B2DD22E964A360073EBE3 /* MockBibleBookVerseListBottomSheetViewModel.swift */; };
 		EC1B2DD52E964A880073EBE3 /* BibleBookVerseListBottomSheetViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1B2DD42E964A880073EBE3 /* BibleBookVerseListBottomSheetViewControllerTests.swift */; };
+		EC1B2DEF2E96B0A90073EBE3 /* Env.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1B2DEE2E96B0A90073EBE3 /* Env.swift */; };
 		EC386DF42E06C4A700251FC6 /* HomeContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF32E06C4A700251FC6 /* HomeContentViewModel.swift */; };
 		EC386DF62E06C60600251FC6 /* SearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF52E06C60600251FC6 /* SearchResultViewModel.swift */; };
 		EC386DF92E06C77A00251FC6 /* HomeContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DF82E06C77A00251FC6 /* HomeContentViewController.swift */; };
@@ -227,13 +228,15 @@
 /* Begin PBXFileReference section */
 		21CCD02993F38A3746EDE812 /* Pods-BibleAtlasTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlasTests.release.xcconfig"; path = "Target Support Files/Pods-BibleAtlasTests/Pods-BibleAtlasTests.release.xcconfig"; sourceTree = "<group>"; };
 		27427E9961F5FEBDD710F748 /* Pods-BibleAtlas-BibleAtlasUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlas-BibleAtlasUITests.debug.xcconfig"; path = "Target Support Files/Pods-BibleAtlas-BibleAtlasUITests/Pods-BibleAtlas-BibleAtlasUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		4E96B6115B0DFDAAB2122F7D /* Pods-BibleAtlasUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlasUITests.debug.xcconfig"; path = "Target Support Files/Pods-BibleAtlasUITests/Pods-BibleAtlasUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		62ED149E4D469D5193C3391F /* Pods-BibleAtlas.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlas.debug.xcconfig"; path = "Target Support Files/Pods-BibleAtlas/Pods-BibleAtlas.debug.xcconfig"; sourceTree = "<group>"; };
+		81B5EBFD3CFA9C36E491E471 /* Pods_BibleAtlasUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BibleAtlasUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EA6D60ADC15852CAC915A09 /* Pods_BibleAtlasTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BibleAtlasTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		93688677BD7F15874DB994F0 /* Pods-BibleAtlas.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlas.release.xcconfig"; path = "Target Support Files/Pods-BibleAtlas/Pods-BibleAtlas.release.xcconfig"; sourceTree = "<group>"; };
 		ADC275028A6E0F37DC7A90D5 /* Pods_BibleAtlas.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BibleAtlas.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B99651049227BE5701E9D126 /* Pods-BibleAtlasTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlasTests.debug.xcconfig"; path = "Target Support Files/Pods-BibleAtlasTests/Pods-BibleAtlasTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CCF5D5F9277B71DAA500A8F2 /* Pods-BibleAtlas-BibleAtlasUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlas-BibleAtlasUITests.release.xcconfig"; path = "Target Support Files/Pods-BibleAtlas-BibleAtlasUITests/Pods-BibleAtlas-BibleAtlasUITests.release.xcconfig"; sourceTree = "<group>"; };
-		DA55ABE10F06790553768BDF /* Pods_BibleAtlas_BibleAtlasUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BibleAtlas_BibleAtlasUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E24E5008FCDE26C1C88C636D /* Pods-BibleAtlasUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlasUITests.release.xcconfig"; path = "Target Support Files/Pods-BibleAtlasUITests/Pods-BibleAtlasUITests.release.xcconfig"; sourceTree = "<group>"; };
 		EC0F01AE2E7B9AE600D7C216 /* MyPageBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
 		EC0F01B02E7C261B00D7C216 /* AccountManagementBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManagementBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
 		EC0F01B22E7C26C500D7C216 /* MockAppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAppCoordinator.swift; sourceTree = "<group>"; };
@@ -280,6 +283,10 @@
 		EC1B2DD02E9634C30073EBE3 /* BibleBookVerseListBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleBookVerseListBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
 		EC1B2DD22E964A360073EBE3 /* MockBibleBookVerseListBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockBibleBookVerseListBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		EC1B2DD42E964A880073EBE3 /* BibleBookVerseListBottomSheetViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleBookVerseListBottomSheetViewControllerTests.swift; sourceTree = "<group>"; };
+		EC1B2DEB2E96ACA80073EBE3 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		EC1B2DEC2E96ACB50073EBE3 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		EC1B2DED2E96ACC00073EBE3 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		EC1B2DEE2E96B0A90073EBE3 /* Env.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Env.swift; sourceTree = "<group>"; };
 		EC386DF32E06C4A700251FC6 /* HomeContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewModel.swift; sourceTree = "<group>"; };
 		EC386DF52E06C60600251FC6 /* SearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewModel.swift; sourceTree = "<group>"; };
 		EC386DF82E06C77A00251FC6 /* HomeContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewController.swift; sourceTree = "<group>"; };
@@ -459,7 +466,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1AA065047DE92DF69959A910 /* Pods_BibleAtlas_BibleAtlasUITests.framework in Frameworks */,
+				347B4EE5449375177C2F60E3 /* Pods_BibleAtlasUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,8 +477,8 @@
 			isa = PBXGroup;
 			children = (
 				ADC275028A6E0F37DC7A90D5 /* Pods_BibleAtlas.framework */,
-				DA55ABE10F06790553768BDF /* Pods_BibleAtlas_BibleAtlasUITests.framework */,
 				8EA6D60ADC15852CAC915A09 /* Pods_BibleAtlasTests.framework */,
+				81B5EBFD3CFA9C36E491E471 /* Pods_BibleAtlasUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -492,6 +499,7 @@
 			isa = PBXGroup;
 			children = (
 				EC0F01DE2E82746500D7C216 /* L10n.swift */,
+				EC1B2DEE2E96B0A90073EBE3 /* Env.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -520,6 +528,16 @@
 				EC0F02052E85362300D7C216 /* AuthorizedApiClientTests.swift */,
 			);
 			path = Clients;
+			sourceTree = "<group>";
+		};
+		EC1B2DEA2E96AC980073EBE3 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				EC1B2DEB2E96ACA80073EBE3 /* Base.xcconfig */,
+				EC1B2DEC2E96ACB50073EBE3 /* Debug.xcconfig */,
+				EC1B2DED2E96ACC00073EBE3 /* Release.xcconfig */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 		EC386DF72E06C74000251FC6 /* HomeBottomSheetVC */ = {
@@ -775,6 +793,7 @@
 		ECA94B8A2D5082B9005B0428 = {
 			isa = PBXGroup;
 			children = (
+				EC1B2DEA2E96AC980073EBE3 /* Config */,
 				EC0F01DB2E826B8E00D7C216 /* Localizable.strings */,
 				EC0F01E82E827CB800D7C216 /* Localizable.stringsdict */,
 				ECA94B952D5082B9005B0428 /* BibleAtlas */,
@@ -1067,6 +1086,8 @@
 				CCF5D5F9277B71DAA500A8F2 /* Pods-BibleAtlas-BibleAtlasUITests.release.xcconfig */,
 				B99651049227BE5701E9D126 /* Pods-BibleAtlasTests.debug.xcconfig */,
 				21CCD02993F38A3746EDE812 /* Pods-BibleAtlasTests.release.xcconfig */,
+				4E96B6115B0DFDAAB2122F7D /* Pods-BibleAtlasUITests.debug.xcconfig */,
+				E24E5008FCDE26C1C88C636D /* Pods-BibleAtlasUITests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1124,7 +1145,6 @@
 				ECA94BB22D5082BA005B0428 /* Sources */,
 				ECA94BB32D5082BA005B0428 /* Frameworks */,
 				ECA94BB42D5082BA005B0428 /* Resources */,
-				81049AA4C914D28F5065C462 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1232,23 +1252,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BibleAtlas/Pods-BibleAtlas-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		81049AA4C914D28F5065C462 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BibleAtlas-BibleAtlasUITests/Pods-BibleAtlas-BibleAtlasUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BibleAtlas-BibleAtlasUITests/Pods-BibleAtlas-BibleAtlasUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BibleAtlas-BibleAtlasUITests/Pods-BibleAtlas-BibleAtlasUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		A1ABF1469C16450CC49E180E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1286,7 +1289,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-BibleAtlas-BibleAtlasUITests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-BibleAtlasUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1391,6 +1394,7 @@
 				EC64B9952DEC595900D3C8A7 /* FooterLoadingReusableView.swift in Sources */,
 				ECD972602E2BA44400D94767 /* AccountManagementBottomSheetViewController.swift in Sources */,
 				EC64B9842DE72C4E00D3C8A7 /* PlaceApiService.swift in Sources */,
+				EC1B2DEF2E96B0A90073EBE3 /* Env.swift in Sources */,
 				EC386DFD2E06F90B00251FC6 /* SearchReadyViewModel.swift in Sources */,
 				EC77CE522DD5C8950030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift in Sources */,
 				EC77CE2E2DCF193D0030DEF5 /* RelatedPlaceTableViewCell.swift in Sources */,
@@ -1686,7 +1690,7 @@
 		};
 		ECA94BC12D5082BA005B0428 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 62ED149E4D469D5193C3391F /* Pods-BibleAtlas.debug.xcconfig */;
+			baseConfigurationReference = EC1B2DEC2E96ACB50073EBE3 /* Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1707,7 +1711,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.seongyeon.BibleAtlas;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1717,7 +1721,7 @@
 		};
 		ECA94BC22D5082BA005B0428 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 93688677BD7F15874DB994F0 /* Pods-BibleAtlas.release.xcconfig */;
+			baseConfigurationReference = EC1B2DED2E96ACC00073EBE3 /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1738,7 +1742,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.seongyeon.BibleAtlas;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1748,7 +1752,7 @@
 		};
 		ECA94BC42D5082BA005B0428 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B99651049227BE5701E9D126 /* Pods-BibleAtlasTests.debug.xcconfig */;
+			baseConfigurationReference = EC1B2DEC2E96ACB50073EBE3 /* Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1768,7 +1772,7 @@
 		};
 		ECA94BC52D5082BA005B0428 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 21CCD02993F38A3746EDE812 /* Pods-BibleAtlasTests.release.xcconfig */;
+			baseConfigurationReference = EC1B2DED2E96ACC00073EBE3 /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1788,7 +1792,7 @@
 		};
 		ECA94BC72D5082BA005B0428 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 27427E9961F5FEBDD710F748 /* Pods-BibleAtlas-BibleAtlasUITests.debug.xcconfig */;
+			baseConfigurationReference = EC1B2DEC2E96ACB50073EBE3 /* Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1806,7 +1810,7 @@
 		};
 		ECA94BC82D5082BA005B0428 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CCF5D5F9277B71DAA500A8F2 /* Pods-BibleAtlas-BibleAtlasUITests.release.xcconfig */;
+			baseConfigurationReference = EC1B2DED2E96ACC00073EBE3 /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

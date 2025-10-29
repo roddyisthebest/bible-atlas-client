@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import PanModal
 
 
 enum BottomSheetType:Equatable {
