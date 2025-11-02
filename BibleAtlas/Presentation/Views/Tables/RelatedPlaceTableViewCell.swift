@@ -118,7 +118,7 @@ class RelatedPlaceTableViewCell: UITableViewCell {
         
         placeIcon.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.width.height.equalTo(20)
+            make.width.height.equalToSuperview()
         }
         
   
@@ -212,16 +212,12 @@ class RelatedPlaceTableViewCell: UITableViewCell {
         setStereoBadge(relation: relation)
         
         
-        let hasOneType = relation.place.types.count == 1;
-
-        if(hasOneType){
-            let placeType = relation.place.types[0];
-            placeIcon.image = UIImage(named: placeType.name.rawValue)
-            
+        guard let placeType = relation.place.types.first else {
+            placeIcon.image = UIImage(named: "ground");
             return;
         }
         
-        placeIcon.image = UIImage(named:"ground")
+        placeIcon.image = UIImage(named: placeType.name.rawValue)
         
         
     }

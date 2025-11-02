@@ -50,7 +50,7 @@ enum PlaceTypeName: String, Decodable {
     case probabilityCenterRadial = "probability center radial"
     case cave
     case stoneHeap = "stone heap"
-    case harb
+    case harbor
     case hall
     case intersection
     case cliff
@@ -63,7 +63,6 @@ enum PlaceTypeName: String, Decodable {
     case probabilityCenterNToS = "probability center n-s"
     case mouthOfRiver = "mouth of river"
     case fortification = "fortification"
-    
 }
 
 
@@ -94,6 +93,8 @@ struct PlaceMemo:Decodable{
 struct Place: Decodable {
     var id: String
     var name: String
+    var anotherNames: String?
+    var anotherKoreanNames: String?
     var koreanName: String
     var isModern: Bool
     var description: String
