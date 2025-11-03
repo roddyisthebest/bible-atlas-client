@@ -168,6 +168,7 @@ final class HomeBottomSheetViewController: UIViewController{
             @MainActor [weak self] in
             self?.sheetPresentationController?.animateChanges{
                 
+                self?.myDetents = self?.sheetPresentationController?.detents ?? []
                 self?.sheetPresentationController?.detents = [.medium()]
                 self?.sheetPresentationController?.largestUndimmedDetentIdentifier = .medium
                 self?.sheetPresentationController?.selectedDetentIdentifier = .medium
@@ -181,6 +182,7 @@ final class HomeBottomSheetViewController: UIViewController{
             @MainActor [weak self] in
             self?.sheetPresentationController?.animateChanges{
                 self?.sheetPresentationController?.detents = self?.myDetents ?? []
+                self?.sheetPresentationController?.selectedDetentIdentifier = self?.myDetents.count ?? 0 > 1 ? .medium : .large
             }
         }).disposed(by: disposeBag)
         
@@ -413,7 +415,7 @@ extension HomeBottomSheetViewController {
     /// 검색 필드 '편집 시작' 시그널 시뮬레이션
     func _test_beginEditing() {
         // delegate 경유 + controlEvent 둘 다 보내 안정적으로 트리거
-//        _ = textFieldShouldBeginEditing(searchTextField)
+        _ = textFieldShouldBeginEditing(searchTextField)
         searchTextField.becomeFirstResponder()
         searchTextField.sendActions(for: .editingDidBegin)
     }
