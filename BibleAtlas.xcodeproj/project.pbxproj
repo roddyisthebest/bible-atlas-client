@@ -61,6 +61,7 @@
 		EC386DFD2E06F90B00251FC6 /* SearchReadyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DFC2E06F90B00251FC6 /* SearchReadyViewModel.swift */; };
 		EC386DFF2E06F95900251FC6 /* SearchReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DFE2E06F95900251FC6 /* SearchReadyViewController.swift */; };
 		EC386E062E0AD31900251FC6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC386E052E0AD31900251FC6 /* GoogleService-Info.plist */; };
+		EC4D070A2EB8E22600C53C35 /* PlaceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4D07092EB8E22600C53C35 /* PlaceType.swift */; };
 		EC64B9522DD838E300D3C8A7 /* TokenProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9512DD838E300D3C8A7 /* TokenProviderProtocol.swift */; };
 		EC64B9582DD8482C00D3C8A7 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9572DD8482C00D3C8A7 /* AppStore.swift */; };
 		EC64B95C2DD9A18D00D3C8A7 /* KeychainTokenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B95B2DD9A18D00D3C8A7 /* KeychainTokenProvider.swift */; };
@@ -292,6 +293,7 @@
 		EC386DFC2E06F90B00251FC6 /* SearchReadyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReadyViewModel.swift; sourceTree = "<group>"; };
 		EC386DFE2E06F95900251FC6 /* SearchReadyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReadyViewController.swift; sourceTree = "<group>"; };
 		EC386E052E0AD31900251FC6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EC4D07092EB8E22600C53C35 /* PlaceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceType.swift; sourceTree = "<group>"; };
 		EC64B9512DD838E300D3C8A7 /* TokenProviderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProviderProtocol.swift; sourceTree = "<group>"; };
 		EC64B9572DD8482C00D3C8A7 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		EC64B95B2DD9A18D00D3C8A7 /* KeychainTokenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainTokenProvider.swift; sourceTree = "<group>"; };
@@ -921,6 +923,7 @@
 				ECD9726C2E307C8A00D94767 /* PlaceReport.swift */,
 				EC0F01B92E7EF4A600D7C216 /* GeoScene.swift */,
 				EC0F01D52E82694C00D7C216 /* BibleBook.swift */,
+				EC4D07092EB8E22600C53C35 /* PlaceType.swift */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -1445,6 +1448,7 @@
 				EC0F01DF2E82746500D7C216 /* L10n.swift in Sources */,
 				EC7058842DB3BAE5002D47DF /* HomeBottomSheetViewController.swift in Sources */,
 				ECA94BA12D5082B9005B0428 /* BibleAtlas.xcdatamodeld in Sources */,
+				EC4D070A2EB8E22600C53C35 /* PlaceType.swift in Sources */,
 				EC64B98D2DEB3ADB00D3C8A7 /* LoadingView.swift in Sources */,
 				EC64B95C2DD9A18D00D3C8A7 /* KeychainTokenProvider.swift in Sources */,
 				EC940E9B2DEF25E300406944 /* ToggleCircleButton.swift in Sources */,

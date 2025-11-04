@@ -87,7 +87,7 @@ class RelatedPlaceTableViewCell: UITableViewCell {
         button.backgroundColor = .ancientBadgeBkg
         button.layer.cornerRadius = 8
         button.layer.masksToBounds = true
-     
+
         button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8) // ✅ 내부 패딩
 
 
@@ -142,6 +142,17 @@ class RelatedPlaceTableViewCell: UITableViewCell {
             make.width.equalTo(40)
             make.height.equalTo(20)
         }
+        
+        // ✅ 우선순위: titleLabel이 가장 먼저 줄어들도록
+         titleLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+         titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+         // ✅ 배지는 가급적 유지되도록 (높은 우선순위)
+         stereoBadge.setContentCompressionResistancePriority(.required, for: .horizontal)
+         stereoBadge.setContentHuggingPriority(.required, for: .horizontal)
+         percentBadge.setContentCompressionResistancePriority(.required, for: .horizontal)
+         percentBadge.setContentHuggingPriority(.required, for: .horizontal)
+        
         
         backgroundColor = .mainItemBkg;
     }

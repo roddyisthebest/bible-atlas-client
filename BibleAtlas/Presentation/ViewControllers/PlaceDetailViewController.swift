@@ -879,12 +879,11 @@ final class PlaceDetailViewController: UIViewController {
             
             self.saveButton.setActive(isActive: place.isSaved ?? false)
             
-            
-      
-            
+         
             guard let placeType = place.types.first else { return }
          
-            self.placeTypeButton.setTitle("\(placeType.name.rawValue)", for: .normal)
+            
+            self.placeTypeButton.setTitle(L10n.isEnglish ? placeType.name.titleEn : placeType.name.titleKo, for: .normal)
             
         }.disposed(by:disposeBag)
         

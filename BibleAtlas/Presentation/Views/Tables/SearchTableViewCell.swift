@@ -99,6 +99,7 @@ final class SearchTableViewCell: UITableViewCell {
 
     func setCotent(recentSearchItem: RecentSearchItem) {
         searchLabel.text = L10n.isEnglish ? recentSearchItem.name : recentSearchItem.koreanName
-        typeLabel.text = recentSearchItem.type
+        let placeTypeName = PlaceTypeName(rawValue: recentSearchItem.type)
+        typeLabel.text = L10n.isEnglish ? placeTypeName?.titleEn : placeTypeName?.titleKo
     }
 }
