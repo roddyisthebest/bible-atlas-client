@@ -25,18 +25,19 @@ final class BibleVerseDetailBottomSheetViewModel: BibleVerseDetailBottomSheetVie
     private let title$ = BehaviorRelay<String?>(value: nil);
     private let bibleBook$ = BehaviorRelay<BibleBook>(value:.Etc)
     
-
+    private let placeName$ = BehaviorRelay<String?>(value: nil);
     
     private let placeUsecase:PlaceUsecaseProtocol?
     
     
 
     
-    init(navigator: BottomSheetNavigator? = nil, bibleBook:BibleBook, keyword: String, placeUsecase:PlaceUsecaseProtocol?) {
+    init(navigator: BottomSheetNavigator? = nil, bibleBook:BibleBook, keyword: String, placeName:String?, placeUsecase:PlaceUsecaseProtocol?) {
         self.navigator = navigator
 
         self.title$.accept("\(bibleBook.title()) \(keyword)")
         self.bibleBook$.accept(bibleBook)
+        self.placeName$.accept(placeName)
         self.placeUsecase = placeUsecase
     }
     
@@ -131,7 +132,7 @@ final class BibleVerseDetailBottomSheetViewModel: BibleVerseDetailBottomSheetVie
         }).disposed(by: disposeBag)
         
         
-        return Output(bibleVerse$: bibleVerse$.asObservable(), error$: error$.asObservable(), isLoading$: isLoading$.asObservable(), title$: title$.asObservable())
+        return Output(bibleVerse$: bibleVerse$.asObservable(), error$: error$.asObservable(), isLoading$: isLoading$.asObservable(), title$: title$.asObservable(), placeName$: placeName$.asObservable())
         
     }
     
@@ -148,6 +149,7 @@ final class BibleVerseDetailBottomSheetViewModel: BibleVerseDetailBottomSheetVie
         let error$:Observable<NetworkError?>
         let isLoading$:Observable<Bool>
         let title$:Observable<String?>
+        let placeName$:Observable<String?>
     }
 }
 

@@ -1185,7 +1185,6 @@ extension PlaceDetailViewController: RelatedVerseTableViewCellDelegate {
     }
     func didTapMoreButton(bibleBook: BibleBook?, in cell: RelatedVerseTableViewCell) {
         moreVerseButtonTapped$.accept(bibleBook)
-
     }
 }
 

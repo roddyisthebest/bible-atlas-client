@@ -67,19 +67,23 @@ final class BibleBookVerseListBottomSheetViewModel:BibleBookVerseListBottomSheet
             self?.navigator?.dismiss(animated: true)
         }).disposed(by: disposeBag)
         
-        input.verseCellTapped$.subscribe(onNext:{
-            [weak self] verse in
-
-            guard let bibleBook = self?.selectedBibleBookAndVerses$.value.0 else {
-                return
-            }
-            
-            if case let .def(text) = verse {
-                self?.navigator?.present(.bibleVerseDetail(bibleBook, text))
-            }
-            
-            
-        }).disposed(by: disposeBag)
+        
+        input.verseCellTapped$
+            // 탭이 발생했을 때의 최신 place만 끌어온다 (place$ 변경으로 재발화 방지)
+            .withLatestFrom(place$) { verse, place in (verse, place) }
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] verse, place in
+                guard let bibleBook = self?.selectedBibleBookAndVerses$.value.0 else {
+                    return
+                }
+                    
+                let localizedName = L10n.isEnglish ? place?.name : place?.koreanName
+                if case let .def(text) = verse {
+                    self?.navigator?.present(.bibleVerseDetail(bibleBook, text, localizedName))
+                }
+            })
+            .disposed(by: disposeBag)
+        
         
         
         return Output(error$: error$.asObservable(), isLoading$: isLoading$.asObservable() , selectedBibleBookAndVerses$: selectedBibleBookAndVerses$.asObservable(), bibles$: bibles$.asObservable(), place$: place$.asObservable())

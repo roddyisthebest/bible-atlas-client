@@ -158,7 +158,7 @@ final class VCFactory:VCFactoryProtocol {
     
     func makeBibleVerseDetailBottomSheetVC(vm: BibleVerseDetailBottomSheetViewModelProtocol, keyword:String) -> UIViewController {
         let vc = BibleVerseDetailBottomSheetViewController(bibleVerseDetailBottomSheetViewModel: vm);
-        setupVC(type: .bibleVerseDetail(.Etc, keyword),sheet: vc);
+        setupVC(type: .bibleVerseDetail(.Etc, keyword, nil),sheet: vc);
         return vc;
     }
     

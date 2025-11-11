@@ -119,11 +119,33 @@ class BibleVerseDetailBottomSheetViewController: UIViewController {
         let output = bibleVerseDetailBottomSheetViewModel?.transform(input: BibleVerseDetailBottomSheetViewModel.Input(viewLoaded$: viewLoaded$.asObservable(), refetchButtonTapped$: refetchTapped$.asObservable(), closeButtonTapped$: closeButtonTapped$))
         
         
-        
-        output?.bibleVerse$.observe(on: MainScheduler.instance).bind{
-            [weak self] bibleVerse in
-            self?.textView.text = bibleVerse
-        }.disposed(by: disposeBag)
+        Observable.combineLatest(output!.bibleVerse$, output!.placeName$)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] (bibleVerse, placeName) in
+                guard let self = self else { return }
+
+                if let kw = placeName?.trimmingCharacters(in: .whitespacesAndNewlines), !kw.isEmpty {
+                    self.textView.attributedText = makeHighlightedVerse(
+                        bibleVerse,
+                        keyword: kw,
+                        mode: .substring // ✅ 부분 매치
+                    )
+
+                    // 선택: 첫 매치 위치로 스크롤
+                    if let s = self.textView.attributedText?.string as NSString? {
+                        let r = s.range(of: kw, options: .caseInsensitive)
+                        if r.location != NSNotFound { self.textView.scrollRangeToVisible(r) }
+                    }
+                } else {
+                    self.textView.attributedText = NSAttributedString(
+                        string: bibleVerse,
+                        attributes: [.font: UIFont.systemFont(ofSize: 16), .foregroundColor: UIColor.mainText]
+                    )
+                }
+            })
+            .disposed(by: disposeBag)
+
+  
         
         output?.title$.observe(on: MainScheduler.instance).bind{
             [weak self] title in
