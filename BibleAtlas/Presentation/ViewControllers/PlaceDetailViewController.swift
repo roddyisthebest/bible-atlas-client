@@ -858,8 +858,12 @@ final class PlaceDetailViewController: UIViewController {
             }
             
             self.titleLabel.text = L10n.isEnglish ?  place.name: place.koreanName
-            self.descriptionTextView.text =  L10n.isEnglish ? place.description : place.koreanDescription
-            
+            self.descriptionTextView.attributedText = makeMarkdownBold(
+                L10n.isEnglish ? place.description : place.koreanDescription,
+                baseFont: .systemFont(ofSize: 16),
+                textColor: .mainText,
+                lineHeight: 22
+            )
                 
             self.generationLabel.text = place.isModern ? L10n.PlaceDetail.modern : L10n.PlaceDetail.ancient
             
