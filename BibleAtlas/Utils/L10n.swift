@@ -91,10 +91,14 @@ enum L10n {
         static let menuByTypeKey = "HomeContent.ExploreMenu.ByType"
         static let menuByBibleKey = "HomeContent.ExploreMenu.ByBible"
         
+        static let allPoliciesKey = "HomeContent.AllPolicies"
+        
         static var menuTitle: String { menuTitleKey.localized }
         static var menuAZ: String { menuAZKey.localized }
         static var menuByType: String { menuByTypeKey.localized }
         static var menuByBible: String { menuByBibleKey.localized }
+        
+        static var allPolicies: String{ allPoliciesKey.localized }
         
         
     }

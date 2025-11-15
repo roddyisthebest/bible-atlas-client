@@ -11,7 +11,7 @@ import RxCocoa
 
 
 final class HomeContentViewController: UIViewController {
-
+    
     private var homeContentViewModel:HomeContentViewModelProtocol?
     
     private let placesByTypeButtonTapped$ = PublishRelay<Void>();
@@ -25,7 +25,7 @@ final class HomeContentViewController: UIViewController {
     private let recentSearchCellTapped$ = PublishRelay<String>();
     
     private let disposeBag = DisposeBag()
-
+    
     private lazy var bodyView = {
         let v = UIView();
         v.addSubview(scrollView);
@@ -41,13 +41,14 @@ final class HomeContentViewController: UIViewController {
     }()
     
     private let loadingView = LoadingView();
-
+    
     
     private lazy var contentView = {
         let v = UIView()
         v.addSubview(collectionStackView);
         v.addSubview(recentStackView);
         v.addSubview(myGuidesStackView)
+        v.addSubview(smallButtonsStackView)
         return v
     }()
     
@@ -65,9 +66,9 @@ final class HomeContentViewController: UIViewController {
     private lazy var collectionDynamicContainer = {
         let sv = UIStackView(arrangedSubviews: [collectionContentStackView])
         sv.axis = .vertical
-           sv.alignment = .fill
-           sv.distribution = .fill
-           return sv
+        sv.alignment = .fill
+        sv.distribution = .fill
+        return sv
     }()
     
     private lazy var collectionContentStackView = {
@@ -158,8 +159,8 @@ final class HomeContentViewController: UIViewController {
         tv.dataSource = self
         tv.isScrollEnabled = false
         tv.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
-
-
+        
+        
         tv.backgroundColor = .mainItemBkg
         tv.layer.cornerRadius = 10;
         tv.layer.masksToBounds = true;
@@ -175,7 +176,7 @@ final class HomeContentViewController: UIViewController {
         button.setTitleColor(.primaryBlue, for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 14)
         button.contentHorizontalAlignment = .right
-
+        
         return button;
     }()
     
@@ -203,7 +204,7 @@ final class HomeContentViewController: UIViewController {
         let button = GuideButton(titleText: L10n.HomeContent.explorePlaces)
         button.menu = buildPlacesMenu();
         button.showsMenuAsPrimaryAction = true
-
+        
         return button;
     }()
     
@@ -216,6 +217,26 @@ final class HomeContentViewController: UIViewController {
     @objc private func handleReportButtonTap(){
         reportButtonTapped$.accept(Void())
     }
+    
+    
+    private lazy var smallButtonsStackView = {
+        let sv = UIStackView(arrangedSubviews: [allPoliciesButton, contactSupportButton])
+        sv.axis = .vertical;
+        sv.distribution = .fill
+        sv.alignment = .fill
+        sv.spacing = 14;
+        return sv;
+    }()
+    
+    private let allPoliciesButton = {
+        let button = ChevronButton(titleText: "전체 약관");
+        return button
+    }()
+    
+    private let contactSupportButton = {
+        let button = ChevronButton(titleText: "고객센터 문의하기");
+        return button
+    }()
     
     private var recentSearches:[RecentSearchItem] = [];
     
@@ -293,10 +314,15 @@ final class HomeContentViewController: UIViewController {
             make.top.equalTo(recentStackView.snp.bottom).offset(30);
             make.leading.equalToSuperview().offset(20);
             make.trailing.equalToSuperview().offset(-20);
-            make.bottom.equalToSuperview().offset(-30)
 
         }
         
+        smallButtonsStackView.snp.makeConstraints { make in
+            make.top.equalTo(myGuidesStackView.snp.bottom).offset(30);
+            make.leading.equalToSuperview().offset(20);
+            make.trailing.equalToSuperview().offset(-20);
+            make.bottom.equalToSuperview().offset(-30)
+        }
 
         
         explorePlacesButton.snp.makeConstraints { make in

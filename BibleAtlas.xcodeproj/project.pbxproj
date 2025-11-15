@@ -55,6 +55,7 @@
 		EC14C6442EC84F84008F90D6 /* ReportRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC14C6432EC84F84008F90D6 /* ReportRepository.swift */; };
 		EC14C6462EC84FEA008F90D6 /* ReportRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC14C6452EC84FEA008F90D6 /* ReportRepositoryProtocol.swift */; };
 		EC14C6482EC8513F008F90D6 /* ReportUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC14C6472EC8513F008F90D6 /* ReportUsecase.swift */; };
+		EC14C64A2EC8BA59008F90D6 /* ChevronButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC14C6492EC8BA59008F90D6 /* ChevronButton.swift */; };
 		EC1B2DC92E8ED0B00073EBE3 /* BibleBookVerseListBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1B2DC82E8ED0B00073EBE3 /* BibleBookVerseListBottomSheetViewModel.swift */; };
 		EC1B2DCB2E8FB0F90073EBE3 /* BibleBookVerseListBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1B2DCA2E8FB0F90073EBE3 /* BibleBookVerseListBottomSheetViewController.swift */; };
 		EC1B2DD12E9634C30073EBE3 /* BibleBookVerseListBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1B2DD02E9634C30073EBE3 /* BibleBookVerseListBottomSheetViewModelTests.swift */; };
@@ -292,6 +293,7 @@
 		EC14C6432EC84F84008F90D6 /* ReportRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportRepository.swift; sourceTree = "<group>"; };
 		EC14C6452EC84FEA008F90D6 /* ReportRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportRepositoryProtocol.swift; sourceTree = "<group>"; };
 		EC14C6472EC8513F008F90D6 /* ReportUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportUsecase.swift; sourceTree = "<group>"; };
+		EC14C6492EC8BA59008F90D6 /* ChevronButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChevronButton.swift; sourceTree = "<group>"; };
 		EC1B2DC82E8ED0B00073EBE3 /* BibleBookVerseListBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleBookVerseListBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		EC1B2DCA2E8FB0F90073EBE3 /* BibleBookVerseListBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleBookVerseListBottomSheetViewController.swift; sourceTree = "<group>"; };
 		EC1B2DD02E9634C30073EBE3 /* BibleBookVerseListBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleBookVerseListBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
@@ -732,6 +734,7 @@
 				EC70589B2DBC7C4D002D47DF /* CircleButton.swift */,
 				EC77CE372DCF79800030DEF5 /* IconTextButton.swift */,
 				EC940E9A2DEF25E300406944 /* ToggleCircleButton.swift */,
+				EC14C6492EC8BA59008F90D6 /* ChevronButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -1364,6 +1367,7 @@
 				EC0F01D42E8228E300D7C216 /* BibleBookCell.swift in Sources */,
 				EC70589E2DBCA8B6002D47DF /* HeaderLabel.swift in Sources */,
 				EC64B9822DE45C0300D3C8A7 /* ErrorHandlerServiceProtocol.swift in Sources */,
+				EC14C64A2EC8BA59008F90D6 /* ChevronButton.swift in Sources */,
 				ECD9726B2E307AE300D94767 /* PlaceReportBottomSheetViewModel.swift in Sources */,
 				EC70588E2DB8BEB1002D47DF /* MainLabel.swift in Sources */,
 				EC940EA12DF1756C00406944 /* RxNotificationService.swift in Sources */,
