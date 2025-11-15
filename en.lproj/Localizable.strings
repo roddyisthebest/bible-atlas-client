@@ -87,6 +87,8 @@
 "PlaceDetail.OK" = "OK";
 "PlaceDetail.LikesFmt" = "%d Likes";
 
+"PlaceDetail.DataSource" = "Data source: OpenBible.info (CC BY 4.0). Some geographical data © OpenStreetMap contributors licensed under ODbL.";
+
 
 // placeTypes
 "PlaceTypes.Title" = "Select The Type";

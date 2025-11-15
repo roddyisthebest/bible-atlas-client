@@ -77,7 +77,7 @@ final class PlaceDetailViewController: UIViewController {
     
     
     private lazy var contentView = {
-        let sv = UIStackView(arrangedSubviews: [subInfoStackView, likeAndMoreButtonsStackView, memoButton, imageButton, descriptionStackView, relatedLocationStackView, relatedVerseStackView, reportIssueButton])
+        let sv = UIStackView(arrangedSubviews: [subInfoStackView, dataSourceLabel, likeAndMoreButtonsStackView, memoButton, imageButton, descriptionStackView, relatedLocationStackView, relatedVerseStackView, reportIssueButton])
      
         sv.axis = .vertical
         sv.spacing = 18
@@ -232,6 +232,17 @@ final class PlaceDetailViewController: UIViewController {
         
         label.font = .systemFont(ofSize: 14, weight: .medium)
         return label;
+    }()
+    
+    
+    private let dataSourceLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 12)
+        label.textColor = .detailLabelText
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.text = L10n.PlaceDetail.dataSource
+        return label
     }()
     
     private lazy var likeAndMoreButtonsStackView = {

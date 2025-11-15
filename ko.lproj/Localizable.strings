@@ -84,6 +84,10 @@
 "PlaceDetail.OK" = "확인";
 "PlaceDetail.LikesFmt" = "좋아요 %d개";
 
+"PlaceDetail.DataSource" = "데이터 출처: OpenBible.info (CC BY 4.0). 일부 지리 정보는 OpenStreetMap 기여자들의 자료이며 ODbL 라이선스를 따릅니다.";
+
+
+
 // placeTypes
 "PlaceTypes.Title" = "유형을 선택하세요.";
 "PlaceTypes.Empty" = "장소 타입/유형이 없습니다.";

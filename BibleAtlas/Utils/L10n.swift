@@ -195,6 +195,8 @@ enum L10n {
 
         static let okKey = "PlaceDetail.OK"
         static let likesFmtKey = "PlaceDetail.LikesFmt" // "%d Likes"
+        
+        static let dataSourceKey = "PlaceDetail.DataSource"
 
             // Values
         static var back: String { backKey.localized }
@@ -217,6 +219,8 @@ enum L10n {
         static var reportInappropriate: String { reportInappropriateKey.localized }
         static var reportFalseInfo: String { reportFalseInfoKey.localized }
         static var reportOther: String { reportOtherKey.localized }
+        
+        static var dataSource: String { dataSourceKey.localized }
 
         static var ok: String { okKey.localized }
 
