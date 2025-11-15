@@ -509,6 +509,46 @@ enum L10n {
             static func moreVerses(_ n: Int) -> String { moreVersesFmtKey.localized(n) }     // stringsdict 권장
             static func moreBooks(_ n: Int) -> String { moreBooksFmtKey.localized(n) }       // stringsdict 권장
         }
+    
+    
+    enum NetworkError {
+           static let urlErrorKey = "NetworkError.UrlError"
+           static var urlError: String { urlErrorKey.localized }
+
+           static let invalidKey = "NetworkError.Invalid"
+           static var invalid: String { invalidKey.localized }
+
+           static let failToDecodeFmtKey = "NetworkError.FailToDecodeFmt"
+           static func failToDecode(_ msg: String) -> String {
+               failToDecodeFmtKey.localized(msg)
+           }
+
+           static let failToEncodeFmtKey = "NetworkError.FailToEncodeFmt"
+           static func failToEncode(_ msg: String) -> String {
+               failToEncodeFmtKey.localized(msg)
+           }
+
+           static let dataNilKey = "NetworkError.DataNil"
+           static var dataNil: String { dataNilKey.localized }
+
+           static let unauthorizedKey = "NetworkError.Unauthorized"
+           static var unauthorized: String { unauthorizedKey.localized }
+
+           static let serverErrorFmtKey = "NetworkError.ServerErrorFmt"
+           static func serverError(_ code: Int) -> String {
+               serverErrorFmtKey.localized(code)
+           }
+
+           static let clientErrorFmtKey = "NetworkError.ClientErrorFmt"
+           static func clientError(_ msg: String) -> String {
+               clientErrorFmtKey.localized(msg)
+           }
+
+           static let failToJSONSerializeFmtKey = "NetworkError.FailToJSONSerializeFmt"
+           static func failToJSONSerialize(_ msg: String) -> String {
+               failToJSONSerializeFmtKey.localized(msg)
+           }
+       }
 }
 
 

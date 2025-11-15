@@ -214,3 +214,15 @@
 "ReportType.MapIssue" = "지도 문제";
 "ReportType.GeneralFeedback" = "일반 피드백";
 "ReportType.Other" = "기타 의견";
+
+
+// NetworkError
+"NetworkError.UrlError" = "URL이 올바르지 않습니다.";
+"NetworkError.Invalid" = "응답값이 유효하지 않습니다.";
+"NetworkError.FailToDecodeFmt" = "디코딩 에러: %@";
+"NetworkError.FailToEncodeFmt" = "엔코딩 에러: %@";
+"NetworkError.DataNil" = "데이터가 없습니다.";
+"NetworkError.Unauthorized" = "다시 로그인해주세요.";
+"NetworkError.ServerErrorFmt" = "서버 에러: %d";
+"NetworkError.ClientErrorFmt" = "%@";
+"NetworkError.FailToJSONSerializeFmt" = "JSON 직렬화 에러: %@";

@@ -220,3 +220,15 @@
 "ReportType.MapIssue" = "Map issue";
 "ReportType.GeneralFeedback" = "General feedback";
 "ReportType.Other" = "Other";
+
+
+// NetworkError
+"NetworkError.UrlError" = "Invalid URL.";
+"NetworkError.Invalid" = "The response is invalid.";
+"NetworkError.FailToDecodeFmt" = "Failed to decode data: %@";
+"NetworkError.FailToEncodeFmt" = "Failed to encode data: %@";
+"NetworkError.DataNil" = "No data received.";
+"NetworkError.Unauthorized" = "Please log in again.";
+"NetworkError.ServerErrorFmt" = "Server error: %d";
+"NetworkError.ClientErrorFmt" = "%@";
+"NetworkError.FailToJSONSerializeFmt" = "JSON serialization failed: %@";
