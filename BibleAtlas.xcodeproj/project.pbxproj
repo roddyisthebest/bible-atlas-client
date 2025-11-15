@@ -48,6 +48,13 @@
 		EC0F020C2E853AC700D7C216 /* MockTokenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F020B2E853AC700D7C216 /* MockTokenProvider.swift */; };
 		EC0F020E2E853B1400D7C216 /* MockTokenRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F020D2E853B1400D7C216 /* MockTokenRefresher.swift */; };
 		EC0F02102E853BB900D7C216 /* MockErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F020F2E853BB900D7C216 /* MockErrorHandler.swift */; };
+		EC14C63C2EC84AC8008F90D6 /* ReportBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC14C63B2EC84AC8008F90D6 /* ReportBottomSheetViewModel.swift */; };
+		EC14C63E2EC84AE0008F90D6 /* ReportBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC14C63D2EC84AE0008F90D6 /* ReportBottomSheetViewController.swift */; };
+		EC14C6402EC84CF9008F90D6 /* ReportApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC14C63F2EC84CF9008F90D6 /* ReportApiService.swift */; };
+		EC14C6422EC84D80008F90D6 /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC14C6412EC84D80008F90D6 /* Report.swift */; };
+		EC14C6442EC84F84008F90D6 /* ReportRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC14C6432EC84F84008F90D6 /* ReportRepository.swift */; };
+		EC14C6462EC84FEA008F90D6 /* ReportRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC14C6452EC84FEA008F90D6 /* ReportRepositoryProtocol.swift */; };
+		EC14C6482EC8513F008F90D6 /* ReportUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC14C6472EC8513F008F90D6 /* ReportUsecase.swift */; };
 		EC1B2DC92E8ED0B00073EBE3 /* BibleBookVerseListBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1B2DC82E8ED0B00073EBE3 /* BibleBookVerseListBottomSheetViewModel.swift */; };
 		EC1B2DCB2E8FB0F90073EBE3 /* BibleBookVerseListBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1B2DCA2E8FB0F90073EBE3 /* BibleBookVerseListBottomSheetViewController.swift */; };
 		EC1B2DD12E9634C30073EBE3 /* BibleBookVerseListBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1B2DD02E9634C30073EBE3 /* BibleBookVerseListBottomSheetViewModelTests.swift */; };
@@ -278,6 +285,13 @@
 		EC0F020B2E853AC700D7C216 /* MockTokenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTokenProvider.swift; sourceTree = "<group>"; };
 		EC0F020D2E853B1400D7C216 /* MockTokenRefresher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTokenRefresher.swift; sourceTree = "<group>"; };
 		EC0F020F2E853BB900D7C216 /* MockErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockErrorHandler.swift; sourceTree = "<group>"; };
+		EC14C63B2EC84AC8008F90D6 /* ReportBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBottomSheetViewModel.swift; sourceTree = "<group>"; };
+		EC14C63D2EC84AE0008F90D6 /* ReportBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBottomSheetViewController.swift; sourceTree = "<group>"; };
+		EC14C63F2EC84CF9008F90D6 /* ReportApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportApiService.swift; sourceTree = "<group>"; };
+		EC14C6412EC84D80008F90D6 /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
+		EC14C6432EC84F84008F90D6 /* ReportRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportRepository.swift; sourceTree = "<group>"; };
+		EC14C6452EC84FEA008F90D6 /* ReportRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportRepositoryProtocol.swift; sourceTree = "<group>"; };
+		EC14C6472EC8513F008F90D6 /* ReportUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportUsecase.swift; sourceTree = "<group>"; };
 		EC1B2DC82E8ED0B00073EBE3 /* BibleBookVerseListBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleBookVerseListBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		EC1B2DCA2E8FB0F90073EBE3 /* BibleBookVerseListBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleBookVerseListBottomSheetViewController.swift; sourceTree = "<group>"; };
 		EC1B2DD02E9634C30073EBE3 /* BibleBookVerseListBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleBookVerseListBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
@@ -598,6 +612,7 @@
 				EC64B9632DDDC45500D3C8A7 /* UserApiService.swift */,
 				EC64B9832DE72C4E00D3C8A7 /* PlaceApiService.swift */,
 				EC940EA52DF6E56500406944 /* MapApiService.swift */,
+				EC14C63F2EC84CF9008F90D6 /* ReportApiService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -621,6 +636,7 @@
 				EC64B9652DDE049500D3C8A7 /* UserRepositoryProtocol.swift */,
 				EC64B9872DE7334500D3C8A7 /* PlaceRepositoryProtocol.swift */,
 				EC940EA92DF7198C00406944 /* MapRepositoryProtocol.swift */,
+				EC14C6452EC84FEA008F90D6 /* ReportRepositoryProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -927,6 +943,7 @@
 				EC0F01B92E7EF4A600D7C216 /* GeoScene.swift */,
 				EC0F01D52E82694C00D7C216 /* BibleBook.swift */,
 				EC4D07092EB8E22600C53C35 /* PlaceType.swift */,
+				EC14C6412EC84D80008F90D6 /* Report.swift */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -938,6 +955,7 @@
 				EC64B9682DDE051D00D3C8A7 /* UserRepository.swift */,
 				EC64B9852DE732CC00D3C8A7 /* PlaceRepository.swift */,
 				EC940EA72DF7196A00406944 /* MapRepository.swift */,
+				EC14C6432EC84F84008F90D6 /* ReportRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -949,6 +967,7 @@
 				EC64B96A2DDE05C900D3C8A7 /* UserUsecase.swift */,
 				EC64B9892DE7344700D3C8A7 /* PlaceUsecase.swift */,
 				EC940EAB2DF71A8100406944 /* MapUsecase.swift */,
+				EC14C6472EC8513F008F90D6 /* ReportUsecase.swift */,
 			);
 			path = Usecases;
 			sourceTree = "<group>";
@@ -988,6 +1007,7 @@
 				EC0F01D12E81929300D7C216 /* BiblesBottomSheetViewController.swift */,
 				EC0F01EC2E828D9400D7C216 /* PlacesByBibleBottomSheetViewController.swift */,
 				EC1B2DCA2E8FB0F90073EBE3 /* BibleBookVerseListBottomSheetViewController.swift */,
+				EC14C63D2EC84AE0008F90D6 /* ReportBottomSheetViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1015,6 +1035,7 @@
 				EC0F01CF2E81921E00D7C216 /* BiblesBottomSheetViewModel.swift */,
 				EC0F01EA2E828C0500D7C216 /* PlacesByBibleBottomSheetViewModel.swift */,
 				EC1B2DC82E8ED0B00073EBE3 /* BibleBookVerseListBottomSheetViewModel.swift */,
+				EC14C63B2EC84AC8008F90D6 /* ReportBottomSheetViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1367,6 +1388,7 @@
 				EC940EA42DF175AB00406944 /* NotificationName.swift in Sources */,
 				EC64B9862DE732CC00D3C8A7 /* PlaceRepository.swift in Sources */,
 				EC70587E2DB397CF002D47DF /* BottomSheetCoordinator.swift in Sources */,
+				EC14C6402EC84CF9008F90D6 /* ReportApiService.swift in Sources */,
 				EC64B9602DDAEDFA00D3C8A7 /* AppInitializer.swift in Sources */,
 				EC77CE3E2DD09AD30030DEF5 /* PlaceModificationBottomSheetViewModel.swift in Sources */,
 				EC64B9792DE44B6700D3C8A7 /* Constants.swift in Sources */,
@@ -1378,6 +1400,7 @@
 				EC386DFB2E06C7B900251FC6 /* SearchResultViewController.swift in Sources */,
 				EC64B9882DE7334500D3C8A7 /* PlaceRepositoryProtocol.swift in Sources */,
 				ECD9726D2E307C8A00D94767 /* PlaceReport.swift in Sources */,
+				EC14C6422EC84D80008F90D6 /* Report.swift in Sources */,
 				EC64B97E2DE44F0400D3C8A7 /* TokenRefresher.swift in Sources */,
 				EC77CE502DD5C86A0030DEF5 /* PlacesByCharacterBottomSheetViewController.swift in Sources */,
 				EC0F01D22E81929300D7C216 /* BiblesBottomSheetViewController.swift in Sources */,
@@ -1411,9 +1434,11 @@
 				EC77CE322DCF34110030DEF5 /* VersedItemCell.swift in Sources */,
 				ECD9725C2E2A353300D94767 /* AccountManagementBottomSheetViewModel.swift in Sources */,
 				EC9A0A472E6F00B500BB580E /* HealthCheckService.swift in Sources */,
+				EC14C6442EC84F84008F90D6 /* ReportRepository.swift in Sources */,
 				EC9A0A4E2E6F10CF00BB580E /* AppEnvironment.swift in Sources */,
 				EC64B96B2DDE05C900D3C8A7 /* UserUsecase.swift in Sources */,
 				EC9A0A4C2E6F106500BB580E /* DIContainer.swift in Sources */,
+				EC14C63E2EC84AE0008F90D6 /* ReportBottomSheetViewController.swift in Sources */,
 				EC0F01D62E82694C00D7C216 /* BibleBook.swift in Sources */,
 				EC0F01D02E81921E00D7C216 /* BiblesBottomSheetViewModel.swift in Sources */,
 				EC7058882DB3CA5B002D47DF /* UIColor.swift in Sources */,
@@ -1441,6 +1466,7 @@
 				ECA94BEB2D50B0B9005B0428 /* AuthUsecase.swift in Sources */,
 				ECCB51DA2E1AB31A007E4AB7 /* PersistenceController.swift in Sources */,
 				EC77CE422DD0A8670030DEF5 /* PlaceTypeCell.swift in Sources */,
+				EC14C6482EC8513F008F90D6 /* ReportUsecase.swift in Sources */,
 				EC64B97C2DE44E0D00D3C8A7 /* TokenRefresherProtocol.swift in Sources */,
 				ECD972562E27E14500D94767 /* MyPageBottomSheetViewController.swift in Sources */,
 				EC77CE3A2DCF7FE60030DEF5 /* MemoBottomSheetViewModel.swift in Sources */,
@@ -1458,6 +1484,8 @@
 				EC940E9B2DEF25E300406944 /* ToggleCircleButton.swift in Sources */,
 				ECA94B992D5082B9005B0428 /* SceneDelegate.swift in Sources */,
 				EC0F01BA2E7EF4A600D7C216 /* GeoScene.swift in Sources */,
+				EC14C63C2EC84AC8008F90D6 /* ReportBottomSheetViewModel.swift in Sources */,
+				EC14C6462EC84FEA008F90D6 /* ReportRepositoryProtocol.swift in Sources */,
 				EC77CE4A2DD0E4DC0030DEF5 /* PlaceCharacterCell.swift in Sources */,
 				ECA94BD52D5094F1005B0428 /* User.swift in Sources */,
 				EC7058942DB9D93D002D47DF /* RecentSearchTableViewCell.swift in Sources */,

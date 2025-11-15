@@ -378,7 +378,7 @@ enum L10n {
           static var withdrawCompleteMessage: String { withdrawCompleteMsgKey.localized }
       }
     
-    enum Report {
+    enum PlaceReport {
            static let titleKey = "Report.Title" // 상단 헤더
            static var title: String { titleKey.localized }
 
@@ -422,6 +422,58 @@ enum L10n {
             static var timeout: String { timeoutKey.localized }
             static func networkError(_ msg: String) -> String { networkErrorFmtKey.localized(msg) }
         }
+    
+    
+    enum Report {
+        // Keys
+        static let titleKey = "Report.Title"
+        static let successKey = "Report.Success"
+        static let reasonPlaceholderKey = "Report.ReasonPlaceholder"
+
+        static let selectTypePlaceholderKey = "Report.SelectTypePlaceholder"
+        static let typeMenuTitleKey = "Report.TypeMenuTitle"
+
+        static let commentRequiredKey = "Report.CommentRequired"
+        static let typeRequiredKey = "Report.TypeRequired"
+        static let diErrorKey = "Report.DiError"
+
+        // Values
+        static var title: String { titleKey.localized }
+        static var success: String { successKey.localized }
+        static var reasonPlaceholder: String { reasonPlaceholderKey.localized }
+
+        static var selectTypePlaceholder: String { selectTypePlaceholderKey.localized }
+        static var typeMenuTitle: String { typeMenuTitleKey.localized }
+
+        static var commentRequired: String { commentRequiredKey.localized }
+        static var typeRequired: String { typeRequiredKey.localized }
+        static var diError: String { diErrorKey.localized }
+
+        enum Types {
+            static let bugReportKey        = "ReportType.BugReport"
+            static let featureRequestKey   = "ReportType.FeatureRequest"
+            static let uiUxIssueKey        = "ReportType.UiUxIssue"
+            static let performanceIssueKey = "ReportType.PerformanceIssue"
+            static let dataErrorKey        = "ReportType.DataError"
+            static let loginIssueKey       = "ReportType.LoginIssue"
+            static let searchIssueKey      = "ReportType.SearchIssue"
+            static let mapIssueKey         = "ReportType.MapIssue"
+            static let generalFeedbackKey  = "ReportType.GeneralFeedback"
+            static let otherKey            = "ReportType.Other"
+
+            static var bugReport: String        { bugReportKey.localized }
+            static var featureRequest: String   { featureRequestKey.localized }
+            static var uiUxIssue: String        { uiUxIssueKey.localized }
+            static var performanceIssue: String { performanceIssueKey.localized }
+            static var dataError: String        { dataErrorKey.localized }
+            static var loginIssue: String       { loginIssueKey.localized }
+            static var searchIssue: String      { searchIssueKey.localized }
+            static var mapIssue: String         { mapIssueKey.localized }
+            static var generalFeedback: String  { generalFeedbackKey.localized }
+            static var other: String            { otherKey.localized }
+        }
+    }
+
     
     
     // 성경 책 선택 + 구절 리스트 BottomSheet 전용

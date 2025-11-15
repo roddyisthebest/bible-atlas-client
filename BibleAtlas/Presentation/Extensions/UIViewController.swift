@@ -23,8 +23,8 @@ extension UIViewController {
     }
     
     func showErrorAlert(message: String?) {
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Confirm", style: .default))
+        let alert = UIAlertController(title: L10n.Common.errorTitle, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: L10n.Common.ok, style: .default))
         DispatchQueue.main.async {
             self.present(alert, animated: true)
         }
@@ -32,7 +32,7 @@ extension UIViewController {
     
     func showDefaultAlert(
             message: String,
-            buttonTitle: String = "확인",
+            buttonTitle: String = L10n.Common.ok,
             animated: Bool = true,
             completion: (() -> Void)? = nil,
             handler: ((UIAlertAction) -> Void)? = nil

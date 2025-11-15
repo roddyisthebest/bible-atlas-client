@@ -7,10 +7,6 @@
 
 import UIKit
 protocol VCFactoryProtocol:AnyObject {
-    //TODO: VC 직접 타입 리턴 프로토콜로 변경 필요
-    
-    
-    
     
     func makeHomeBottomSheetVC(
         homeVM: HomeBottomSheetViewModelProtocol,
@@ -53,6 +49,8 @@ protocol VCFactoryProtocol:AnyObject {
     func makePlaceReportBottomSheetVC(vm:PlaceReportBottomSheetViewModelProtocol) -> UIViewController
     
     func makeBibleBookVerseListBottomSheetVC(vm:BibleBookVerseListBottomSheetViewModelProtocol) -> UIViewController
+    
+    func makeReportBottomSheetVC(vm:ReportBottomSheetViewModelProtocol) -> UIViewController
     
     func setupVC(type: BottomSheetType, sheet: UIViewController) -> Void
 }
@@ -202,6 +200,11 @@ final class VCFactory:VCFactoryProtocol {
         let vc = BibleBookVerseListBottomSheetViewController(vm: vm)
         return vc
     }
+    
+    func makeReportBottomSheetVC(vm: ReportBottomSheetViewModelProtocol) -> UIViewController{
+        let vc = ReportBottomSheetViewController(reportBottomSheetViewModel: vm);
+        return vc
+    }
 
     func setupVC(type: BottomSheetType, sheet: UIViewController) {
         switch(type){
@@ -259,8 +262,8 @@ final class VCFactory:VCFactoryProtocol {
 
         default:
             if let sheet = sheet.sheetPresentationController {
-                sheet.detents = [.large()] // 높이 조절 가능 (중간, 전체 화면)
-                sheet.prefersScrollingExpandsWhenScrolledToEdge = false // 스크롤 시 확장 가능
+                sheet.detents = [.large()]
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = false // 스크롤 시 확장 불가능
                 sheet.prefersGrabberVisible = false // 위쪽 핸들 표시
             }
             sheet.isModalInPresentation = true

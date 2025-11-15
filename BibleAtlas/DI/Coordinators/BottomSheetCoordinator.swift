@@ -29,6 +29,7 @@ enum BottomSheetType:Equatable {
     case popularPlaces
     case myPage
     case accountManagement
+    case report
 }
 
 
@@ -280,7 +281,10 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             let vc = vcFactory.makeBibleBookVerseListBottomSheetVC(vm: vm);
             
             presentFromTopVC(vc)
-            
+        case .report:
+            let vm = vmFactory.makeReportBottomSheetVM();
+            let vc = vcFactory.makeReportBottomSheetVC(vm: vm);
+            presentFromTopVC(vc);
         }
     
     }

@@ -190,3 +190,27 @@
 "VerseListSheet.BooksCountFmt" = "%d권";
 "VerseListSheet.MoreVersesFmt" = "%d절 더보기";
 "VerseListSheet.MoreBooksFmt" = "%d권 더보기";
+
+
+// Report (ko)
+"Report.Title" = "문제 리포트";
+"Report.Success" = "신고가 접수되었습니다.";
+"Report.ReasonPlaceholder" = "어떤 문제가 있는지 알려주세요.";
+
+"Report.SelectTypePlaceholder" = "신고 유형을 선택해 주세요.";
+"Report.TypeMenuTitle" = "신고 유형 선택";
+
+"Report.CommentRequired" = "문제 내용을 입력해 주세요.";
+"Report.TypeRequired" = "신고 유형을 선택해 주세요.";
+"Report.DiError" = "내부 설정 오류가 발생했습니다.";
+
+"ReportType.BugReport" = "버그";
+"ReportType.FeatureRequest" = "기능 개선 요청";
+"ReportType.UiUxIssue" = "UI / UX 문제";
+"ReportType.PerformanceIssue" = "성능 문제";
+"ReportType.DataError" = "잘못된 데이터";
+"ReportType.LoginIssue" = "로그인 문제";
+"ReportType.SearchIssue" = "검색 문제";
+"ReportType.MapIssue" = "지도 문제";
+"ReportType.GeneralFeedback" = "일반 피드백";
+"ReportType.Other" = "기타 의견";

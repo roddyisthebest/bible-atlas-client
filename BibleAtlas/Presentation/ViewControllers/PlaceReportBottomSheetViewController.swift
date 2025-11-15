@@ -53,7 +53,7 @@ final class PlaceReportBottomSheetViewController: UIViewController {
     }()
     
     private let headerLabel = {
-        let label = HeaderLabel(text: L10n.Report.title);
+        let label = HeaderLabel(text: L10n.PlaceReport.title);
         label.font = .boldSystemFont(ofSize: 18);
         return label;
     }()
@@ -288,7 +288,7 @@ final class PlaceReportBottomSheetViewController: UIViewController {
                     return;
                 }
                 
-                self?.showDefaultAlert(message: L10n.Report.success, buttonTitle: L10n.Common.ok, animated: true, completion: nil, handler: self?.handleSuccessionAlertComplete)
+                self?.showDefaultAlert(message: L10n.PlaceReport.success, buttonTitle: L10n.Common.ok, animated: true, completion: nil, handler: self?.handleSuccessionAlertComplete)
                 
             }.disposed(by: disposeBag)
         

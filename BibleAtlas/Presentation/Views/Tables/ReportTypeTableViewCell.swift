@@ -64,17 +64,17 @@ final class ReportTypeTableViewCell: UITableViewCell {
         var text = ""
         switch report {
             case .spam:
-                text = L10n.Report.Types.spam
+                text = L10n.PlaceReport.Types.spam
             case .inappropriate:
-                text = L10n.Report.Types.inappropriate
+                text = L10n.PlaceReport.Types.inappropriate
             case .hateSpeech:
-                text = L10n.Report.Types.hateSpeech
+                text = L10n.PlaceReport.Types.hateSpeech
             case .falseInfomation:     // enum 네이밍 그대로 사용
-                text = L10n.Report.Types.falseInfo
+                text = L10n.PlaceReport.Types.falseInfo
             case .personalInfomation:  // enum 네이밍 그대로 사용
-                text = L10n.Report.Types.personalInfo
+                text = L10n.PlaceReport.Types.personalInfo
             case .etc:
-                text = L10n.Report.Types.etc
+                text = L10n.PlaceReport.Types.etc
         }
 
         label.text = text;

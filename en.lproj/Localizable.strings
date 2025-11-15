@@ -195,3 +195,28 @@
 "VerseListSheet.BooksCountFmt" = "%d book(s)";
 "VerseListSheet.MoreVersesFmt" = "Show %d more verse(s)";
 "VerseListSheet.MoreBooksFmt" = "Show %d more book(s)";
+
+
+
+// Report
+"Report.Title" = "Report an Issue";
+"Report.Success" = "Your report has been submitted.";
+"Report.ReasonPlaceholder" = "Please describe the issue.";
+
+"Report.SelectTypePlaceholder" = "Please select a report type.";
+"Report.TypeMenuTitle" = "Select report type";
+
+"Report.CommentRequired" = "Please enter a description.";
+"Report.TypeRequired" = "Please select a report type.";
+"Report.DiError" = "An internal configuration error occurred.";
+
+"ReportType.BugReport" = "Bug";
+"ReportType.FeatureRequest" = "Feature request";
+"ReportType.UiUxIssue" = "UI / UX issue";
+"ReportType.PerformanceIssue" = "Performance issue";
+"ReportType.DataError" = "Incorrect data";
+"ReportType.LoginIssue" = "Login issue";
+"ReportType.SearchIssue" = "Search issue";
+"ReportType.MapIssue" = "Map issue";
+"ReportType.GeneralFeedback" = "General feedback";
+"ReportType.Other" = "Other";

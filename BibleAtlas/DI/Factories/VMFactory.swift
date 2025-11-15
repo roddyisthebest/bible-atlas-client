@@ -13,6 +13,7 @@ struct UseCases {
     let user: UserUsecaseProtocol
     let place: PlaceUsecaseProtocol
     let map: MapUsecaseProtocol
+    let report: ReportUsecaseProtocol
 }
 
 protocol VMFactoryProtocol {
@@ -63,12 +64,18 @@ protocol VMFactoryProtocol {
     
     
     func makeMainVM() -> MainViewModelProtocol
-    
+        
+    func makeReportBottomSheetVM() -> ReportBottomSheetViewModelProtocol
     
     func configure(navigator:BottomSheetNavigator, appCoordinator:AppCoordinatorProtocol)
 }
 
 final class VMFactory:VMFactoryProtocol{
+    func makeReportBottomSheetVM() -> ReportBottomSheetViewModelProtocol {
+        let vm = ReportBottomSheetViewModel(navigator: navigator, reportUsecase: usecases?.report)
+        return vm
+    }
+    
     func makeRecentSearchesBottomSheetVM() -> RecentSearchesBottomSheetViewModelProtocol {
         let vm = RecentSearchesBottomSheetViewModel(navigator: navigator, recentSearchService: recentSearchService, notificationService:  notificationService)
         return vm
