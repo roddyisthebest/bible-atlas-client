@@ -34,7 +34,7 @@ final class LoginBottomSheetViewController: UIViewController {
     private let appleTokenReceived$ = BehaviorRelay<String?>(value: nil);
 
     private lazy var buttonsStackView = {
-        let sv = UIStackView(arrangedSubviews: [localButton, googleButton, appleButton]);
+        let sv = UIStackView(arrangedSubviews: [googleButton, appleButton]);
         sv.axis = .vertical;
         sv.distribution = .fill;
         sv.alignment = .fill
@@ -42,7 +42,7 @@ final class LoginBottomSheetViewController: UIViewController {
         return sv;
     }()
     
-    private let localButton = GuideButton(titleText: L10n.Auth.continueWithLocal);
+
     private let googleButton = {
         let button = GuideButton(titleText: L10n.Auth.continueWithGoogle);
         button.addTarget(self, action: #selector(googleLoginButtonTapped), for: .touchUpInside)
@@ -71,10 +71,10 @@ final class LoginBottomSheetViewController: UIViewController {
     private func bindViewModel(){
 
         let closeButtonTapped$ = closeButton.rx.tap.asObservable();
-        let localButtonTapped$ = localButton.rx.tap.asObservable();
+
         
         
-        let output = loginBottomSheetViewModel?.transform(input: LoginBottomSheetViewModel.Input(localButtonTapped$: localButtonTapped$, googleTokenReceived$: googleTokenReceived$.asObservable(), appleTokenReceived$: appleTokenReceived$.asObservable(), closeButtonTapped$: closeButtonTapped$))
+        let output = loginBottomSheetViewModel?.transform(input: LoginBottomSheetViewModel.Input(googleTokenReceived$: googleTokenReceived$.asObservable(), appleTokenReceived$: appleTokenReceived$.asObservable(), closeButtonTapped$: closeButtonTapped$))
         
         
         output?.error$.subscribe(onNext: { [weak self] error in
@@ -84,13 +84,6 @@ final class LoginBottomSheetViewController: UIViewController {
                 default:
                     self?.showAlert(message: error.description)
                 }
-        }).disposed(by: disposeBag)
-        
-        
-        output?.localLoading$.subscribe(onNext: { [weak self] loading in
-            DispatchQueue.main.async {
-                self?.localButton.setLoading(loading)
-            }
         }).disposed(by: disposeBag)
         
         output?.googleLoading$.subscribe(onNext:{ [weak self] loading in
