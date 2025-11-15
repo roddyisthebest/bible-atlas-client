@@ -61,6 +61,7 @@
 "Common.Ok" = "OK";
 "Common.Cancel" = "Cancel";
 "Common.Done" = "Done";
+"Common.Empty" = "No data available.";
 
 // placeDetail
 "PlaceDetail.Back" = "Back";

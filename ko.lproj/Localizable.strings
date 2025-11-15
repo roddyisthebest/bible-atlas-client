@@ -58,6 +58,7 @@
 "Common.Ok" = "확인";
 "Common.Cancel" = "취소";
 "Common.Done" = "완료";
+"Common.Empty" = "표시할 데이터가 없습니다.";
 
 // placeDetail
 "PlaceDetail.Back" = "뒤로";

@@ -160,7 +160,9 @@ enum L10n {
 
         static let doneKey = "Common.Done" // 완료
         static var done: String { doneKey.localized }
-        
+
+        static let emptyKey = "Common.Empty"
+        static var empty: String {emptyKey.localized}
         
         // Count (stringsdict로 복수형 처리)
         static func placesCount(_ n: Int) -> String {
