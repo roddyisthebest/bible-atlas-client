@@ -271,10 +271,8 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             let vc = vcFactory.makeAccountManagementBottomSheetVC(vm: vm);
             presentFromTopVC(vc)
         case .placeReport(let placeId, let reportType):
-            let vm = vmFactory.makeReportBottomSheetVM(placeId: placeId, reportType: reportType)
-            
-            let vc = vcFactory.makeReportBottomSheetVC(vm: vm)
-            
+            let vm = vmFactory.makePlaceReportBottomSheetVM(placeId: placeId, reportType: reportType)
+            let vc = vcFactory.makePlaceReportBottomSheetVC(vm: vm)
             presentFromTopVC(vc)
             
         case .bibleBookVerseList(let placeId, let bibleBook):

@@ -140,7 +140,7 @@
 		EC940EAA2DF7198C00406944 /* MapRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940EA92DF7198C00406944 /* MapRepositoryProtocol.swift */; };
 		EC940EAC2DF71A8100406944 /* MapUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940EAB2DF71A8100406944 /* MapUsecase.swift */; };
 		EC940EAE2DF7229800406944 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940EAD2DF7229800406944 /* MainViewModel.swift */; };
-		EC9A0A382E6A8EB300BB580E /* ReportBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9A0A372E6A8EB300BB580E /* ReportBottomSheetViewModelTests.swift */; };
+		EC9A0A382E6A8EB300BB580E /* PlaceReportBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9A0A372E6A8EB300BB580E /* PlaceReportBottomSheetViewModelTests.swift */; };
 		EC9A0A3A2E6ACCB400BB580E /* MainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9A0A392E6ACCB400BB580E /* MainViewModelTests.swift */; };
 		EC9A0A3D2E6B2F1A00BB580E /* MockMapUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9A0A3C2E6B2F1A00BB580E /* MockMapUsecase.swift */; };
 		EC9A0A3F2E6B33AB00BB580E /* MockPlaceUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9A0A3E2E6B33AB00BB580E /* MockPlaceUsecase.swift */; };
@@ -194,8 +194,8 @@
 		ECD972602E2BA44400D94767 /* AccountManagementBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9725F2E2BA44400D94767 /* AccountManagementBottomSheetViewController.swift */; };
 		ECD972652E2CE02000D94767 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972642E2CE02000D94767 /* AppCoordinator.swift */; };
 		ECD972672E2CE78800D94767 /* WindowService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972662E2CE78800D94767 /* WindowService.swift */; };
-		ECD972692E307AC500D94767 /* ReportBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972682E307AC500D94767 /* ReportBottomSheetViewController.swift */; };
-		ECD9726B2E307AE300D94767 /* ReportBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9726A2E307AE300D94767 /* ReportBottomSheetViewModel.swift */; };
+		ECD972692E307AC500D94767 /* PlaceReportBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972682E307AC500D94767 /* PlaceReportBottomSheetViewController.swift */; };
+		ECD9726B2E307AE300D94767 /* PlaceReportBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9726A2E307AE300D94767 /* PlaceReportBottomSheetViewModel.swift */; };
 		ECD9726D2E307C8A00D94767 /* PlaceReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9726C2E307C8A00D94767 /* PlaceReport.swift */; };
 		ECD9726F2E324E9F00D94767 /* ReportTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD9726E2E324E9F00D94767 /* ReportTypeTableViewCell.swift */; };
 		ECD972712E38B6C200D94767 /* MKMapRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972702E38B6C200D94767 /* MKMapRect.swift */; };
@@ -371,7 +371,7 @@
 		EC940EA92DF7198C00406944 /* MapRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRepositoryProtocol.swift; sourceTree = "<group>"; };
 		EC940EAB2DF71A8100406944 /* MapUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapUsecase.swift; sourceTree = "<group>"; };
 		EC940EAD2DF7229800406944 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
-		EC9A0A372E6A8EB300BB580E /* ReportBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
+		EC9A0A372E6A8EB300BB580E /* PlaceReportBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceReportBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
 		EC9A0A392E6ACCB400BB580E /* MainViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelTests.swift; sourceTree = "<group>"; };
 		EC9A0A3C2E6B2F1A00BB580E /* MockMapUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMapUsecase.swift; sourceTree = "<group>"; };
 		EC9A0A3E2E6B33AB00BB580E /* MockPlaceUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPlaceUsecase.swift; sourceTree = "<group>"; };
@@ -430,8 +430,8 @@
 		ECD9725F2E2BA44400D94767 /* AccountManagementBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManagementBottomSheetViewController.swift; sourceTree = "<group>"; };
 		ECD972642E2CE02000D94767 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		ECD972662E2CE78800D94767 /* WindowService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowService.swift; sourceTree = "<group>"; };
-		ECD972682E307AC500D94767 /* ReportBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBottomSheetViewController.swift; sourceTree = "<group>"; };
-		ECD9726A2E307AE300D94767 /* ReportBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBottomSheetViewModel.swift; sourceTree = "<group>"; };
+		ECD972682E307AC500D94767 /* PlaceReportBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceReportBottomSheetViewController.swift; sourceTree = "<group>"; };
+		ECD9726A2E307AE300D94767 /* PlaceReportBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceReportBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		ECD9726C2E307C8A00D94767 /* PlaceReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceReport.swift; sourceTree = "<group>"; };
 		ECD9726E2E324E9F00D94767 /* ReportTypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTypeTableViewCell.swift; sourceTree = "<group>"; };
 		ECD972702E38B6C200D94767 /* MKMapRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKMapRect.swift; sourceTree = "<group>"; };
@@ -983,7 +983,7 @@
 				ECD972512E210DF700D94767 /* PopularPlacesBottomSheetViewController.swift */,
 				ECD972552E27E14500D94767 /* MyPageBottomSheetViewController.swift */,
 				ECD9725F2E2BA44400D94767 /* AccountManagementBottomSheetViewController.swift */,
-				ECD972682E307AC500D94767 /* ReportBottomSheetViewController.swift */,
+				ECD972682E307AC500D94767 /* PlaceReportBottomSheetViewController.swift */,
 				EC9A0A482E6F051F00BB580E /* AppGateViewController.swift */,
 				EC0F01D12E81929300D7C216 /* BiblesBottomSheetViewController.swift */,
 				EC0F01EC2E828D9400D7C216 /* PlacesByBibleBottomSheetViewController.swift */,
@@ -1011,7 +1011,7 @@
 				ECD9724F2E21040000D94767 /* PopularPlacesBottomSheetViewModel.swift */,
 				ECD972572E27E8B800D94767 /* MyPageBottomSheetViewModel.swift */,
 				ECD9725B2E2A353300D94767 /* AccountManagementBottomSheetViewModel.swift */,
-				ECD9726A2E307AE300D94767 /* ReportBottomSheetViewModel.swift */,
+				ECD9726A2E307AE300D94767 /* PlaceReportBottomSheetViewModel.swift */,
 				EC0F01CF2E81921E00D7C216 /* BiblesBottomSheetViewModel.swift */,
 				EC0F01EA2E828C0500D7C216 /* PlacesByBibleBottomSheetViewModel.swift */,
 				EC1B2DC82E8ED0B00073EBE3 /* BibleBookVerseListBottomSheetViewModel.swift */,
@@ -1065,7 +1065,7 @@
 				ECC49F7E2E4A1F000061B467 /* LoginBottomSheetViewModelTests.swift */,
 				ECC49F802E4CC3C10061B467 /* MyCollectionBottomSheetViewModelTests.swift */,
 				ECC49F822E4F25090061B467 /* PlaceDetailBottomSheetViewModelTests.swift */,
-				EC9A0A372E6A8EB300BB580E /* ReportBottomSheetViewModelTests.swift */,
+				EC9A0A372E6A8EB300BB580E /* PlaceReportBottomSheetViewModelTests.swift */,
 				EC9A0A392E6ACCB400BB580E /* MainViewModelTests.swift */,
 				EC9A0A402E6C0AF000BB580E /* MemoBottomSheetViewModelTests.swift */,
 				EC9A0A422E6C1EE400BB580E /* PlaceTypesBottomSheetViewModelTests.swift */,
@@ -1343,7 +1343,7 @@
 				EC0F01D42E8228E300D7C216 /* BibleBookCell.swift in Sources */,
 				EC70589E2DBCA8B6002D47DF /* HeaderLabel.swift in Sources */,
 				EC64B9822DE45C0300D3C8A7 /* ErrorHandlerServiceProtocol.swift in Sources */,
-				ECD9726B2E307AE300D94767 /* ReportBottomSheetViewModel.swift in Sources */,
+				ECD9726B2E307AE300D94767 /* PlaceReportBottomSheetViewModel.swift in Sources */,
 				EC70588E2DB8BEB1002D47DF /* MainLabel.swift in Sources */,
 				EC940EA12DF1756C00406944 /* RxNotificationService.swift in Sources */,
 				EC940EAA2DF7198C00406944 /* MapRepositoryProtocol.swift in Sources */,
@@ -1418,7 +1418,7 @@
 				EC0F01D02E81921E00D7C216 /* BiblesBottomSheetViewModel.swift in Sources */,
 				EC7058882DB3CA5B002D47DF /* UIColor.swift in Sources */,
 				EC9A0A492E6F051F00BB580E /* AppGateViewController.swift in Sources */,
-				ECD972692E307AC500D94767 /* ReportBottomSheetViewController.swift in Sources */,
+				ECD972692E307AC500D94767 /* PlaceReportBottomSheetViewController.swift in Sources */,
 				ECA94BE12D50A739005B0428 /* AuthData.swift in Sources */,
 				EC64B96E2DE3401900D3C8A7 /* Pagination.swift in Sources */,
 				ECCB51D62E1A95F9007E4AB7 /* RecentSearchService.swift in Sources */,
@@ -1496,7 +1496,7 @@
 				EC0F01BE2E7F844000D7C216 /* MockPlaceDetailViewModel.swift in Sources */,
 				EC0F01AF2E7B9AE600D7C216 /* MyPageBottomSheetViewModelTests.swift in Sources */,
 				EC64B9712DE3456900D3C8A7 /* PaginationTests.swift in Sources */,
-				EC9A0A382E6A8EB300BB580E /* ReportBottomSheetViewModelTests.swift in Sources */,
+				EC9A0A382E6A8EB300BB580E /* PlaceReportBottomSheetViewModelTests.swift in Sources */,
 				EC9A0A562E71B11A00BB580E /* BibleVerseDetailBottomSheetViewModelTests.swift in Sources */,
 				EC0F02062E85362300D7C216 /* AuthorizedApiClientTests.swift in Sources */,
 				EC0F01C62E81466800D7C216 /* MockSearchReadyViewModel.swift in Sources */,

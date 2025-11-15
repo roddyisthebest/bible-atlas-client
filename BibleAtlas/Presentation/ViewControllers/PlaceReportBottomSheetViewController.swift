@@ -10,7 +10,7 @@ import RxRelay
 import RxSwift
 
 
-final class ReportBottomSheetViewController: UIViewController {
+final class PlaceReportBottomSheetViewController: UIViewController {
 
     private var cellHeight = 40;
 
@@ -24,7 +24,7 @@ final class ReportBottomSheetViewController: UIViewController {
     
     private var selectedReportType:PlaceReportType? = nil
     
-    private let reportBottomSheetViewModel:ReportBottomSheetViewModelProtocol;
+    private let placeReportBottomSheetViewModel:PlaceReportBottomSheetViewModelProtocol;
     
     private let cancelButtonTapped$ = PublishRelay<Void>()
 
@@ -248,7 +248,7 @@ final class ReportBottomSheetViewController: UIViewController {
         let confirmTappedWithText$ = confirmButtonTapped$
             .withLatestFrom(reasonTextView.rx.text.orEmpty).asObservable()
         
-        let output = self.reportBottomSheetViewModel.transform(input: ReportBottomSheetViewModel.Input(cancelButttonTapped$: cancelButtonTapped$.asObservable(), placeTypeCellTapped$: reportTypeCellTapped$.asObservable(), confirmButtonTapped$: confirmTappedWithText$))
+        let output = self.placeReportBottomSheetViewModel.transform(input: PlaceReportBottomSheetViewModel.Input(cancelButttonTapped$: cancelButtonTapped$.asObservable(), placeTypeCellTapped$: reportTypeCellTapped$.asObservable(), confirmButtonTapped$: confirmTappedWithText$))
         
         
         output.reportType$
@@ -314,8 +314,8 @@ final class ReportBottomSheetViewController: UIViewController {
     
     
     
-    init(reportBottomSheetViewModel: ReportBottomSheetViewModelProtocol) {
-        self.reportBottomSheetViewModel = reportBottomSheetViewModel
+    init(placeReportBottomSheetViewModel: PlaceReportBottomSheetViewModelProtocol) {
+        self.placeReportBottomSheetViewModel = placeReportBottomSheetViewModel
                 
         super.init(nibName: nil, bundle: nil)
 
@@ -339,7 +339,7 @@ final class ReportBottomSheetViewController: UIViewController {
 
 }
 
-extension ReportBottomSheetViewController:UITableViewDataSource{
+extension PlaceReportBottomSheetViewController:UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         reportTypes.count
     }
@@ -370,7 +370,7 @@ extension ReportBottomSheetViewController:UITableViewDataSource{
     }
 }
 
-extension ReportBottomSheetViewController:UITableViewDelegate{
+extension PlaceReportBottomSheetViewController:UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)

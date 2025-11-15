@@ -9,16 +9,16 @@ import Foundation
 import RxSwift
 import RxRelay
 
-protocol ReportBottomSheetViewModelProtocol{
-    func transform(input:ReportBottomSheetViewModel.Input) -> ReportBottomSheetViewModel.Output
+protocol PlaceReportBottomSheetViewModelProtocol{
+    func transform(input:PlaceReportBottomSheetViewModel.Input) -> PlaceReportBottomSheetViewModel.Output
 }
 
-enum ReportClientError:Error{
+enum PlaceReportClientError:Error{
     case placeId
     case placeType
 }
 
-final class ReportBottomSheetViewModel:ReportBottomSheetViewModelProtocol{
+final class PlaceReportBottomSheetViewModel:PlaceReportBottomSheetViewModelProtocol{
         
     private let disposeBag = DisposeBag();
     
@@ -31,7 +31,7 @@ final class ReportBottomSheetViewModel:ReportBottomSheetViewModelProtocol{
     private let isLoading$ = BehaviorRelay<Bool>(value: false)
     private let isSuccess$ = BehaviorRelay<Bool?>(value: nil)
     private let networkError$ = BehaviorRelay<NetworkError?>(value: nil)
-    private let clientError$ = BehaviorRelay<ReportClientError?>(value: nil)
+    private let clientError$ = BehaviorRelay<PlaceReportClientError?>(value: nil)
 
     private let placeUsecase:PlaceUsecaseProtocol?
 
@@ -98,7 +98,7 @@ final class ReportBottomSheetViewModel:ReportBottomSheetViewModelProtocol{
         let isLoading$: Observable<Bool>
         let isSuccess$:Observable<Bool?>
         let networkError$:Observable<NetworkError?>
-        let clientError$:Observable<ReportClientError?>
+        let clientError$:Observable<PlaceReportClientError?>
         
         let reportType$: Observable<PlaceReportType?>
     }

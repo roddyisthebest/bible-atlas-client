@@ -13,7 +13,7 @@ import RxBlocking
 
 @testable import BibleAtlas
 
-final class ReportBottomSheetViewModelTests: XCTestCase {
+final class PlaceReportBottomSheetViewModelTests: XCTestCase {
 
     var navigator: MockBottomSheetNavigator!
     var placeUsecase: MockPlaceusecase!
@@ -33,10 +33,10 @@ final class ReportBottomSheetViewModelTests: XCTestCase {
     }
 
     func test_cancelButtonTap_shouldDismissNavigator(){
-        let vm = ReportBottomSheetViewModel(navigator: navigator, reportType: reportType, placeUsecase: placeUsecase, placeId: placeId);
+        let vm = PlaceReportBottomSheetViewModel(navigator: navigator, reportType: reportType, placeUsecase: placeUsecase, placeId: placeId);
         
         let cancelButtonTapped$ = PublishRelay<Void>();
-        let _ = vm.transform(input: ReportBottomSheetViewModel.Input(cancelButttonTapped$: cancelButtonTapped$.asObservable(), placeTypeCellTapped$: .empty(), confirmButtonTapped$: .empty()))
+        let _ = vm.transform(input: PlaceReportBottomSheetViewModel.Input(cancelButttonTapped$: cancelButtonTapped$.asObservable(), placeTypeCellTapped$: .empty(), confirmButtonTapped$: .empty()))
         
         cancelButtonTapped$.accept(())
         
@@ -49,12 +49,12 @@ final class ReportBottomSheetViewModelTests: XCTestCase {
         let reportType = PlaceReportType.etc
         let placeId = "test"
         
-        let vm = ReportBottomSheetViewModel(navigator: navigator, reportType: reportType, placeUsecase: placeUsecase, placeId: placeId);
+        let vm = PlaceReportBottomSheetViewModel(navigator: navigator, reportType: reportType, placeUsecase: placeUsecase, placeId: placeId);
         
         let placeTypeCellTapped$ = PublishRelay<PlaceReportType>();
         
         
-        let output = vm.transform(input: ReportBottomSheetViewModel.Input(cancelButttonTapped$: .empty(), placeTypeCellTapped$: placeTypeCellTapped$.asObservable(), confirmButtonTapped$: .empty()))
+        let output = vm.transform(input: PlaceReportBottomSheetViewModel.Input(cancelButttonTapped$: .empty(), placeTypeCellTapped$: placeTypeCellTapped$.asObservable(), confirmButtonTapped$: .empty()))
         
         placeTypeCellTapped$.accept(.inappropriate)
         
@@ -67,12 +67,12 @@ final class ReportBottomSheetViewModelTests: XCTestCase {
 
     
     func test_confirmTap_withoutPlaceId_shouldEmitClientError_placeId() throws{
-        let vm = ReportBottomSheetViewModel(navigator: navigator, reportType: .etc, placeUsecase: placeUsecase, placeId: nil)
+        let vm = PlaceReportBottomSheetViewModel(navigator: navigator, reportType: .etc, placeUsecase: placeUsecase, placeId: nil)
         
         let confirmButtonTapped$ = PublishRelay<String>();
         
         
-        let output = vm.transform(input: ReportBottomSheetViewModel.Input(cancelButttonTapped$: .empty(), placeTypeCellTapped$: .empty(), confirmButtonTapped$: confirmButtonTapped$.asObservable()))
+        let output = vm.transform(input: PlaceReportBottomSheetViewModel.Input(cancelButttonTapped$: .empty(), placeTypeCellTapped$: .empty(), confirmButtonTapped$: confirmButtonTapped$.asObservable()))
         
         
         confirmButtonTapped$.accept("pov:test")
@@ -80,17 +80,17 @@ final class ReportBottomSheetViewModelTests: XCTestCase {
         
         let clientError = try output.clientError$.toBlocking(timeout: 1).first()!
             
-        XCTAssertEqual(clientError, ReportClientError.placeId)
+        XCTAssertEqual(clientError, PlaceReportClientError.placeId)
         
     }
 
     func test_confirmTap_withoutReportType_shouldEmitClientError_placeType() throws{
-        let vm = ReportBottomSheetViewModel(navigator: navigator, reportType: nil, placeUsecase: placeUsecase, placeId: placeId)
+        let vm = PlaceReportBottomSheetViewModel(navigator: navigator, reportType: nil, placeUsecase: placeUsecase, placeId: placeId)
         
         let confirmButtonTapped$ = PublishRelay<String>();
         
         
-        let output = vm.transform(input: ReportBottomSheetViewModel.Input(cancelButttonTapped$: .empty(), placeTypeCellTapped$: .empty(), confirmButtonTapped$: confirmButtonTapped$.asObservable()))
+        let output = vm.transform(input: PlaceReportBottomSheetViewModel.Input(cancelButttonTapped$: .empty(), placeTypeCellTapped$: .empty(), confirmButtonTapped$: confirmButtonTapped$.asObservable()))
         
         
         confirmButtonTapped$.accept("pov:test")
@@ -98,7 +98,7 @@ final class ReportBottomSheetViewModelTests: XCTestCase {
         
         let clientError = try output.clientError$.toBlocking(timeout: 1).first()!
             
-        XCTAssertEqual(clientError, ReportClientError.placeType)
+        XCTAssertEqual(clientError, PlaceReportClientError.placeType)
         
     }
     
@@ -109,12 +109,12 @@ final class ReportBottomSheetViewModelTests: XCTestCase {
         placeUsecase.createReportExp = exp;
         placeUsecase.createReportResultToReturn = .success(1233)
 
-        let vm = ReportBottomSheetViewModel(navigator: navigator, reportType: .etc, placeUsecase: placeUsecase, placeId: placeId)
+        let vm = PlaceReportBottomSheetViewModel(navigator: navigator, reportType: .etc, placeUsecase: placeUsecase, placeId: placeId)
         
         let confirmButtonTapped$ = PublishRelay<String>();
         
         
-        let output = vm.transform(input: ReportBottomSheetViewModel.Input(cancelButttonTapped$: .empty(), placeTypeCellTapped$: .empty(), confirmButtonTapped$: confirmButtonTapped$.asObservable()))
+        let output = vm.transform(input: PlaceReportBottomSheetViewModel.Input(cancelButttonTapped$: .empty(), placeTypeCellTapped$: .empty(), confirmButtonTapped$: confirmButtonTapped$.asObservable()))
         
         var histories:[Bool] = []
         
@@ -144,12 +144,12 @@ final class ReportBottomSheetViewModelTests: XCTestCase {
         placeUsecase.createReportExp = exp;
         placeUsecase.createReportResultToReturn = .failure(.clientError("test-error"))
 
-        let vm = ReportBottomSheetViewModel(navigator: navigator, reportType: .etc, placeUsecase: placeUsecase, placeId: placeId)
+        let vm = PlaceReportBottomSheetViewModel(navigator: navigator, reportType: .etc, placeUsecase: placeUsecase, placeId: placeId)
         
         let confirmButtonTapped$ = PublishRelay<String>();
         
         
-        let output = vm.transform(input: ReportBottomSheetViewModel.Input(cancelButttonTapped$: .empty(), placeTypeCellTapped$: .empty(), confirmButtonTapped$: confirmButtonTapped$.asObservable()))
+        let output = vm.transform(input: PlaceReportBottomSheetViewModel.Input(cancelButttonTapped$: .empty(), placeTypeCellTapped$: .empty(), confirmButtonTapped$: confirmButtonTapped$.asObservable()))
         
         var histories:[Bool] = []
         
@@ -178,12 +178,12 @@ final class ReportBottomSheetViewModelTests: XCTestCase {
         placeUsecase.createReportExp = exp;
         placeUsecase.createReportResultToReturn = .success(1233)
         
-        let vm = ReportBottomSheetViewModel(navigator: navigator, reportType: .etc, placeUsecase: placeUsecase, placeId: placeId)
+        let vm = PlaceReportBottomSheetViewModel(navigator: navigator, reportType: .etc, placeUsecase: placeUsecase, placeId: placeId)
         
         let confirmButtonTapped$ = PublishRelay<String>();
         let placeTypeCellTapped$ = PublishRelay<PlaceReportType>();
         
-        let output = vm.transform(input: ReportBottomSheetViewModel.Input(cancelButttonTapped$: .empty(), placeTypeCellTapped$: placeTypeCellTapped$.asObservable(), confirmButtonTapped$: confirmButtonTapped$.asObservable()))
+        let output = vm.transform(input: PlaceReportBottomSheetViewModel.Input(cancelButttonTapped$: .empty(), placeTypeCellTapped$: placeTypeCellTapped$.asObservable(), confirmButtonTapped$: confirmButtonTapped$.asObservable()))
         
         placeTypeCellTapped$.accept(.inappropriate)
         confirmButtonTapped$.accept("test")

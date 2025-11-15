@@ -50,7 +50,7 @@ protocol VCFactoryProtocol:AnyObject {
     
     func makeMainVC(vm:MainViewModelProtocol) -> UIViewController & Presentable
     
-    func makeReportBottomSheetVC(vm:ReportBottomSheetViewModelProtocol) -> UIViewController
+    func makePlaceReportBottomSheetVC(vm:PlaceReportBottomSheetViewModelProtocol) -> UIViewController
     
     func makeBibleBookVerseListBottomSheetVC(vm:BibleBookVerseListBottomSheetViewModelProtocol) -> UIViewController
     
@@ -187,8 +187,8 @@ final class VCFactory:VCFactoryProtocol {
     }
     
     
-    func makeReportBottomSheetVC(vm: ReportBottomSheetViewModelProtocol) -> UIViewController {
-        let vc = ReportBottomSheetViewController(reportBottomSheetViewModel: vm);
+    func makePlaceReportBottomSheetVC(vm: PlaceReportBottomSheetViewModelProtocol) -> UIViewController {
+        let vc = PlaceReportBottomSheetViewController(placeReportBottomSheetViewModel: vm);
         setupVC(type: .placeReport("0", .etc), sheet: vc)
         return vc;
     }
