@@ -261,6 +261,7 @@ final class HomeContentViewController: UIViewController {
         setupStyle();
         setupConstraints();
         setupSheet()
+        setupButtonActions();
         bindViewModel();
     }
     
@@ -280,6 +281,26 @@ final class HomeContentViewController: UIViewController {
     private func setupStyle(){
         view.backgroundColor = .mainBkg;
     }
+    
+    private func setupButtonActions() {
+        allPoliciesButton.addTarget(self, action: #selector(handleAllPoliciesButtonTap), for: .touchUpInside)
+        contactSupportButton.addTarget(self, action: #selector(handleContactSupportButtonTap), for: .touchUpInside)
+    }
+    
+    
+    private func openExternalURL(_ urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+
+    @objc private func handleAllPoliciesButtonTap() {
+        openExternalURL("https://bible-atlas-cs.vercel.app/terms")
+    }
+
+    @objc private func handleContactSupportButtonTap() {
+        openExternalURL("https://bible-atlas-cs.vercel.app/support")
+    }
+    
     
     
     private func setupConstraints(){
