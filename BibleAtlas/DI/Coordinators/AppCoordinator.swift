@@ -11,6 +11,7 @@ import UIKit
 protocol AppCoordinatorProtocol: AnyObject {
     func start()
     func logout()
+    func openSupportCenter()
 }
 
 
@@ -59,6 +60,13 @@ final class AppCoordinator:AppCoordinatorProtocol {
         appStore.dispatch(.logout)
         start() // 또는 loginFlow()
     }
+    
+    
+    func openSupportCenter() {
+         guard let url = URL(string: "https://bible-atlas-cs.vercel.app/support") else { return }
+         UIApplication.shared.open(url, options: [:], completionHandler: nil)
+     }
+    
 }
 
 

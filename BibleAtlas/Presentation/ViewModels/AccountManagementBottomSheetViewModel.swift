@@ -85,7 +85,7 @@ final class AccountManagementBottomSheetViewModel:AccountManagementBottomSheetVi
                 case .withdrawal:
                     self?.showWithdrawConfirm$.accept(())
                 case .navigateCS:
-                    print("navigateCS")
+                    self?.appCoordinator?.openSupportCenter()
                 case .navigatePROFILE:
                     print("navigatePROFILE")
 
