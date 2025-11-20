@@ -42,19 +42,22 @@ final class DIContainer {
     lazy var userApiService = UserApiService(apiClient: apiClient, url: env.baseURL.appendingPathComponent("user").absoluteString)
     lazy var placeApiService = PlaceApiService(apiClient: apiClient, url: env.baseURL.absoluteString)
     lazy var mapApiService = MapApiService(apiClient: apiClient, url: env.baseURL.absoluteString)
+    lazy var reportApiService = ReportApiService(apiClient: apiClient, url: env.baseURL.absoluteString)
 
     // Repositories
     lazy var authRepository = AuthRepository(authApiService: authApiService)
     lazy var userRepository = UserRepository(userApiService: userApiService)
     lazy var placeRepository = PlaceRepository(placeApiService: placeApiService)
     lazy var mapRepository = MapRepository(mapApiService: mapApiService)
+    lazy var reportRepository = ReportRepository(reportApiService: reportApiService)
 
     // Usecases
     lazy var authUsecase = AuthUsecase(repository: authRepository, tokenProvider: tokenProvider)
     lazy var userUsecase = UserUsecase(repository: userRepository)
     lazy var placeUsecase = PlaceUsecase(repository: placeRepository)
     lazy var mapUsecase = MapUsecase(repository: mapRepository)
-    lazy var usecases = UseCases(auth: authUsecase, user: userUsecase, place: placeUsecase, map: mapUsecase)
+    lazy var reportUsecase = ReportUsecase(repository: reportRepository)
+    lazy var usecases = UseCases(auth: authUsecase, user: userUsecase, place: placeUsecase, map: mapUsecase, report: reportUsecase)
 
     // Factories & Coordinators
     lazy var vmFactory = VMFactory(appStore: appStore, collectionStore: collectionStore, usecases: usecases, notificationService: notificationService, recentSearchService: recentSearchService)

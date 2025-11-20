@@ -7,10 +7,6 @@
 
 import UIKit
 protocol VCFactoryProtocol:AnyObject {
-    //TODO: VC 직접 타입 리턴 프로토콜로 변경 필요
-    
-    
-    
     
     func makeHomeBottomSheetVC(
         homeVM: HomeBottomSheetViewModelProtocol,
@@ -50,9 +46,11 @@ protocol VCFactoryProtocol:AnyObject {
     
     func makeMainVC(vm:MainViewModelProtocol) -> UIViewController & Presentable
     
-    func makeReportBottomSheetVC(vm:ReportBottomSheetViewModelProtocol) -> UIViewController
+    func makePlaceReportBottomSheetVC(vm:PlaceReportBottomSheetViewModelProtocol) -> UIViewController
     
     func makeBibleBookVerseListBottomSheetVC(vm:BibleBookVerseListBottomSheetViewModelProtocol) -> UIViewController
+    
+    func makeReportBottomSheetVC(vm:ReportBottomSheetViewModelProtocol) -> UIViewController
     
     func setupVC(type: BottomSheetType, sheet: UIViewController) -> Void
 }
@@ -158,7 +156,7 @@ final class VCFactory:VCFactoryProtocol {
     
     func makeBibleVerseDetailBottomSheetVC(vm: BibleVerseDetailBottomSheetViewModelProtocol, keyword:String) -> UIViewController {
         let vc = BibleVerseDetailBottomSheetViewController(bibleVerseDetailBottomSheetViewModel: vm);
-        setupVC(type: .bibleVerseDetail(.Etc, keyword),sheet: vc);
+        setupVC(type: .bibleVerseDetail(.Etc, keyword, nil),sheet: vc);
         return vc;
     }
     
@@ -187,8 +185,8 @@ final class VCFactory:VCFactoryProtocol {
     }
     
     
-    func makeReportBottomSheetVC(vm: ReportBottomSheetViewModelProtocol) -> UIViewController {
-        let vc = ReportBottomSheetViewController(reportBottomSheetViewModel: vm);
+    func makePlaceReportBottomSheetVC(vm: PlaceReportBottomSheetViewModelProtocol) -> UIViewController {
+        let vc = PlaceReportBottomSheetViewController(placeReportBottomSheetViewModel: vm);
         setupVC(type: .placeReport("0", .etc), sheet: vc)
         return vc;
     }
@@ -200,6 +198,11 @@ final class VCFactory:VCFactoryProtocol {
     
     func makeBibleBookVerseListBottomSheetVC(vm: BibleBookVerseListBottomSheetViewModelProtocol) -> UIViewController {
         let vc = BibleBookVerseListBottomSheetViewController(vm: vm)
+        return vc
+    }
+    
+    func makeReportBottomSheetVC(vm: ReportBottomSheetViewModelProtocol) -> UIViewController{
+        let vc = ReportBottomSheetViewController(reportBottomSheetViewModel: vm);
         return vc
     }
 
@@ -259,8 +262,8 @@ final class VCFactory:VCFactoryProtocol {
 
         default:
             if let sheet = sheet.sheetPresentationController {
-                sheet.detents = [.large()] // 높이 조절 가능 (중간, 전체 화면)
-                sheet.prefersScrollingExpandsWhenScrolledToEdge = false // 스크롤 시 확장 가능
+                sheet.detents = [.large()]
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = false // 스크롤 시 확장 불가능
                 sheet.prefersGrabberVisible = false // 위쪽 핸들 표시
             }
             sheet.isModalInPresentation = true

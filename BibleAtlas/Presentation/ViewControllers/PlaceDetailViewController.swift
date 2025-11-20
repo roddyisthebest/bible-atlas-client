@@ -77,7 +77,7 @@ final class PlaceDetailViewController: UIViewController {
     
     
     private lazy var contentView = {
-        let sv = UIStackView(arrangedSubviews: [subInfoStackView, likeAndMoreButtonsStackView, memoButton, imageButton, descriptionStackView, relatedLocationStackView, relatedVerseStackView, reportIssueButton])
+        let sv = UIStackView(arrangedSubviews: [subInfoStackView, dataSourceLabel, likeAndMoreButtonsStackView, memoButton, imageButton, descriptionStackView, relatedLocationStackView, relatedVerseStackView, reportIssueButton])
      
         sv.axis = .vertical
         sv.spacing = 18
@@ -232,6 +232,17 @@ final class PlaceDetailViewController: UIViewController {
         
         label.font = .systemFont(ofSize: 14, weight: .medium)
         return label;
+    }()
+    
+    
+    private let dataSourceLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 12)
+        label.textColor = .detailLabelText
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.text = L10n.PlaceDetail.dataSource
+        return label
     }()
     
     private lazy var likeAndMoreButtonsStackView = {
@@ -858,8 +869,12 @@ final class PlaceDetailViewController: UIViewController {
             }
             
             self.titleLabel.text = L10n.isEnglish ?  place.name: place.koreanName
-            self.descriptionTextView.text =  L10n.isEnglish ? place.description : place.koreanDescription
-            
+            self.descriptionTextView.attributedText = makeMarkdownBold(
+                L10n.isEnglish ? place.description : place.koreanDescription,
+                baseFont: .systemFont(ofSize: 16),
+                textColor: .mainText,
+                lineHeight: 22
+            )
                 
             self.generationLabel.text = place.isModern ? L10n.PlaceDetail.modern : L10n.PlaceDetail.ancient
             
@@ -879,12 +894,11 @@ final class PlaceDetailViewController: UIViewController {
             
             self.saveButton.setActive(isActive: place.isSaved ?? false)
             
-            
-      
-            
+         
             guard let placeType = place.types.first else { return }
          
-            self.placeTypeButton.setTitle("\(placeType.name.rawValue)", for: .normal)
+            
+            self.placeTypeButton.setTitle(L10n.isEnglish ? placeType.name.titleEn : placeType.name.titleKo, for: .normal)
             
         }.disposed(by:disposeBag)
         
@@ -1182,7 +1196,6 @@ extension PlaceDetailViewController: RelatedVerseTableViewCellDelegate {
     }
     func didTapMoreButton(bibleBook: BibleBook?, in cell: RelatedVerseTableViewCell) {
         moreVerseButtonTapped$.accept(bibleBook)
-
     }
 }
 

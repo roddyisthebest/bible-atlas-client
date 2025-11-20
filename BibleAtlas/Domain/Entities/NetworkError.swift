@@ -50,28 +50,37 @@ public enum NetworkError:Error,Equatable {
     public var description: String {
         switch self {
         case .urlError:
-            return "URL이 올바르지 않습니다."
+            return L10n.NetworkError.urlError
+
         case .invalid:
-            return "응답값이 유효하지 않습니다."
+            return L10n.NetworkError.invalid
+
         case .failToDecode(let desc):
-            return "디코딩 에러: \(desc)"
+            return L10n.NetworkError.failToDecode(desc)
+
         case .failToEncode(let desc):
-            return "엔코딩 에러: \(desc)"
+            return L10n.NetworkError.failToEncode(desc)
+
         case .dataNil:
-            return "데이터가 없습니다."
+            return L10n.NetworkError.dataNil
+
         case .serverError(let statusCode):
-            if(statusCode == 401){
-                return "다시 로그인해주세요."
+            if statusCode == 401 {
+                return L10n.NetworkError.unauthorized
             }
-            return "서버에러: \(statusCode)"
+            return L10n.NetworkError.serverError(statusCode)
+
         case .serverErrorWithMessage(let errorResponse):
             return errorResponse.message
+
         case .clientError(let msg):
-            return "클라이언트에서 서버 요청 실패 \(msg)"
+            return L10n.NetworkError.clientError(msg)
+
         case .failToJSONSerialize(let desc):
-                return "json 직렬화에러: \(desc)"
+            return L10n.NetworkError.failToJSONSerialize(desc)
         }
     }
+
 }
 
 

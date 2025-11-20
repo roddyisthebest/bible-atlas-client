@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import PanModal
 
 
 enum BottomSheetType:Equatable {
@@ -24,12 +23,13 @@ enum BottomSheetType:Equatable {
     case placesByCharacter(String)
     case placesByBible(BibleBook)
     case placeReport(String, PlaceReportType)
-    case bibleVerseDetail(BibleBook, String)
+    case bibleVerseDetail(BibleBook, String, String?)
     case bibleBookVerseList(String, BibleBook?)
     case recentSearches
     case popularPlaces
     case myPage
     case accountManagement
+    case report
 }
 
 
@@ -247,8 +247,8 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             let vc = vcFactory.makePlacesByBibleBottomSheetVC(vm: vm, bibleBook: bibleBook)
             presentFromTopVC(vc)
             
-        case .bibleVerseDetail(let bibleBook, let keyword):
-            let vm = vmFactory.makeBibleVerseDetailBottomSheetVM(bibleBook:bibleBook, keyword: keyword);
+        case .bibleVerseDetail(let bibleBook, let keyword, let placeName):
+            let vm = vmFactory.makeBibleVerseDetailBottomSheetVM(bibleBook:bibleBook, keyword: keyword, placeName: placeName);
             let vc = vcFactory.makeBibleVerseDetailBottomSheetVC(vm: vm, keyword: keyword);
             presentFromTopVC(vc)
             
@@ -272,10 +272,8 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             let vc = vcFactory.makeAccountManagementBottomSheetVC(vm: vm);
             presentFromTopVC(vc)
         case .placeReport(let placeId, let reportType):
-            let vm = vmFactory.makeReportBottomSheetVM(placeId: placeId, reportType: reportType)
-            
-            let vc = vcFactory.makeReportBottomSheetVC(vm: vm)
-            
+            let vm = vmFactory.makePlaceReportBottomSheetVM(placeId: placeId, reportType: reportType)
+            let vc = vcFactory.makePlaceReportBottomSheetVC(vm: vm)
             presentFromTopVC(vc)
             
         case .bibleBookVerseList(let placeId, let bibleBook):
@@ -283,7 +281,10 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             let vc = vcFactory.makeBibleBookVerseListBottomSheetVC(vm: vm);
             
             presentFromTopVC(vc)
-            
+        case .report:
+            let vm = vmFactory.makeReportBottomSheetVM();
+            let vc = vcFactory.makeReportBottomSheetVC(vm: vm);
+            presentFromTopVC(vc);
         }
     
     }

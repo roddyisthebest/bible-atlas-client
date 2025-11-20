@@ -226,9 +226,17 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
             self?.navigator?.present(.placeDetail(placeId))
         }).disposed(by: disposeBag)
         
-        input.verseCellTapped$.subscribe(onNext: {[weak self] (bibleBook, keyword) in self?.navigator?.present(.bibleVerseDetail(bibleBook, keyword))
-        }).disposed(by: disposeBag)
-        
+        input.verseCellTapped$
+            // 탭이 발생했을 때의 최신 place만 끌어온다 (place$ 변경으로 재발화 방지)
+            .withLatestFrom(place$) { tap, place in (tap, place) }
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] tap, place in
+                let (book, keyword) = tap
+                let localizedName = L10n.isEnglish ? place?.name : place?.koreanName
+                self?.navigator?.present(.bibleVerseDetail(book, keyword, localizedName))
+            })
+            .disposed(by: disposeBag)
+ 
         input.moreVerseButtonTapped$.subscribe(onNext:{ [weak self] bibleBook in
             guard let placeId = self?.placeId else{
                 return

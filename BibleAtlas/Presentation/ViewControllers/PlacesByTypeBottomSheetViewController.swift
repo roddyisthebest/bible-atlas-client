@@ -138,7 +138,7 @@ final class PlacesByTypeBottomSheetViewController: UIViewController {
         output?.typeName$.observe(on:MainScheduler.instance).bind{
             [weak self] typeName in
             guard let typeName = typeName else {return }
-            self?.headerLabel.text = "\(typeName)"
+            self?.headerLabel.text = L10n.isEnglish ? typeName.titleEn : typeName.titleKo
         }.disposed(by: disposeBag)
 
             

@@ -9,7 +9,7 @@ import UIKit
 
 class EmptyLabel: UILabel {
     
-    init(text:String? = "내 컬렉션이 없습니다."){
+    init(text:String? = L10n.Common.empty){
         super.init(frame: .zero);
         self.text = text;
         textColor = .mainLabelText;

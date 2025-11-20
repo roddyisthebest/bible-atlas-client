@@ -91,10 +91,14 @@ enum L10n {
         static let menuByTypeKey = "HomeContent.ExploreMenu.ByType"
         static let menuByBibleKey = "HomeContent.ExploreMenu.ByBible"
         
+        static let allPoliciesKey = "HomeContent.AllPolicies"
+        
         static var menuTitle: String { menuTitleKey.localized }
         static var menuAZ: String { menuAZKey.localized }
         static var menuByType: String { menuByTypeKey.localized }
         static var menuByBible: String { menuByBibleKey.localized }
+        
+        static var allPolicies: String{ allPoliciesKey.localized }
         
         
     }
@@ -160,7 +164,9 @@ enum L10n {
 
         static let doneKey = "Common.Done" // 완료
         static var done: String { doneKey.localized }
-        
+
+        static let emptyKey = "Common.Empty"
+        static var empty: String {emptyKey.localized}
         
         // Count (stringsdict로 복수형 처리)
         static func placesCount(_ n: Int) -> String {
@@ -195,6 +201,8 @@ enum L10n {
 
         static let okKey = "PlaceDetail.OK"
         static let likesFmtKey = "PlaceDetail.LikesFmt" // "%d Likes"
+        
+        static let dataSourceKey = "PlaceDetail.DataSource"
 
             // Values
         static var back: String { backKey.localized }
@@ -217,6 +225,8 @@ enum L10n {
         static var reportInappropriate: String { reportInappropriateKey.localized }
         static var reportFalseInfo: String { reportFalseInfoKey.localized }
         static var reportOther: String { reportOtherKey.localized }
+        
+        static var dataSource: String { dataSourceKey.localized }
 
         static var ok: String { okKey.localized }
 
@@ -378,7 +388,7 @@ enum L10n {
           static var withdrawCompleteMessage: String { withdrawCompleteMsgKey.localized }
       }
     
-    enum Report {
+    enum PlaceReport {
            static let titleKey = "Report.Title" // 상단 헤더
            static var title: String { titleKey.localized }
 
@@ -424,6 +434,58 @@ enum L10n {
         }
     
     
+    enum Report {
+        // Keys
+        static let titleKey = "Report.Title"
+        static let successKey = "Report.Success"
+        static let reasonPlaceholderKey = "Report.ReasonPlaceholder"
+
+        static let selectTypePlaceholderKey = "Report.SelectTypePlaceholder"
+        static let typeMenuTitleKey = "Report.TypeMenuTitle"
+
+        static let commentRequiredKey = "Report.CommentRequired"
+        static let typeRequiredKey = "Report.TypeRequired"
+        static let diErrorKey = "Report.DiError"
+
+        // Values
+        static var title: String { titleKey.localized }
+        static var success: String { successKey.localized }
+        static var reasonPlaceholder: String { reasonPlaceholderKey.localized }
+
+        static var selectTypePlaceholder: String { selectTypePlaceholderKey.localized }
+        static var typeMenuTitle: String { typeMenuTitleKey.localized }
+
+        static var commentRequired: String { commentRequiredKey.localized }
+        static var typeRequired: String { typeRequiredKey.localized }
+        static var diError: String { diErrorKey.localized }
+
+        enum Types {
+            static let bugReportKey        = "ReportType.BugReport"
+            static let featureRequestKey   = "ReportType.FeatureRequest"
+            static let uiUxIssueKey        = "ReportType.UiUxIssue"
+            static let performanceIssueKey = "ReportType.PerformanceIssue"
+            static let dataErrorKey        = "ReportType.DataError"
+            static let loginIssueKey       = "ReportType.LoginIssue"
+            static let searchIssueKey      = "ReportType.SearchIssue"
+            static let mapIssueKey         = "ReportType.MapIssue"
+            static let generalFeedbackKey  = "ReportType.GeneralFeedback"
+            static let otherKey            = "ReportType.Other"
+
+            static var bugReport: String        { bugReportKey.localized }
+            static var featureRequest: String   { featureRequestKey.localized }
+            static var uiUxIssue: String        { uiUxIssueKey.localized }
+            static var performanceIssue: String { performanceIssueKey.localized }
+            static var dataError: String        { dataErrorKey.localized }
+            static var loginIssue: String       { loginIssueKey.localized }
+            static var searchIssue: String      { searchIssueKey.localized }
+            static var mapIssue: String         { mapIssueKey.localized }
+            static var generalFeedback: String  { generalFeedbackKey.localized }
+            static var other: String            { otherKey.localized }
+        }
+    }
+
+    
+    
     // 성경 책 선택 + 구절 리스트 BottomSheet 전용
         enum VerseListSheet {
             // Keys
@@ -457,6 +519,46 @@ enum L10n {
             static func moreVerses(_ n: Int) -> String { moreVersesFmtKey.localized(n) }     // stringsdict 권장
             static func moreBooks(_ n: Int) -> String { moreBooksFmtKey.localized(n) }       // stringsdict 권장
         }
+    
+    
+    enum NetworkError {
+           static let urlErrorKey = "NetworkError.UrlError"
+           static var urlError: String { urlErrorKey.localized }
+
+           static let invalidKey = "NetworkError.Invalid"
+           static var invalid: String { invalidKey.localized }
+
+           static let failToDecodeFmtKey = "NetworkError.FailToDecodeFmt"
+           static func failToDecode(_ msg: String) -> String {
+               failToDecodeFmtKey.localized(msg)
+           }
+
+           static let failToEncodeFmtKey = "NetworkError.FailToEncodeFmt"
+           static func failToEncode(_ msg: String) -> String {
+               failToEncodeFmtKey.localized(msg)
+           }
+
+           static let dataNilKey = "NetworkError.DataNil"
+           static var dataNil: String { dataNilKey.localized }
+
+           static let unauthorizedKey = "NetworkError.Unauthorized"
+           static var unauthorized: String { unauthorizedKey.localized }
+
+           static let serverErrorFmtKey = "NetworkError.ServerErrorFmt"
+           static func serverError(_ code: Int) -> String {
+               serverErrorFmtKey.localized(code)
+           }
+
+           static let clientErrorFmtKey = "NetworkError.ClientErrorFmt"
+           static func clientError(_ msg: String) -> String {
+               clientErrorFmtKey.localized(msg)
+           }
+
+           static let failToJSONSerializeFmtKey = "NetworkError.FailToJSONSerializeFmt"
+           static func failToJSONSerialize(_ msg: String) -> String {
+               failToJSONSerializeFmtKey.localized(msg)
+           }
+       }
 }
 
 

@@ -49,8 +49,8 @@ final class PlaceTypesBottomSheetViewModel:PlaceTypesBottomSheetViewModelProtoco
     
     
     func transform(input: Input) -> Output {
-        input.placeTypeCellTapped$.subscribe(onNext: {[weak self] placeTypeId in
-            self?.navigator?.present(.placesByType(placeTypeId))
+        input.placeTypeCellTapped$.subscribe(onNext: {[weak self] placeTypeName in
+            self?.navigator?.present(.placesByType(placeTypeName))
         }).disposed(by: disposeBag)
         
         input.closeButtonTapped$.subscribe(onNext: {[weak self] in

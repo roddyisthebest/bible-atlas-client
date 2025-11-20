@@ -114,16 +114,12 @@ class PlaceTableViewCell: UITableViewCell {
         titleLabel.text = L10n.isEnglish ? place.name: place.koreanName;
         descriptionLabel.text = L10n.isEnglish ? place.description: place.koreanDescription;
 
-        let hasOneType = place.types.count == 1;
-        
-        if(hasOneType){
-            let placeType = place.types[0];
-            placeIcon.image = UIImage(named: placeType.name.rawValue)
-            
+        guard let placeType = place.types.first else {
+            placeIcon.image = UIImage(named: "ground");
             return;
         }
         
-        placeIcon.image = UIImage(named: "ground");
+        placeIcon.image = UIImage(named: placeType.name.rawValue)
 
     }
 

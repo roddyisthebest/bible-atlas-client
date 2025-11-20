@@ -1,0 +1,20 @@
+//
+//  Release.xcconfig
+//  BibleAtlas
+//
+//  Created by 배성연 on 10/8/25.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include "Pods/Target Support Files/Pods-BibleAtlas/Pods-BibleAtlas.release.xcconfig"
+#include "Base.xcconfig"
+
+PRODUCT_BUNDLE_IDENTIFIER = com.seongyeon.bibleatlas.release
+INFOPLIST_KEY_CFBundleDisplayName = $(PRODUCT_NAME)
+
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) RELEASE_ENV
+
+INFOPLIST_KEY_ENV_NAME = prod
+INFOPLIST_KEY_API_BASE_URL = https:/$()/bible-atlas-server.xyz

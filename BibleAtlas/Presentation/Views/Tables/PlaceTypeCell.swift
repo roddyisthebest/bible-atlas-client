@@ -60,7 +60,7 @@ class PlaceTypeCell: UICollectionViewCell {
     
     
     func setPlace(placeType:PlaceTypeWithPlaceCount){
-        nameLabel.text = placeType.name.rawValue;
+        nameLabel.text = L10n.isEnglish ? placeType.name.titleEn : placeType.name.titleKo;
         placeIcon.image = UIImage(named: placeType.name.rawValue);
         numberLabel.text =  L10n.Common.placesCount(placeType.placeCount)
     }

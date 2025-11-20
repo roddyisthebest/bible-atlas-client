@@ -85,6 +85,27 @@ final class HomeBottomSheetViewControllerTests: XCTestCase {
         
     }
     
+    func test_detentChanges_whenIsSearchingIsTrue(){
+        vc._test_beginEditing();
+        pump(1.0)
+
+        XCTAssertEqual(vc._test_selectedDetentIdentifier, .large)
+        XCTAssertEqual(vc._test_detentsCount, 1)
+        
+        vm._forceMedium$.accept(())
+        pump(1.0)
+        
+        XCTAssertEqual(vc._test_selectedDetentIdentifier, .medium)
+        XCTAssertEqual(vc._test_detentsCount, 1)
+        
+        
+        vm._restoreDetents$.accept(())
+        pump(1.0)
+        
+        XCTAssertEqual(vc._test_selectedDetentIdentifier, .large)
+        XCTAssertEqual(vc._test_detentsCount, 1)
+    }
+    
     
 
     

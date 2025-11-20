@@ -174,6 +174,7 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
         let placesByBibleButtonTapped$:Observable<Void>
         let recentSearchCellTapped$:Observable<String>
         let moreRecentSearchesButtonTapped$:Observable<Void>
+        let reportButtonTapped$:Observable<Void>
     }
     
     public struct Output{
@@ -226,6 +227,10 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
         input.moreRecentSearchesButtonTapped$.bind{[weak self] in
             self?.navigator?.present(.recentSearches)
         }.disposed(by: disposeBag)
+        
+        input.reportButtonTapped$.subscribe(onNext:{[weak self] in
+            self?.navigator?.present(.report)
+        }).disposed(by: disposeBag)
         
         return Output(profile$: profile$.asObservable(), isLoggedIn$: isLoggedIn$.asObservable(), likePlacesCount$: likePlacesCount$.asObservable(), savePlacesCount$: savePlacesCount$.asObservable(), memoPlacesCount$: memoPlacesCount$.asObservable(), recentSearches$: recentSearches$.asObservable(), errorToFetchRecentSearches$: errorToFetchRecentSearches$.asObservable(), loading$: loading$.asObservable(), forceMedium$: forceMedium$.asObservable(), restoreDetents$: restoreDetents$.asObservable())
     }

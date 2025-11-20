@@ -14,9 +14,10 @@ import RxCocoa
 
 final class MockHomeBottomSheetViewModel: HomeBottomSheetViewModelProtocol {
     // Inputs (VC가 바인딩해서 쓸 것)
-    let isSearchingMode$ = BehaviorRelay<Bool>(value: false)
+
     let keyword$ = BehaviorRelay<String>(value: "")
     let cancelButtonTapped$ = PublishRelay<Void>()
+    let isSearchingMode$ = BehaviorRelay<Bool>(value: false)
 
     // 내부 상태 시뮬레이션용
     let _profile$ = BehaviorRelay<User?>(value: nil)
@@ -24,6 +25,8 @@ final class MockHomeBottomSheetViewModel: HomeBottomSheetViewModelProtocol {
     let _screenMode$ = BehaviorRelay<HomeScreenMode>(value: .home)
     let _forceMedium$ = PublishRelay<Void>();
     let _restoreDetents$ = PublishRelay<Void>()
+    let _isSearchingMode$ = BehaviorRelay<Bool>(value: false)
+
 
     struct IO {
         let profile$: Observable<User?>
@@ -42,7 +45,7 @@ final class MockHomeBottomSheetViewModel: HomeBottomSheetViewModelProtocol {
             screenMode$: _screenMode$.asObservable(),
             keyword$: keyword$,
             keywordText$: keyword$.asDriver(onErrorJustReturn: ""),
-            isSearchingMode$: isSearchingMode$.asObservable(),
+            isSearchingMode$: _isSearchingMode$.asObservable(),
             forceMedium$: _forceMedium$.asObservable(),
             restoreDetents$: _restoreDetents$.asObservable()
         )

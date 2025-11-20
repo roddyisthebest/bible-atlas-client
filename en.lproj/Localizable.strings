@@ -61,6 +61,7 @@
 "Common.Ok" = "OK";
 "Common.Cancel" = "Cancel";
 "Common.Done" = "Done";
+"Common.Empty" = "No data available.";
 
 // placeDetail
 "PlaceDetail.Back" = "Back";
@@ -86,6 +87,8 @@
 
 "PlaceDetail.OK" = "OK";
 "PlaceDetail.LikesFmt" = "%d Likes";
+
+"PlaceDetail.DataSource" = "Data source: OpenBible.info (CC BY 4.0). Some geographical data © OpenStreetMap contributors licensed under ODbL.";
 
 
 // placeTypes
@@ -195,3 +198,40 @@
 "VerseListSheet.BooksCountFmt" = "%d book(s)";
 "VerseListSheet.MoreVersesFmt" = "Show %d more verse(s)";
 "VerseListSheet.MoreBooksFmt" = "Show %d more book(s)";
+
+
+
+// Report
+"Report.Title" = "Report an Issue";
+"Report.Success" = "Your report has been submitted.";
+"Report.ReasonPlaceholder" = "Please describe the issue.";
+
+"Report.SelectTypePlaceholder" = "Please select a report type.";
+"Report.TypeMenuTitle" = "Select report type";
+
+"Report.CommentRequired" = "Please enter a description.";
+"Report.TypeRequired" = "Please select a report type.";
+"Report.DiError" = "An internal configuration error occurred.";
+
+"ReportType.BugReport" = "Bug";
+"ReportType.FeatureRequest" = "Feature request";
+"ReportType.UiUxIssue" = "UI / UX issue";
+"ReportType.PerformanceIssue" = "Performance issue";
+"ReportType.DataError" = "Incorrect data";
+"ReportType.LoginIssue" = "Login issue";
+"ReportType.SearchIssue" = "Search issue";
+"ReportType.MapIssue" = "Map issue";
+"ReportType.GeneralFeedback" = "General feedback";
+"ReportType.Other" = "Other";
+
+
+// NetworkError
+"NetworkError.UrlError" = "Invalid URL.";
+"NetworkError.Invalid" = "The response is invalid.";
+"NetworkError.FailToDecodeFmt" = "Failed to decode data: %@";
+"NetworkError.FailToEncodeFmt" = "Failed to encode data: %@";
+"NetworkError.DataNil" = "No data received.";
+"NetworkError.Unauthorized" = "Please log in again.";
+"NetworkError.ServerErrorFmt" = "Server error: %d";
+"NetworkError.ClientErrorFmt" = "%@";
+"NetworkError.FailToJSONSerializeFmt" = "JSON serialization failed: %@";

@@ -13,6 +13,7 @@ struct UseCases {
     let user: UserUsecaseProtocol
     let place: PlaceUsecaseProtocol
     let map: MapUsecaseProtocol
+    let report: ReportUsecaseProtocol
 }
 
 protocol VMFactoryProtocol {
@@ -46,7 +47,7 @@ protocol VMFactoryProtocol {
     
     func makePlacesByBibleBottomSheetVM(bible:BibleBook) -> PlacesByBibleBottomSheetViewModelProtocol
     
-    func makeBibleVerseDetailBottomSheetVM(bibleBook:BibleBook, keyword:String) ->
+    func makeBibleVerseDetailBottomSheetVM(bibleBook:BibleBook, keyword:String, placeName:String?) ->
         BibleVerseDetailBottomSheetViewModelProtocol
     
     func makeRecentSearchesBottomSheetVM() -> RecentSearchesBottomSheetViewModelProtocol
@@ -57,18 +58,24 @@ protocol VMFactoryProtocol {
     
     func makeAccountManagementBottomSheetVM() -> AccountManagementBottomSheetViewModelProtocol
     
-    func makeReportBottomSheetVM(placeId:String, reportType:PlaceReportType) -> ReportBottomSheetViewModelProtocol
+    func makePlaceReportBottomSheetVM(placeId:String, reportType:PlaceReportType) -> PlaceReportBottomSheetViewModelProtocol
     
     func makeBibleBookVerseListBottomSheetVM(placeId:String, bibleBook:BibleBook?) -> BibleBookVerseListBottomSheetViewModelProtocol
     
     
     func makeMainVM() -> MainViewModelProtocol
-    
+        
+    func makeReportBottomSheetVM() -> ReportBottomSheetViewModelProtocol
     
     func configure(navigator:BottomSheetNavigator, appCoordinator:AppCoordinatorProtocol)
 }
 
 final class VMFactory:VMFactoryProtocol{
+    func makeReportBottomSheetVM() -> ReportBottomSheetViewModelProtocol {
+        let vm = ReportBottomSheetViewModel(navigator: navigator, reportUsecase: usecases?.report)
+        return vm
+    }
+    
     func makeRecentSearchesBottomSheetVM() -> RecentSearchesBottomSheetViewModelProtocol {
         let vm = RecentSearchesBottomSheetViewModel(navigator: navigator, recentSearchService: recentSearchService, notificationService:  notificationService)
         return vm
@@ -89,8 +96,8 @@ final class VMFactory:VMFactoryProtocol{
         return vm
     }
     
-    func makeBibleVerseDetailBottomSheetVM(bibleBook:BibleBook, keyword: String) -> BibleVerseDetailBottomSheetViewModelProtocol {
-        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: bibleBook, keyword: keyword, placeUsecase: usecases?.place)
+    func makeBibleVerseDetailBottomSheetVM(bibleBook:BibleBook, keyword: String, placeName:String?) -> BibleVerseDetailBottomSheetViewModelProtocol {
+        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: bibleBook, keyword: keyword, placeName: placeName, placeUsecase: usecases?.place)
         return vm
     }
     
@@ -189,8 +196,8 @@ final class VMFactory:VMFactoryProtocol{
         return vm
     }
     
-    func makeReportBottomSheetVM(placeId: String, reportType: PlaceReportType) -> ReportBottomSheetViewModelProtocol {
-        let vm = ReportBottomSheetViewModel(navigator: navigator, reportType: reportType, placeUsecase: usecases?.place, placeId: placeId)
+    func makePlaceReportBottomSheetVM(placeId: String, reportType: PlaceReportType) -> PlaceReportBottomSheetViewModelProtocol {
+        let vm = PlaceReportBottomSheetViewModel(navigator: navigator, reportType: reportType, placeUsecase: usecases?.place, placeId: placeId)
         
         return vm;
     }
