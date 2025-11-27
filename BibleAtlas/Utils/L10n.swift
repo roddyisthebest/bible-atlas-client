@@ -559,6 +559,16 @@ enum L10n {
                failToJSONSerializeFmtKey.localized(msg)
            }
        }
+    
+    enum FatalError {
+        static let reExecKey = "FatalError.ReExec"
+        static var reExec: String { reExecKey.localized }
+    }
+    
+    enum Login {
+        static let invalidFormatKey = "Login.InValidFormat"
+        static var invalidFormat: String { invalidFormatKey.localized }
+    }
 }
 
 

@@ -231,3 +231,9 @@
 "NetworkError.ServerErrorFmt" = "서버 에러: %d";
 "NetworkError.ClientErrorFmt" = "%@";
 "NetworkError.FailToJSONSerializeFmt" = "JSON 직렬화 에러: %@";
+
+// FatalError
+"FatalError.ReExec" = "불편을 드려 죄송합니다. 앱을 다시 실행해주세요.";
+
+// Login
+"Login.InValidFormat" = "아이디와 비밀번호를 모두 입력해주세요.";

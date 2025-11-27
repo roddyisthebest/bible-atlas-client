@@ -26,6 +26,8 @@ final class LoginBottomSheetViewModel:LoginBottomSheetViewModelProtocol {
     private let error$ = PublishRelay<NetworkError>()
     private let googleLoading$ = BehaviorRelay<Bool>(value:false);
     private let appleLoading$ = BehaviorRelay<Bool>(value:false);
+    private let localLoading$ = BehaviorRelay<Bool>(value:false);
+
 
     init(navigator:BottomSheetNavigator?, usecase:AuthUsecaseProtocol?, appStore: AppStoreProtocol?, notificationService:RxNotificationServiceProtocol?){
         self.navigator = navigator
@@ -97,18 +99,60 @@ final class LoginBottomSheetViewModel:LoginBottomSheetViewModelProtocol {
             
         }).disposed(by: disposeBag)
         
+        
+        input.localLoginButtonTapped$.subscribe(onNext: {
+            [weak self] (userId, password) in
+            
+            guard let self = self, let authUsecase = self.authUsecase else{
+                
+                self?.error$.accept(.clientError(L10n.FatalError.reExec))
+                return;
+            }
+            
+            guard
+                let userId = userId?.trimmingCharacters(in: .whitespacesAndNewlines),
+                let password = password?.trimmingCharacters(in: .whitespacesAndNewlines),
+                !userId.isEmpty,
+                !password.isEmpty
+            else {
+                self.error$.accept(.clientError(L10n.Login.invalidFormat))
+                return
+            }
+            
+            Task{
+                self.localLoading$.accept(true)
+                
+                defer{
+                    self.localLoading$.accept(false)
+                }
+                
+                let result = await authUsecase.loginUser(body: AuthPayload(userId: userId, password: password))
+                
+                switch(result){
+                    case .success(let response):
+                        self.notificationService?.post(.refetchRequired, object: nil)
+                        self.appStore?.dispatch(.login(response.user))
+                        self.navigator?.dismiss(animated: true)
+                    case .failure(let networkError):
+                        self.error$.accept(networkError)
+
+                }
+            }
+        }).disposed(by: disposeBag)
+        
         input.closeButtonTapped$.subscribe(onNext:{[weak self] in
             self?.navigator?.dismiss(animated: true)
         }).disposed(by: disposeBag)
         
         
-        return Output(error$: error$.asObservable(), googleLoading$: googleLoading$.asObservable(), appleLoading$: appleLoading$.asObservable())
+        return Output(error$: error$.asObservable(), googleLoading$: googleLoading$.asObservable(), appleLoading$: appleLoading$.asObservable(), localLoading$: localLoading$.asObservable())
         
     }
     
     public struct Input {
         let googleTokenReceived$:Observable<String?>
         let appleTokenReceived$:Observable<String?>
+        let localLoginButtonTapped$:Observable<(String?, String?)>
         let closeButtonTapped$:Observable<Void>
     }
     
@@ -117,5 +161,6 @@ final class LoginBottomSheetViewModel:LoginBottomSheetViewModelProtocol {
         let error$:Observable<NetworkError>
         let googleLoading$:Observable<Bool>
         let appleLoading$:Observable<Bool>
+        let localLoading$:Observable<Bool>
     }
 }

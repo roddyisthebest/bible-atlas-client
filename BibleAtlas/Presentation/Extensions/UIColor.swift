@@ -135,7 +135,9 @@ extension UIColor {
     }
     
    
-    
+    static let dividerBkg = UIColor { traitCollection in
+        return traitCollection.userInterfaceStyle == .dark ? UIColor(hex: "#5F5F5F") : UIColor(hex: "#D7D7D7")
+    }
     
     
     
