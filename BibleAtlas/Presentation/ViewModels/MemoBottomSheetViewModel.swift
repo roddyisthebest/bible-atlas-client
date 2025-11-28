@@ -110,7 +110,7 @@ final class MemoBottomSheetViewModel:MemoBottomSheetViewModelProtocol{
     
     private func createOrUpdatePlaceMemo(text:String?){
         guard let text = text else {
-            self.interactionError$.accept(.clientError("텍스트가 없습니다."))
+            self.interactionError$.accept(.clientError(L10n.Memo.textRequired))
             return;
         }
         
