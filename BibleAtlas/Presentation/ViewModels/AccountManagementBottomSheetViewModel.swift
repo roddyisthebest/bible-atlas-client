@@ -81,7 +81,7 @@ final class AccountManagementBottomSheetViewModel:AccountManagementBottomSheetVi
             [weak self] menuItem in
             switch(menuItem.id){
                 case .logout:
-                    self?.appCoordinator?.logout();
+                    self?.logout();
                 case .withdrawal:
                     self?.showWithdrawConfirm$.accept(())
                 case .navigateCS:
@@ -130,6 +130,25 @@ final class AccountManagementBottomSheetViewModel:AccountManagementBottomSheetVi
             }
             
         }
+    }
+    
+    
+    private func logout(){
+    
+        guard let authUsecase = self.authUsecase else {
+            self.error$.accept(.clientError(L10n.FatalError.reExec))
+            return;
+        }
+        
+        let result = authUsecase.logout();
+        
+        switch(result){
+            case .success:
+                self.appCoordinator?.logout();
+        case .failure(let error):
+            self.error$.accept(.clientError(L10n.FatalError.reExec))
+        }
+        
     }
     
     public struct Input {

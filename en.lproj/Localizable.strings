@@ -235,3 +235,9 @@
 "NetworkError.ServerErrorFmt" = "Server error: %d";
 "NetworkError.ClientErrorFmt" = "%@";
 "NetworkError.FailToJSONSerializeFmt" = "JSON serialization failed: %@";
+
+// FatalError
+"FatalError.ReExec" = "Sorry, please restart the app.";
+
+// Login
+"Login.InValidFormat" = "Please enter your ID and password.";
