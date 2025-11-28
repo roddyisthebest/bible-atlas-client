@@ -101,7 +101,7 @@ final class BibleBookVerseListBottomSheetViewModel:BibleBookVerseListBottomSheet
                 
             }
             guard let result = await self.placeUsecase?.getPlace(placeId: placeId) else{
-                self.error$.accept(.clientError("placeUsecase is nil"))
+                self.error$.accept(.clientError(L10n.FatalError.reExec))
                 return
             }
             
@@ -109,7 +109,7 @@ final class BibleBookVerseListBottomSheetViewModel:BibleBookVerseListBottomSheet
                 case .success(let place):
                 self.place$.accept(place)
                 guard let bibles = self.placeUsecase?.parseBible(verseString: place.verse) else{
-                    self.error$.accept(.clientError("placeUsecase is nil"))
+                    self.error$.accept(.clientError(L10n.FatalError.reExec))
                     return
                 }
                 self.bibles$.accept(bibles)

@@ -296,11 +296,13 @@ enum L10n {
         static let updateTitleKey = "Memo.UpdateTitle" // "Update Memo"
         static let deleteKey = "Memo.Delete"           // "Delete Memo"
         static let placeholderKey = "Memo.Placeholder" // (선택) "Write your memo..."
-
+        static let textRequiredKey = "Memo.TextRequired"
+        
         static var addTitle: String { addTitleKey.localized }
         static var updateTitle: String { updateTitleKey.localized }
         static var delete: String { deleteKey.localized }
         static var placeholder: String { placeholderKey.localized }
+        static var textRequired: String { textRequiredKey.localized }
     }
     
     
@@ -559,6 +561,31 @@ enum L10n {
                failToJSONSerializeFmtKey.localized(msg)
            }
        }
+    
+    enum ClientError {
+        static let badRequestKey = "ClientError.BadRequest"
+        static let unauthorizedKey = "ClientError.Unauthorized"
+        static let paymentRequiredKey = "ClientError.PaymentRequired"
+        static let forbiddenKey = "ClientError.Forbidden"
+        static let notFoundKey = "ClientError.NotFound"
+        
+        static var badRequest: String { badRequestKey.localized }
+        static var unauthorized: String { unauthorizedKey.localized }
+        static var paymentRequired: String { paymentRequiredKey.localized }
+        static var forbidden: String { forbiddenKey.localized }
+        static var notFound: String { notFoundKey.localized }
+    }
+    
+    enum ServerError {
+        static let internalServerErrorKey = "ServerError.InternalServerError"
+        static let serviceUnavailableKey = "ServerError.ServiceUnavailable"
+        static let unknownKey = "ServerError.Unknown"
+
+        static var internalServerError: String { internalServerErrorKey.localized }
+        static var serviceUnavailable: String { serviceUnavailableKey.localized }
+        static var unknown: String { unknownKey.localized }
+    }
+        
     
     enum FatalError {
         static let reExecKey = "FatalError.ReExec"

@@ -65,11 +65,25 @@ public enum NetworkError:Error,Equatable {
             return L10n.NetworkError.dataNil
 
         case .serverError(let statusCode):
-            if statusCode == 401 {
-                return L10n.NetworkError.unauthorized
+            switch(statusCode){
+                case 400:
+                    return L10n.ClientError.badRequest
+                case 401:
+                    return L10n.ClientError.unauthorized
+                case 402:
+                    return L10n.ClientError.paymentRequired
+                case 403:
+                    return L10n.ClientError.forbidden
+                case 404:
+                    return L10n.ClientError.notFound
+                case 500:
+                    return L10n.ServerError.internalServerError
+                case 503:
+                    return L10n.ServerError.serviceUnavailable
+                default:
+                    return L10n.ServerError.unknown
             }
-            return L10n.NetworkError.serverError(statusCode)
-
+    
         case .serverErrorWithMessage(let errorResponse):
             return errorResponse.message
 
