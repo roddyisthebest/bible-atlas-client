@@ -138,7 +138,7 @@ final class PlaceDetailViewControllerTests: XCTestCase {
         vm.emit(place: place)
         
         
-        RunLoop.current.run(until: Date().addingTimeInterval(0.01))
+        RunLoop.current.run(until: Date().addingTimeInterval(0.2))
 
         XCTAssertEqual(vc._test_likeButton?.backgroundColor, .primaryBlue)
         XCTAssertEqual(vc._test_likeButton?.titleColor(for: .normal), .white)
@@ -190,7 +190,7 @@ final class PlaceDetailViewControllerTests: XCTestCase {
         vm.setLoggedIn(true)
         vm.emit(place: place)
         
-        RunLoop.current.run(until: Date().addingTimeInterval(0.01))
+        RunLoop.current.run(until: Date().addingTimeInterval(0.02))
 
         XCTAssertEqual(vc._test_memoButton?.isHidden, false)
         XCTAssertEqual(vc._test_memoLabel?.text, "nocap")

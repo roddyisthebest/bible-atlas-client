@@ -131,9 +131,9 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
         
         let viewModel = LoginBottomSheetViewModel(navigator: mockNavigator, usecase: mockAuthusecase, appStore: mockAppStore, notificationService: mockNotificationService)
         
-        let localButtonTapped$ = PublishRelay<Void>()
+        let localButtonTapped$ = PublishRelay<(String?,String?)>()
         
-        let _ = viewModel.transform(input: LoginBottomSheetViewModel.Input(localButtonTapped$: localButtonTapped$.asObservable(), googleTokenReceived$: .empty(), appleTokenReceived$: .empty(), closeButtonTapped$: .empty()))
+        let _ = viewModel.transform(input: LoginBottomSheetViewModel.Input(googleTokenReceived$: .empty(), appleTokenReceived$: .empty(), localLoginButtonTapped$: localButtonTapped$.asObservable(), closeButtonTapped$: .empty()))
         
         let stateExpectation = XCTestExpectation(description: "appStore state updated")
         
@@ -143,7 +143,7 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
             .take(1)
             .subscribe(onNext: { _ in stateExpectation.fulfill() })
         
-        localButtonTapped$.accept(())
+        localButtonTapped$.accept(("id","pw"))
         
         wait(for: [expectation], timeout: 1.0)
         wait(for: [stateExpectation], timeout: 1.0)
@@ -168,11 +168,11 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
             notificationService: nil
         )
 
-        let localButtonTapped$ = PublishRelay<Void>()
+        let localButtonTapped$ = PublishRelay<(String?, String?)>()
         let output = vm.transform(input: .init(
-            localButtonTapped$: localButtonTapped$.asObservable(),
             googleTokenReceived$: .empty(),
-            appleTokenReceived$: .empty(), closeButtonTapped$: .empty()
+            appleTokenReceived$: .empty(),
+            localLoginButtonTapped$: localButtonTapped$.asObservable(), closeButtonTapped$: .empty()
         ))
 
         let exp = expectation(description: "error emitted")
@@ -185,7 +185,7 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
             })
 
 
-        localButtonTapped$.accept(())
+        localButtonTapped$.accept(("id", "pw"))
         
         wait(for: [exp], timeout: 2.0)
         disposable.dispose()
@@ -200,7 +200,7 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
         
         let googleTokenReceived$ = PublishRelay<String?>();
         
-        let output = viewModel.transform(input: LoginBottomSheetViewModel.Input(localButtonTapped$: .empty(), googleTokenReceived$: googleTokenReceived$.asObservable(), appleTokenReceived$: .empty(), closeButtonTapped$: .empty()))
+        let output = viewModel.transform(input: LoginBottomSheetViewModel.Input(googleTokenReceived$: googleTokenReceived$.asObservable(), appleTokenReceived$: googleTokenReceived$.asObservable(), localLoginButtonTapped$: .empty(), closeButtonTapped$: .empty()))
         
         
         

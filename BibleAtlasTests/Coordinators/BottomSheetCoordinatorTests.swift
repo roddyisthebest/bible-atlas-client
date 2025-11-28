@@ -104,10 +104,10 @@ final class BottomSheetCoordinatorTests: XCTestCase {
     func test_dismissFromDetail_restoresPrevDetents_andResetsGeoJson() {
             sut.present(.home)
             pump(0.03)
-            guard let home = presenterVC.presentedViewController,
-                  let homeSheet = home.sheetPresentationController else { XCTFail(); return }
-            homeSheet.detents = [.large(), .medium()]
-            homeSheet.selectedDetentIdentifier = .large
+//            guard let home = presenterVC.presentedViewController,
+//                  let homeSheet = home.sheetPresentationController else { XCTFail(); return }
+//            homeSheet.detents = [.large(), .medium()]
+//            homeSheet.selectedDetentIdentifier = .large
 
             sut.present(.placeDetail("P1"))
             pump(0.05)

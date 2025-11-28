@@ -322,7 +322,7 @@ final class BibleBookVerseListBottomSheetViewModelTests: XCTestCase {
         
         verseCellTapped$.accept(.def("12.21"))
         
-        XCTAssertEqual(navigator.presentedSheet, .bibleVerseDetail(.Acts, "12.21"))
+        XCTAssertEqual(navigator.presentedSheet, .bibleVerseDetail(.Acts, "12.21", nil))
       
         
     }

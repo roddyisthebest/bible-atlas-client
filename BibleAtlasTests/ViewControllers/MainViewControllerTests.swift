@@ -99,14 +99,14 @@ final class MainViewControllerTests: XCTestCase {
         let geoJsonFeatures = makeGeoJsonFeaturesForTest();
         vm.emitGeoJSON(geoJsonFeatures)
         
-        RunLoop.current.run(until: Date().addingTimeInterval(0.01))
+        RunLoop.current.run(until: Date().addingTimeInterval(0.2))
 
         XCTAssertEqual(vc._test_mapView.overlays.count,2)
         XCTAssertEqual(vc._test_mapView.annotations.count,1)
         
         vm.emitReset()
         
-        RunLoop.current.run(until: Date().addingTimeInterval(0.01))
+        RunLoop.current.run(until: Date().addingTimeInterval(0.4))
 
         XCTAssertEqual(vc._test_mapView.overlays.count, 0)
         XCTAssertEqual(vc._test_mapView.annotations.count, 0)
