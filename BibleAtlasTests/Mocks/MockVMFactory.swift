@@ -11,6 +11,18 @@ import RxRelay
 @testable import BibleAtlas
 
 final class MockVMFactory: VMFactoryProtocol {
+    func makeBibleVerseDetailBottomSheetVM(bibleBook: BibleAtlas.BibleBook, keyword: String, placeName: String?) -> BibleAtlas.BibleVerseDetailBottomSheetViewModelProtocol {
+        fatalError()
+    }
+    
+    func makePlaceReportBottomSheetVM(placeId: String, reportType: BibleAtlas.PlaceReportType) -> BibleAtlas.PlaceReportBottomSheetViewModelProtocol {
+        fatalError()
+    }
+    
+    func makeReportBottomSheetVM() -> BibleAtlas.ReportBottomSheetViewModelProtocol {
+        fatalError()
+    }
+    
     func makeBibleBookVerseListBottomSheetVM(placeId: String, bibleBook: BibleAtlas.BibleBook?) -> BibleAtlas.BibleBookVerseListBottomSheetViewModelProtocol {
         fatalError()
     }

@@ -34,7 +34,7 @@ final class BibleVerseDetailBottomSheetViewModelTests: XCTestCase {
         let result: Result<BibleAtlas.BibleVerseResponse, BibleAtlas.NetworkError>? = .success(BibleVerseResponse(text: text))
         placeUsecase.bibleVerseResult = result
         
-        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: .Etc, keyword: keyword, placeUsecase: placeUsecase)
+        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: .Etc, keyword: keyword, placeName: "", placeUsecase: placeUsecase)
         
         let viewLoaded$ = PublishRelay<Void>();
         
@@ -94,7 +94,7 @@ final class BibleVerseDetailBottomSheetViewModelTests: XCTestCase {
         let result: Result<BibleAtlas.BibleVerseResponse, BibleAtlas.NetworkError>? = .failure(error)
         placeUsecase.bibleVerseResult = result
         
-        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: .Etc, keyword: keyword, placeUsecase: placeUsecase)
+        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: .Etc, keyword: keyword, placeName: "", placeUsecase: placeUsecase)
         
         let viewLoaded$ = PublishRelay<Void>();
         
@@ -146,7 +146,7 @@ final class BibleVerseDetailBottomSheetViewModelTests: XCTestCase {
         let result: Result<BibleAtlas.BibleVerseResponse, BibleAtlas.NetworkError>? = .success(BibleVerseResponse(text: text))
         placeUsecase.bibleVerseResult = result
         
-        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: .Etc, keyword: keyword, placeUsecase: placeUsecase)
+        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: .Etc, keyword: keyword, placeName: "", placeUsecase: placeUsecase)
         
         let refetchButtonTapped$ = PublishRelay<Void>();
         
@@ -215,7 +215,7 @@ final class BibleVerseDetailBottomSheetViewModelTests: XCTestCase {
         let result: Result<BibleAtlas.BibleVerseResponse, BibleAtlas.NetworkError>? = .success(BibleVerseResponse(text: text))
         placeUsecase.bibleVerseResult = result
         
-        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: .Etc, keyword: keyword, placeUsecase: placeUsecase)
+        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: .Etc, keyword: keyword, placeName: "", placeUsecase: placeUsecase)
         
         let viewLoaded$ = PublishRelay<Void>();
         let refetchButtonTapped$ = PublishRelay<Void>();
@@ -285,7 +285,7 @@ final class BibleVerseDetailBottomSheetViewModelTests: XCTestCase {
     
     
     func test_closeButtonTapped_dismisses(){
-        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: .Etc, keyword: keyword, placeUsecase: placeUsecase)
+        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: .Etc, keyword: keyword, placeName: "", placeUsecase: placeUsecase)
         
         let closeButtonTapped$ = PublishRelay<Void>();
 
@@ -305,7 +305,7 @@ final class BibleVerseDetailBottomSheetViewModelTests: XCTestCase {
  
         keyword = "1.1"
         
-        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: .Gen, keyword: keyword, placeUsecase: placeUsecase)
+        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: .Gen, keyword: keyword, placeName: "", placeUsecase: placeUsecase)
         
         let viewLoaded$ = PublishRelay<Void>();
         
@@ -329,7 +329,7 @@ final class BibleVerseDetailBottomSheetViewModelTests: XCTestCase {
         let result: Result<BibleAtlas.BibleVerseResponse, BibleAtlas.NetworkError>? = .failure(error)
         placeUsecase.bibleVerseResult = result
         
-        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: .Etc, keyword: keyword, placeUsecase: placeUsecase)
+        let vm = BibleVerseDetailBottomSheetViewModel(navigator: navigator, bibleBook: .Etc, keyword: keyword, placeName: "", placeUsecase: placeUsecase)
         
         let viewLoaded$ = PublishRelay<Void>();
         let refetchButtonTapped$ = PublishRelay<Void>();

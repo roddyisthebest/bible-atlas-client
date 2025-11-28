@@ -164,7 +164,8 @@ final class HomeContentViewModelTests: XCTestCase {
                 placesByCharacterButtonTapped$: .empty(), 
                 placesByBibleButtonTapped$: .empty(),
                 recentSearchCellTapped$: .empty(),
-                moreRecentSearchesButtonTapped$: .empty()
+                moreRecentSearchesButtonTapped$: .empty(), 
+                reportButtonTapped$: .empty()
             ))
 
             let isLoggedInObserver = scheduler.createObserver(Bool.self)
@@ -219,7 +220,8 @@ final class HomeContentViewModelTests: XCTestCase {
             placesByCharacterButtonTapped$: .empty(), 
             placesByBibleButtonTapped$: .empty(),
             recentSearchCellTapped$: .empty(),
-            moreRecentSearchesButtonTapped$: .empty()
+            moreRecentSearchesButtonTapped$: .empty(),
+            reportButtonTapped$: .empty()
         )
         
         let _ = viewModel.transform(input: input)
@@ -271,7 +273,8 @@ final class HomeContentViewModelTests: XCTestCase {
             placesByCharacterButtonTapped$: .empty(), 
             placesByBibleButtonTapped$: .empty(),
             recentSearchCellTapped$: .empty(),
-            moreRecentSearchesButtonTapped$: .empty()
+            moreRecentSearchesButtonTapped$: .empty(), 
+            reportButtonTapped$: .empty()
         ))
         
         let likeCount = try output.likePlacesCount$.toBlocking().first()
@@ -308,7 +311,8 @@ final class HomeContentViewModelTests: XCTestCase {
             placesByCharacterButtonTapped$: .empty(), 
             placesByBibleButtonTapped$: .empty(),
             recentSearchCellTapped$: .empty(),
-            moreRecentSearchesButtonTapped$: .empty()
+            moreRecentSearchesButtonTapped$: .empty(), 
+            reportButtonTapped$: .empty()
         ))
 
 

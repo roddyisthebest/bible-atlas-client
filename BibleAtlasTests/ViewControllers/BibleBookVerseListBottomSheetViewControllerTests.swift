@@ -47,6 +47,7 @@ final class BibleBookVerseListBottomSheetViewControllerTests: XCTestCase {
     func test_viewLoaded_bindsAndShowsLoading_thenHides() {
         // given
         vm.loadingRelay.accept(true)
+        pump(0.1)
 
         // then (loading visible)
         XCTAssertTrue(vc._test_isLoadingVisible)
@@ -68,7 +69,7 @@ final class BibleBookVerseListBottomSheetViewControllerTests: XCTestCase {
                           description: "", koreanDescription: "", stereo: .parent,
                           verse: "", likeCount: 0, types: [])
         vm.placeRelay.accept(place)
-        pump()
+        pump(0.2)
 
         // then
         let title = vc._test_headerText ?? ""

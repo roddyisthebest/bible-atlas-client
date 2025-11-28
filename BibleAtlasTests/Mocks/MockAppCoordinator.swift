@@ -14,6 +14,9 @@ import RxBlocking
 @testable import BibleAtlas
 
 final class MockAppCoordinator: AppCoordinatorProtocol {
+    func openSupportCenter() {
+    }
+    
     // Call counters
     private(set) var startCallCount = 0
     private(set) var logoutCallCount = 0

@@ -51,7 +51,7 @@ final class AccountManagementBottomSheetViewModelTests: XCTestCase {
     
     
     func test_menuItemCellTapped_logout_callsAppCoordinatorLogout(){
-        
+        authUsecase.logoutResultToReturn = .success(())
         let vm = AccountManagementBottomSheetViewModel(navigator: navigator, appStore: appStore, appCoordinator: appCoordinator, authUsecase: authUsecase)
         
         let menuItemCellTapped$ = PublishRelay<SimpleMenuItem>()

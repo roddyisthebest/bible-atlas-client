@@ -131,9 +131,9 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
         
         let viewModel = LoginBottomSheetViewModel(navigator: mockNavigator, usecase: mockAuthusecase, appStore: mockAppStore, notificationService: mockNotificationService)
         
-        let localButtonTapped$ = PublishRelay<Void>()
+        let localButtonTapped$ = PublishRelay<(String?,String?)>()
         
-        let _ = viewModel.transform(input: LoginBottomSheetViewModel.Input(localButtonTapped$: localButtonTapped$.asObservable(), googleTokenReceived$: .empty(), appleTokenReceived$: .empty(), closeButtonTapped$: .empty()))
+        let _ = viewModel.transform(input: LoginBottomSheetViewModel.Input(googleTokenReceived$: .empty(), appleTokenReceived$: .empty(), localLoginButtonTapped$: localButtonTapped$.asObservable(), closeButtonTapped$: .empty()))
         
         let stateExpectation = XCTestExpectation(description: "appStore state updated")
         
@@ -143,7 +143,7 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
             .take(1)
             .subscribe(onNext: { _ in stateExpectation.fulfill() })
         
-        localButtonTapped$.accept(())
+        localButtonTapped$.accept(("id","pw"))
         
         wait(for: [expectation], timeout: 1.0)
         wait(for: [stateExpectation], timeout: 1.0)
@@ -168,11 +168,11 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
             notificationService: nil
         )
 
-        let localButtonTapped$ = PublishRelay<Void>()
+        let localButtonTapped$ = PublishRelay<(String?, String?)>()
         let output = vm.transform(input: .init(
-            localButtonTapped$: localButtonTapped$.asObservable(),
             googleTokenReceived$: .empty(),
-            appleTokenReceived$: .empty(), closeButtonTapped$: .empty()
+            appleTokenReceived$: .empty(),
+            localLoginButtonTapped$: localButtonTapped$.asObservable(), closeButtonTapped$: .empty()
         ))
 
         let exp = expectation(description: "error emitted")
@@ -185,7 +185,7 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
             })
 
 
-        localButtonTapped$.accept(())
+        localButtonTapped$.accept(("id", "pw"))
         
         wait(for: [exp], timeout: 2.0)
         disposable.dispose()
@@ -200,7 +200,7 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
         
         let googleTokenReceived$ = PublishRelay<String?>();
         
-        let output = viewModel.transform(input: LoginBottomSheetViewModel.Input(localButtonTapped$: .empty(), googleTokenReceived$: googleTokenReceived$.asObservable(), appleTokenReceived$: .empty(), closeButtonTapped$: .empty()))
+        let output = viewModel.transform(input: LoginBottomSheetViewModel.Input(googleTokenReceived$: googleTokenReceived$.asObservable(), appleTokenReceived$: googleTokenReceived$.asObservable(), localLoginButtonTapped$: .empty(), closeButtonTapped$: .empty()))
         
         
         
@@ -221,6 +221,90 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
         XCTAssertFalse(googleLoading)
         
         
+    }
+    
+    func test_localLogin_invalidCredentials_emitInvalidFormatError_and_doNotCallUsecase() {
+        // given
+        let vm = LoginBottomSheetViewModel(
+            navigator: nil,
+            usecase: mockAuthusecase,   // 여기는 있어도 됨 (안 불려야 하니까)
+            appStore: mockAppStore,
+            notificationService: mockNotificationService
+        )
+        
+        // loginResultToReturn이 있어도, validation에서 걸리기 때문에 사용되면 안 됨
+        mockAuthusecase.loginResultToReturn = .success(
+            UserResponse(
+                user: User(id: 1, role: .USER, avatar: "test"),
+                authData: AuthData(refreshToken: "r", accessToken: "a"),
+                recovered: false
+            )
+        )
+
+        let localButtonTapped$ = PublishRelay<(String?, String?)>()
+        let output = vm.transform(input: .init(
+            googleTokenReceived$: .empty(),
+            appleTokenReceived$: .empty(),
+            localLoginButtonTapped$: localButtonTapped$.asObservable(),
+            closeButtonTapped$: .empty()
+        ))
+
+        let exp = expectation(description: "validation error emitted")
+        var captured: NetworkError?
+
+        let disposable = output.error$
+            .take(1)
+            .subscribe(onNext: { e in
+                captured = e
+                exp.fulfill()
+            })
+
+        // when: 공백 + 공백
+        localButtonTapped$.accept(("   ", "   "))
+
+        wait(for: [exp], timeout: 1.0)
+        disposable.dispose()
+
+  
+        XCTAssertEqual(captured, .clientError(L10n.Login.invalidFormat))
+        
+    }
+
+    func test_localLogin_whenUsecaseIsNil_emitsFatalError_andDoesNotCrash() {
+        // given
+        let vm = LoginBottomSheetViewModel(
+            navigator: nil,
+            usecase: nil,                    // 🔥 핵심
+            appStore: mockAppStore,
+            notificationService: mockNotificationService
+        )
+
+        let localButtonTapped$ = PublishRelay<(String?, String?)>()
+        let output = vm.transform(input: .init(
+            googleTokenReceived$: .empty(),
+            appleTokenReceived$: .empty(),
+            localLoginButtonTapped$: localButtonTapped$.asObservable(),
+            closeButtonTapped$: .empty()
+        ))
+
+        let exp = expectation(description: "fatal error emitted")
+        var captured: NetworkError?
+
+        let disposable = output.error$
+            .take(1)
+            .subscribe(onNext: { e in
+                captured = e
+                exp.fulfill()
+            })
+
+        // when
+        localButtonTapped$.accept(("id", "pw"))
+
+        wait(for: [exp], timeout: 1.0)
+        disposable.dispose()
+
+        // then
+        XCTAssertEqual(captured, .clientError(L10n.FatalError.reExec))
     }
 
     
