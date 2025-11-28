@@ -222,6 +222,90 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
         
         
     }
+    
+    func test_localLogin_invalidCredentials_emitInvalidFormatError_and_doNotCallUsecase() {
+        // given
+        let vm = LoginBottomSheetViewModel(
+            navigator: nil,
+            usecase: mockAuthusecase,   // 여기는 있어도 됨 (안 불려야 하니까)
+            appStore: mockAppStore,
+            notificationService: mockNotificationService
+        )
+        
+        // loginResultToReturn이 있어도, validation에서 걸리기 때문에 사용되면 안 됨
+        mockAuthusecase.loginResultToReturn = .success(
+            UserResponse(
+                user: User(id: 1, role: .USER, avatar: "test"),
+                authData: AuthData(refreshToken: "r", accessToken: "a"),
+                recovered: false
+            )
+        )
+
+        let localButtonTapped$ = PublishRelay<(String?, String?)>()
+        let output = vm.transform(input: .init(
+            googleTokenReceived$: .empty(),
+            appleTokenReceived$: .empty(),
+            localLoginButtonTapped$: localButtonTapped$.asObservable(),
+            closeButtonTapped$: .empty()
+        ))
+
+        let exp = expectation(description: "validation error emitted")
+        var captured: NetworkError?
+
+        let disposable = output.error$
+            .take(1)
+            .subscribe(onNext: { e in
+                captured = e
+                exp.fulfill()
+            })
+
+        // when: 공백 + 공백
+        localButtonTapped$.accept(("   ", "   "))
+
+        wait(for: [exp], timeout: 1.0)
+        disposable.dispose()
+
+  
+        XCTAssertEqual(captured, .clientError(L10n.Login.invalidFormat))
+        
+    }
+
+    func test_localLogin_whenUsecaseIsNil_emitsFatalError_andDoesNotCrash() {
+        // given
+        let vm = LoginBottomSheetViewModel(
+            navigator: nil,
+            usecase: nil,                    // 🔥 핵심
+            appStore: mockAppStore,
+            notificationService: mockNotificationService
+        )
+
+        let localButtonTapped$ = PublishRelay<(String?, String?)>()
+        let output = vm.transform(input: .init(
+            googleTokenReceived$: .empty(),
+            appleTokenReceived$: .empty(),
+            localLoginButtonTapped$: localButtonTapped$.asObservable(),
+            closeButtonTapped$: .empty()
+        ))
+
+        let exp = expectation(description: "fatal error emitted")
+        var captured: NetworkError?
+
+        let disposable = output.error$
+            .take(1)
+            .subscribe(onNext: { e in
+                captured = e
+                exp.fulfill()
+            })
+
+        // when
+        localButtonTapped$.accept(("id", "pw"))
+
+        wait(for: [exp], timeout: 1.0)
+        disposable.dispose()
+
+        // then
+        XCTAssertEqual(captured, .clientError(L10n.FatalError.reExec))
+    }
 
     
     
