@@ -3,6 +3,7 @@ name: iOS Tests
 on:
   pull_request:
     branches: [main]
+
 jobs:
   tests:
     runs-on: macos-latest
@@ -29,8 +30,6 @@ jobs:
 
       - name: Install Pods
         run: pod install
-        working-directory: ./BibleAtlas
 
       - name: Run unit tests via fastlane
         run: bundle exec fastlane ios tests
-        working-directory: ./BibleAtlas
