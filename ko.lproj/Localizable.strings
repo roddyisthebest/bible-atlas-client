@@ -29,6 +29,9 @@
 "HomeContent.ExploreMenu.ByType" = "유형별";
 "HomeContent.ExploreMenu.ByBible" = "성경별";
 
+"HomeContent.TOC" = "전체약관";
+"HomeContent.CS" = "고객센터 문의하기";
+
 
 // searchResult
 "SearchResult.Empty" = "장소가 없습니다.";

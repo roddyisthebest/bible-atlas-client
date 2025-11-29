@@ -31,6 +31,9 @@
 
 "HomeContent.Places" = "Places";
 
+"HomeContent.TOC" = "Terms of Service";
+"HomeContent.CS" = "Contact Customer Service";
+
 
 // searchResult
 "SearchResult.Empty" = "No places found.";
