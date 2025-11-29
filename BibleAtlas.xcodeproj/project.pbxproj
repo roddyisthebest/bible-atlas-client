@@ -550,13 +550,6 @@
 			path = Clients;
 			sourceTree = "<group>";
 		};
-		EC14C64D2EDADA47008F90D6 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
-			sourceTree = "<group>";
-		};
 		EC1B2DEA2E96AC980073EBE3 /* Config */ = {
 			isa = PBXGroup;
 			children = (
@@ -824,7 +817,6 @@
 		ECA94B8A2D5082B9005B0428 = {
 			isa = PBXGroup;
 			children = (
-				EC14C64D2EDADA47008F90D6 /* New Group */,
 				EC1B2DEA2E96AC980073EBE3 /* Config */,
 				EC0F01DB2E826B8E00D7C216 /* Localizable.strings */,
 				EC0F01E82E827CB800D7C216 /* Localizable.stringsdict */,
