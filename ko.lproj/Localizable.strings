@@ -117,7 +117,7 @@
 "Memo.UpdateTitle" = "메모 수정";
 "Memo.Delete" = "메모 삭제";
 "Memo.Placeholder" = "메모를 입력하세요...";
-"Memo.TextRequired" = "메모를 입력해주세요."
+"Memo.TextRequired" = "메모를 입력해주세요.";
 
 
 // myCollection
@@ -234,16 +234,16 @@
 "NetworkError.FailToJSONSerializeFmt" = "JSON 직렬화 에러: %@";
 
 // ClientError
-"ClientError.BadRequest" = "잘못된 요청입니다."
-"ClientError.Unauthorized" = "인증 정보가 없거나 유효하지 않습니다. \n 다시 로그인해주세요."
-"ClientError.PaymentRequired" = "현재는 거의 사용되지 않으나, 결제가 필요합니다."
-"ClientError.Forbidden" = "잘못된 접근입니다."
-"ClientError.NotFound" = "요청한 리소스를 서버에서 찾을 수 없습니다."
+"ClientError.BadRequest" = "잘못된 요청입니다.";
+"ClientError.Unauthorized" = "인증 정보가 없거나 유효하지 않습니다. \n 다시 로그인해주세요.";
+"ClientError.PaymentRequired" = "현재는 거의 사용되지 않으나, 결제가 필요합니다.";
+"ClientError.Forbidden" = "잘못된 접근입니다.";
+"ClientError.NotFound" = "요청한 리소스를 서버에서 찾을 수 없습니다.";
 
 // ServerERror
-"ServerError.InternalServerError" = "서버 내부에서 오류가 발생했습니다."
-"ServerError.ServiceUnavailable" = "서버가 일시적으로 과부하 또는 점검 중이여서\n 요청을 처리할 수 없습니다."
-"ClientError.Unknown" = "알수없는 에러입니다."
+"ServerError.InternalServerError" = "서버 내부에서 오류가 발생했습니다.";
+"ServerError.ServiceUnavailable" = "서버가 일시적으로 과부하 또는 점검 중이여서\n 요청을 처리할 수 없습니다.";
+"ClientError.Unknown" = "알수없는 에러입니다.";
 
 
 // FatalError

@@ -119,7 +119,7 @@
 "Memo.UpdateTitle" = "Update Memo";
 "Memo.Delete" = "Delete Memo";
 "Memo.Placeholder" = "Write your memo...";
-"Memo.TextRequired" = "Please enter a memo."
+"Memo.TextRequired" = "Please enter a memo.";
 
 
 // myCollection
@@ -240,16 +240,16 @@
 
 
 // ClientError
-"ClientError.BadRequest" = "Invalid request."
-"ClientError.Unauthorized" = "Authentication information is missing or invalid. \n Please log in again."
-"ClientError.PaymentRequired" = "Payment is required. (rarely used)"
-"ClientError.Forbidden" = "Access forbidden."
-"ClientError.NotFound" = "The requested resource could not be found."
+"ClientError.BadRequest" = "Invalid request.";
+"ClientError.Unauthorized" = "Authentication information is missing or invalid. \n Please log in again.";
+"ClientError.PaymentRequired" = "Payment is required. (rarely used)";
+"ClientError.Forbidden" = "Access forbidden.";
+"ClientError.NotFound" = "The requested resource could not be found.";
 
 // ServerERror
-"ServerError.InternalServerError" = "An error occurred on the server."
-"ServerError.ServiceUnavailable" = "The server is temporarily overloaded or undergoing maintenance, \n so it cannot process the request."
-"ServerError.Unknown" = "Unknown error."
+"ServerError.InternalServerError" = "An error occurred on the server.";
+"ServerError.ServiceUnavailable" = "The server is temporarily overloaded or undergoing maintenance, \n so it cannot process the request.";
+"ServerError.Unknown" = "Unknown error.";
 
 
 
