@@ -229,12 +229,12 @@ final class HomeContentViewController: UIViewController {
     }()
     
     private let allPoliciesButton = {
-        let button = ChevronButton(titleText: "전체 약관");
+        let button = ChevronButton(titleText: L10n.HomeContent.tos);
         return button
     }()
     
     private let contactSupportButton = {
-        let button = ChevronButton(titleText: "고객센터 문의하기");
+        let button = ChevronButton(titleText: L10n.HomeContent.cs);
         return button
     }()
     

@@ -100,6 +100,15 @@ enum L10n {
         
         static var allPolicies: String{ allPoliciesKey.localized }
         
+        static var tosKey = "HomeContent.TOC"
+        static var tos: String {
+            tosKey.localized
+        }
+        
+        static var csKey = "HomeContent.CS"
+        static var cs: String {
+            csKey.localized
+        }
         
     }
     
