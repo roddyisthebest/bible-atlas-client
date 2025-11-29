@@ -290,7 +290,7 @@ final class BibleBookVerseListBottomSheetViewModelTests: XCTestCase {
         viewLoaded$.accept(())
         wait(for: [errorExp], timeout: 1.0)
 
-        XCTAssertEqual(gotError, .clientError("placeUsecase is nil"))
+        XCTAssertEqual(gotError, .clientError(L10n.FatalError.reExec))
         
         
     }

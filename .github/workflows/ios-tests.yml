@@ -1,0 +1,39 @@
+name: iOS Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  tests:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set Xcode version
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: "15.4" # 네 Xcode 버전에 맞게
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+
+      - name: Install CocoaPods
+        run: |
+          gem install cocoapods --no-document
+          pod --version
+
+      - name: Install Pods
+        run: pod install
+        working-directory: ./BibleAtlas
+
+      - name: Run unit tests via fastlane
+        run: bundle exec fastlane ios tests
+        working-directory: ./BibleAtlas

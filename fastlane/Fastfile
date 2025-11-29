@@ -1,0 +1,32 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Run unit tests for BibleAtlasTests"
+  lane :tests do
+    scan(
+      scheme: "BibleAtlas",                    # ✅ 앱 스킴 이름
+      workspace: "BibleAtlas.xcworkspace",     # ✅ 워크스페이스 쓴다면
+      clean: true,
+      only_testing: [
+        "BibleAtlasTests"                      # ✅ 테스트 타겟 이름
+      ],
+      # 선택사항: 어느 시뮬레이터에서 돌릴지 명시해주고 싶으면
+      destination: "platform=iOS Simulator,name=iPhone 15,OS=latest"
+    )
+  end
+end

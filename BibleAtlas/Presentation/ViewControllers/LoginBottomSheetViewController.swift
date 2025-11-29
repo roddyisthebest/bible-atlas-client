@@ -128,6 +128,9 @@ final class LoginBottomSheetViewController: UIViewController {
         tf.snp.makeConstraints { make in
             make.height.equalTo(44)
         }
+        
+        tf.accessibilityIdentifier = "login_id_textfield"
+
 
         return tf
     }()
@@ -150,13 +153,17 @@ final class LoginBottomSheetViewController: UIViewController {
             make.height.equalTo(44)
         }
 
+        tf.accessibilityIdentifier = "login_password_textfield"
+
         return tf
     }()
 
     private let localLoginButton: GuideButton = {
-        let button = GuideButton(titleText: "로그인") // L10n.Auth.login
-        // action은 viewDidLoad에서 addTarget 해줄게
+        let button = GuideButton(titleText: L10n.Auth.title)
+
         button.addTarget(self, action: #selector(emitLocalLogin), for: .touchUpInside)
+        button.accessibilityIdentifier = "login_local_button"
+
         return button
     }()
 
