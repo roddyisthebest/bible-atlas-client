@@ -1,11 +1,8 @@
 name: iOS Tests
 
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
-
 jobs:
   tests:
     runs-on: macos-latest
@@ -17,7 +14,7 @@ jobs:
       - name: Set Xcode version
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: "15.4" # 네 Xcode 버전에 맞게
+          xcode-version: "16.4"
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
