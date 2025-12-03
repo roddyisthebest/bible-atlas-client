@@ -105,7 +105,7 @@ final class AuthUsecaseTests:XCTestCase {
         
         let result = sut.logout()
         switch result {
-          case .success(let success):
+          case .success:
             XCTAssertTrue(true)
           case .failure:
             XCTFail("Expected success, got failure")

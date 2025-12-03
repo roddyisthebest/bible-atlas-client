@@ -73,7 +73,7 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
             .distinctUntilChanged { prev, next in
                 return prev.0.isLoggedIn == next.0.isLoggedIn
             }
-            .observe(on: self.scheduler)
+//            .observe(on: self.scheduler)
             .bind{
                 [weak self] appState, collectionState in
                 

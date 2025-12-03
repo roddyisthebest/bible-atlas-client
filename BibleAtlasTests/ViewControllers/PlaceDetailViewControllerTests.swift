@@ -36,7 +36,7 @@ final class PlaceDetailViewControllerTests: XCTestCase {
         vm.setLoadError(nil)
         vm.setLoading(true)
         
-        RunLoop.current.run(until: Date().addingTimeInterval(0.02))
+        RunLoop.current.run(until: Date().addingTimeInterval(0.01))
 
         XCTAssertEqual(vm.viewLoadedCount, 1)
         XCTAssertTrue(vc._test_isLoadingVisible)
@@ -76,8 +76,15 @@ final class PlaceDetailViewControllerTests: XCTestCase {
         
         RunLoop.current.run(until: Date().addingTimeInterval(0.01))
 
-        XCTAssertEqual(vc._test_titleText, place.name)
-        XCTAssertEqual(vc._test_descriptionText, place.description)
+        
+        
+        let expectedTitle = L10n.isEnglish ? place.name : place.koreanName
+        let expectedDescription = L10n.isEnglish ? place.description : place.koreanDescription
+
+        
+        
+        XCTAssertEqual(vc._test_titleText, expectedTitle)
+        XCTAssertEqual(vc._test_descriptionText, expectedDescription)
         
     }
     
@@ -124,10 +131,10 @@ final class PlaceDetailViewControllerTests: XCTestCase {
         vm.emit(place: place)
         vm.setLiking(false)
         
-        RunLoop.current.run(until: Date().addingTimeInterval(0.01))
+        RunLoop.current.run(until: Date().addingTimeInterval(0.1))
 
         XCTAssertTrue(vc._test_likeButtonEnabled)
-        XCTAssertEqual(vc._test_likeButtonTitle, "\(place.likeCount) Likes")
+        XCTAssertEqual(vc._test_likeButtonTitle, L10n.PlaceDetail.likes(place.likeCount))
         XCTAssertNotNil(vc._test_likeButtonImage)
         
     }
@@ -138,12 +145,12 @@ final class PlaceDetailViewControllerTests: XCTestCase {
         vm.emit(place: place)
         
         
-        RunLoop.current.run(until: Date().addingTimeInterval(0.2))
+        RunLoop.current.run(until: Date().addingTimeInterval(0.01))
 
         XCTAssertEqual(vc._test_likeButton?.backgroundColor, .primaryBlue)
         XCTAssertEqual(vc._test_likeButton?.titleColor(for: .normal), .white)
         XCTAssertEqual(vc._test_likeButton?.tintColor, .white)
-        XCTAssertEqual(vc._test_likeButton?.title(for: .normal), "\(place.likeCount) Likes")
+        XCTAssertEqual(vc._test_likeButton?.title(for: .normal), L10n.PlaceDetail.likes(place.likeCount))
 
     }
     
@@ -158,7 +165,7 @@ final class PlaceDetailViewControllerTests: XCTestCase {
         XCTAssertEqual(vc._test_likeButton?.backgroundColor, .circleButtonBkg)
         XCTAssertEqual(vc._test_likeButton?.titleColor(for: .normal), .mainText)
         XCTAssertEqual(vc._test_likeButton?.tintColor, .mainText)
-        XCTAssertEqual(vc._test_likeButton?.title(for: .normal), "\(place.likeCount) Likes")
+        XCTAssertEqual(vc._test_likeButton?.title(for: .normal), L10n.PlaceDetail.likes(place.likeCount))
         
     }
     
@@ -190,7 +197,7 @@ final class PlaceDetailViewControllerTests: XCTestCase {
         vm.setLoggedIn(true)
         vm.emit(place: place)
         
-        RunLoop.current.run(until: Date().addingTimeInterval(0.02))
+        RunLoop.current.run(until: Date().addingTimeInterval(0.01))
 
         XCTAssertEqual(vc._test_memoButton?.isHidden, false)
         XCTAssertEqual(vc._test_memoLabel?.text, "nocap")

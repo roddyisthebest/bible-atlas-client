@@ -183,7 +183,7 @@ final class PlaceReportBottomSheetViewModelTests: XCTestCase {
         let confirmButtonTapped$ = PublishRelay<String>();
         let placeTypeCellTapped$ = PublishRelay<PlaceReportType>();
         
-        let output = vm.transform(input: PlaceReportBottomSheetViewModel.Input(cancelButttonTapped$: .empty(), placeTypeCellTapped$: placeTypeCellTapped$.asObservable(), confirmButtonTapped$: confirmButtonTapped$.asObservable()))
+        let _ = vm.transform(input: PlaceReportBottomSheetViewModel.Input(cancelButttonTapped$: .empty(), placeTypeCellTapped$: placeTypeCellTapped$.asObservable(), confirmButtonTapped$: confirmButtonTapped$.asObservable()))
         
         placeTypeCellTapped$.accept(.inappropriate)
         confirmButtonTapped$.accept("test")

@@ -2,8 +2,7 @@
 # platform :ios, '9.0'
 
 # 최소 플랫폼은 네 프로젝트에 맞춰 지정(예: iOS 15 이상이면 '15.0')
-#platform :ios, '13.0'
-
+platform :ios, '13.0'
 project 'BibleAtlas', { 'Debug' => :debug, 'Release' => :release }
 
 target 'BibleAtlas' do

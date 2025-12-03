@@ -141,58 +141,71 @@ final class HomeContentViewModelTests: XCTestCase {
     
     
     func test_appStore_bind_sets_isLoggedIn_and_profile_correctly() {
-            // Given
-            let expectedUser = User(id: 123, name: "test", role: .USER, avatar: "test")
-            mockUserUsecase.myCollectionPlaceIdsResultToReturn = .success(
-                MyCollectionPlaceIds(liked: [], bookmarked: [], memoed: [])
-            )
+        // Given
+        let expectedUser = User(id: 123, name: "test", role: .USER, avatar: "test")
+        mockUserUsecase.myCollectionPlaceIdsResultToReturn = .success(
+            MyCollectionPlaceIds(liked: [], bookmarked: [], memoed: [])
+        )
 
-            let viewModel = HomeContentViewModel(
-                navigator: nil,
-                appStore: mockAppStore,
-                collectionStore: mockCollectionStore,
-                userUsecase: mockUserUsecase,
-                authUseCase: nil,
-                recentSearchService: nil,
-                schedular: scheduler,
-                notificationService: notificationService
-            )
+        let viewModel = HomeContentViewModel(
+            navigator: nil,
+            appStore: mockAppStore,
+            collectionStore: mockCollectionStore,
+            userUsecase: mockUserUsecase,
+            authUseCase: nil,
+            recentSearchService: nil,
+            schedular: scheduler,              // 이건 ViewModel 내부 다른 테스트용에서 쓰고 있으면 그냥 둬도 됨
+            notificationService: notificationService
+        )
 
-            let output = viewModel.transform(input: .init(
-                collectionButtonTapped$: .empty(),
-                placesByTypeButtonTapped$: .empty(),
-                placesByCharacterButtonTapped$: .empty(), 
-                placesByBibleButtonTapped$: .empty(),
-                recentSearchCellTapped$: .empty(),
-                moreRecentSearchesButtonTapped$: .empty(), 
-                reportButtonTapped$: .empty()
-            ))
+        let output = viewModel.transform(input: .init(
+            collectionButtonTapped$: .empty(),
+            placesByTypeButtonTapped$: .empty(),
+            placesByCharacterButtonTapped$: .empty(),
+            placesByBibleButtonTapped$: .empty(),
+            recentSearchCellTapped$: .empty(),
+            moreRecentSearchesButtonTapped$: .empty(),
+            reportButtonTapped$: .empty()
+        ))
 
-            let isLoggedInObserver = scheduler.createObserver(Bool.self)
-            let profileObserver = scheduler.createObserver(User?.self)
+        let loggedInExpectation = expectation(description: "isLoggedIn updated")
+        let profileExpectation = expectation(description: "profile updated")
 
-            output.isLoggedIn$
-                .observe(on: scheduler)
-                .bind(to: isLoggedInObserver)
-                .disposed(by: disposeBag)
+        var lastIsLoggedIn: Bool?
+        var lastProfile: User?
 
-            output.profile$
-                .observe(on: scheduler)
-                .bind(to: profileObserver)
-                .disposed(by: disposeBag)
 
-            // When
-            mockAppStore.dispatch(.login(expectedUser))
-            scheduler.start()
+        output.isLoggedIn$
+            .skip(1) // 초기값(false) 스킵하고 로그인 후 값만 보고 싶다면
+            .subscribe(onNext: { value in
+                lastIsLoggedIn = value
+                loggedInExpectation.fulfill()
+            })
+            .disposed(by: disposeBag)
 
-            // Then
-            let isLoggedInEvents = isLoggedInObserver.events.compactMap { $0.value.element }
-            let profileEvents = profileObserver.events.compactMap { $0.value.element }
+        output.profile$
+            .compactMap{$0}
+            .take(1)
+            .subscribe(onNext: { profile in
+                lastProfile = profile
+                profileExpectation.fulfill()
+            })
+            .disposed(by: disposeBag)
 
-            XCTAssertEqual(isLoggedInEvents.last, true)
-            XCTAssertEqual(profileEvents.last??.name, "test")
-            XCTAssertEqual(mockCollectionStore.lastAction, .initialize(MyCollectionPlaceIds(liked: [], bookmarked: [], memoed: [])))
-        }
+        // When
+        mockAppStore.dispatch(.login(expectedUser))
+        
+        // Then
+        wait(for: [loggedInExpectation, profileExpectation], timeout: 1.0)
+        
+        XCTAssertEqual(lastIsLoggedIn, true)
+        XCTAssertEqual(lastProfile?.name, "test")
+        XCTAssertEqual(
+            mockCollectionStore.lastAction,
+            .initialize(MyCollectionPlaceIds(liked: [], bookmarked: [], memoed: []))
+        )
+    }
+
     
     
     

@@ -63,7 +63,7 @@ final class MyPageBottomSheetViewModelTests: XCTestCase {
         
         let closeButtonTapped$ = PublishRelay<Void>();
         
-        let output = vm.transform(input: MyPageBottomSheetViewModel.Input(closeButtonTapped$: closeButtonTapped$.asObservable(), menuItemCellTapped$: .empty()))
+        let _ = vm.transform(input: MyPageBottomSheetViewModel.Input(closeButtonTapped$: closeButtonTapped$.asObservable(), menuItemCellTapped$: .empty()))
             
         closeButtonTapped$.accept(())
         XCTAssertTrue(navigator.isDismissed)
