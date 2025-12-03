@@ -9,8 +9,8 @@ jobs:
     runs-on: macos-latest
 
     env:
-      FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: 30 # 기본 3초 → 30초로 늘리기
-      FASTLANE_XCODEBUILD_SETTINGS_RETRIES: 4 # 기본 4 (유지하거나 2~3으로 줄여도 됨)
+      FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: 120
+      FASTLANE_XCODEBUILD_SETTINGS_RETRIES: 1
 
     steps:
       - name: Checkout repository
