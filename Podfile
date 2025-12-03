@@ -27,10 +27,6 @@ target 'BibleAtlas' do
   target 'BibleAtlasTests' do
     inherit! :search_paths
   end
-
-  target 'BibleAtlasUITests' do
-    inherit! :search_paths
-  end
 end
 
 post_install do |installer|
