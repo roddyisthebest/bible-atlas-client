@@ -67,7 +67,7 @@
 		EC386DFB2E06C7B900251FC6 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DFA2E06C7B900251FC6 /* SearchResultViewController.swift */; };
 		EC386DFD2E06F90B00251FC6 /* SearchReadyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DFC2E06F90B00251FC6 /* SearchReadyViewModel.swift */; };
 		EC386DFF2E06F95900251FC6 /* SearchReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC386DFE2E06F95900251FC6 /* SearchReadyViewController.swift */; };
-		EC386E062E0AD31900251FC6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC386E052E0AD31900251FC6 /* GoogleService-Info.plist */; };
+		EC4767532EE1814900E959DC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC4767522EE1814900E959DC /* GoogleService-Info.plist */; };
 		EC4D070A2EB8E22600C53C35 /* PlaceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4D07092EB8E22600C53C35 /* PlaceType.swift */; };
 		EC4D070C2EB9B1AE00C53C35 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4D070B2EB9B1AE00C53C35 /* UIFont.swift */; };
 		EC64B9522DD838E300D3C8A7 /* TokenProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9512DD838E300D3C8A7 /* TokenProviderProtocol.swift */; };
@@ -298,7 +298,7 @@
 		EC386DFA2E06C7B900251FC6 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
 		EC386DFC2E06F90B00251FC6 /* SearchReadyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReadyViewModel.swift; sourceTree = "<group>"; };
 		EC386DFE2E06F95900251FC6 /* SearchReadyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReadyViewController.swift; sourceTree = "<group>"; };
-		EC386E052E0AD31900251FC6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EC4767522EE1814900E959DC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EC4D07092EB8E22600C53C35 /* PlaceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceType.swift; sourceTree = "<group>"; };
 		EC4D070B2EB9B1AE00C53C35 /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		EC64B9512DD838E300D3C8A7 /* TokenProviderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenProviderProtocol.swift; sourceTree = "<group>"; };
@@ -790,6 +790,7 @@
 		ECA94B8A2D5082B9005B0428 = {
 			isa = PBXGroup;
 			children = (
+				EC4767522EE1814900E959DC /* GoogleService-Info.plist */,
 				EC1B2DEA2E96AC980073EBE3 /* Config */,
 				EC0F01DB2E826B8E00D7C216 /* Localizable.strings */,
 				EC0F01E82E827CB800D7C216 /* Localizable.stringsdict */,
@@ -830,7 +831,6 @@
 				ECA94BA72D5082BA005B0428 /* Info.plist */,
 				EC9A0A442E6C71BF00BB580E /* Launch Screen.storyboard */,
 				ECA94B9F2D5082B9005B0428 /* BibleAtlas.xcdatamodeld */,
-				EC386E052E0AD31900251FC6 /* GoogleService-Info.plist */,
 				ECCB51D92E1AB31A007E4AB7 /* PersistenceController.swift */,
 			);
 			path = BibleAtlas;
@@ -1174,9 +1174,9 @@
 			files = (
 				EC9A0A452E6C71BF00BB580E /* Launch Screen.storyboard in Resources */,
 				EC0F01D92E826B8E00D7C216 /* Localizable.strings in Resources */,
+				EC4767532EE1814900E959DC /* GoogleService-Info.plist in Resources */,
 				ECA94BA32D5082BA005B0428 /* Assets.xcassets in Resources */,
 				EC0F01E62E827CB800D7C216 /* Localizable.stringsdict in Resources */,
-				EC386E062E0AD31900251FC6 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
