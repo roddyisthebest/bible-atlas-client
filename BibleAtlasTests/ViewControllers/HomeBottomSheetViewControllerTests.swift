@@ -45,7 +45,7 @@ final class HomeBottomSheetViewControllerTests: XCTestCase {
     
     func test_homeMode_showsHomeContent_and_buttonsVisibility() {
         vm._screenMode$.accept(.home)
-        pump(0.5)
+        pump(0.01)
 
         XCTAssertTrue(vc.children.first is HomeContentViewController)
         XCTAssertFalse(vc._test_isUserAvatarHidden)
@@ -63,7 +63,7 @@ final class HomeBottomSheetViewControllerTests: XCTestCase {
     
     func test_searchingMode_swapsToSearchResult_and_buttonsVisibility() {
         vm._screenMode$.accept(.searching)
-        pump(1.0)
+        pump(0.01)
 
         XCTAssertTrue(vc.children.first is SearchResultViewController)
         XCTAssertTrue(vc._test_isUserAvatarHidden)
@@ -73,34 +73,34 @@ final class HomeBottomSheetViewControllerTests: XCTestCase {
     func test_detentChanges_whenForceMediumAndRestore_emits(){
         
         vm._forceMedium$.accept(())
-        pump(1.0)
+        pump(0.01)
         
         XCTAssertEqual(vc._test_selectedDetentIdentifier, .medium)
         XCTAssertEqual(vc._test_detentsCount, 1)
         
         
         vm._restoreDetents$.accept(())
-        pump(1.0)
+        pump(0.01)
         XCTAssertEqual(vc._test_detentsCount, 3)
         
     }
     
     func test_detentChanges_whenIsSearchingIsTrue(){
         vc._test_beginEditing();
-        pump(1.0)
+        pump(0.01)
 
         XCTAssertEqual(vc._test_selectedDetentIdentifier, .large)
         XCTAssertEqual(vc._test_detentsCount, 1)
         
         vm._forceMedium$.accept(())
-        pump(1.0)
+        pump(0.01)
         
         XCTAssertEqual(vc._test_selectedDetentIdentifier, .medium)
         XCTAssertEqual(vc._test_detentsCount, 1)
         
         
         vm._restoreDetents$.accept(())
-        pump(1.0)
+        pump(0.01)
         
         XCTAssertEqual(vc._test_selectedDetentIdentifier, .large)
         XCTAssertEqual(vc._test_detentsCount, 1)

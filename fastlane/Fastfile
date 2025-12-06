@@ -16,17 +16,29 @@
 default_platform(:ios)
 
 platform :ios do
-  desc "Run unit tests for BibleAtlasTests"
-  lane :tests do
+  desc "Local tests"
+  lane :tests_local do
     scan(
-      scheme: "BibleAtlas",                    # ✅ 앱 스킴 이름
-      workspace: "BibleAtlas.xcworkspace",     # ✅ 워크스페이스 쓴다면
+      scheme: "BibleAtlas",
+      workspace: "BibleAtlas.xcworkspace",
       clean: true,
-      only_testing: [
-        "BibleAtlasTests"                      # ✅ 테스트 타겟 이름
-      ],
+      only_testing: ["BibleAtlasTests"],
       code_coverage: true,
       xcargs: "-parallel-testing-enabled YES -parallel-testing-worker-count 4"
     )
-   end
+  end
+
+  desc "CI tests"
+  lane :tests_ci do
+    scan(
+      scheme: "BibleAtlas",
+      workspace: "BibleAtlas.xcworkspace",
+      clean: true,
+      only_testing: ["BibleAtlasTests"],
+      devices: ["iPhone 16 Pro"],
+      code_coverage: true, # 필요 없으면 false
+      xcargs: "-parallel-testing-enabled NO"
+    )
+  end
 end
+

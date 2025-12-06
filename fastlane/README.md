@@ -15,13 +15,21 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
-### ios tests
+### ios tests_local
 
 ```sh
-[bundle exec] fastlane ios tests
+[bundle exec] fastlane ios tests_local
 ```
 
-Run unit tests for BibleAtlasTests
+Local tests
+
+### ios tests_ci
+
+```sh
+[bundle exec] fastlane ios tests_ci
+```
+
+CI tests
 
 ----
 

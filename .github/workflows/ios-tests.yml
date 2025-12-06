@@ -36,4 +36,4 @@ jobs:
         run: pod install
 
       - name: Run unit tests via fastlane
-        run: bundle exec fastlane ios tests
+        run: bundle exec fastlane tests_ci
