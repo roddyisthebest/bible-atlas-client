@@ -36,9 +36,9 @@ platform :ios do
       clean: true,
       only_testing: ["BibleAtlasTests"],
       devices: ["iPhone 16 Pro"],
-      code_coverage: true, # 필요 없으면 false
-      xcargs: "-parallel-testing-enabled NO"
-    )
+      code_coverage: true, 
+      xcargs: "-parallel-testing-enabled YES -parallel-testing-worker-count 2"
+      )
   end
 end
 
