@@ -37,3 +37,9 @@ jobs:
 
       - name: Run unit tests via fastlane
         run: bundle exec fastlane tests_ci
+
+      - name: Show code coverage summary
+        run: |
+          XCRESULT_PATH=$(ls ~/Library/Developer/Xcode/DerivedData/BibleAtlas*/Logs/Test/Run-*.xcresult | sort | tail -n 1)
+          echo "Using xcresult: $XCRESULT_PATH"
+          xcrun xccov view --report --only-targets "$XCRESULT_PATH"
