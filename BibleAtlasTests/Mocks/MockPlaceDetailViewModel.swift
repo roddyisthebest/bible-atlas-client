@@ -115,4 +115,7 @@ final class MockPlaceDetailViewModel: PlaceDetailViewModelProtocol {
     func setLoggedIn(_ v: Bool)                { isLoggedIn$.accept(v) }
     func setProfile(_ u: User?)                { profile$.accept(u) }
     func setHasPrev(_ v: Bool)                 { hasPrev$.accept(v) }
+
+    
+
 }

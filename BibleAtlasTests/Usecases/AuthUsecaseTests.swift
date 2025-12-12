@@ -131,5 +131,108 @@ final class AuthUsecaseTests:XCTestCase {
     }
     
     
+    // MARK: - Google Login
+
+       func test_loginGoogleUser_success_savesToken() async {
+           // given
+           let expectedAccessToken = "google-access"
+           let expectedRefreshToken = "google-refresh"
+
+           let authData = AuthData(
+               refreshToken: expectedRefreshToken,
+               accessToken: expectedAccessToken
+           )
+
+           mockRepo.resultToReturn = .success(
+               UserResponse(
+                   user: User(id: 1, name: "google", role: .USER, avatar: "g"),
+                   authData: authData,
+                   recovered: false
+               )
+           )
+
+           // when
+           let result = await sut.loginGoogleUser(idToken: "dummy-google-idtoken")
+
+           // then
+           switch result {
+           case .success(let response):
+               XCTAssertEqual(response.authData.accessToken, expectedAccessToken)
+               XCTAssertTrue(mockTokenProvider.didSaveCalled)
+               XCTAssertEqual(mockTokenProvider.savedAccessToken, expectedAccessToken)
+               XCTAssertEqual(mockTokenProvider.savedRefreshToken, expectedRefreshToken)
+           case .failure:
+               XCTFail("Expected success, got failure")
+           }
+       }
+
+       func test_loginGoogleUser_failure_doesNotSaveToken() async {
+           // given
+           mockRepo.resultToReturn = .failure(.serverError(500))
+
+           // when
+           let result = await sut.loginGoogleUser(idToken: "dummy-google-idtoken")
+
+           // then
+           switch result {
+           case .failure:
+               XCTAssertFalse(mockTokenProvider.didSaveCalled)
+           case .success:
+               XCTFail("Expected failure, got success")
+           }
+       }
+
+       // MARK: - Apple Login
+
+       func test_loginAppleUser_success_savesToken() async {
+           // given
+           let expectedAccessToken = "apple-access"
+           let expectedRefreshToken = "apple-refresh"
+
+           let authData = AuthData(
+               refreshToken: expectedRefreshToken,
+               accessToken: expectedAccessToken
+           )
+
+           mockRepo.resultToReturn = .success(
+               UserResponse(
+                   user: User(id: 2, name: "apple", role: .USER, avatar: "a"),
+                   authData: authData,
+                   recovered: false
+               )
+           )
+
+           // when
+           let result = await sut.loginAppleUser(idToken: "dummy-apple-idtoken")
+
+           // then
+           switch result {
+           case .success(let response):
+               XCTAssertEqual(response.authData.accessToken, expectedAccessToken)
+               XCTAssertTrue(mockTokenProvider.didSaveCalled)
+               XCTAssertEqual(mockTokenProvider.savedAccessToken, expectedAccessToken)
+               XCTAssertEqual(mockTokenProvider.savedRefreshToken, expectedRefreshToken)
+           case .failure:
+               XCTFail("Expected success, got failure")
+           }
+       }
+
+       func test_loginAppleUser_failure_doesNotSaveToken() async {
+           // given
+           mockRepo.resultToReturn = .failure(.serverError(500))
+
+           // when
+           let result = await sut.loginAppleUser(idToken: "dummy-apple-idtoken")
+
+           // then
+           switch result {
+           case .failure:
+               XCTAssertFalse(mockTokenProvider.didSaveCalled)
+           case .success:
+               XCTFail("Expected failure, got success")
+           }
+       }
+    
+    
     
 }

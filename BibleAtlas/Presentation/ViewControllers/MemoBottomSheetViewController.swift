@@ -10,7 +10,7 @@ import RxSwift
 import RxRelay
 
 
-final class MemoBottomSheetViewController: UIViewController {
+class MemoBottomSheetViewController: UIViewController {
     
     private var memoBottomSheetViewModel:MemoBottomSheetViewModelProtocol?
     
@@ -265,3 +265,18 @@ final class MemoBottomSheetViewController: UIViewController {
     }
 
 }
+
+
+
+#if DEBUG
+extension MemoBottomSheetViewController {
+    var _test_cancelButton: UIButton { cancelButton }
+    var _test_confirmButton: UIButton { confirmButton }
+    var _test_confirmLoadingView: LoadingView { confirmLoadingView }
+    var _test_descriptionTextView: UITextView { descriptionTextView }
+    var _test_deleteMemoButton: IconTextButton { deleteMemoButton }
+    var _test_loadingView: LoadingView { loadingView }
+    var _test_errorRetryView: ErrorRetryView { errorRetryView }
+    var _test_headerLabel: UILabel { headerLabel }
+}
+#endif

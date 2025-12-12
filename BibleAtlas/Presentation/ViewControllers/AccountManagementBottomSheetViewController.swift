@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxRelay
 
-final class AccountManagementBottomSheetViewController: UIViewController {
+class AccountManagementBottomSheetViewController: UIViewController {
 
     private var menuHeight = 60;
     
@@ -272,3 +272,16 @@ extension AccountManagementBottomSheetViewController:UITableViewDelegate{
     }
     
 }
+
+
+#if DEBUG
+extension AccountManagementBottomSheetViewController {
+    var _test_tableView: UITableView { tableView }
+    var _test_closeButton: UIButton { closeButton }
+    var _test_loadingOverlayView: UIView { loadingOverlayView }
+    var _test_headerLabel: UILabel { headerLabel }
+    func _test_triggerWithdrawConfirm() { withdrawConfirmButtonTapped$.accept(()) }
+    func _test_triggerWithdrawCompleteConfirm() { withdrawCompleteConfirmButtonTapped$.accept(()) }
+}
+#endif
+

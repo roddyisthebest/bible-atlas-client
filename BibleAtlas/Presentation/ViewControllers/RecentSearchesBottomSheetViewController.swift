@@ -298,3 +298,10 @@ extension RecentSearchesBottomSheetViewController: UIScrollViewDelegate {
    
     
 }
+
+
+#if DEBUG
+extension RecentSearchesBottomSheetViewController {
+    var _test_tableView: UITableView { tableView }
+}
+#endif

@@ -14,7 +14,7 @@ import RxBlocking
 @testable import BibleAtlas
 
 
-final class MockBottomSheetNavigator:BottomSheetNavigator{
+class MockBottomSheetNavigator:BottomSheetNavigator{
     var presentedSheet: BottomSheetType?
     var isDismissed = false;
     

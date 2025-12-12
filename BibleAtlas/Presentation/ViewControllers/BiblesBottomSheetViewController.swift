@@ -255,3 +255,16 @@ extension BiblesBottomSheetViewController:UICollectionViewDelegateFlowLayout{
     
     
 }
+
+
+
+#if DEBUG
+extension BiblesBottomSheetViewController {
+    var _test_headerLabel: UILabel { headerLabel }
+    var _test_collectionView: UICollectionView { collectionView }
+    var _test_loadingView: LoadingView { loadingView }
+    var _test_emptyLabel: UILabel { emptyLabel }
+    var _test_errorRetryView: ErrorRetryView { errorRetryView }
+    var _test_closeButton: CircleButton { closeButton }
+}
+#endif

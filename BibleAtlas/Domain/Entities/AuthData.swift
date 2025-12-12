@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RefreshedData:Decodable, Hashable {
+struct RefreshedData: Encodable, Decodable, Hashable {
     let accessToken:String;
 }
 

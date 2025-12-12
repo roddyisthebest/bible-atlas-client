@@ -69,7 +69,12 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
     }
     
     func bindStores(){
-        Observable.combineLatest(appStore!.state$, collectionStore!.state$)
+        
+        guard let appStoreState$ = appStore?.state$, let collectionStoreState$ = collectionStore?.state$ else {
+            return
+        }
+        
+        Observable.combineLatest(appStoreState$, collectionStoreState$)
             .distinctUntilChanged { prev, next in
                 return prev.0.isLoggedIn == next.0.isLoggedIn
             }
@@ -114,7 +119,13 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
     }
     
     func bindCollectionStore(){
-        collectionStore!.state$.bind{
+        
+        
+        guard let collectionStoreState$ = collectionStore?.state$ else {
+            return
+        }
+        
+        collectionStoreState$.bind{
             [weak self] state in
             self?.memoPlacesCount$.accept(state.memoedPlaceIds.count)
             self?.likePlacesCount$.accept(state.likedPlaceIds.count)

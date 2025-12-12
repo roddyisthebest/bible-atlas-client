@@ -58,19 +58,26 @@ final class MockUserUsecase: UserUsecaseProtocol {
     
     var placesResultToReturn: Result<ListResponse<Place>, NetworkError>?
 
+    var placesResultsQueue: [Result<ListResponse<Place>, NetworkError>] = []
     
-    func getMyCollectionPlaceIds() async -> Result<MyCollectionPlaceIds, NetworkError> {
-        return myCollectionPlaceIdsResultToReturn ?? .failure(.clientError("test")) ;
-    }
+    var getPlacesCallCount = 0
     
-    func getPlaces(limit: Int?, page: Int?, filter: BibleAtlas.PlaceFilter?) async -> Result<BibleAtlas.ListResponse<BibleAtlas.Place>, BibleAtlas.NetworkError> {
-        defer { placesExp?.fulfill() }
-        return placesResultToReturn ?? .failure(.clientError("test"))
-    }
-    
-    func getProfile() async -> Result<BibleAtlas.User, BibleAtlas.NetworkError> {
-        return profileResultToReturn ?? .failure(.clientError("test"))
-    }
+    func getPlaces(limit: Int?, page: Int?, filter: PlaceFilter?) async -> Result<ListResponse<Place>, NetworkError> {
+          getPlacesCallCount += 1
+          
+          if !placesResultsQueue.isEmpty {
+              return placesResultsQueue.removeFirst()
+          }
+          return placesResultToReturn ?? .failure(.clientError("not-set"))
+      }
+
+      func getProfile() async -> Result<User, NetworkError> {
+          return profileResultToReturn ?? .failure(.clientError("not-set"))
+      }
+
+      func getMyCollectionPlaceIds() async -> Result<MyCollectionPlaceIds, NetworkError> {
+          return myCollectionPlaceIdsResultToReturn ?? .failure(.clientError("not-set"))
+      }
     
 }
 
@@ -79,6 +86,7 @@ final class MockRecentSearchService: RecentSearchServiceProtocol {
     
     var resultToReturn: Result<RecentSearchFetchResult, RecentSearchError>?
     var resultExp:XCTestExpectation?
+    var savedPlaces:[Place] = []
     func fetch(limit: Int, page: Int?) -> Result<RecentSearchFetchResult, RecentSearchError> {
         defer{
             resultExp?.fulfill()
@@ -88,6 +96,7 @@ final class MockRecentSearchService: RecentSearchServiceProtocol {
     }
     
     func save(_ place: BibleAtlas.Place) -> Result<Void, BibleAtlas.RecentSearchError> {
+        savedPlaces.append(place)
         return saveResultToReturn ?? .success(())
     }
     

@@ -189,3 +189,13 @@ final class PlaceModificationBottomSheetViewController: UIViewController {
     }
 
 }
+
+
+#if DEBUG
+// MARK: - Testing helpers
+extension PlaceModificationBottomSheetViewController {
+    var test_cancelButton: UIButton { cancelButton }
+    var test_confirmButton: UIButton { confirmButton }
+    var test_descriptionTextView: UITextView { descriptionTextView }
+}
+#endif

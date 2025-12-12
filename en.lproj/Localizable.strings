@@ -249,10 +249,17 @@
 "ClientError.Forbidden" = "Access forbidden.";
 "ClientError.NotFound" = "The requested resource could not be found.";
 
-// ServerERror
+"ClientError.PlaceIdRequired" = "The Place ID is required.";
+"ClientError.PlaceTypeRequired" = "Please select the Place Type.";
+"ClientError.ReasonRequired" = "Please enter the reason.";
+
+
+// ServerError
 "ServerError.InternalServerError" = "An error occurred on the server.";
 "ServerError.ServiceUnavailable" = "The server is temporarily overloaded or undergoing maintenance, \n so it cannot process the request.";
 "ServerError.Unknown" = "Unknown error.";
+
+
 
 
 
@@ -261,3 +268,4 @@
 
 // Login
 "Login.InValidFormat" = "Please enter your ID and password.";
+

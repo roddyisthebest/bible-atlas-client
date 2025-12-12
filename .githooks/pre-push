@@ -1,0 +1,8 @@
+cat > .githooks/pre-push <<'EOF'
+#!/usr/bin/env bash
+set -e
+
+echo "Running tests before push..."
+bundle exec fastlane tests_local
+echo "✅ Tests passed."
+EOF

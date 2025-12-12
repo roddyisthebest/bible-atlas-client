@@ -77,7 +77,7 @@ final class MainViewController: UIViewController, Presentable  {
 
     }
     
-    func present(vc: ViewController, animated: Bool) {
+    func present(vc: UIViewController, animated: Bool) {
         super.present(vc, animated: animated)
     }
 
@@ -482,9 +482,18 @@ extension MainViewController {
           mapView = mv
       }
     
+    func _test_setSelected(placeId: String?) {
+        selectedPlaceId = placeId
+    }
+
+    func _test_zoomOut() {
+        zoomOut()
+    }
+    
 }
 
 
 #endif
+
 
 

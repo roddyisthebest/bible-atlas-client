@@ -8,9 +8,8 @@
 import XCTest
 @testable import BibleAtlas
 
-//private func pump(_ sec: TimeInterval = 0.05) {
-//    RunLoop.current.run(until: Date().addingTimeInterval(sec))
-//}
+
+
 
 final class HomeBottomSheetViewControllerTests: XCTestCase {
 
@@ -18,31 +17,31 @@ final class HomeBottomSheetViewControllerTests: XCTestCase {
     var vc: HomeBottomSheetViewController!
 
     override func setUp() {
-            super.setUp()
-            vm = MockHomeBottomSheetViewModel()
+        super.setUp()
+        vm = MockHomeBottomSheetViewModel()
 
-            // 실제 VC 그대로 사용 (final이라 서브클래싱 불가)
-            let homeVC = HomeContentViewController(homeContentViewModel: MockHomeContentViewModel())
-            let readyVC = SearchReadyViewController(searchReadyViewModel: MockSearchReadyViewModel())
-            let resultVC = SearchResultViewController(searchResultViewModel: MockSearchResultViewModel())
+        // 실제 VC 그대로 사용 (final이라 서브클래싱 불가)
+        let homeVC = HomeContentViewController(homeContentViewModel: MockHomeContentViewModel())
+        let readyVC = SearchReadyViewController(searchReadyViewModel: MockSearchReadyViewModel())
+        let resultVC = SearchResultViewController(searchResultViewModel: MockSearchResultViewModel())
 
         vc = HomeBottomSheetViewController(
-                homeBottomSheetViewModel: vm,
-                homeContentViewController: homeVC,
-                searchReadyViewController: readyVC,
-                searchResultViewController: resultVC
-            )
+            homeBottomSheetViewModel: vm,
+            homeContentViewController: homeVC,
+            searchReadyViewController: readyVC,
+            searchResultViewController: resultVC
+        )
 
-            _ = vc.view  // viewDidLoad 트리거 (bindViewModel 호출됨)
-            pump()
-        }
-    
+        _ = vc.view  // viewDidLoad 트리거 (bindViewModel 호출됨)
+        pump()
+    }
+
     override func tearDown() {
         vc = nil
         vm = nil
         super.tearDown()
     }
-    
+
     func test_homeMode_showsHomeContent_and_buttonsVisibility() {
         vm._screenMode$.accept(.home)
         pump(0.01)
@@ -51,16 +50,16 @@ final class HomeBottomSheetViewControllerTests: XCTestCase {
         XCTAssertFalse(vc._test_isUserAvatarHidden)
         XCTAssertTrue(vc._test_isCancelHidden)
     }
-    
+
     func test_searchReadyMode_swapsToSearchReady_and_buttonsVisibility() {
         vm._screenMode$.accept(.searchReady)
-        pump()
+        pump(0.1)
 
         XCTAssertTrue(vc.children.first is SearchReadyViewController)
         XCTAssertTrue(vc._test_isUserAvatarHidden)
         XCTAssertFalse(vc._test_isCancelHidden)
     }
-    
+
     func test_searchingMode_swapsToSearchResult_and_buttonsVisibility() {
         vm._screenMode$.accept(.searching)
         pump(0.01)
@@ -69,45 +68,38 @@ final class HomeBottomSheetViewControllerTests: XCTestCase {
         XCTAssertTrue(vc._test_isUserAvatarHidden)
         XCTAssertFalse(vc._test_isCancelHidden)
     }
-    
-    func test_detentChanges_whenForceMediumAndRestore_emits(){
-        
+
+    func test_detentChanges_whenForceMediumAndRestore_emits() {
+
         vm._forceMedium$.accept(())
-        pump(0.01)
-        
+        pump(0.1)
+
         XCTAssertEqual(vc._test_selectedDetentIdentifier, .medium)
         XCTAssertEqual(vc._test_detentsCount, 1)
-        
-        
+
         vm._restoreDetents$.accept(())
-        pump(0.01)
+        pump(0.1)
+
         XCTAssertEqual(vc._test_detentsCount, 3)
-        
     }
-    
-    func test_detentChanges_whenIsSearchingIsTrue(){
-        vc._test_beginEditing();
-        pump(0.01)
+
+    func test_detentChanges_whenIsSearchingIsTrue() {
+        vc._test_beginEditing()
+        pump(0.5)
 
         XCTAssertEqual(vc._test_selectedDetentIdentifier, .large)
         XCTAssertEqual(vc._test_detentsCount, 1)
-        
+
         vm._forceMedium$.accept(())
-        pump(0.01)
-        
+        pump(0.5)
+
         XCTAssertEqual(vc._test_selectedDetentIdentifier, .medium)
         XCTAssertEqual(vc._test_detentsCount, 1)
-        
-        
+
         vm._restoreDetents$.accept(())
-        pump(0.01)
-        
+        pump(0.5)
+
         XCTAssertEqual(vc._test_selectedDetentIdentifier, .large)
         XCTAssertEqual(vc._test_detentsCount, 1)
     }
-    
-    
-
-    
-    
 }

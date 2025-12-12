@@ -267,7 +267,7 @@ extension BibleBook {
 
 
 
-struct BibleBookCount:Decodable {
+struct BibleBookCount:Decodable, Equatable {
     var bible:BibleBook;
     var placeCount: Int
 }

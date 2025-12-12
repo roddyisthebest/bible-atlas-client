@@ -10,21 +10,30 @@ import RxSwift
 import RxRelay
 @testable import BibleAtlas
 
-final class MockVMFactory: VMFactoryProtocol {
+class MockVMFactory: VMFactoryProtocol {
+ 
+    
+    
     func makeBibleVerseDetailBottomSheetVM(bibleBook: BibleAtlas.BibleBook, keyword: String, placeName: String?) -> BibleAtlas.BibleVerseDetailBottomSheetViewModelProtocol {
-        fatalError()
+        made.append("bibleVerseDetailBottomSheetVM")
+        return MockBibleVerseDetailBottomSheetViewModel()
     }
     
     func makePlaceReportBottomSheetVM(placeId: String, reportType: BibleAtlas.PlaceReportType) -> BibleAtlas.PlaceReportBottomSheetViewModelProtocol {
-        fatalError()
+        made.append("placeReportBottomSheetVM")
+        return MockPlaceReportBottomSheetViewModelForVC()
     }
     
     func makeReportBottomSheetVM() -> BibleAtlas.ReportBottomSheetViewModelProtocol {
-        fatalError()
+        made.append("reportBottomSheetVM")
+        return MockReportBottomSheetViewModel()
+
     }
     
     func makeBibleBookVerseListBottomSheetVM(placeId: String, bibleBook: BibleAtlas.BibleBook?) -> BibleAtlas.BibleBookVerseListBottomSheetViewModelProtocol {
-        fatalError()
+        made.append("bibleBookVerseListBottomSheetVM")
+        return MockBibleBookVerseListBottomSheetViewModel()
+
     }
     
     // 호출 기록(간단)
@@ -58,27 +67,95 @@ final class MockVMFactory: VMFactoryProtocol {
 
     func makeLoginBottomSheetVM() -> LoginBottomSheetViewModelProtocol {
         made.append("loginVM")
-        fatalError()
+        return MockLoginBottomSheetViewModel()
     }
 
     // 이하 테스트에 불필요 → 명시적 중단
-    func makeMyCollectionBottomSheetVM(filter: PlaceFilter) -> MyCollectionBottomSheetViewModelProtocol { fatalError() }
-    func makeMemoBottomSheetVM(placeId: String) -> MemoBottomSheetViewModelProtocol { fatalError() }
-    func makePlaceModificationBottomSheerVM(placeId: String) -> PlaceModificationBottomSheetViewModelProtocol { fatalError() }
-    func makePlaceTypesBottomSheetVM() -> PlaceTypesBottomSheetViewModelProtocol { fatalError() }
-    func makePlaceCharactersBottomSheetVM() -> PlaceCharactersBottomSheetViewModelProtocol { fatalError() }
-    func makeBiblesBottomSheetVM() -> BiblesBottomSheetViewModelProtocol { fatalError() }
-    func makePlacesByTypeBottomSheetVM(placeTypeName: PlaceTypeName) -> PlacesByTypeBottomSheetViewModelProtocol { fatalError() }
-    func makePlacesByCharacterBottomSheetVM(character: String) -> PlacesByCharacterBottomSheetViewModelProtocol { fatalError() }
-    func makePlacesByBibleBottomSheetVM(bible: BibleBook) -> PlacesByBibleBottomSheetViewModelProtocol { fatalError() }
-    func makeBibleVerseDetailBottomSheetVM(bibleBook: BibleBook, keyword: String) -> BibleVerseDetailBottomSheetViewModelProtocol { fatalError() }
-    func makeRecentSearchesBottomSheetVM() -> RecentSearchesBottomSheetViewModelProtocol { fatalError() }
-    func makePopularPlacesBottomSheetVM() -> PopularPlacesBottomSheetViewModelProtocol { fatalError() }
-    func makeMyPageBottomSheetVM() -> MyPageBottomSheetViewModelProtocol { fatalError() }
-    func makeAccountManagementBottomSheetVM() -> AccountManagementBottomSheetViewModelProtocol { fatalError() }
-    func makeReportBottomSheetVM(placeId: String, reportType: PlaceReportType) -> ReportBottomSheetViewModelProtocol { fatalError() }
-    func makeMainVM() -> MainViewModelProtocol { fatalError() }
-
+    func makeMyCollectionBottomSheetVM(filter: PlaceFilter) -> MyCollectionBottomSheetViewModelProtocol {
+            made.append("myCollectionVM")
+            return MockMyCollectionBottomSheetViewModel()
+    }
+    func makeMemoBottomSheetVM(placeId: String) -> MemoBottomSheetViewModelProtocol {
+            made.append("memoVM(\(placeId))")
+            return MockMemoBottomSheetViewModel()
+        }
+    
+    func makePlaceModificationBottomSheetVM(placeId: String) -> PlaceModificationBottomSheetViewModelProtocol {
+            made.append("placeModificationVM(\(placeId))")
+            return MockPlaceModificationBottomSheetViewModel()
+        }
+        
+        func makePlaceTypesBottomSheetVM() -> PlaceTypesBottomSheetViewModelProtocol {
+            made.append("placeTypesVM")
+            return MockPlaceTypesBottomSheetViewModel()
+        }
+        
+        func makePlaceCharactersBottomSheetVM() -> PlaceCharactersBottomSheetViewModelProtocol {
+            made.append("placeCharactersVM")
+            return MockPlaceCharactersBottomSheetViewModel()
+        }
+        
+        func makeBiblesBottomSheetVM() -> BiblesBottomSheetViewModelProtocol {
+            made.append("biblesVM")
+            return MockBiblesBottomSheetViewModel()
+        }
+        
+        func makePlacesByTypeBottomSheetVM(placeTypeName: PlaceTypeName) -> PlacesByTypeBottomSheetViewModelProtocol {
+            made.append("placesByTypeVM")
+            return MockPlacesByTypeBottomSheetViewModel()
+        }
+        
+        func makePlacesByCharacterBottomSheetVM(character: String) -> PlacesByCharacterBottomSheetViewModelProtocol {
+            made.append("placesByCharacterVM(\(character))")
+            return MockPlacesByCharacterBottomSheetViewModel()
+        }
+        
+        func makePlacesByBibleBottomSheetVM(bible: BibleBook) -> PlacesByBibleBottomSheetViewModelProtocol {
+            made.append("placesByBibleVM")
+            return MockPlacesByBibleBottomSheetViewModel()
+        }
+        
+        func makeBibleVerseDetailBottomSheetVM(bibleBook: BibleBook, keyword: String) -> BibleVerseDetailBottomSheetViewModelProtocol {
+            made.append("bibleVerseDetailVM(\(keyword))")
+            return MockBibleVerseDetailBottomSheetViewModel()
+        }
+        
+        func makeRecentSearchesBottomSheetVM() -> RecentSearchesBottomSheetViewModelProtocol {
+            made.append("recentSearchesVM")
+            return MockRecentSearchesBottomSheetViewModel()
+        }
+        
+        func makePopularPlacesBottomSheetVM() -> PopularPlacesBottomSheetViewModelProtocol {
+            made.append("popularPlacesVM")
+            return MockPopularPlacesBottomSheetViewModel()
+        }
+        
+        func makeMyPageBottomSheetVM() -> MyPageBottomSheetViewModelProtocol {
+            made.append("myPageVM")
+            return MockMyPageBottomSheetViewModel(menuItems: [])
+        }
+        
+        func makeAccountManagementBottomSheetVM() -> AccountManagementBottomSheetViewModelProtocol {
+            made.append("accountManagementVM")
+            return MockAccountManagementBottomSheetViewModel()
+        }
+        
+        func makeReportBottomSheetVM(placeId: String, reportType: PlaceReportType) -> ReportBottomSheetViewModelProtocol {
+            made.append("reportVM(\(placeId), \(reportType))")
+            return MockReportBottomSheetViewModel()
+        }
+        
+        func makeMainVM() -> MainViewModelProtocol {
+            made.append("mainVM")
+            return MockMainViewModel()
+        }
+    
+    
+    func makePlaceModificationBottomSheerVM(placeId: String) -> BibleAtlas.PlaceModificationBottomSheetViewModelProtocol {
+        made.append("placeModificationBottomSheetVM")
+        return MockPlaceModificationBottomSheetViewModel()
+    }
+    
     func configure(navigator: BottomSheetNavigator, appCoordinator: AppCoordinatorProtocol) {}
 }
 

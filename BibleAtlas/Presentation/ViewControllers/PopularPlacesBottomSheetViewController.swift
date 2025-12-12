@@ -284,3 +284,15 @@ extension PopularPlacesBottomSheetViewController: UIScrollViewDelegate {
    
     
 }
+
+
+
+#if DEBUG
+extension PopularPlacesBottomSheetViewController {
+    var _test_tableView: UITableView { tableView }
+    var _test_closeButton: UIButton { closeButton }
+    var _test_loadingView: LoadingView { loadingView }
+    var _test_emptyLabel: UILabel { emptyLabel }
+    var _test_errorRetryView: ErrorRetryView { errorRetryView }
+}
+#endif

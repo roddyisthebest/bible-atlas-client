@@ -416,3 +416,17 @@ extension SearchReadyViewController:UITableViewDataSource{
    
     }
 }
+
+#if DEBUG
+extension SearchReadyViewController {
+    var _test_recentTable: UITableView { recentSearchTableView }
+    var _test_popularTable: UITableView { popularPlaceTableView }
+    var _test_errorRetryView: ErrorRetryView { errorRetryView }
+    var _test_loadingView: LoadingView { loadingView }
+    var _test_emptyView: UIView { emptyView }
+    var _test_moreRecentButton: UIButton { moreRecentSearchButton }
+    var _test_morePopularButton: UIButton { morePopularPlacesButton }
+    var _test_isRecentSearchStackHidden: Bool { recentSearchStackView.isHidden }
+    var _test_isLoadingVisible: Bool { !loadingView.isHidden && loadingView.isAnimating }
+}
+#endif

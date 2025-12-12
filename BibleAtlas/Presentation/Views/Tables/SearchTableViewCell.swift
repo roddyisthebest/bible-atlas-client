@@ -103,3 +103,13 @@ final class SearchTableViewCell: UITableViewCell {
         typeLabel.text = L10n.isEnglish ? placeTypeName?.titleEn : placeTypeName?.titleKo
     }
 }
+
+
+#if DEBUG
+extension SearchTableViewCell {
+    var _test_searchIcon: UIImageView { searchIcon }
+    var _test_searchLabel: UILabel { searchLabel }
+    var _test_circleIcon: UIImageView { circleIcon }
+    var _test_typeLabel: UILabel { typeLabel }
+}
+#endif

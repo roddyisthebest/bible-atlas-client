@@ -515,5 +515,25 @@ extension HomeContentViewController:UITableViewDelegate, UITableViewDataSource{
     
 }
 
+#if DEBUG
+extension HomeContentViewController {
+    // Views for inspection
+    var _test_recentTable: UITableView { recentSearchTableView }
+    var _test_loadingView: LoadingView { loadingView }
+    var _test_scrollView: UIScrollView { scrollView }
+    var _test_emptyView: UIView { emptyView }
+    var _test_moreRecentButton: UIButton { moreRecentSearchesButton }
+    var _test_reportButton: GuideButton { reportButton }
 
+    // Emitters for menu actions
+    func _test_emitPlacesByType() { placesByTypeButtonTapped$.accept(()) }
+    func _test_emitPlacesByCharacter() { placesByCharacterButtonTapped$.accept(()) }
+    func _test_emitPlacesByBible() { placesByBibleButtonTapped$.accept(()) }
 
+    // Helper to select a recent search row
+    func _test_selectRecentRow(_ row: Int) {
+        let indexPath = IndexPath(row: row, section: 0)
+        tableView(recentSearchTableView, didSelectRowAt: indexPath)
+    }
+}
+#endif

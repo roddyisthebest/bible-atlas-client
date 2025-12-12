@@ -98,3 +98,12 @@ final class SimpleMenuTableViewCell: UITableViewCell {
     }
 
 }
+
+
+#if DEBUG
+extension SimpleMenuTableViewCell {
+    var _test_nameLabel: UILabel { nameLabel }
+    var _test_arrowIcon: UIImageView { arrowIcon }
+    var _test_stackView: UIStackView { stackView }
+}
+#endif

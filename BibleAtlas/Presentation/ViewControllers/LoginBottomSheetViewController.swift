@@ -452,3 +452,16 @@ extension LoginBottomSheetViewController: ASAuthorizationControllerDelegate, ASA
         print("❌ Apple login error:", error)
     }
 }
+
+
+#if DEBUG
+extension LoginBottomSheetViewController {
+    var _test_idTextField: UITextField { idTextField }
+    var _test_passwordTextField: UITextField { passwordTextField }
+    var _test_localLoginButton: GuideButton { localLoginButton }
+    var _test_closeButton: CircleButton { closeButton }
+    var _test_googleButton: GuideButton { googleButton }
+    var _test_appleButton: GuideButton { appleButton }
+    var _test_scrollView: UIScrollView {scrollView}
+}
+#endif

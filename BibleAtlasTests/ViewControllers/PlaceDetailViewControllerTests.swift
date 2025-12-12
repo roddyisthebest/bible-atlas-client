@@ -14,11 +14,18 @@ final class PlaceDetailViewControllerTests: XCTestCase {
     private var vm:MockPlaceDetailViewModel!;
     private var vc:PlaceDetailViewController!
     
+    private var window: UIWindow!
+
     private var placeId = "test-place-id"
     override func setUp(){
         super.setUp()
         vm = MockPlaceDetailViewModel()
         vc = PlaceDetailViewController(placeDetailViewModel: vm, placeId: placeId)
+        
+        // ✅ 테스트용 윈도우에 VC를 붙여서 present가 실제로 동작하게 만든다
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window.rootViewController = vc
+        window.makeKeyAndVisible()
         
         _ = vc.view;
         vc.view.frame = CGRect(x: 0, y: 0, width: 390, height: 844)
@@ -26,6 +33,7 @@ final class PlaceDetailViewControllerTests: XCTestCase {
     }
     
     override func tearDown(){
+        window = nil
         vc = nil
         vm = nil
         super.tearDown()
@@ -275,5 +283,117 @@ final class PlaceDetailViewControllerTests: XCTestCase {
         XCTAssertTrue(vc._relatedVerseMoreButtonVisible)
     }
     
+    func test_hasPrevPlaceId_binding_showsAndHidesBackButton() {
+        // given
+        XCTAssertTrue(vc._test_isBackButtonHidden, "초기에는 back 버튼이 숨겨져 있어야 함")
+
+        // when: 이전 place 있음
+        vm.setHasPrev(true)
+        RunLoop.current.run(until: Date().addingTimeInterval(0.01))
+
+        // then
+        XCTAssertFalse(vc._test_isBackButtonHidden)
+
+        // when: 다시 false
+        vm.setHasPrev(false)
+        RunLoop.current.run(until: Date().addingTimeInterval(0.01))
+
+        // then
+        XCTAssertTrue(vc._test_isBackButtonHidden)
+    }
     
+    
+    func test_interactionError_showsAlertController() {
+        // given
+        let error = NetworkError.clientError("test-interaction-error")
+
+        // when
+        vm.setInteractionError(error)
+        RunLoop.current.run(until: Date().addingTimeInterval(0.05))
+
+        // then
+        guard let alert = vc.presentedViewController as? UIAlertController else {
+            return XCTFail("UIAlertController가 떠야 함")
+        }
+
+        XCTAssertNil(alert.title) // showAlert에서 title은 nil
+        XCTAssertEqual(alert.message, error.description)
+    }
+    
+    func test_showShare_presentsActivityViewController_whenCurrentPlaceExists() {
+        // given
+        let place = Place(
+            id: "share-test",
+            name: "Share Place",
+            koreanName: "쉐어 장소",
+            isModern: true,
+            description: "desc",
+            koreanDescription: "설명",
+            stereo: .child,
+            likeCount: 0,
+            types: [] // 이미지 없어도 상관 없음
+        )
+        vm.emit(place: place)
+        RunLoop.current.run(until: Date().addingTimeInterval(0.01))
+
+        // when
+        vc._test_showShare()
+        RunLoop.current.run(until: Date().addingTimeInterval(0.5))
+
+        // then
+        XCTAssertTrue(
+            vc.presentedViewController is UIActivityViewController,
+            "공유 시 UIActivityViewController가 떠야 함"
+        )
+    }
+    
+    func test_sheetDelegate_togglesScrollEnabled_basedOnDetent() {
+        guard #available(iOS 15.0, *) else { return }
+
+        // given
+        let sheet = UISheetPresentationController(
+            presentedViewController: vc,
+            presenting: nil
+        )
+
+        // when: large → 스크롤 가능
+        sheet.selectedDetentIdentifier = .large
+        vc.sheetPresentationControllerDidChangeSelectedDetentIdentifier(sheet)
+        RunLoop.current.run(until: Date().addingTimeInterval(0.01))
+
+        XCTAssertTrue(vc._test_isScrollEnabled)
+
+        // when: medium → 스크롤 불가
+        sheet.selectedDetentIdentifier = .medium
+        vc.sheetPresentationControllerDidChangeSelectedDetentIdentifier(sheet)
+        RunLoop.current.run(until: Date().addingTimeInterval(0.01))
+
+        XCTAssertFalse(vc._test_isScrollEnabled)
+    }
+
+    
+    
+    func test_scrollView_headerBorder_showsAndHidesWithScroll() {
+        // initial 상태
+        XCTAssertEqual(vc._test_headerBorderAlpha, 0, accuracy: 0.001)
+        XCTAssertFalse(vc._test_isTitleSingleLine)
+
+        // when: 아래로 좀 스크롤 (showThreshold=4 넘어가게)
+        vc._test_scroll(toY: 10)
+        RunLoop.current.run(until: Date().addingTimeInterval(0.02))
+
+        // then: 보더 보임 + 타이틀 한 줄
+        XCTAssertEqual(vc._test_headerBorderAlpha, 1, accuracy: 0.001)
+        XCTAssertTrue(vc._test_isTitleSingleLine)
+
+        // when: 다시 맨 위로 (hideThreshold=2보다 작게)
+        vc._test_scroll(toY: 0)
+        RunLoop.current.run(until: Date().addingTimeInterval(0.02))
+
+        // then: 보더 숨김 + 여러 줄 모드
+        XCTAssertEqual(vc._test_headerBorderAlpha, 0, accuracy: 0.001)
+        XCTAssertFalse(vc._test_isTitleSingleLine)
+    }
+
+
 }

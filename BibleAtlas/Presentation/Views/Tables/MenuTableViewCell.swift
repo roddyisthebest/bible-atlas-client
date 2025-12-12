@@ -151,3 +151,16 @@ final class MenuTableViewCell: UITableViewCell {
     }
 
 }
+
+
+#if DEBUG
+extension MenuTableViewCell {
+    var _test_stackView: UIStackView { stackView }
+    var _test_titleStackView: UIStackView { titleStackView }
+    var _test_nameLabel: UILabel { nameLabel }
+    var _test_icon: UIImageView { icon }
+    var _test_iconWrapper: UIView { iconWrapper }
+    var _test_arrowIcon: UIImageView { arrowIcon }
+    var _test_contentLabel: UILabel { contentLabel }
+}
+#endif

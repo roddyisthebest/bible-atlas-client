@@ -14,40 +14,6 @@ import RxBlocking
 @testable import BibleAtlas
 
 
-final class MockAuthUsecase:AuthUsecaseProtocol{
-    
-    var loginResultToReturn:Result<UserResponse,NetworkError>?
-    
-    var logoutResultToReturn:Result<Void, Error>?
-    
-    var withdrawResultToReturn:Result<Int, NetworkError>?
-    
-    var completedExp: XCTestExpectation?
-
-    
-    func loginUser(body: BibleAtlas.AuthPayload) async -> Result<BibleAtlas.UserResponse, BibleAtlas.NetworkError> {
-        defer { completedExp?.fulfill() }
-        return loginResultToReturn ?? .failure(.clientError("test-error"))
-    }
-    
-    func logout() -> Result<Void, Error> {
-        return logoutResultToReturn ?? .failure(NSError(domain: "Test", code: 1))
-    }
-    
-    func loginGoogleUser(idToken: String) async -> Result<BibleAtlas.UserResponse, BibleAtlas.NetworkError> {
-        return loginResultToReturn ?? .failure(.clientError("test-error"))
-    }
-    
-    func loginAppleUser(idToken: String) async -> Result<BibleAtlas.UserResponse, BibleAtlas.NetworkError> {
-        return loginResultToReturn ?? .failure(.clientError("test-error"))
-    }
-    
-    func withdraw() async -> Result<Int, BibleAtlas.NetworkError> {
-        return withdrawResultToReturn ?? .failure(.clientError("test-error"))
-    }
-    
-    
-}
 
 
 
@@ -85,6 +51,8 @@ final class MockNotificationService: RxNotificationServiceProtocol {
     func emit(_ name: Notification.Name, object: Any? = nil) {
         post(name, object: object)
     }
+    
+    
 }
 
 
@@ -308,6 +276,209 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
     }
 
     
+    func test_googleLogin_success_updatesAppStore_postsNotification_andDismisses() {
+        // given
+        let user = User(id: 1, role: .USER, avatar: "avatar")
+        let authData = AuthData(refreshToken: "r", accessToken: "a")
+        let userResponse = UserResponse(user: user, authData: authData, recovered: false)
+        
+        mockAuthusecase.loginResultToReturn = .success(userResponse)
+        let loginExp = expectation(description: "google login completed")
+        mockAuthusecase.googleCompletedExp = loginExp
+        
+        let vm = LoginBottomSheetViewModel(
+            navigator: mockNavigator,
+            usecase: mockAuthusecase,
+            appStore: mockAppStore,
+            notificationService: mockNotificationService
+        )
+        
+        let googleToken$ = PublishRelay<String?>()
+        
+        _ = vm.transform(input: .init(
+            googleTokenReceived$: googleToken$.asObservable(),
+            appleTokenReceived$: .empty(),
+            localLoginButtonTapped$: .empty(),
+            closeButtonTapped$: .empty()
+        ))
+        
+        let stateExp = expectation(description: "state updated after google login")
+        let stateDisposable = mockAppStore.state$
+            .skip(1)
+            .take(1)
+            .subscribe(onNext: { _ in stateExp.fulfill() })
+        
+        // when
+        googleToken$.accept("google-id-token")
+        
+        // then
+        wait(for: [loginExp, stateExp], timeout: 1.0)
+        stateDisposable.dispose()
+        
+        // 사이드 이펙트들 확인
+        XCTAssertTrue(mockAppStore.state$.value.isLoggedIn)
+        XCTAssertEqual(mockNotificationService.calledNotificationName, .refetchRequired)
+        XCTAssertTrue(mockNavigator.isDismissed)
+    }
+    
+    
+    func test_googleLogin_failure_emitsError_andNoSideEffects() {
+        // given
+        mockAuthusecase.loginResultToReturn = .failure(.clientError("google-error"))
+        
+        let vm = LoginBottomSheetViewModel(
+            navigator: mockNavigator,
+            usecase: mockAuthusecase,
+            appStore: mockAppStore,
+            notificationService: mockNotificationService
+        )
+        
+        let googleToken$ = PublishRelay<String?>()
+        let output = vm.transform(input: .init(
+            googleTokenReceived$: googleToken$.asObservable(),
+            appleTokenReceived$: .empty(),
+            localLoginButtonTapped$: .empty(),
+            closeButtonTapped$: .empty()
+        ))
+        
+        let errorExp = expectation(description: "google error emitted")
+        var captured: NetworkError?
+        
+        let disposable = output.error$
+            .take(1)
+            .subscribe(onNext: { e in
+                captured = e
+                errorExp.fulfill()
+            })
+        
+        // when
+        googleToken$.accept("google-id-token")
+        
+        // then
+        wait(for: [errorExp], timeout: 1.0)
+        disposable.dispose()
+        
+        XCTAssertEqual(captured, .clientError("google-error"))
+        XCTAssertFalse(mockAppStore.state$.value.isLoggedIn)
+        XCTAssertNil(mockNotificationService.calledNotificationName)
+        XCTAssertFalse(mockNavigator.isDismissed)
+    }
+    
+    
+    
+    func test_appleLogin_success_updatesAppStore_postsNotification_andDismisses() {
+        // given
+        let user = User(id: 2, role: .USER, avatar: "apple-avatar")
+        let authData = AuthData(refreshToken: "r2", accessToken: "a2")
+        let userResponse = UserResponse(user: user, authData: authData, recovered: false)
+        
+        mockAuthusecase.loginResultToReturn = .success(userResponse)
+        let loginExp = expectation(description: "apple login completed")
+        mockAuthusecase.appleCompletedExp = loginExp
+        
+        let vm = LoginBottomSheetViewModel(
+            navigator: mockNavigator,
+            usecase: mockAuthusecase,
+            appStore: mockAppStore,
+            notificationService: mockNotificationService
+        )
+        
+        let appleToken$ = PublishRelay<String?>()
+        
+        _ = vm.transform(input: .init(
+            googleTokenReceived$: .empty(),
+            appleTokenReceived$: appleToken$.asObservable(),
+            localLoginButtonTapped$: .empty(),
+            closeButtonTapped$: .empty()
+        ))
+        
+        let stateExp = expectation(description: "state updated after apple login")
+        let stateDisposable = mockAppStore.state$
+            .skip(1)
+            .take(1)
+            .subscribe(onNext: { _ in stateExp.fulfill() })
+        
+        // when
+        appleToken$.accept("apple-id-token")
+        
+        // then
+        wait(for: [loginExp, stateExp], timeout: 1.0)
+        stateDisposable.dispose()
+        
+        XCTAssertTrue(mockAppStore.state$.value.isLoggedIn)
+        XCTAssertEqual(mockNotificationService.calledNotificationName, .refetchRequired)
+        XCTAssertTrue(mockNavigator.isDismissed)
+    }
+
+    func test_appleLogin_failure_emitsError_andNoSideEffects() {
+        // given
+        mockAuthusecase.loginResultToReturn = .failure(.clientError("apple-error"))
+        
+        let vm = LoginBottomSheetViewModel(
+            navigator: mockNavigator,
+            usecase: mockAuthusecase,
+            appStore: mockAppStore,
+            notificationService: mockNotificationService
+        )
+        
+        let appleToken$ = PublishRelay<String?>()
+        let output = vm.transform(input: .init(
+            googleTokenReceived$: .empty(),
+            appleTokenReceived$: appleToken$.asObservable(),
+            localLoginButtonTapped$: .empty(),
+            closeButtonTapped$: .empty()
+        ))
+        
+        let errorExp = expectation(description: "apple error emitted")
+        var captured: NetworkError?
+        
+        let disposable = output.error$
+            .take(1)
+            .subscribe(onNext: { e in
+                captured = e
+                errorExp.fulfill()
+            })
+        
+        // when
+        appleToken$.accept("apple-id-token")
+        
+        // then
+        wait(for: [errorExp], timeout: 1.0)
+        disposable.dispose()
+        
+        XCTAssertEqual(captured, .clientError("apple-error"))
+        XCTAssertFalse(mockAppStore.state$.value.isLoggedIn)
+        XCTAssertNil(mockNotificationService.calledNotificationName)
+        XCTAssertFalse(mockNavigator.isDismissed)
+    }
+
+    
+    func test_closeButtonTapped_dismissesNavigator() {
+        // given
+        let vm = LoginBottomSheetViewModel(
+            navigator: mockNavigator,
+            usecase: nil,
+            appStore: nil,
+            notificationService: nil
+        )
+        
+        let close$ = PublishRelay<Void>()
+        
+        _ = vm.transform(input: .init(
+            googleTokenReceived$: .empty(),
+            appleTokenReceived$: .empty(),
+            localLoginButtonTapped$: .empty(),
+            closeButtonTapped$: close$.asObservable()
+        ))
+        
+        // when
+        close$.accept(())
+        
+        // then
+        XCTAssertTrue(mockNavigator.isDismissed)
+    }
+
     
     
 }
+

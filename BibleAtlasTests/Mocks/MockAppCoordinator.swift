@@ -14,16 +14,17 @@ import RxBlocking
 @testable import BibleAtlas
 
 final class MockAppCoordinator: AppCoordinatorProtocol {
-    func openSupportCenter() {
-    }
+    
     
     // Call counters
     private(set) var startCallCount = 0
     private(set) var logoutCallCount = 0
+    private(set) var openCallCount = 0
 
     // Quick flags
     var didStart: Bool { startCallCount > 0 }
     var didLogout: Bool { logoutCallCount > 0 }
+    var didOpen: Bool { openCallCount > 0 }
 
     // Optional hooks for expectations
     var onStart: (() -> Void)?
@@ -48,5 +49,10 @@ final class MockAppCoordinator: AppCoordinatorProtocol {
     func reset() {
         startCallCount = 0
         logoutCallCount = 0
+        openCallCount = 0
+    }
+    
+    func openSupportCenter() {
+        openCallCount += 1
     }
 }

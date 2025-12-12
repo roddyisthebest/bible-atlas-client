@@ -578,11 +578,28 @@ enum L10n {
         static let forbiddenKey = "ClientError.Forbidden"
         static let notFoundKey = "ClientError.NotFound"
         
+        static let placeIdRequiredKey = "ClientError.PlaceIdRequired"
+        static let placeTypeRequiredKey = "ClientError.PlaceTypeRequired"
+        static let reasonRequiredKey = "ClientError.ReasonRequired"
+        
+        
         static var badRequest: String { badRequestKey.localized }
         static var unauthorized: String { unauthorizedKey.localized }
         static var paymentRequired: String { paymentRequiredKey.localized }
         static var forbidden: String { forbiddenKey.localized }
         static var notFound: String { notFoundKey.localized }
+        
+        static var placeIdRequired :String {
+            placeIdRequiredKey.localized
+        }
+        
+        static var placeTypeRequired :String {
+            placeTypeRequiredKey.localized
+        }
+        
+        static var reasonRequired: String {
+            reasonRequiredKey.localized
+        }
     }
     
     enum ServerError {

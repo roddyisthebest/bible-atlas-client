@@ -60,7 +60,41 @@ struct Place: Decodable {
     var imageTitle:String?
     var longitude:Double?
     var latitude:Double?
+    
+    
 }
+
+extension Place {
+    static func mock(
+        id: String = UUID().uuidString,
+        name: String = "MockPlace"
+    ) -> Place {
+        Place(
+            id: id,
+            name: name,
+            anotherNames: nil,
+            anotherKoreanNames: nil,
+            koreanName: name,
+            isModern: false,
+            description: "",
+            koreanDescription: "",
+            stereo: .parent,
+            verse: nil,
+            likeCount: 0,
+            unknownPlacePossibility: nil,
+            types: [],
+            childRelations: nil,
+            parentRelations: nil,
+            isLiked: nil,
+            isSaved: nil,
+            memo: nil,
+            imageTitle: nil,
+            longitude: nil,
+            latitude: nil
+        )
+    }
+}
+
 
 
 struct PlacePrefix:Decodable {
