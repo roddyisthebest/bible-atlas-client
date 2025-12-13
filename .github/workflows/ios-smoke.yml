@@ -1,0 +1,58 @@
+name: iOS Smoke (GeoJSON & TokenRefresh)
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  smoke:
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app
+
+      - name: Install CocoaPods
+        run: |
+          sudo gem install cocoapods
+          pod install
+
+      - name: Run smoke tests
+        run: |
+          set -euo pipefail
+
+          SCHEME="BibleAtlas"
+          # DEST="platform=iOS Simulator,name=iPhone 15"
+
+          # workspace / project 자동 선택 (안전하게 배열 사용)
+          if ls *.xcworkspace >/dev/null 2>&1; then
+            WS=$(ls -1 *.xcworkspace | head -n1)
+            PROJ_ARGS=(-workspace "$WS")
+          else
+            PJ=$(ls -1 *.xcodeproj | head -n1)
+            PROJ_ARGS=(-project "$PJ")
+          fi
+
+          xcodebuild test \
+            "${PROJ_ARGS[@]}" \
+            -scheme "$SCHEME" \
+            -destination "$DEST" \
+            -resultBundlePath Smoke.xcresult \
+            -only-testing:BibleAtlasTests/MainViewModelTests/test_fetchGeoJsonRequired_success_shouldSetSelectedId_resetError_toggleLoading_andEmitGeoJson \
+            -only-testing:BibleAtlasTests/MainViewModelTests/test_fetchGeoJsonRequired_failure_shouldToggleLoading_emitError_andNotEmitGeoJson \
+            -only-testing:BibleAtlasTests/MainViewControllerTests/test_geoJson_emits_addsOverlaysAndAnnotations_withExpectedCounts \
+            -only-testing:BibleAtlasTests/MainViewControllerTests/test_renderGeoJson_setsVisibleMapRect_withMinSizeAndPadding \
+            -only-testing:BibleAtlasTests/MainViewControllerGeoJSONTests/test_geoJson_point_propertiesMapping_setsCustomAnnotationFields \
+            -only-testing:BibleAtlasTests/MainViewControllerGeoJSONTests/test_geoJson_multiGeometries_addsMultiOverlays_andSetsVisibleRect \
+            -only-testing:BibleAtlasTests/AuthorizedApiClientTests/test_401TriggersRefreshAndRetries \
+            -only-testing:BibleAtlasTests/AuthorizedApiClientTests/test_refreshFailure_propagatesUnauthorized
+
+      - name: Upload xcresult
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Smoke.xcresult
+          path: Smoke.xcresult
