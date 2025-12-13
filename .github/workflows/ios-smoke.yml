@@ -3,6 +3,8 @@ name: iOS Smoke (GeoJSON & TokenRefresh)
 on:
   pull_request:
     branches: [main]
+  push:
+    branches: [main]
 
 jobs:
   smoke:
@@ -25,9 +27,31 @@ jobs:
           set -euo pipefail
 
           SCHEME="BibleAtlas"
-          # DEST="platform=iOS Simulator,name=iPhone 15"
 
-          # workspace / project 자동 선택 (안전하게 배열 사용)
+          # Pick an available iPhone simulator automatically (CI machines vary)
+          DEST=$(python3 - <<'PY'
+          import json, subprocess
+          j = subprocess.check_output(["xcrun","simctl","list","devices","available","-j"])
+          data = json.loads(j)
+
+          for rt in sorted(data["devices"].keys(), reverse=True):
+            devs = data["devices"][rt]
+            iphones = [d for d in devs if d.get("isAvailable") and "iPhone" in d.get("name","")]
+            if not iphones:
+              continue
+            # Prefer Pro if available
+            iphones.sort(key=lambda d: ("Pro" not in d["name"], d["name"]))
+            name = iphones[0]["name"]
+            osver = rt.split("iOS-")[-1].replace("-", ".")
+            print(f"platform=iOS Simulator,OS={osver},name={name}")
+            break
+          else:
+            raise SystemExit("No available iPhone simulator found")
+          PY
+          )
+          echo "Using DEST=$DEST"
+
+          # workspace / project auto-detect (safe argv via array)
           if ls *.xcworkspace >/dev/null 2>&1; then
             WS=$(ls -1 *.xcworkspace | head -n1)
             PROJ_ARGS=(-workspace "$WS")
