@@ -3,8 +3,6 @@ name: iOS Smoke (GeoJSON & TokenRefresh)
 on:
   pull_request:
     branches: [main]
-  push:
-    branches: [main]
 
 jobs:
   smoke:
@@ -27,6 +25,10 @@ jobs:
           set -euo pipefail
 
           SCHEME="BibleAtlas"
+          WORKSPACE="BibleAtlas.xcworkspace"
+
+          # sanity check: make sure it's a real workspace
+          test -f "$WORKSPACE/contents.xcworkspacedata"
 
           # Pick an available iPhone simulator automatically (CI machines vary)
           DEST=$(python3 - <<'PY'
@@ -39,7 +41,6 @@ jobs:
             iphones = [d for d in devs if d.get("isAvailable") and "iPhone" in d.get("name","")]
             if not iphones:
               continue
-            # Prefer Pro if available
             iphones.sort(key=lambda d: ("Pro" not in d["name"], d["name"]))
             name = iphones[0]["name"]
             osver = rt.split("iOS-")[-1].replace("-", ".")
@@ -51,17 +52,8 @@ jobs:
           )
           echo "Using DEST=$DEST"
 
-          # workspace / project auto-detect (safe argv via array)
-          if ls *.xcworkspace >/dev/null 2>&1; then
-            WS=$(ls -1 *.xcworkspace | head -n1)
-            PROJ_ARGS=(-workspace "$WS")
-          else
-            PJ=$(ls -1 *.xcodeproj | head -n1)
-            PROJ_ARGS=(-project "$PJ")
-          fi
-
           xcodebuild test \
-            "${PROJ_ARGS[@]}" \
+            -workspace "$WORKSPACE" \
             -scheme "$SCHEME" \
             -destination "$DEST" \
             -resultBundlePath Smoke.xcresult \
