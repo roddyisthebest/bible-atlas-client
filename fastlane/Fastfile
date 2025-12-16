@@ -21,7 +21,7 @@ platform :ios do
   scan(
     workspace: "BibleAtlas.xcworkspace",
     scheme: "BibleAtlas",            
-    clean: true,
+    clean: false,
     code_coverage: true,
     only_testing: [
       "BibleAtlasTests/MainViewModelTests/test_fetchGeoJsonRequired_success_shouldSetSelectedId_resetError_toggleLoading_andEmitGeoJson",
