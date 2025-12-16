@@ -16,29 +16,27 @@
 default_platform(:ios)
 
 platform :ios do
-  desc "Local tests"
-  lane :tests_local do
-    scan(
-      scheme: "BibleAtlas",
-      workspace: "BibleAtlas.xcworkspace",
-      clean: true,
-      only_testing: ["BibleAtlasTests"],
-      code_coverage: true,
-      xcargs: "-parallel-testing-enabled YES -parallel-testing-worker-count 4"
-    )
-  end
+  desc "Smoke test"
+  lane :smoke do
+  scan(
+    workspace: "BibleAtlas.xcworkspace",
+    scheme: "BibleAtlas",            
+    clean: true,
+    code_coverage: true,
+    only_testing: [
+      "BibleAtlasTests/MainViewModelTests/test_fetchGeoJsonRequired_success_shouldSetSelectedId_resetError_toggleLoading_andEmitGeoJson",
+      "BibleAtlasTests/MainViewModelTests/test_fetchGeoJsonRequired_failure_shouldToggleLoading_emitError_andNotEmitGeoJson",
+      "BibleAtlasTests/MainViewControllerTests/test_geoJson_emits_addsOverlaysAndAnnotations_withExpectedCounts",
+      "BibleAtlasTests/MainViewControllerTests/test_renderGeoJson_setsVisibleMapRect_withMinSizeAndPadding",
+      "BibleAtlasTests/MainViewControllerGeoJSONTests/test_geoJson_point_propertiesMapping_setsCustomAnnotationFields",
+      "BibleAtlasTests/MainViewControllerGeoJSONTests/test_geoJson_multiGeometries_addsMultiOverlays_andSetsVisibleRect",
+      "BibleAtlasTests/AuthorizedApiClientTests/test_401TriggersRefreshAndRetries",
+      "BibleAtlasTests/AuthorizedApiClientTests/test_refreshFailure_propagatesUnauthorized"
+    ]
+  )
+end
 
-  desc "CI tests"
-  lane :tests_ci do
-    scan(
-      scheme: "BibleAtlas",
-      workspace: "BibleAtlas.xcworkspace",
-      clean: true,
-      only_testing: ["BibleAtlasTests"],
-      devices: ["iPhone 16 Pro"],
-      code_coverage: true, 
-      xcargs: "-parallel-testing-enabled YES -parallel-testing-worker-count 2"
-      )
-  end
+
+  
 end
 

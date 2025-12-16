@@ -1,4 +1,4 @@
-name: iOS Smoke (GeoJSON & TokenRefresh)
+name: iOS Smoke (fastlane scan)
 
 on:
   pull_request:
@@ -15,60 +15,23 @@ jobs:
       - name: Select Xcode
         run: sudo xcode-select -s /Applications/Xcode.app
 
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2.2"
+          bundler-cache: true
+
       - name: Install CocoaPods
         run: |
           sudo gem install cocoapods
           pod install
 
-      - name: Run smoke tests
-        run: |
-          set -euo pipefail
+      - name: Run fastlane smoke
+        run: bundle exec fastlane ios smoke
 
-          SCHEME="BibleAtlas"
-          WORKSPACE="BibleAtlas.xcworkspace"
-
-          # sanity check: make sure it's a real workspace
-          test -f "$WORKSPACE/contents.xcworkspacedata"
-
-          # Pick an available iPhone simulator automatically (CI machines vary)
-          DEST=$(python3 - <<'PY'
-          import json, subprocess
-          j = subprocess.check_output(["xcrun","simctl","list","devices","available","-j"])
-          data = json.loads(j)
-
-          for rt in sorted(data["devices"].keys(), reverse=True):
-            devs = data["devices"][rt]
-            iphones = [d for d in devs if d.get("isAvailable") and "iPhone" in d.get("name","")]
-            if not iphones:
-              continue
-            iphones.sort(key=lambda d: ("Pro" not in d["name"], d["name"]))
-            name = iphones[0]["name"]
-            osver = rt.split("iOS-")[-1].replace("-", ".")
-            print(f"platform=iOS Simulator,OS={osver},name={name}")
-            break
-          else:
-            raise SystemExit("No available iPhone simulator found")
-          PY
-          )
-          echo "Using DEST=$DEST"
-
-          xcodebuild test \
-            -workspace "$WORKSPACE" \
-            -scheme "$SCHEME" \
-            -destination "$DEST" \
-            -resultBundlePath Smoke.xcresult \
-            -only-testing:BibleAtlasTests/MainViewModelTests/test_fetchGeoJsonRequired_success_shouldSetSelectedId_resetError_toggleLoading_andEmitGeoJson \
-            -only-testing:BibleAtlasTests/MainViewModelTests/test_fetchGeoJsonRequired_failure_shouldToggleLoading_emitError_andNotEmitGeoJson \
-            -only-testing:BibleAtlasTests/MainViewControllerTests/test_geoJson_emits_addsOverlaysAndAnnotations_withExpectedCounts \
-            -only-testing:BibleAtlasTests/MainViewControllerTests/test_renderGeoJson_setsVisibleMapRect_withMinSizeAndPadding \
-            -only-testing:BibleAtlasTests/MainViewControllerGeoJSONTests/test_geoJson_point_propertiesMapping_setsCustomAnnotationFields \
-            -only-testing:BibleAtlasTests/MainViewControllerGeoJSONTests/test_geoJson_multiGeometries_addsMultiOverlays_andSetsVisibleRect \
-            -only-testing:BibleAtlasTests/AuthorizedApiClientTests/test_401TriggersRefreshAndRetries \
-            -only-testing:BibleAtlasTests/AuthorizedApiClientTests/test_refreshFailure_propagatesUnauthorized
-
-      - name: Upload xcresult
+      - name: Upload xcresult (if generated)
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: Smoke.xcresult
-          path: Smoke.xcresult
+          name: fastlane-test-output
+          path: fastlane/test_output
