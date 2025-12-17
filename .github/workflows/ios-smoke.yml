@@ -34,7 +34,7 @@ jobs:
 
       # ✅ pod install 최적화: repo 업데이트 안함
       - name: Install Pods (via Bundler)
-        run: bundle exec pod install --repo-update=false
+        run: bundle exec pod install --deployment
 
       - name: Run fastlane smoke
         run: bundle exec fastlane ios smoke
