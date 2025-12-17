@@ -15,21 +15,31 @@ jobs:
       - name: Select Xcode
         run: sudo xcode-select -s /Applications/Xcode.app
 
-      - name: Setup Ruby
+      - name: Setup Ruby (Bundler cache)
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.2.2"
           bundler-cache: true
 
-      - name: Install CocoaPods
-        run: |
-          sudo gem install cocoapods
-          pod install
+      # ✅ Pods 캐시 (Podfile.lock 바뀌면 자동 invalidate)
+      - name: Cache Pods
+        uses: actions/cache@v4
+        with:
+          path: |
+            Pods
+            ~/Library/Caches/CocoaPods
+          key: ${{ runner.os }}-pods-${{ hashFiles('Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+
+      # ✅ pod install 최적화: repo 업데이트 안함
+      - name: Install Pods (via Bundler)
+        run: bundle exec pod install --repo-update=false
 
       - name: Run fastlane smoke
         run: bundle exec fastlane ios smoke
 
-      - name: Upload xcresult (if generated)
+      - name: Upload test output
         if: always()
         uses: actions/upload-artifact@v4
         with:
