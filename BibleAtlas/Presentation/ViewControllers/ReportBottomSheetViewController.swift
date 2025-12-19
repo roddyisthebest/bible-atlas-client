@@ -8,8 +8,8 @@
 import UIKit
 import RxSwift
 import RxRelay
-
-final class ReportBottomSheetViewController: UIViewController {
+ 
+class ReportBottomSheetViewController: UIViewController {
 
     private var reportBottomSheetViewModel: ReportBottomSheetViewModelProtocol
     
@@ -278,3 +278,18 @@ final class ReportBottomSheetViewController: UIViewController {
     */
 
 }
+
+
+#if DEBUG
+import UIKit
+
+extension ReportBottomSheetViewController {
+    var _test_cancelButton: UIButton { cancelButton }
+    var _test_confirmButton: UIButton { confirmButton }
+    var _test_selectButton: UIButton { selectButton }
+    var _test_textView: UITextView { textView }
+    var _test_confirmLoadingView: LoadingView { confirmLoadingView }
+    var _test_scrollView: UIScrollView { scrollView }
+    var _test_contentStackView: UIStackView { contentStackView }
+}
+#endif

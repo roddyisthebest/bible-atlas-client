@@ -148,6 +148,7 @@ final class PlaceCharactersBottomSheetViewController: UIViewController {
                 }
                 
                 self.loadingView.stop();
+                self.errorRetryView.isHidden = true
                 
                 
                 let isEmpty = !isLoading && placeCharacters.isEmpty;
@@ -256,3 +257,16 @@ extension PlaceCharactersBottomSheetViewController:UICollectionViewDelegateFlowL
     
     
 }
+
+
+#if DEBUG
+extension PlaceCharactersBottomSheetViewController {
+    var _test_headerLabel: UILabel { headerLabel }
+    var _test_collectionView: UICollectionView { collectionView }
+    var _test_loadingView: LoadingView { loadingView }
+    var _test_emptyLabel: EmptyLabel { emptyLabel }
+    var _test_errorRetryView: ErrorRetryView { errorRetryView }
+    var _test_closeButton: CircleButton { closeButton }
+}
+#endif
+

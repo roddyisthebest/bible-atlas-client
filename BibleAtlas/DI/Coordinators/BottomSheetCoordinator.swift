@@ -34,7 +34,7 @@ enum BottomSheetType:Equatable {
 
 
 protocol Presentable:AnyObject{
-    func present(vc:ViewController, animated:Bool)
+    func present(vc:UIViewController, animated:Bool)
     func dismiss(animated:Bool)
     func topMostViewController() -> UIViewController
 }

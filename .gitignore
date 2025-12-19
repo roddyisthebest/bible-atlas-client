@@ -1,14 +1,14 @@
-# macOS °ü·Ã
+# macOS ï¿½ï¿½ï¿½ï¿½
 .DS_Store
 *.swp
 *.lock
 *.xcuserstate
 
-# Xcode ºôµå Æú´õ
+# Xcode ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 DerivedData/
 build/
 
-# CocoaPods & Swift Package Manager °ü·Ã
+# CocoaPods & Swift Package Manager ï¿½ï¿½ï¿½ï¿½
 Pods/
 Carthage/
 .framework/
@@ -21,14 +21,17 @@ fastlane/Preview.html
 fastlane/screenshots/
 fastlane/test_output/
 
-# È¯°æ¼³Á¤ ÆÄÀÏ
+# È¯ï¿½æ¼³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 xcuserdata/
 *.xcscmblueprint
 *.xcworkspace
 
-# IDE °ü·Ã ÆÄÀÏ
+# IDE ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 .idea/
 .vscode/
 
-# Dependencies Æú´õ (¿Ã¸®¸é ¾È µÇ´Â °Í)
+# Dependencies ï¿½ï¿½ï¿½ï¿½ (ï¿½Ã¸ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ç´ï¿½ ï¿½ï¿½)
 dependencies/
+
+
+vendor/*

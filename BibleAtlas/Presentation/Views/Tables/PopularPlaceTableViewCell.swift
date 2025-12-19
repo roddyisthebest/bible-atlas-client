@@ -126,3 +126,11 @@ class PopularPlaceTableViewCell: UITableViewCell {
         
     }
 }
+
+#if DEBUG
+extension PopularPlaceTableViewCell {
+    var _test_searchLabel: UILabel { searchLabel }
+    var _test_likeLabel: UILabel { likeLabel }
+    var _test_placeIcon: UIImageView { placeIcon }
+}
+#endif

@@ -259,7 +259,7 @@ final class RecentSearchesBottomSheetViewModelTests: XCTestCase {
  
         
         let cellSelected$ = PublishRelay<String>();
-        let output = vm.transform(input: RecentSearchesBottomSheetViewModel.Input(viewLoaded$: .empty(), closeButtonTapped$: .empty(), cellSelected$: cellSelected$.asObservable(), bottomReached$: .empty(), retryButtonTapped$: .empty(), allClearButtonTapped$: .empty()))
+        let _ = vm.transform(input: RecentSearchesBottomSheetViewModel.Input(viewLoaded$: .empty(), closeButtonTapped$: .empty(), cellSelected$: cellSelected$.asObservable(), bottomReached$: .empty(), retryButtonTapped$: .empty(), allClearButtonTapped$: .empty()))
         
         
         let placeId = "test-id"
@@ -276,7 +276,7 @@ final class RecentSearchesBottomSheetViewModelTests: XCTestCase {
         
         let closeButtonTapped$ = PublishRelay<Void>();
         
-        let output = vm.transform(input: RecentSearchesBottomSheetViewModel.Input(viewLoaded$: .empty(), closeButtonTapped$: closeButtonTapped$.asObservable(), cellSelected$: .empty(), bottomReached$: .empty(), retryButtonTapped$: .empty(), allClearButtonTapped$: .empty()))
+        let _ = vm.transform(input: RecentSearchesBottomSheetViewModel.Input(viewLoaded$: .empty(), closeButtonTapped$: closeButtonTapped$.asObservable(), cellSelected$: .empty(), bottomReached$: .empty(), retryButtonTapped$: .empty(), allClearButtonTapped$: .empty()))
         
         
         closeButtonTapped$.accept(())

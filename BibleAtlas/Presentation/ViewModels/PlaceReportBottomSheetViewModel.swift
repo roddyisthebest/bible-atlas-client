@@ -16,6 +16,7 @@ protocol PlaceReportBottomSheetViewModelProtocol{
 enum PlaceReportClientError:Error{
     case placeId
     case placeType
+    case reasonMissing
 }
 
 final class PlaceReportBottomSheetViewModel:PlaceReportBottomSheetViewModelProtocol{
@@ -67,11 +68,27 @@ final class PlaceReportBottomSheetViewModel:PlaceReportBottomSheetViewModelProto
             clientError$.accept(.placeId)
             return;
         }
-        
-        
+
         guard let reportType = self.reportType$.value else{
             clientError$.accept(.placeType)
             return;
+        }
+        
+        if reportType == .etc {
+                // 1. reason이 nil이거나,
+                // 2. reason이 있지만 공백/개행문자 제거 후 비어있는 경우 (isEmpty)
+                
+            guard let reason = reason else {
+                clientError$.accept(.reasonMissing)
+                return;
+            }
+            
+            let trimmedReason = reason.trimmingCharacters(in: .whitespacesAndNewlines)
+                
+            if trimmedReason.isEmpty {
+                clientError$.accept(.reasonMissing)
+                return
+            }
         }
         
         isLoading$.accept(true)

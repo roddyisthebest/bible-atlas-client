@@ -35,7 +35,7 @@ final class FakePlaceDetailVC: UIViewController, IdentifiableBottomSheet {
 
 /// main 용: UIViewController & Presentable 조합
 final class FakeMainVC: UIViewController, Presentable {
-    func present(vc: BibleAtlas.ViewController, animated: Bool) {
+    func present(vc: UIViewController, animated: Bool) {
         super.present(vc, animated: animated)
     }
     
@@ -49,63 +49,132 @@ final class FakeMainVC: UIViewController, Presentable {
 }
 
 final class MockVCFactory: VCFactoryProtocol {
-    func makePlaceReportBottomSheetVC(vm: BibleAtlas.PlaceReportBottomSheetViewModelProtocol) -> UIViewController {
-        FakeSheetVC("placeReport")
-    }
-    
-    func makeBibleBookVerseListBottomSheetVC(vm: BibleAtlas.BibleBookVerseListBottomSheetViewModelProtocol) -> UIViewController {
-        FakeSheetVC("verseList")
-    }
-    
-
     // 호출 기록
-    struct Call { let name: String }
-    private(set) var calls: [Call] = []
+        struct Call { let name: String }
+        private(set) var calls: [Call] = []
+        
+        private func record(_ name: String) {
+            calls.append(.init(name: name))
+        }
 
-    // MARK: - Implemented for tests
+        // MARK: - Report / BibleBookVerseList
 
-    func makeHomeBottomSheetVC(
-        homeVM: HomeBottomSheetViewModelProtocol,
-        homeContentVM: HomeContentViewModelProtocol,
-        searchResultVM: SearchResultViewModelProtocol,
-        searchReadyVM: SearchReadyViewModelProtocol
-    ) -> UIViewController {
-        calls.append(.init(name: "makeHomeBottomSheetVC"))
-        return FakeSheetVC("homeBottomSheet")
-    }
+        func makePlaceReportBottomSheetVC(vm: BibleAtlas.PlaceReportBottomSheetViewModelProtocol) -> UIViewController {
+            record("makePlaceReportBottomSheetVC")
+            return FakeSheetVC("placeReport")
+        }
+        
+        func makeBibleBookVerseListBottomSheetVC(vm: BibleAtlas.BibleBookVerseListBottomSheetViewModelProtocol) -> UIViewController {
+            record("makeBibleBookVerseListBottomSheetViewController")
+            return FakeSheetVC("verseList")
+        }
 
-    func makePlaceDetailBottomSheetVC(vm: PlaceDetailViewModelProtocol, placeId: String) -> UIViewController {
-        calls.append(.init(name: "makePlaceDetailBottomSheetVC:\(placeId)"))
-        // ✅ IdentifiableBottomSheet 채택한 VC를 리턴해야 코디네이터에서 캐스팅/검증 OK
-        return FakePlaceDetailVC(placeId)
-    }
+        // MARK: - Home
 
-    func makeMainVC(vm: MainViewModelProtocol) -> UIViewController & BibleAtlas.Presentable {
-        calls.append(.init(name: "makeMainVC"))
-        return FakeMainVC()
-    }
+        func makeHomeBottomSheetVC(
+            homeVM: HomeBottomSheetViewModelProtocol,
+            homeContentVM: HomeContentViewModelProtocol,
+            searchResultVM: SearchResultViewModelProtocol,
+            searchReadyVM: SearchReadyViewModelProtocol
+        ) -> UIViewController {
+            record("makeHomeBottomSheetVC")
+            return FakeSheetVC("homeBottomSheet")
+        }
 
-    func setupVC(type: BottomSheetType, sheet: UIViewController) {
-        // 필요시 공통 시트 옵션(코너, 라지/미디엄 등) 지정
-        sheet.modalPresentationStyle = .pageSheet
-        // sheet.sheetPresentationController?.prefersGrabberVisible = true  // 등등
-    }
+        func makePlaceDetailBottomSheetVC(vm: PlaceDetailViewModelProtocol, placeId: String) -> UIViewController {
+            record("makePlaceDetailBottomSheetVC:\(placeId)")
+            return FakePlaceDetailVC(placeId)
+        }
 
-    // MARK: - Not used in current tests (fill later or trap)
-    func makeLoginBottomSheetVC(vm: LoginBottomSheetViewModelProtocol) -> UIViewController { FakeSheetVC("login") }
-    func makeMyCollectionBottomSheetVC(vm: MyCollectionBottomSheetViewModelProtocol) -> UIViewController { FakeSheetVC("myCollection") }
-    func makeMemoBottomSheetVC(vm: MemoBottomSheetViewModelProtocol) -> UIViewController { FakeSheetVC("memo") }
-    func makePlaceModificationBottomSheetVC(vm: PlaceModificationBottomSheetViewModelProtocol) -> UIViewController { FakeSheetVC("placeModification") }
-    func makePlaceTypesBottomSheetVC(vm: PlaceTypesBottomSheetViewModelProtocol) -> UIViewController { FakeSheetVC("placeTypes") }
-    func makePlaceCharactersBottomSheetVC(vm: PlaceCharactersBottomSheetViewModelProtocol) -> UIViewController { FakeSheetVC("placeCharacters") }
-    func makeBiblesBottomSheetVC(vm: BiblesBottomSheetViewModelProtocol) -> UIViewController { FakeSheetVC("bibles") }
-    func makePlacesByTypeBottomSheetVC(vm: PlacesByTypeBottomSheetViewModelProtocol, placeTypeName: PlaceTypeName) -> UIViewController { FakeSheetVC("placesByType") }
-    func makePlacesByCharacterBottomSheetVC(vm: PlacesByCharacterBottomSheetViewModelProtocol, character: String) -> UIViewController { FakeSheetVC("placesByCharacter") }
-    func makePlacesByBibleBottomSheetVC(vm: PlacesByBibleBottomSheetViewModelProtocol, bibleBook: BibleBook) -> UIViewController { FakeSheetVC("placesByBible") }
-    func makeBibleVerseDetailBottomSheetVC(vm: BibleVerseDetailBottomSheetViewModelProtocol, keyword: String) -> UIViewController { FakeSheetVC("bibleVerseDetail") }
-    func makeRecentSearchesBottomSheetVC(vm: RecentSearchesBottomSheetViewModelProtocol) -> UIViewController { FakeSheetVC("recentSearches") }
-    func makePopularPlacesBottomSheetVC(vm: PopularPlacesBottomSheetViewModelProtocol) -> UIViewController { FakeSheetVC("popularPlaces") }
-    func makeMyPageBottomSheetVC(vm: MyPageBottomSheetViewModelProtocol) -> UIViewController { FakeSheetVC("myPage") }
-    func makeAccountManagementBottomSheetVC(vm: AccountManagementBottomSheetViewModelProtocol) -> UIViewController { FakeSheetVC("accountManagement") }
-    func makeReportBottomSheetVC(vm: ReportBottomSheetViewModelProtocol) -> UIViewController { FakeSheetVC("report") }
+        func makeMainVC(vm: MainViewModelProtocol) -> UIViewController & BibleAtlas.Presentable {
+            record("makeMainVC")
+            return FakeMainVC()
+        }
+
+        func setupVC(type: BottomSheetType, sheet: UIViewController) {
+            // 공통 시트 옵션
+            sheet.modalPresentationStyle = .pageSheet
+        }
+
+        // MARK: - 나머지 BottomSheet VCs (전부 기록 추가)
+
+        func makeLoginBottomSheetVC(vm: LoginBottomSheetViewModelProtocol) -> UIViewController {
+            record("makeLoginBottomSheetVC")
+            return FakeSheetVC("login")
+        }
+
+        func makeMyCollectionBottomSheetVC(vm: MyCollectionBottomSheetViewModelProtocol) -> UIViewController {
+            record("makeMyCollectionBottomSheetViewController")
+            return FakeSheetVC("myCollection")
+        }
+
+        func makeMemoBottomSheetVC(vm: MemoBottomSheetViewModelProtocol) -> UIViewController {
+            record("makeMemoBottomSheetViewController")
+            return FakeSheetVC("memo")
+        }
+
+        func makePlaceModificationBottomSheetVC(vm: PlaceModificationBottomSheetViewModelProtocol) -> UIViewController {
+            record("makePlaceModificationBottomSheetViewController")
+            return FakeSheetVC("placeModification")
+        }
+
+        func makePlaceTypesBottomSheetVC(vm: PlaceTypesBottomSheetViewModelProtocol) -> UIViewController {
+            record("makePlaceTypesBottomSheetViewController")
+            return FakeSheetVC("placeTypes")
+        }
+
+        func makePlaceCharactersBottomSheetVC(vm: PlaceCharactersBottomSheetViewModelProtocol) -> UIViewController {
+            record("makePlaceCharactersBottomSheetViewController")
+            return FakeSheetVC("placeCharacters")
+        }
+
+        func makeBiblesBottomSheetVC(vm: BiblesBottomSheetViewModelProtocol) -> UIViewController {
+            record("makeBiblesBottomSheetViewController")
+            return FakeSheetVC("bibles")
+        }
+
+        func makePlacesByTypeBottomSheetVC(vm: PlacesByTypeBottomSheetViewModelProtocol, placeTypeName: PlaceTypeName) -> UIViewController {
+            record("makePlacesByTypeBottomSheetViewController")
+            return FakeSheetVC("placesByType")
+        }
+
+        func makePlacesByCharacterBottomSheetVC(vm: PlacesByCharacterBottomSheetViewModelProtocol, character: String) -> UIViewController {
+            record("makePlacesByCharacterBottomSheetViewController")
+            return FakeSheetVC("placesByCharacter")
+        }
+
+        func makePlacesByBibleBottomSheetVC(vm: PlacesByBibleBottomSheetViewModelProtocol, bibleBook: BibleBook) -> UIViewController {
+            record("makePlacesByBibleBottomSheetViewController")
+            return FakeSheetVC("placesByBible")
+        }
+
+        func makeBibleVerseDetailBottomSheetVC(vm: BibleVerseDetailBottomSheetViewModelProtocol, keyword: String) -> UIViewController {
+            record("makeBibleVerseDetailBottomSheetViewController")
+            return FakeSheetVC("bibleVerseDetail")
+        }
+
+        func makeRecentSearchesBottomSheetVC(vm: RecentSearchesBottomSheetViewModelProtocol) -> UIViewController {
+            record("makeRecentSearchesBottomSheetViewController")
+            return FakeSheetVC("recentSearches")
+        }
+
+        func makePopularPlacesBottomSheetVC(vm: PopularPlacesBottomSheetViewModelProtocol) -> UIViewController {
+            record("makePopularPlacesBottomSheetViewController")
+            return FakeSheetVC("popularPlaces")
+        }
+
+        func makeMyPageBottomSheetVC(vm: MyPageBottomSheetViewModelProtocol) -> UIViewController {
+            record("makeMyPageBottomSheetViewController")
+            return FakeSheetVC("myPage")
+        }
+
+        func makeAccountManagementBottomSheetVC(vm: AccountManagementBottomSheetViewModelProtocol) -> UIViewController {
+            record("makeAccountManagementBottomSheetViewController")
+            return FakeSheetVC("accountManagement")
+        }
+
+        func makeReportBottomSheetVC(vm: ReportBottomSheetViewModelProtocol) -> UIViewController {
+            record("makeReportBottomSheetViewController")
+            return FakeSheetVC("report")
+        }
 }

@@ -13,46 +13,6 @@ enum HttpMethodCaptured {
     case get, post, put, patch, delete
 }
 
-final class MockAuthorizedApiClient: AuthorizedApiClientProtocol {
-    var lastRequestURL: String?
-    var lastHeaders: HTTPHeaders?
-    var lastBody: Data?
-    var lastMethodCalled:HttpMethodCaptured!
-    var postResult: Result<UserResponse, NetworkError> = .failure(.invalid)
-    var deleteResult: Result<Int, NetworkError> = .success(200)
-
-    func postData<T>(
-        url: String,
-        parameters: Parameters?,
-        body: Data?,
-        headers: HTTPHeaders?
-    ) async -> Result<T, NetworkError> where T : Decodable {
-        self.lastRequestURL = url
-        self.lastBody = body
-        self.lastHeaders = headers
-        self.lastMethodCalled = .post
-        return postResult as! Result<T, NetworkError>
-    }
-
-    // 나머지는 필요 없어도 미리 stub
-    func getData<T>(url: String, parameters: Parameters?) async -> Result<T, NetworkError> where T : Decodable {
-        fatalError()
-    }
-
-    func getRawData(url: String, parameters: Parameters?) async -> Result<Data, NetworkError> {
-        fatalError()
-    }
-
-    func updateData<T>(url: String, method: HTTPMethod, parameters: Parameters?, body: Data?) async -> Result<T, NetworkError> where T : Decodable {
-        fatalError()
-    }
-
-    func deleteData<T>(url: String, parameters: Parameters?) async -> Result<T, NetworkError> where T : Decodable {
-        lastRequestURL = url
-        lastMethodCalled = .delete
-        return deleteResult as! Result<T, NetworkError>
-    }
-}
 
 
 final class AuthApiServiceTests:XCTestCase {

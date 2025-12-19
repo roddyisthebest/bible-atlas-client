@@ -249,3 +249,13 @@ extension MyPageBottomSheetViewController:UITableViewDelegate{
     }
     
 }
+
+
+#if DEBUG
+extension MyPageBottomSheetViewController {
+    var _test_closeButton: UIButton { closeButton }
+    var _test_menuTableView: UITableView { menuTableView }
+    var _test_nameLabel: UILabel { nameLabel }
+    var _test_emailLabel: UILabel { emailLabel }
+}
+#endif

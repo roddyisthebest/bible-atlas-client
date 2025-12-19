@@ -156,19 +156,19 @@ final class RecentSearchService: RecentSearchServiceProtocol{
     }
     
     func clearAll() -> Result<Void, RecentSearchError> {
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = RecentSearchEntity.fetchRequest()
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        let fetchRequest: NSFetchRequest<RecentSearchEntity> = RecentSearchEntity.fetchRequest()
 
-        do{
-            try context.execute(deleteRequest)
+        do {
+            let entities = try context.fetch(fetchRequest)
+            entities.forEach { context.delete($0) }
             try context.save()
             didChangeSubject$.onNext(())
             return .success(())
-        }catch{
+        } catch {
             return .failure(.clearFailed(error))
         }
-        
     }
+
     
     
     private let context: NSManagedObjectContext

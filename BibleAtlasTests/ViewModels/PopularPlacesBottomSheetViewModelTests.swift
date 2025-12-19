@@ -378,7 +378,7 @@ final class PopularPlacesBottomSheetViewModelTests: XCTestCase {
         
         let cellSelected$ = PublishRelay<String>();
         
-        let output = vm.transform(input: PopularPlacesBottomSheetViewModel.Input(viewLoaded$: .empty(), closeButtonTapped$: .empty(), cellSelected$: cellSelected$.asObservable(), bottomReached$: .empty(), refetchButtonTapped$: .empty()))
+        let _ = vm.transform(input: PopularPlacesBottomSheetViewModel.Input(viewLoaded$: .empty(), closeButtonTapped$: .empty(), cellSelected$: cellSelected$.asObservable(), bottomReached$: .empty(), refetchButtonTapped$: .empty()))
         
         let placeId = "test"
         cellSelected$.accept(placeId)
@@ -394,7 +394,7 @@ final class PopularPlacesBottomSheetViewModelTests: XCTestCase {
         
         let closeButtonTapped$ = PublishRelay<Void>();
         
-        let output = vm.transform(input: PopularPlacesBottomSheetViewModel.Input(viewLoaded$: .empty(), closeButtonTapped$: closeButtonTapped$.asObservable(), cellSelected$: .empty(), bottomReached$: .empty(), refetchButtonTapped$: .empty()))
+        let _ = vm.transform(input: PopularPlacesBottomSheetViewModel.Input(viewLoaded$: .empty(), closeButtonTapped$: closeButtonTapped$.asObservable(), cellSelected$: .empty(), bottomReached$: .empty(), refetchButtonTapped$: .empty()))
         
         closeButtonTapped$.accept(())
         

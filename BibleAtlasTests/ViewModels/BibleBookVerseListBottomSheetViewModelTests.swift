@@ -290,7 +290,7 @@ final class BibleBookVerseListBottomSheetViewModelTests: XCTestCase {
         viewLoaded$.accept(())
         wait(for: [errorExp], timeout: 1.0)
 
-        XCTAssertEqual(gotError, .clientError("placeUsecase is nil"))
+        XCTAssertEqual(gotError, .clientError(L10n.FatalError.reExec))
         
         
     }
@@ -302,7 +302,7 @@ final class BibleBookVerseListBottomSheetViewModelTests: XCTestCase {
         let closeButtonTapped$ = PublishRelay<Void>()
 
         
-        let output = vm.transform(input: BibleBookVerseListBottomSheetViewModel.Input(viewLoaded$: .empty(), refetchButtonTapped$:.empty(), closeButtonTapped$: closeButtonTapped$.asObservable(), bibleBookChanged$: .empty(), verseCellTapped$: .empty()))
+        let _ = vm.transform(input: BibleBookVerseListBottomSheetViewModel.Input(viewLoaded$: .empty(), refetchButtonTapped$:.empty(), closeButtonTapped$: closeButtonTapped$.asObservable(), bibleBookChanged$: .empty(), verseCellTapped$: .empty()))
         
         closeButtonTapped$.accept(())
         
@@ -318,7 +318,7 @@ final class BibleBookVerseListBottomSheetViewModelTests: XCTestCase {
         let verseCellTapped$ = PublishRelay<Verse>()
 
         
-        let output = vm.transform(input: BibleBookVerseListBottomSheetViewModel.Input(viewLoaded$: .empty(), refetchButtonTapped$: .empty(), closeButtonTapped$: .empty(), bibleBookChanged$: .empty(), verseCellTapped$: verseCellTapped$.asObservable()))
+        let _ = vm.transform(input: BibleBookVerseListBottomSheetViewModel.Input(viewLoaded$: .empty(), refetchButtonTapped$: .empty(), closeButtonTapped$: .empty(), bibleBookChanged$: .empty(), verseCellTapped$: verseCellTapped$.asObservable()))
         
         verseCellTapped$.accept(.def("12.21"))
         
@@ -334,7 +334,7 @@ final class BibleBookVerseListBottomSheetViewModelTests: XCTestCase {
         let verseCellTapped$ = PublishRelay<Verse>()
 
         
-        let output = vm.transform(input: BibleBookVerseListBottomSheetViewModel.Input(viewLoaded$: .empty(), refetchButtonTapped$: .empty(), closeButtonTapped$: .empty(), bibleBookChanged$: .empty(), verseCellTapped$: verseCellTapped$.asObservable()))
+        let _ = vm.transform(input: BibleBookVerseListBottomSheetViewModel.Input(viewLoaded$: .empty(), refetchButtonTapped$: .empty(), closeButtonTapped$: .empty(), bibleBookChanged$: .empty(), verseCellTapped$: verseCellTapped$.asObservable()))
         
         verseCellTapped$.accept(.def("12.21"))
         

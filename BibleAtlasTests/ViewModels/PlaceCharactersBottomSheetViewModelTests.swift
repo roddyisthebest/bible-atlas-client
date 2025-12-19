@@ -297,7 +297,7 @@ final class PlaceCharactersBottomSheetViewModelTests: XCTestCase {
         let vm = PlaceCharactersBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase, notificationService: notificationService)
         let placeCharacterCellTapped$ = PublishRelay<String>()
 
-        let output = vm.transform(input: .init(
+        let _ = vm.transform(input: .init(
             placeCharacterCellTapped$: placeCharacterCellTapped$.asObservable(),
             closeButtonTapped$: .empty(),
             viewLoaded$: .empty(),
@@ -318,7 +318,7 @@ final class PlaceCharactersBottomSheetViewModelTests: XCTestCase {
         let vm = PlaceCharactersBottomSheetViewModel(navigator: navigator, placeUsecase: placeUsecase, notificationService: notificationService)
         let closeButtonTapped$ = PublishRelay<Void>()
 
-        let output = vm.transform(input: .init(
+        let _ = vm.transform(input: .init(
             placeCharacterCellTapped$: .empty(),
             closeButtonTapped$: closeButtonTapped$.asObservable(),
             viewLoaded$: .empty(),

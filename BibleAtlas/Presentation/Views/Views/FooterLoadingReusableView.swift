@@ -30,3 +30,10 @@ final class FooterLoadingReusableView: UICollectionReusableView {
         loadingView.stop()
     }
 }
+
+
+#if DEBUG
+extension FooterLoadingReusableView {
+    var _test_loadingView: LoadingView { loadingView }
+}
+#endif

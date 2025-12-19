@@ -227,7 +227,7 @@ final class PlaceTypesBottomSheetViewModelTests: XCTestCase {
         let viewLoaded$ = PublishRelay<Void>()
         let bottomReached$ = PublishRelay<Void>()
 
-        let output = vm.transform(input: .init(
+        let _ = vm.transform(input: .init(
             placeTypeCellTapped$: .empty(),
             closeButtonTapped$: .empty(),
             viewLoaded$: viewLoaded$.asObservable(),

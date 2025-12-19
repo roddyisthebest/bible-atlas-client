@@ -87,3 +87,14 @@ class RecentSearchTableViewCell: UITableViewCell {
         searchLabel.text = L10n.isEnglish ? text : koreanText
     }
 }
+
+
+
+#if DEBUG
+extension RecentSearchTableViewCell {
+    var _test_searchLabel: UILabel { searchLabel }
+    var _test_iconWrapper: UIView { iconWrapper }
+    var _test_searchIcon: UIImageView { searchIcon }
+    var _test_containerStackView: UIStackView { containerStackView }
+}
+#endif

@@ -11,7 +11,7 @@ import UIKit
 /// 테스트에서 코디네이터가 사용할 실제 presenter VC
 final class PresenterHostVC: UIViewController, Presentable {
     // 코디네이터가 요구하는 Presentable API를 UIKit에 연결
-    func present(vc: ViewController, animated: Bool) {
+    func present(vc: UIViewController, animated: Bool) {
         self.present(vc, animated: animated, completion: nil)
     }
 

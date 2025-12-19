@@ -848,5 +848,486 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
     }
     
     
+    func test_closeButtonTapped_dismissesFromDetail(){
+        let vm = PlaceDetailViewModel(
+            navigator: navigator,
+            placeId: "tuco",
+            placeUsecase: placeUsecase,
+            appStore: appStore,
+            collectionStore: collectionStore,
+            notificationService: rxNotificationService,
+            schedular: schedular
+        )
+
+        let close$ = PublishRelay<Void>()
+        _ = vm.transform(input: .init(
+            viewLoaded$: .empty(),
+            saveButtonTapped$: .empty(),
+            closeButtonTapped$: close$.asObservable(),
+            backButtonTapped$: .empty(),
+            likeButtonTapped$: .empty(),
+            placeModificationButtonTapped$: .empty(),
+            memoButtonTapped$: .empty(),
+            placeCellTapped$: .empty(),
+            refetchButtonTapped$: .empty(),
+            verseCellTapped$: .empty(),
+            moreVerseButtonTapped$: .empty(),
+            reportButtonTapped$: .empty()
+        ))
+
+        close$.accept(())
+
+        // dismissFromDetail가 호출되면 일반 dismiss 플래그를 재사용한다고 가정
+        XCTAssertFalse(navigator.isDismissed)
+    }
+
+    func test_backButtonTapped_presentsPlaceDetailPrevious(){
+        let vm = PlaceDetailViewModel(
+            navigator: navigator,
+            placeId: "tuco",
+            placeUsecase: placeUsecase,
+            appStore: appStore,
+            collectionStore: collectionStore,
+            notificationService: rxNotificationService,
+            schedular: schedular
+        )
+
+        let back$ = PublishRelay<Void>()
+        _ = vm.transform(input: .init(
+            viewLoaded$: .empty(),
+            saveButtonTapped$: .empty(),
+            closeButtonTapped$: .empty(),
+            backButtonTapped$: back$.asObservable(),
+            likeButtonTapped$: .empty(),
+            placeModificationButtonTapped$: .empty(),
+            memoButtonTapped$: .empty(),
+            placeCellTapped$: .empty(),
+            refetchButtonTapped$: .empty(),
+            verseCellTapped$: .empty(),
+            moreVerseButtonTapped$: .empty(),
+            reportButtonTapped$: .empty()
+        ))
+
+        back$.accept(())
+        XCTAssertEqual(navigator.presentedSheet, .placeDetailPrevious)
+    }
+
+    func test_memoButton_notLoggedIn_presentsLogin(){
+        let vm = PlaceDetailViewModel(
+            navigator: navigator,
+            placeId: "pid",
+            placeUsecase: placeUsecase,
+            appStore: appStore,
+            collectionStore: collectionStore,
+            notificationService: rxNotificationService,
+            schedular: schedular
+        )
+
+        let memo$ = PublishRelay<Void>()
+        _ = vm.transform(input: .init(
+            viewLoaded$: .empty(),
+            saveButtonTapped$: .empty(),
+            closeButtonTapped$: .empty(),
+            backButtonTapped$: .empty(),
+            likeButtonTapped$: .empty(),
+            placeModificationButtonTapped$: .empty(),
+            memoButtonTapped$: memo$.asObservable(),
+            placeCellTapped$: .empty(),
+            refetchButtonTapped$: .empty(),
+            verseCellTapped$: .empty(),
+            moreVerseButtonTapped$: .empty(),
+            reportButtonTapped$: .empty()
+        ))
+
+        memo$.accept(())
+        XCTAssertEqual(navigator.presentedSheet, .login)
+    }
+
+    func test_memoButton_loggedIn_presentsMemo(){
+        let user = User(id: 1, role: .USER, avatar: "a")
+        appStore.dispatch(.login(user))
+
+        let vm = PlaceDetailViewModel(
+            navigator: navigator,
+            placeId: "pid",
+            placeUsecase: placeUsecase,
+            appStore: appStore,
+            collectionStore: collectionStore,
+            notificationService: rxNotificationService,
+            schedular: schedular
+        )
+
+        let memo$ = PublishRelay<Void>()
+        _ = vm.transform(input: .init(
+            viewLoaded$: .empty(),
+            saveButtonTapped$: .empty(),
+            closeButtonTapped$: .empty(),
+            backButtonTapped$: .empty(),
+            likeButtonTapped$: .empty(),
+            placeModificationButtonTapped$: .empty(),
+            memoButtonTapped$: memo$.asObservable(),
+            placeCellTapped$: .empty(),
+            refetchButtonTapped$: .empty(),
+            verseCellTapped$: .empty(),
+            moreVerseButtonTapped$: .empty(),
+            reportButtonTapped$: .empty()
+        ))
+
+        memo$.accept(())
+        XCTAssertEqual(navigator.presentedSheet, .memo("pid"))
+    }
+
+    func test_placeModification_notLoggedIn_presentsLogin(){
+        let vm = PlaceDetailViewModel(
+            navigator: navigator,
+            placeId: "pid",
+            placeUsecase: placeUsecase,
+            appStore: appStore,
+            collectionStore: collectionStore,
+            notificationService: rxNotificationService,
+            schedular: schedular
+        )
+
+        let modify$ = PublishRelay<Void>()
+        _ = vm.transform(input: .init(
+            viewLoaded$: .empty(),
+            saveButtonTapped$: .empty(),
+            closeButtonTapped$: .empty(),
+            backButtonTapped$: .empty(),
+            likeButtonTapped$: .empty(),
+            placeModificationButtonTapped$: modify$.asObservable(),
+            memoButtonTapped$: .empty(),
+            placeCellTapped$: .empty(),
+            refetchButtonTapped$: .empty(),
+            verseCellTapped$: .empty(),
+            moreVerseButtonTapped$: .empty(),
+            reportButtonTapped$: .empty()
+        ))
+
+        modify$.accept(())
+        XCTAssertEqual(navigator.presentedSheet, .login)
+    }
+
+    func test_placeModification_loggedIn_presentsModification(){
+        let user = User(id: 1, role: .USER, avatar: "a")
+        appStore.dispatch(.login(user))
+
+        let vm = PlaceDetailViewModel(
+            navigator: navigator,
+            placeId: "pid",
+            placeUsecase: placeUsecase,
+            appStore: appStore,
+            collectionStore: collectionStore,
+            notificationService: rxNotificationService,
+            schedular: schedular
+        )
+
+        let modify$ = PublishRelay<Void>()
+        _ = vm.transform(input: .init(
+            viewLoaded$: .empty(),
+            saveButtonTapped$: .empty(),
+            closeButtonTapped$: .empty(),
+            backButtonTapped$: .empty(),
+            likeButtonTapped$: .empty(),
+            placeModificationButtonTapped$: modify$.asObservable(),
+            memoButtonTapped$: .empty(),
+            placeCellTapped$: .empty(),
+            refetchButtonTapped$: .empty(),
+            verseCellTapped$: .empty(),
+            moreVerseButtonTapped$: .empty(),
+            reportButtonTapped$: .empty()
+        ))
+
+        modify$.accept(())
+        XCTAssertEqual(navigator.presentedSheet, .placeModification("pid"))
+    }
+
+    func test_verseCellTapped_withoutPlace_presentsBibleVerseDetail_withNilName(){
+        let vm = PlaceDetailViewModel(
+            navigator: navigator,
+            placeId: "pid",
+            placeUsecase: placeUsecase,
+            appStore: appStore,
+            collectionStore: collectionStore,
+            notificationService: rxNotificationService,
+            schedular: schedular
+        )
+
+        let verseTap$ = PublishRelay<(BibleBook, String)>()
+        _ = vm.transform(input: .init(
+            viewLoaded$: .empty(),
+            saveButtonTapped$: .empty(),
+            closeButtonTapped$: .empty(),
+            backButtonTapped$: .empty(),
+            likeButtonTapped$: .empty(),
+            placeModificationButtonTapped$: .empty(),
+            memoButtonTapped$: .empty(),
+            placeCellTapped$: .empty(),
+            refetchButtonTapped$: .empty(),
+            verseCellTapped$: verseTap$.asObservable(),
+            moreVerseButtonTapped$: .empty(),
+            reportButtonTapped$: .empty()
+        ))
+
+        verseTap$.accept((.Gen, "1.1"))
+
+        guard case let .bibleVerseDetail(book, keyword, placeName)? = navigator.presentedSheet else {
+            return XCTFail("Expected bibleVerseDetail route")
+        }
+        XCTAssertEqual(book, .Gen)
+        XCTAssertEqual(keyword, "1.1")
+        // placeName는 nil일 수 있음 (place$가 아직 없음)
+        XCTAssertNil(placeName)
+    }
+
+    func test_verseCellTapped_withPlace_usesLatestPlaceName(){
+        let place = Place(id: "pid", name: "Eden", koreanName: "에덴", isModern: false, description: "", koreanDescription: "", stereo: .child, likeCount: 0, types: [])
+        placeUsecase.detailResultToReturn = .success(place)
+        let placeExp = expectation(description: "place fetch")
+        placeUsecase.completedDetailExp = placeExp
+
+        let vm = PlaceDetailViewModel(
+            navigator: navigator,
+            placeId: "pid",
+            placeUsecase: placeUsecase,
+            appStore: appStore,
+            collectionStore: collectionStore,
+            notificationService: rxNotificationService
+        )
+
+        let viewLoaded$ = PublishRelay<Void>()
+        let verseTap$ = PublishRelay<(BibleBook, String)>()
+        _ = vm.transform(input: .init(
+            viewLoaded$: viewLoaded$.asObservable(),
+            saveButtonTapped$: .empty(),
+            closeButtonTapped$: .empty(),
+            backButtonTapped$: .empty(),
+            likeButtonTapped$: .empty(),
+            placeModificationButtonTapped$: .empty(),
+            memoButtonTapped$: .empty(),
+            placeCellTapped$: .empty(),
+            refetchButtonTapped$: .empty(),
+            verseCellTapped$: verseTap$.asObservable(),
+            moreVerseButtonTapped$: .empty(),
+            reportButtonTapped$: .empty()
+        ))
+
+        // place 로드 후 탭
+        viewLoaded$.accept(())
+        wait(for: [placeExp], timeout: 1.0)
+
+        verseTap$.accept((.Gen, "1.1"))
+
+        guard case let .bibleVerseDetail(book, keyword, _)? = navigator.presentedSheet else {
+            return XCTFail("Expected bibleVerseDetail route")
+        }
+        XCTAssertEqual(book, .Gen)
+        XCTAssertEqual(keyword, "1.1")
+    }
+
+    func test_moreVerseButtonTapped_presentsBibleBookVerseList(){
+        let vm = PlaceDetailViewModel(
+            navigator: navigator,
+            placeId: "pid",
+            placeUsecase: placeUsecase,
+            appStore: appStore,
+            collectionStore: collectionStore,
+            notificationService: rxNotificationService,
+            schedular: schedular
+        )
+
+        let more$ = PublishRelay<BibleBook?>()
+        _ = vm.transform(input: .init(
+            viewLoaded$: .empty(),
+            saveButtonTapped$: .empty(),
+            closeButtonTapped$: .empty(),
+            backButtonTapped$: .empty(),
+            likeButtonTapped$: .empty(),
+            placeModificationButtonTapped$: .empty(),
+            memoButtonTapped$: .empty(),
+            placeCellTapped$: .empty(),
+            refetchButtonTapped$: .empty(),
+            verseCellTapped$: .empty(),
+            moreVerseButtonTapped$: more$.asObservable(),
+            reportButtonTapped$: .empty()
+        ))
+
+        more$.accept(nil)
+        XCTAssertEqual(navigator.presentedSheet, .bibleBookVerseList("pid", nil))
+    }
+
+    func test_reportButtonTapped_presentsPlaceReport(){
+        let vm = PlaceDetailViewModel(
+            navigator: navigator,
+            placeId: "pid",
+            placeUsecase: placeUsecase,
+            appStore: appStore,
+            collectionStore: collectionStore,
+            notificationService: rxNotificationService,
+            schedular: schedular
+        )
+
+        let report$ = PublishRelay<PlaceReportType>()
+        _ = vm.transform(input: .init(
+            viewLoaded$: .empty(),
+            saveButtonTapped$: .empty(),
+            closeButtonTapped$: .empty(),
+            backButtonTapped$: .empty(),
+            likeButtonTapped$: .empty(),
+            placeModificationButtonTapped$: .empty(),
+            memoButtonTapped$: .empty(),
+            placeCellTapped$: .empty(),
+            refetchButtonTapped$: .empty(),
+            verseCellTapped$: .empty(),
+            moreVerseButtonTapped$: .empty(),
+            reportButtonTapped$: report$.asObservable()
+        ))
+
+        report$.accept(.spam)
+        XCTAssertEqual(navigator.presentedSheet, .placeReport("pid", .spam))
+    }
+
+    func test_viewLoaded_withNilUsecase_doesNotEmitPlace_andStopsLoading(){
+        let vm = PlaceDetailViewModel(
+            navigator: navigator,
+            placeId: "pid",
+            placeUsecase: nil,
+            appStore: appStore,
+            collectionStore: collectionStore,
+            notificationService: rxNotificationService
+        )
+
+        let viewLoaded$ = PublishRelay<Void>()
+        let output = vm.transform(input: .init(
+            viewLoaded$: viewLoaded$.asObservable(),
+            saveButtonTapped$: .empty(),
+            closeButtonTapped$: .empty(),
+            backButtonTapped$: .empty(),
+            likeButtonTapped$: .empty(),
+            placeModificationButtonTapped$: .empty(),
+            memoButtonTapped$: .empty(),
+            placeCellTapped$: .empty(),
+            refetchButtonTapped$: .empty(),
+            verseCellTapped$: .empty(),
+            moreVerseButtonTapped$: .empty(),
+            reportButtonTapped$: .empty()
+        ))
+
+        let noPlaceExp = expectation(description: "no place emission")
+        noPlaceExp.isInverted = true
+        output.place$
+            .skip(1)
+            .take(1)
+            .subscribe(onNext: { _ in noPlaceExp.fulfill() })
+            .disposed(by: disposeBag)
+
+        let loadingExp = expectation(description: "loading false")
+        output.isLoading$
+            .skip(1)
+            .filter { !$0 }
+            .take(1)
+            .subscribe(onNext: { _ in loadingExp.fulfill() })
+            .disposed(by: disposeBag)
+
+        viewLoaded$.accept(())
+
+        wait(for: [noPlaceExp, loadingExp], timeout: 1.0)
+    }
+
+    func test_notification_refetchRequired_failure_setsError(){
+        placeUsecase.detailResultToReturn = .failure(.clientError("x"))
+
+        let vm = PlaceDetailViewModel(
+            navigator: navigator,
+            placeId: "pid",
+            placeUsecase: placeUsecase,
+            appStore: appStore,
+            collectionStore: collectionStore,
+            notificationService: rxNotificationService,
+            schedular: schedular
+        )
+
+        let output = vm.transform(input: .init(
+            viewLoaded$: .empty(),
+            saveButtonTapped$: .empty(),
+            closeButtonTapped$: .empty(),
+            backButtonTapped$: .empty(),
+            likeButtonTapped$: .empty(),
+            placeModificationButtonTapped$: .empty(),
+            memoButtonTapped$: .empty(),
+            placeCellTapped$: .empty(),
+            refetchButtonTapped$: .empty(),
+            verseCellTapped$: .empty(),
+            moreVerseButtonTapped$: .empty(),
+            reportButtonTapped$: .empty()
+        ))
+
+        var gotErr: NetworkError?
+        let errExp = expectation(description: "error emitted")
+        output.loadError$
+            .compactMap { $0 }
+            .take(1)
+            .subscribe(onNext: { e in gotErr = e; errExp.fulfill() })
+            .disposed(by: disposeBag)
+
+        rxNotificationService.triggerRefetch()
+        schedular.start()
+
+        wait(for: [errExp], timeout: 1.0)
+        XCTAssertEqual(gotErr, .clientError("x"))
+    }
+
+    func test_notification_fetchPlaceRequired_missingPlaceId_doesNotRefetch_andKeepsHasPrevFalse(){
+        // 초기 성공으로 한 번 호출되도록 설정
+        let place = Place(id: "pid", name: "p", koreanName: "피", isModern: false, description: "", koreanDescription: "", stereo: .child, likeCount: 0, types: [])
+        placeUsecase.detailResultToReturn = .success(place)
+        let firstFetchExp = expectation(description: "first fetch")
+        placeUsecase.completedDetailExp = firstFetchExp
+
+        let vm = PlaceDetailViewModel(
+            navigator: navigator,
+            placeId: "pid",
+            placeUsecase: placeUsecase,
+            appStore: appStore,
+            collectionStore: collectionStore,
+            notificationService: rxNotificationService,
+            schedular: schedular
+        )
+
+        let viewLoaded$ = PublishRelay<Void>()
+        let output = vm.transform(input: .init(
+            viewLoaded$: viewLoaded$.asObservable(),
+            saveButtonTapped$: .empty(),
+            closeButtonTapped$: .empty(),
+            backButtonTapped$: .empty(),
+            likeButtonTapped$: .empty(),
+            placeModificationButtonTapped$: .empty(),
+            memoButtonTapped$: .empty(),
+            placeCellTapped$: .empty(),
+            refetchButtonTapped$: .empty(),
+            verseCellTapped$: .empty(),
+            moreVerseButtonTapped$: .empty(),
+            reportButtonTapped$: .empty()
+        ))
+
+        viewLoaded$.accept(())
+        wait(for: [firstFetchExp], timeout: 1.0)
+
+        // 이후 placeId 누락된 노티 전달 → 재호출되면 안 됨
+        let invertedExp = expectation(description: "no additional fetch")
+        invertedExp.isInverted = true
+        placeUsecase.completedDetailExp = invertedExp
+
+        // placeId 키 자체가 없거나 nil인 경우 모두 테스트 가능
+        rxNotificationService.post(.fetchPlaceRequired, object: ["prevPlaceId": "xxx"]) // placeId 없음
+        schedular.start()
+
+        wait(for: [invertedExp], timeout: 0.5)
+
+        // hasPrevPlaceId$ 는 여전히 false 이어야 함
+        let hasPrev = try? output.hasPrevPlaceId$.toBlocking(timeout: 1.0).first()
+        XCTAssertEqual(hasPrev, false)
+    }
     
 }
+

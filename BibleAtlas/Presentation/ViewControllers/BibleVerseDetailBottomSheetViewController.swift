@@ -184,3 +184,14 @@ class BibleVerseDetailBottomSheetViewController: UIViewController {
     
 
 }
+
+
+#if DEBUG
+extension BibleVerseDetailBottomSheetViewController {
+    var _test_headerLabel: UILabel { headerLabel }
+    var _test_textView: UITextView { textView }
+    var _test_loadingView: LoadingView { loadingView }
+    var _test_errorRetryView: ErrorRetryView { errorRetryView }
+    var _test_closeButton: CircleButton { closeButton }
+}
+#endif

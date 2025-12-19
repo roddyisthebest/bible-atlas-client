@@ -1,0 +1,74 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  private_lane :asc_key do
+    app_store_connect_api_key(
+      key_id: ENV["ASC_KEY_ID"],
+      issuer_id: ENV["ASC_ISSUER_ID"],
+      key_content: ENV["ASC_KEY_P8"],
+      is_key_content_base64: false
+    )
+  end
+
+  desc "Smoke test"
+  lane :smoke do
+    scan(
+      workspace: "BibleAtlas.xcworkspace",
+      scheme: "BibleAtlas",
+      clean: false,
+      code_coverage: true,
+      only_testing: [
+        "BibleAtlasTests/MainViewModelTests/test_fetchGeoJsonRequired_success_shouldSetSelectedId_resetError_toggleLoading_andEmitGeoJson",
+        "BibleAtlasTests/MainViewModelTests/test_fetchGeoJsonRequired_failure_shouldToggleLoading_emitError_andNotEmitGeoJson",
+        "BibleAtlasTests/MainViewControllerTests/test_geoJson_emits_addsOverlaysAndAnnotations_withExpectedCounts",
+        "BibleAtlasTests/MainViewControllerTests/test_renderGeoJson_setsVisibleMapRect_withMinSizeAndPadding",
+        "BibleAtlasTests/MainViewControllerGeoJSONTests/test_geoJson_point_propertiesMapping_setsCustomAnnotationFields",
+        "BibleAtlasTests/MainViewControllerGeoJSONTests/test_geoJson_multiGeometries_addsMultiOverlays_andSetsVisibleRect",
+        "BibleAtlasTests/AuthorizedApiClientTests/test_401TriggersRefreshAndRetries",
+        "BibleAtlasTests/AuthorizedApiClientTests/test_refreshFailure_propagatesUnauthorized"
+      ]
+    )
+  end
+
+  desc "Build & Upload to TestFlight (Release scheme)"
+  lane :beta do
+    asc_key
+
+    match(
+      type: "appstore",
+      readonly: ENV["CI"] == "true",
+      git_url: ENV["MATCH_GIT_URL"]
+    )
+
+    increment_build_number(
+      xcodeproj: "BibleAtlas.xcodeproj"
+    )
+
+    build_app(
+      workspace: "BibleAtlas.xcworkspace",
+      scheme: "BibleAtlas(Release)",
+      clean: false,
+      export_method: "app-store",
+      xcargs: "ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS=NO ENABLE_ON_DEMAND_RESOURCES=NO"
+    )
+
+    upload_to_testflight(
+      skip_waiting_for_build_processing: true
+    )
+  end
+end

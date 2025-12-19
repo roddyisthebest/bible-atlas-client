@@ -17,15 +17,21 @@ import RxBlocking
 
 final class MockPlaceusecase: PlaceUsecaseProtocol {
     func getBibleBookCounts() async -> Result<BibleAtlas.ListResponse<BibleAtlas.BibleBookCount>, BibleAtlas.NetworkError> {
-        return .failure(.clientError("not-implemented"))
+        return bibleBookCountsResult ?? .failure(.clientError("not-implemented"))
     }
     
 
     var resultToReturn: Result<ListResponse<Place>, NetworkError>?
+
+    
     var resultsQueue: [Result<ListResponse<Place>, NetworkError>] = []
     var delayBeforeReturn: TimeInterval = 0.0
     var delaysQueue: [TimeInterval] = []
 
+    
+    var bibleBookCountsResult: Result<ListResponse<BibleBookCount>, NetworkError>?
+
+    
     // 호출/파라미터 추적
     var listApiCall = 0
     var lastGetPlacesParameters: PlaceParameters?

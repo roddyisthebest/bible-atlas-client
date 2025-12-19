@@ -251,3 +251,14 @@ extension SearchResultViewController:UIScrollViewDelegate{
     }
     
 }
+
+#if DEBUG
+extension SearchResultViewController {
+    var _test_tableView: UITableView { searchTableView }
+    var _test_emptyLabel: UILabel { emptyLabel }
+    var _test_errorRetryView: ErrorRetryView { errorRetryView }
+    var _test_searchingView: LoadingView { searchingView }
+    var _test_footerLoadingView: LoadingView { footerLoadingView }
+    func _test_emitBottomReached() { bottomReached$.accept(()) }
+}
+#endif

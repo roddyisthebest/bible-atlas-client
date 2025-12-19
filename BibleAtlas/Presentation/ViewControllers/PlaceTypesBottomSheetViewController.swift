@@ -333,3 +333,14 @@ extension PlaceTypesBottomSheetViewController:UIScrollViewDelegate{
         
     }
 }
+
+
+#if DEBUG
+extension PlaceTypesBottomSheetViewController {
+    var test_collectionView: UICollectionView { collectionView }
+    var test_headerLabel: UILabel { headerLabel }
+    var test_loadingView: LoadingView { loadingView }
+    var test_emptyLabel: UILabel { emptyLabel }
+    var test_errorRetryView: ErrorRetryView { errorRetryView }
+}
+#endif

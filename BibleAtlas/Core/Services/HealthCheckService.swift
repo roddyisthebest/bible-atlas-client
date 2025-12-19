@@ -6,7 +6,7 @@ enum HealthStatus: Equatable {
     case blocked(message: String)
 }
 
-struct HealthDTO: Decodable {
+struct HealthDTO: Decodable, Encodable {
     let status: String        // "ok" | "maintenance" | ...
     let timestamp: String
 }

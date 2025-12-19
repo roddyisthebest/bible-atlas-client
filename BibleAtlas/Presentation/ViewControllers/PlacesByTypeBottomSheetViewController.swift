@@ -314,3 +314,16 @@ extension PlacesByTypeBottomSheetViewController: UIScrollViewDelegate {
    
     
 }
+
+
+#if DEBUG
+extension PlacesByTypeBottomSheetViewController {
+    var _test_tableView: UITableView { tableView }
+    var _test_loadingView: LoadingView { loadingView }
+    var _test_footerLoadingView: LoadingView { footerLoadingView }
+    var _test_emptyLabel: UILabel { emptyLabel }
+    var _test_errorRetryView: ErrorRetryView { errorRetryView }
+    var _test_headerLabel: UILabel { headerLabel }
+    var _test_closeButton: UIButton { closeButton }
+}
+#endif

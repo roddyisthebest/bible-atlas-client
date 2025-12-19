@@ -100,3 +100,12 @@ class PlaceTypeCell: UICollectionViewCell {
     
     
 }
+
+
+#if DEBUG
+extension PlaceTypeCell {
+    var _test_nameLabel: UILabel { nameLabel }
+    var _test_numberLabel: UILabel { numberLabel }
+    var _test_placeIcon: UIImageView { placeIcon }
+}
+#endif

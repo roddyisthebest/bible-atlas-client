@@ -278,7 +278,16 @@ final class PlaceReportBottomSheetViewController: UIViewController {
         output.clientError$.observe(on: MainScheduler.asyncInstance)
             .compactMap{ $0 }
             .bind{[weak self] error in
-                self?.showErrorAlert(message: error?.localizedDescription)
+                var msg = ""
+                switch(error){
+                    case .placeId:
+                        msg = L10n.ClientError.placeIdRequired
+                    case .placeType:
+                        msg = L10n.ClientError.placeTypeRequired
+                    case .reasonMissing:
+                        msg = L10n.ClientError.reasonRequired
+                }
+                self?.showErrorAlert(message: msg)
             }.disposed(by: disposeBag)
         
         
@@ -294,8 +303,7 @@ final class PlaceReportBottomSheetViewController: UIViewController {
         
     }
     
-    private func handleSuccessionAlertComplete(_:UIAlertAction){
-        
+    @objc private func handleSuccessionAlertComplete(_:UIAlertAction){
         cancelButtonTapped$.accept(Void())
     }
     
@@ -381,3 +389,16 @@ extension PlaceReportBottomSheetViewController:UITableViewDelegate{
     
     
 }
+
+
+#if DEBUG
+extension PlaceReportBottomSheetViewController {
+    var _test_tableView: UITableView { tableView }
+    var _test_reasonTextView: UITextView { reasonTextView }
+    var _test_confirmButton: UIButton { confirmButton }
+    var _test_confirmLoadingView: LoadingView { confirmLoadingView }
+    var _test_selectedReportType: PlaceReportType? { selectedReportType }
+    var _test_cancelButton: UIButton { cancelButton }
+    var _test_scrollView: UIScrollView { scrollView }
+}
+#endif

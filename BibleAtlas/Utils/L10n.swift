@@ -100,6 +100,15 @@ enum L10n {
         
         static var allPolicies: String{ allPoliciesKey.localized }
         
+        static var tosKey = "HomeContent.TOC"
+        static var tos: String {
+            tosKey.localized
+        }
+        
+        static var csKey = "HomeContent.CS"
+        static var cs: String {
+            csKey.localized
+        }
         
     }
     
@@ -569,11 +578,28 @@ enum L10n {
         static let forbiddenKey = "ClientError.Forbidden"
         static let notFoundKey = "ClientError.NotFound"
         
+        static let placeIdRequiredKey = "ClientError.PlaceIdRequired"
+        static let placeTypeRequiredKey = "ClientError.PlaceTypeRequired"
+        static let reasonRequiredKey = "ClientError.ReasonRequired"
+        
+        
         static var badRequest: String { badRequestKey.localized }
         static var unauthorized: String { unauthorizedKey.localized }
         static var paymentRequired: String { paymentRequiredKey.localized }
         static var forbidden: String { forbiddenKey.localized }
         static var notFound: String { notFoundKey.localized }
+        
+        static var placeIdRequired :String {
+            placeIdRequiredKey.localized
+        }
+        
+        static var placeTypeRequired :String {
+            placeTypeRequiredKey.localized
+        }
+        
+        static var reasonRequired: String {
+            reasonRequiredKey.localized
+        }
     }
     
     enum ServerError {

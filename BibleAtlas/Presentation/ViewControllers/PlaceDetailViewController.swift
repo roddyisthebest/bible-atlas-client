@@ -1322,7 +1322,13 @@ extension PlaceDetailViewController {
         scrollView.delegate?.scrollViewDidScroll?(scrollView)
     }
     
-    
+    /// backButton hidden 여부
+    var _test_isBackButtonHidden: Bool { backButton.isHidden }
+
+    /// share 액션 강제 실행 (activityVC 표시)
+    func _test_showShare() {
+        showShareVC()
+    }
     
     
 }
