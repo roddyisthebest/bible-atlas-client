@@ -52,7 +52,8 @@ platform :ios do
     match(
       type: "appstore",
       readonly: ENV["CI"] == "true",
-      git_url: ENV["MATCH_GIT_URL"]
+      git_url: ENV["MATCH_GIT_URL"],
+      git_basic_authorization: ENV["MATCH_GIT_BASIC_AUTHORIZATION"]
     )
 
     increment_build_number(
