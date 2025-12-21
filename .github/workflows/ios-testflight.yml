@@ -20,6 +20,13 @@ jobs:
       - name: CocoaPods install
         run: bundle exec pod install --deployment
 
+      # ✅ 여기서 Basic auth 헤더를 런타임에 생성 (개행/숨은문자 이슈 제거)
+      - name: Build match basic auth header
+        run: |
+          set -euo pipefail
+          AUTH_B64="$(printf "x-access-token:%s" "${{ secrets.MATCH_PAT }}" | base64 | tr -d '\r\n')"
+          echo "MATCH_GIT_BASIC_AUTHORIZATION=$AUTH_B64" >> "$GITHUB_ENV"
+
       - name: Build & Upload TestFlight
         env:
           CI: "true"
@@ -30,6 +37,5 @@ jobs:
 
           MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
-
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ env.MATCH_GIT_BASIC_AUTHORIZATION }}
         run: bundle exec fastlane ios beta
