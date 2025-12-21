@@ -51,6 +51,7 @@ platform :ios do
 
     match(
       type: "appstore",
+      app_identifier: "com.seongyeon.bibleatlas.release",
       readonly: ENV["CI"] == "true",
       git_url: ENV["MATCH_GIT_URL"],
       git_basic_authorization: ENV["MATCH_GIT_BASIC_AUTHORIZATION"]
