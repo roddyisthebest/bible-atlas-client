@@ -25,11 +25,12 @@ platform :ios do
     )
   end
 
+  # ✅ CI에서만 쓸 전용 keychain 준비
   private_lane :ci_keychain do
-    setup_ci
-
-  # (선택) match가 이 keychain에 넣도록 명시하고 싶으면 아래처럼
-  # match가 setup_ci가 만든 keychain을 자동으로 쓰는 케이스가 많음
+    setup_ci(
+      keychain_name: ENV.fetch("MATCH_KEYCHAIN_NAME", "fastlane_tmp_keychain"),
+      keychain_password: ENV.fetch("MATCH_KEYCHAIN_PASSWORD", "fastlane_tmp_keychain_pw")
+    )
   end
 
   desc "Smoke test"
@@ -55,16 +56,24 @@ platform :ios do
   desc "Build & Upload to TestFlight (Release scheme)"
   lane :beta do
     asc_key
-    ci_keychain
+
+    # ✅ CI에서만 keychain 셋업 (로컬은 굳이 안 해도 됨)
+    ci_keychain if ENV["CI"] == "true"
+
     match(
       type: "appstore",
       app_identifier: "com.seongyeon.bibleatlas.release",
       readonly: ENV["CI"] == "true",
       git_url: ENV["MATCH_GIT_URL"],
       git_basic_authorization: ENV["MATCH_GIT_BASIC_AUTHORIZATION"],
-      keychain_name: "login.keychain-db",
-      keychain_password: ENV["KEYCHAIN_PASSWORD"]
+
+      # ✅ login.keychain-db 쓰지 말고 fastlane keychain으로 통일
+      keychain_name: ENV.fetch("MATCH_KEYCHAIN_NAME", "fastlane_tmp_keychain"),
+      keychain_password: ENV.fetch("MATCH_KEYCHAIN_PASSWORD", "fastlane_tmp_keychain_pw")
     )
+
+    # (디버깅용) CI에서 설치된 codesign identity 확인하고 싶으면 주석 해제
+    # sh("security find-identity -v -p codesigning || true")
 
     increment_build_number(
       xcodeproj: "BibleAtlas.xcodeproj"
@@ -77,6 +86,7 @@ platform :ios do
       clean: false,
       export_method: "app-store",
       export_options: {
+        signingStyle: "manual",
         provisioningProfiles: {
           "com.seongyeon.bibleatlas.release" => "match AppStore com.seongyeon.bibleatlas.release"
         }
