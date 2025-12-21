@@ -1,4 +1,4 @@
-git_url("https://github.com/roddyisthebest/bible-atlas-ios-certificates")
+git_url("https://github.com/roddyisthebest/roddyisthebest-bible-atlas-ios-match.git")
 
 storage_mode("git")
 
