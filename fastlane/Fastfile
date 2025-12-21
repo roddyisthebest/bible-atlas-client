@@ -29,8 +29,9 @@ platform :ios do
   private_lane :ci_keychain do
     setup_ci(
       keychain_name: ENV.fetch("MATCH_KEYCHAIN_NAME", "fastlane_tmp_keychain"),
-      keychain_password: ENV.fetch("MATCH_KEYCHAIN_PASSWORD", "fastlane_tmp_keychain_pw")
     )
+    sh(%Q(security unlock-keychain -p "#{ENV.fetch("MATCH_KEYCHAIN_PASSWORD", "fastlane_tmp_keychain_pw")}" "#{ENV.fetch("MATCH_KEYCHAIN_NAME", "fastlane_tmp_keychain")}.keychain-db" || true))
+
   end
 
   desc "Smoke test"
