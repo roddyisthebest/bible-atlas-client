@@ -21,25 +21,37 @@ platform :ios do
 
   # --- CI Keychain hardening (search list + unlock + partition list) ---
   private_lane :ci_keychain do
-    setup_ci(
-      keychain_name: ENV.fetch("MATCH_KEYCHAIN_NAME", "fastlane_tmp_keychain")
-    )
+    keychain_name = ENV.fetch("MATCH_KEYCHAIN_NAME", "fastlane_tmp_keychain")
+    pw            = ENV.fetch("MATCH_KEYCHAIN_PASSWORD")
 
-    keychain = ENV.fetch("MATCH_KEYCHAIN_NAME", "fastlane_tmp_keychain")
-    pw       = ENV.fetch("MATCH_KEYCHAIN_PASSWORD")
+    setup_ci(keychain_name: keychain_name)
 
-    # setup_ci가 만든 keychain은 보통 -db로 생성됨
-    keychain_path = File.expand_path("~/Library/Keychains/#{keychain}-db")
+    # --- 디버깅: 실제 생성된 파일 확인 ---
+    sh("echo '--- ~/Library/Keychains ---' && ls -al $HOME/Library/Keychains || true")
+    sh("echo '--- list-keychains (user) ---' && security list-keychains -d user || true")
 
-    # 1) search list에 넣기 (codesign이 이 리스트만 봄)  :contentReference[oaicite:3]{index=3}
+    # setup_ci가 만든 keychain은 보통 아래 중 하나 형태
+    candidates = [
+      File.expand_path("~/Library/Keychains/#{keychain_name}-db"),
+      File.expand_path("~/Library/Keychains/#{keychain_name}.keychain-db"),
+      File.expand_path("~/Library/Keychains/#{keychain_name}"),
+      File.expand_path("~/Library/Keychains/#{keychain_name}.keychain"),
+    ]
+
+    keychain_path = candidates.find { |p| File.exist?(p) }
+
+    UI.user_error!("Could not find keychain file. Tried:\n#{candidates.join("\n")}") unless keychain_path
+
+    # 1) search list에 넣기
     sh(%(security list-keychains -d user -s "#{keychain_path}" "$(security default-keychain | tr -d \\" )"))
 
-    # 2) unlock (멈춤/프롬프트 방지)
+    # 2) unlock
     sh(%(security unlock-keychain -p "#{pw}" "#{keychain_path}"))
 
-    # 3) codesign이 private key 접근 가능하게 partition list 세팅 (진짜 중요)
+    # 3) partition list (codesign 접근 허용)
     sh(%(security set-key-partition-list -S apple-tool:,apple: -s -k "#{pw}" "#{keychain_path}"))
   end
+
 
   desc "Smoke test"
   lane :smoke do
