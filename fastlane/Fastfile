@@ -57,9 +57,6 @@ platform :ios do
   lane :beta do
     asc_key
 
-    # ✅ CI에서만 keychain 셋업 (로컬은 굳이 안 해도 됨)
-    # ci_keychain if ENV["CI"] == "true"
-
     match(
       type: "appstore",
       app_identifier: "com.seongyeon.bibleatlas.release",
