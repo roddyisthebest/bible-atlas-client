@@ -58,19 +58,14 @@ platform :ios do
     asc_key
 
     # ✅ CI에서만 keychain 셋업 (로컬은 굳이 안 해도 됨)
-    ci_keychain if ENV["CI"] == "true"
-    sh("security list-keychains -d user || true")
-    sh("ls -al $HOME/Library/Keychains || true")
+    # ci_keychain if ENV["CI"] == "true"
+
     match(
       type: "appstore",
       app_identifier: "com.seongyeon.bibleatlas.release",
       readonly: ENV["CI"] == "true",
       git_url: ENV["MATCH_GIT_URL"],
       git_basic_authorization: ENV["MATCH_GIT_BASIC_AUTHORIZATION"],
-
-      # ✅ login.keychain-db 쓰지 말고 fastlane keychain으로 통일
-      keychain_name: ENV.fetch("MATCH_KEYCHAIN_NAME", "fastlane_tmp_keychain"),
-      keychain_password: ENV.fetch("MATCH_KEYCHAIN_PASSWORD", "fastlane_tmp_keychain_pw")
     )
 
     # (디버깅용) CI에서 설치된 codesign identity 확인하고 싶으면 주석 해제
