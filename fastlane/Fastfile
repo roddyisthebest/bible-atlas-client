@@ -23,7 +23,6 @@ platform :ios do
     keychain_name = ENV.fetch("MATCH_KEYCHAIN_NAME", "fastlane_tmp_keychain")
     pw            = ENV.fetch("MATCH_KEYCHAIN_PASSWORD")
 
-    # 1) keychain 직접 생성 (항상 같은 경로/파일명)
     create_keychain(
       name: keychain_name,
       password: pw,
@@ -33,16 +32,33 @@ platform :ios do
       lock_when_sleeps: false
     )
 
-    # 2) search list 확실히 설정
-    keychain_path = File.expand_path("~/Library/Keychains/#{keychain_name}.keychain-db")
+    # ✅ 실제로 생성된 keychain 파일 경로를 찾는다 (CI마다 -db / .keychain-db / .keychain 등이 달라질 수 있음)
+    candidates = [
+      File.expand_path("~/Library/Keychains/#{keychain_name}-db"),
+      File.expand_path("~/Library/Keychains/#{keychain_name}.keychain-db"),
+      File.expand_path("~/Library/Keychains/#{keychain_name}.keychain"),
+      File.expand_path("~/Library/Keychains/#{keychain_name}")
+    ]
+
+    sh("echo '--- ~/Library/Keychains ---' && ls -al $HOME/Library/Keychains || true")
+    sh("echo '--- security list-keychains (user) ---' && security list-keychains -d user || true")
+
+    keychain_path = candidates.find { |p| File.exist?(p) }
+    UI.user_error!("Could not find created keychain file. Tried:\n#{candidates.join("\n")}") unless keychain_path
+
+    # search list에 등록
     sh(%(security list-keychains -d user -s "#{keychain_path}" "$(security default-keychain | tr -d \\" )"))
 
-    # 3) partition list 설정 (codesign 접근 허용)
+    # unlock 한번 더 (안전)
+    sh(%(security unlock-keychain -p "#{pw}" "#{keychain_path}"))
+
+    # partition list
     sh(%(security set-key-partition-list -S apple-tool:,apple: -s -k "#{pw}" "#{keychain_path}"))
 
-    # (디버깅) identity 확인
-    sh("security find-identity -v -p codesigning #{keychain_path} || true")
+    # 디버깅 (identity 확인)
+    sh(%(security find-identity -v -p codesigning "#{keychain_path}" || true))
   end
+
 
 
 
