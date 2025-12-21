@@ -64,8 +64,14 @@ platform :ios do
     build_app(
       workspace: "BibleAtlas.xcworkspace",
       scheme: "BibleAtlas(Release)",
+      configuration: "Release",
       clean: false,
       export_method: "app-store",
+      export_options: {
+        provisioningProfiles: {
+          "com.seongyeon.bibleatlas.release" => "match AppStore com.seongyeon.bibleatlas.release"
+        }
+      },
       xcargs: "ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS=NO ENABLE_ON_DEMAND_RESOURCES=NO"
     )
 
