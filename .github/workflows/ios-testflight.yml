@@ -13,6 +13,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: "16.2" # 또는 "16.1", "16.0" 등 설치된 버전
+
       - name: Ruby (bundler cache)
         uses: ruby/setup-ruby@v1
         with:
