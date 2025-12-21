@@ -30,7 +30,6 @@ platform :ios do
     setup_ci(
       keychain_name: ENV.fetch("MATCH_KEYCHAIN_NAME", "fastlane_tmp_keychain"),
     )
-    sh(%Q(security unlock-keychain -p "#{ENV.fetch("MATCH_KEYCHAIN_PASSWORD", "fastlane_tmp_keychain_pw")}" "#{ENV.fetch("MATCH_KEYCHAIN_NAME", "fastlane_tmp_keychain")}.keychain-db" || true))
 
   end
 
@@ -60,7 +59,8 @@ platform :ios do
 
     # ✅ CI에서만 keychain 셋업 (로컬은 굳이 안 해도 됨)
     ci_keychain if ENV["CI"] == "true"
-
+    sh("security list-keychains -d user || true")
+    sh("ls -al $HOME/Library/Keychains || true")
     match(
       type: "appstore",
       app_identifier: "com.seongyeon.bibleatlas.release",
