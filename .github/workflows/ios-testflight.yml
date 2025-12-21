@@ -8,8 +8,10 @@ on:
 jobs:
   testflight:
     runs-on: macos-14
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Ruby (bundler cache)
         uses: ruby/setup-ruby@v1
@@ -20,7 +22,6 @@ jobs:
       - name: CocoaPods install
         run: bundle exec pod install --deployment
 
-      # ✅ 여기서 Basic auth 헤더를 런타임에 생성 (개행/숨은문자 이슈 제거)
       - name: Build match basic auth header
         run: |
           set -euo pipefail
@@ -31,12 +32,18 @@ jobs:
         env:
           CI: "true"
 
+          # ASC
           ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
           ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
           ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
 
+          # match
           MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          MATCH_PAT: ${{ secrets.MATCH_PAT }}
+
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ env.MATCH_GIT_BASIC_AUTHORIZATION }}
+          MATCH_KEYCHAIN_NAME: ${{ secrets.MATCH_KEYCHAIN_NAME }}
+          MATCH_KEYCHAIN_PASSWORD: ${{ secrets.MATCH_KEYCHAIN_PASSWORD }}
 
         run: bundle exec fastlane ios beta

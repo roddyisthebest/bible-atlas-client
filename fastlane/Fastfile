@@ -1,36 +1,44 @@
-# This file contains the fastlane.tools configuration
-# You can find the documentation at https://docs.fastlane.tools
-#
-# For a list of all available actions, check out
-#
-#     https://docs.fastlane.tools/actions
-#
-# For a list of all available plugins, check out
-#
-#     https://docs.fastlane.tools/plugins/available-plugins
-#
-
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
-
 default_platform(:ios)
 
 platform :ios do
+  # --- ASC Key (CI: key_content, Local: key_filepath) ---
   private_lane :asc_key do
-    app_store_connect_api_key(
-      key_id: ENV["ASC_KEY_ID"],
-      issuer_id: ENV["ASC_ISSUER_ID"],
-      key_content: ENV["ASC_KEY_P8"],
-      is_key_content_base64: false
-    )
+    if ENV["ASC_KEY_P8"] && !ENV["ASC_KEY_P8"].empty?
+      app_store_connect_api_key(
+        key_id: ENV.fetch("ASC_KEY_ID"),
+        issuer_id: ENV.fetch("ASC_ISSUER_ID"),
+        key_content: ENV.fetch("ASC_KEY_P8"),
+        is_key_content_base64: false
+      )
+    else
+      app_store_connect_api_key(
+        key_id: ENV.fetch("ASC_KEY_ID"),
+        issuer_id: ENV.fetch("ASC_ISSUER_ID"),
+        key_filepath: ENV.fetch("ASC_KEY_P8_PATH")
+      )
+    end
   end
 
-  # ✅ CI에서만 쓸 전용 keychain 준비
+  # --- CI Keychain hardening (search list + unlock + partition list) ---
   private_lane :ci_keychain do
     setup_ci(
-      keychain_name: ENV.fetch("MATCH_KEYCHAIN_NAME", "fastlane_tmp_keychain"),
+      keychain_name: ENV.fetch("MATCH_KEYCHAIN_NAME", "fastlane_tmp_keychain")
     )
 
+    keychain = ENV.fetch("MATCH_KEYCHAIN_NAME", "fastlane_tmp_keychain")
+    pw       = ENV.fetch("MATCH_KEYCHAIN_PASSWORD")
+
+    # setup_ci가 만든 keychain은 보통 -db로 생성됨
+    keychain_path = File.expand_path("~/Library/Keychains/#{keychain}-db")
+
+    # 1) search list에 넣기 (codesign이 이 리스트만 봄)  :contentReference[oaicite:3]{index=3}
+    sh(%(security list-keychains -d user -s "#{keychain_path}" "$(security default-keychain | tr -d \\" )"))
+
+    # 2) unlock (멈춤/프롬프트 방지)
+    sh(%(security unlock-keychain -p "#{pw}" "#{keychain_path}"))
+
+    # 3) codesign이 private key 접근 가능하게 partition list 세팅 (진짜 중요)
+    sh(%(security set-key-partition-list -S apple-tool:,apple: -s -k "#{pw}" "#{keychain_path}"))
   end
 
   desc "Smoke test"
@@ -56,21 +64,22 @@ platform :ios do
   desc "Build & Upload to TestFlight (Release scheme)"
   lane :beta do
     asc_key
+    ci_keychain
 
     match(
       type: "appstore",
       app_identifier: "com.seongyeon.bibleatlas.release",
       readonly: ENV["CI"] == "true",
-      git_url: ENV["MATCH_GIT_URL"],
-      git_basic_authorization: ENV["MATCH_GIT_BASIC_AUTHORIZATION"],
+      git_url: ENV.fetch("MATCH_GIT_URL"),
+      git_basic_authorization: ENV.fetch("MATCH_GIT_BASIC_AUTHORIZATION"),
+      keychain_name: ENV.fetch("MATCH_KEYCHAIN_NAME"),
+      keychain_password: ENV.fetch("MATCH_KEYCHAIN_PASSWORD")
     )
 
-    # (디버깅용) CI에서 설치된 codesign identity 확인하고 싶으면 주석 해제
+    # 디버깅용 (필요시)
     # sh("security find-identity -v -p codesigning || true")
 
-    increment_build_number(
-      xcodeproj: "BibleAtlas.xcodeproj"
-    )
+    increment_build_number(xcodeproj: "BibleAtlas.xcodeproj")
 
     build_app(
       workspace: "BibleAtlas.xcworkspace",
@@ -87,8 +96,6 @@ platform :ios do
       xcargs: "ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS=NO ENABLE_ON_DEMAND_RESOURCES=NO"
     )
 
-    upload_to_testflight(
-      skip_waiting_for_build_processing: true
-    )
+    upload_to_testflight(skip_waiting_for_build_processing: true)
   end
 end
