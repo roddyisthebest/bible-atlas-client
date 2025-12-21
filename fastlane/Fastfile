@@ -32,30 +32,31 @@ platform :ios do
       lock_when_sleeps: false
     )
 
-    # ✅ 실제로 생성된 keychain 파일 경로를 찾는다 (CI마다 -db / .keychain-db / .keychain 등이 달라질 수 있음)
+    # 실제 생성된 경로 찾기
     candidates = [
       File.expand_path("~/Library/Keychains/#{keychain_name}-db"),
       File.expand_path("~/Library/Keychains/#{keychain_name}.keychain-db"),
       File.expand_path("~/Library/Keychains/#{keychain_name}.keychain"),
       File.expand_path("~/Library/Keychains/#{keychain_name}")
     ]
-
-    sh("echo '--- ~/Library/Keychains ---' && ls -al $HOME/Library/Keychains || true")
-    sh("echo '--- security list-keychains (user) ---' && security list-keychains -d user || true")
-
     keychain_path = candidates.find { |p| File.exist?(p) }
     UI.user_error!("Could not find created keychain file. Tried:\n#{candidates.join("\n")}") unless keychain_path
 
-    # search list에 등록
+    # search list + unlock
     sh(%(security list-keychains -d user -s "#{keychain_path}" "$(security default-keychain | tr -d \\" )"))
-
-    # unlock 한번 더 (안전)
     sh(%(security unlock-keychain -p "#{pw}" "#{keychain_path}"))
 
-    # partition list
+    # 이후 lane에서 keychain_path를 쓰려고 ENV에 박아둠
+    ENV["CI_KEYCHAIN_PATH"] = keychain_path
+  end
+  private_lane :keychain_partition do
+    pw = ENV.fetch("MATCH_KEYCHAIN_PASSWORD")
+    keychain_path = ENV.fetch("CI_KEYCHAIN_PATH")
+
+    # ✅ match가 cert/private key를 keychain에 넣은 다음에 실행해야 함
     sh(%(security set-key-partition-list -S apple-tool:,apple: -s -k "#{pw}" "#{keychain_path}"))
 
-    # 디버깅 (identity 확인)
+    # 확인용
     sh(%(security find-identity -v -p codesigning "#{keychain_path}" || true))
   end
 
@@ -85,6 +86,7 @@ platform :ios do
   desc "Build & Upload to TestFlight (Release scheme)"
   lane :beta do
     asc_key
+
     ci_keychain
 
     match(
@@ -97,8 +99,8 @@ platform :ios do
       keychain_password: ENV.fetch("MATCH_KEYCHAIN_PASSWORD")
     )
 
-    # 디버깅용 (필요시)
-    # sh("security find-identity -v -p codesigning || true")
+    # ✅ match 이후에 partition list
+    keychain_partition
 
     increment_build_number(xcodeproj: "BibleAtlas.xcodeproj")
 
