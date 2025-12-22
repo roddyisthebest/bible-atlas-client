@@ -301,6 +301,7 @@
 		ECD972822E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972812E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift */; };
 		ECD972842E4487CA00D94767 /* HomeContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972832E4487CA00D94767 /* HomeContentViewModelTests.swift */; };
 		ECD972892E47371900D94767 /* SearchReadyViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972882E47371900D94767 /* SearchReadyViewModelTests.swift */; };
+		ECE2170C2EF97C1400249F1F /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE2170B2EF97C1000249F1F /* AppVersion.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -628,6 +629,7 @@
 		ECD972812E40F4A700D94767 /* HomeBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
 		ECD972832E4487CA00D94767 /* HomeContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewModelTests.swift; sourceTree = "<group>"; };
 		ECD972882E47371900D94767 /* SearchReadyViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReadyViewModelTests.swift; sourceTree = "<group>"; };
+		ECE2170B2EF97C1000249F1F /* AppVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -695,6 +697,7 @@
 		EC0F01DD2E82745400D7C216 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				ECE2170B2EF97C1000249F1F /* AppVersion.swift */,
 				EC0F01DE2E82746500D7C216 /* L10n.swift */,
 				EC1B2DEE2E96B0A90073EBE3 /* Env.swift */,
 			);
@@ -1711,6 +1714,7 @@
 				EC386DF92E06C77A00251FC6 /* HomeContentViewController.swift in Sources */,
 				ECA94BD72D50977A005B0428 /* AuthorizedApiClient.swift in Sources */,
 				ECD9725E2E2A3DD000D94767 /* SimpleMenuTableViewCell.swift in Sources */,
+				ECE2170C2EF97C1400249F1F /* AppVersion.swift in Sources */,
 				EC64B9932DEC3E1700D3C8A7 /* ErrorRetryView.swift in Sources */,
 				EC70588B2DB8BCCE002D47DF /* CollectionButton.swift in Sources */,
 				EC70589A2DBC7BE1002D47DF /* LoginBottomSheetViewController.swift in Sources */,

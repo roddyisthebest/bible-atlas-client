@@ -268,7 +268,6 @@ extension AccountManagementBottomSheetViewController:UITableViewDelegate{
         let menuItem = menuItems[indexPath.row]
         menuItemCellTapped$.accept(menuItem)
         
-        
     }
     
 }

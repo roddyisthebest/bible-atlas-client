@@ -172,8 +172,7 @@ final class MyPageBottomSheetViewController: UIViewController {
         let output = myPageBottomSheetViewModel?.transform(input: MyPageBottomSheetViewModel.Input(closeButtonTapped$: closeButtonTapped$.asObservable(), menuItemCellTapped$: menuItemCellTapped$.asObservable()))
         
         output?.profile$.bind{ [weak self] profile in
-            
-            
+       
             guard let profile = profile else {
                 return
             }
@@ -242,10 +241,8 @@ extension MyPageBottomSheetViewController:  UITableViewDataSource{
 extension MyPageBottomSheetViewController:UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
+        tableView.deselectRow(at: indexPath, animated: true)        
         menuItemCellTapped$.accept(menuItems[indexPath.row])
-        
     }
     
 }
