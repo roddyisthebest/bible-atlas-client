@@ -55,7 +55,9 @@ final class LoginBottomSheetViewModel:LoginBottomSheetViewModelProtocol {
                         print(response)
                         self.notificationService?.post(.refetchRequired, object: nil)
                         self.appStore?.dispatch(.login(response.user))
-                        self.navigator?.dismiss(animated: true)
+                        await MainActor.run {
+                            self.navigator?.dismiss(animated: true)
+                        }
 
                     case .failure(let networkError):
                         self.error$.accept(networkError)
@@ -86,7 +88,9 @@ final class LoginBottomSheetViewModel:LoginBottomSheetViewModelProtocol {
 
                         self.notificationService?.post(.refetchRequired, object: nil)
                         self.appStore?.dispatch(.login(response.user))
-                        self.navigator?.dismiss(animated: true)
+                        await MainActor.run {
+                            self.navigator?.dismiss(animated: true)
+                        }
                     
                     case .failure(let networkError):
                         self.error$.accept(networkError)
@@ -132,7 +136,9 @@ final class LoginBottomSheetViewModel:LoginBottomSheetViewModelProtocol {
                     case .success(let response):
                         self.notificationService?.post(.refetchRequired, object: nil)
                         self.appStore?.dispatch(.login(response.user))
-                        self.navigator?.dismiss(animated: true)
+                        await MainActor.run {
+                            self.navigator?.dismiss(animated: true)
+                        }
                     case .failure(let networkError):
                         self.error$.accept(networkError)
 
@@ -141,7 +147,10 @@ final class LoginBottomSheetViewModel:LoginBottomSheetViewModelProtocol {
         }).disposed(by: disposeBag)
         
         input.closeButtonTapped$.subscribe(onNext:{[weak self] in
-            self?.navigator?.dismiss(animated: true)
+            guard let self = self else { return }
+            Task { @MainActor in
+                self.navigator?.dismiss(animated: true)
+            }
         }).disposed(by: disposeBag)
         
         

@@ -48,12 +48,6 @@ final class AppCoordinator:AppCoordinatorProtocol {
         
         bottomSheetCoordinator?.setPresenter(mainVC)
         windowService.attach(mainVC)
-
-        DispatchQueue.main.async {
-            self.bottomSheetCoordinator?.present(.home)
-        }
-        
-
     }
 
     func logout() {
@@ -68,5 +62,4 @@ final class AppCoordinator:AppCoordinatorProtocol {
      }
     
 }
-
 

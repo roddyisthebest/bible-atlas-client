@@ -115,6 +115,7 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
         
         wait(for: [expectation], timeout: 1.0)
         wait(for: [stateExpectation], timeout: 1.0)
+        RunLoop.current.run(until: Date().addingTimeInterval(0.05))
 
         token.dispose()
 
@@ -295,7 +296,8 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
         
         let googleToken$ = PublishRelay<String?>()
         
-        _ = vm.transform(input: .init(
+        // output을 받아 googleLoading$로 dismiss 완료 시점을 기다린다
+        let output = vm.transform(input: .init(
             googleTokenReceived$: googleToken$.asObservable(),
             appleTokenReceived$: .empty(),
             localLoginButtonTapped$: .empty(),
@@ -308,12 +310,21 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
             .take(1)
             .subscribe(onNext: { _ in stateExp.fulfill() })
         
+        // dismiss까지 완료되었음을 보장하기 위해 googleLoading$ == false 대기
+        let loadingDoneExp = expectation(description: "google loading false (dismiss done)")
+        let loadingDisposable = output.googleLoading$
+            .skip(1)
+            .filter { $0 == false }
+            .take(1)
+            .subscribe(onNext: { _ in loadingDoneExp.fulfill() })
+        
         // when
         googleToken$.accept("google-id-token")
         
         // then
-        wait(for: [loginExp, stateExp], timeout: 1.0)
+        wait(for: [loginExp, stateExp, loadingDoneExp], timeout: 2.0)
         stateDisposable.dispose()
+        loadingDisposable.dispose()
         
         // 사이드 이펙트들 확인
         XCTAssertTrue(mockAppStore.state$.value.isLoggedIn)
@@ -385,7 +396,7 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
         
         let appleToken$ = PublishRelay<String?>()
         
-        _ = vm.transform(input: .init(
+        let output = vm.transform(input: .init(
             googleTokenReceived$: .empty(),
             appleTokenReceived$: appleToken$.asObservable(),
             localLoginButtonTapped$: .empty(),
@@ -398,12 +409,21 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
             .take(1)
             .subscribe(onNext: { _ in stateExp.fulfill() })
         
+        // dismiss까지 완료되었음을 보장하기 위해 appleLoading$ == false 대기
+        let appleLoadingDoneExp = expectation(description: "apple loading false (dismiss done)")
+        let appleLoadingDisposable = output.appleLoading$
+            .skip(1)
+            .filter { $0 == false }
+            .take(1)
+            .subscribe(onNext: { _ in appleLoadingDoneExp.fulfill() })
+        
         // when
         appleToken$.accept("apple-id-token")
         
         // then
-        wait(for: [loginExp, stateExp], timeout: 1.0)
+        wait(for: [loginExp, stateExp, appleLoadingDoneExp], timeout: 2.0)
         stateDisposable.dispose()
+        appleLoadingDisposable.dispose()
         
         XCTAssertTrue(mockAppStore.state$.value.isLoggedIn)
         XCTAssertEqual(mockNotificationService.calledNotificationName, .refetchRequired)
@@ -473,6 +493,7 @@ final class LoginBottomSheetViewModelTests:XCTestCase{
         
         // when
         close$.accept(())
+        RunLoop.current.run(until: Date().addingTimeInterval(0.05))
         
         // then
         XCTAssertTrue(mockNavigator.isDismissed)

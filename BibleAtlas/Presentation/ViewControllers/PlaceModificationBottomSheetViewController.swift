@@ -162,12 +162,18 @@ final class PlaceModificationBottomSheetViewController: UIViewController {
             }).disposed(by: disposeBag)
         
         
-        output?.isSuccess$.subscribe(onNext: {[weak self] isSuccess in
-            if(isSuccess ?? false){
-                self?.showDefaultAlert(message: L10n.PlaceModification.success, buttonTitle: L10n.Common.ok, animated: true, completion: nil, handler: self?.handleSuccessionAlertComplete)
-                self?.showAlertToDisplaySuccssion()
-            }
-        }).disposed(by: disposeBag)
+        output?.isSuccess$
+            .subscribe(onNext: { [weak self] isSuccess in
+                guard isSuccess == true else { return }
+                self?.showDefaultAlert(
+                    message: L10n.PlaceModification.success,
+                    buttonTitle: L10n.Common.ok,
+                    animated: true,
+                    completion: nil,
+                    handler: self?.handleSuccessionAlertComplete
+                )
+            })
+            .disposed(by: disposeBag)
     }
     
     override func viewDidLoad() {
@@ -199,3 +205,4 @@ extension PlaceModificationBottomSheetViewController {
     var test_descriptionTextView: UITextView { descriptionTextView }
 }
 #endif
+

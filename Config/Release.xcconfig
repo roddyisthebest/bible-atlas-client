@@ -18,3 +18,5 @@ SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) RELEASE_ENV
 
 INFOPLIST_KEY_ENV_NAME = prod
 INFOPLIST_KEY_API_BASE_URL = https:/$()/bible-atlas-server.xyz
+
+INFOPLIST_KEY_SHARE_API_URL = https:/$()/bibleatlas.xyz

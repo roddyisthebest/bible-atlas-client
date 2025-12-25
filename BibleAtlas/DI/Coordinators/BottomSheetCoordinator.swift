@@ -66,8 +66,16 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
         }
     }
     
-    
-    
+    // Queue bottom sheet requests until the coordinator is ready. Default includes .home as base.
+    private var pendingRequests: [BottomSheetType] = [.home]
+    private var isReady: Bool { presenter != nil }
+
+    private func flushPendingIfReady() {
+        guard isReady, !pendingRequests.isEmpty else { return }
+        let requests = pendingRequests
+        pendingRequests.removeAll()
+        requests.forEach { performPresent($0) }
+    }
     
     init(vcFactory: VCFactoryProtocol, vmFactory:VMFactoryProtocol, notificationService:RxNotificationServiceProtocol) {
         self.vmFactory = vmFactory;
@@ -77,6 +85,7 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
 
     func setPresenter(_ presenter: Presentable?) {
         self.presenter = presenter
+        flushPendingIfReady()
     }
     
     func presentFromTopVC(_ vc: UIViewController){
@@ -174,6 +183,21 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
     }
 
     func present(_ type: BottomSheetType) {
+        // If not ready, enqueue the request. Ensure .home stays at the front and avoid duplicates.
+        guard isReady else {
+            if type == .home {
+                // ensure .home is at the front exactly once
+                pendingRequests.removeAll { $0 == .home }
+                pendingRequests.insert(.home, at: 0)
+            } else if !pendingRequests.contains(type) {
+                pendingRequests.append(type)
+            }
+            return
+        }
+        performPresent(type)
+    }
+    
+    private func performPresent(_ type: BottomSheetType) {
         switch(type){
         case .home:
             let homeVM = vmFactory.makeHomeBottomSheetVM();
@@ -286,7 +310,6 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             let vc = vcFactory.makeReportBottomSheetVC(vm: vm);
             presentFromTopVC(vc);
         }
-    
     }
 
     func dismiss(animated:Bool) {
@@ -306,3 +329,4 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
 
     
 }
+

@@ -8,9 +8,9 @@
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:../BibleAtlas.xctestplan">
+      location = "group:MainViewControllerGeoJSONTests.swift">
    </FileRef>
    <FileRef
-      location = "group:MainViewControllerGeoJSONTests.swift">
+      location = "group:../BibleAtlas.xctestplan">
    </FileRef>
 </Workspace>
