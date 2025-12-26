@@ -102,7 +102,21 @@ platform :ios do
     # ✅ match 이후에 partition list
     keychain_partition
 
-    increment_build_number(xcodeproj: "BibleAtlas.xcodeproj")
+    latest = latest_testflight_build_number(
+      app_identifier: "com.seongyeon.bibleatlas.release",
+      version: get_version_number(
+        xcodeproj: "BibleAtlas.xcodeproj",
+        target: "BibleAtlas"
+      )
+    ) rescue 0
+
+    next_build = latest.to_i + 1
+    UI.message("🚀 Next build number: #{next_build}")
+
+    increment_build_number(
+      xcodeproj: "BibleAtlas.xcodeproj",
+      build_number: next_build
+    )
 
     build_app(
       workspace: "BibleAtlas.xcworkspace",
