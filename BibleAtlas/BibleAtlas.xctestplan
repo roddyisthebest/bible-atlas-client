@@ -1,0 +1,30 @@
+{
+  "configurations" : [
+    {
+      "id" : "601F7856-7747-4DCD-BE76-B1B3F07E82EF",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:BibleAtlas.xcodeproj",
+      "identifier" : "ECA94B922D5082B9005B0428",
+      "name" : "BibleAtlas"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:BibleAtlas.xcodeproj",
+        "identifier" : "ECA94BAB2D5082BA005B0428",
+        "name" : "BibleAtlasTests"
+      }
+    }
+  ],
+  "version" : 1
+}
