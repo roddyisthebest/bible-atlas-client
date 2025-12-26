@@ -28,6 +28,10 @@ final class AppCoordinatorBottomSheetNavigatorStub: MockBottomSheetNavigator {
     override func setPresenter(_ presenter: Presentable?) {
         self.presenter = presenter
         super.setPresenter(presenter)
+        // Simulate default BottomSheetCoordinator behavior: once presenter is set, present the home sheet.
+        if presenter != nil {
+            present(.home)
+        }
     }
 
     override func present(_ type: BottomSheetType) {

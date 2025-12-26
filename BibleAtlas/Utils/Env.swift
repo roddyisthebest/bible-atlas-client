@@ -14,4 +14,7 @@ enum Env {
     static var apiBaseURL: String {
         Bundle.main.object(forInfoDictionaryKey: "BASE_URL") as? String ?? ""
     }
+    static var shareApiURL: String {
+        Bundle.main.object(forInfoDictionaryKey: "SHARE_URL") as? String ?? ""
+    }
 }

@@ -70,21 +70,17 @@ final class MainViewModel: MainViewModelProtocol {
         isLoading$.accept(true)
         
         Task{
-            defer{
-                isLoading$.accept(false)
-            }
-            
-            let result = await self.placeUsecase?.getPlacesWithRepresentativePoint();
-                
-            
-            
-            switch(result){
-            case.success(let response):
-                self.placesWithRepresentativePoint$.accept(response.data);
-            case .failure(let error):
-                print(error)
-            case.none:
-                print("none")
+            let result = await self.placeUsecase?.getPlacesWithRepresentativePoint()
+            await MainActor.run {
+                switch(result){
+                case.success(let response):
+                    self.placesWithRepresentativePoint$.accept(response.data)
+                case .failure(let error):
+                    print(error)
+                case .none:
+                    print("none")
+                }
+                self.isLoading$.accept(false)
             }
         }
         
@@ -163,3 +159,4 @@ final class MainViewModel: MainViewModelProtocol {
     }
     
 }
+

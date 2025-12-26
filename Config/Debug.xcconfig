@@ -16,6 +16,9 @@ INFOPLIST_KEY_CFBundleDisplayName = $(PRODUCT_NAME) Debug
 
 SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) DEBUG_ENV
 
+
 // 앱에서 읽어 쓸 커스텀 키
 INFOPLIST_KEY_ENV_NAME = debug
 INFOPLIST_KEY_API_BASE_URL = http:/$()/localhost:4343
+
+INFOPLIST_KEY_SHARE_API_URL = https:/$()/bibleatlas.xyz

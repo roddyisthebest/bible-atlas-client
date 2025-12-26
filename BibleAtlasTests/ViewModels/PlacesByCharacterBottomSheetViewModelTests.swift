@@ -350,8 +350,10 @@ final class PlacesByCharacterBottomSheetViewModelTests: XCTestCase {
 
         // when
         closeRelay.accept(())
+        RunLoop.current.run(until: Date().addingTimeInterval(0.05))
 
         // then
         XCTAssertTrue(navigator.isDismissed)
     }
 }
+

@@ -68,62 +68,53 @@ final class PlacesByCharacterBottomSheetViewModel:PlacesByCharacterBottomSheetVi
     
     
     func transform(input: Input) -> Output {
-        input.viewLoaded$.subscribe(onNext: {
-            [weak self] in
-            guard let self = self else { return }
-                
-            Task{
-                defer {
+        input.viewLoaded$
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+                Task {
+                    let parameters = PlaceParameters(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeName: nil, prefix: self.character$.value, sort: nil)
+                    let response = await self.placeUsecase?.getPlaces(parameters: parameters)
+                    switch response {
+                    case .success(let r):
+                        self.places$.accept(r.data)
+                        self.pagination.update(total: r.total)
+                        self.error$.accept(nil)
+                    case .failure(let e):
+                        self.error$.accept(e)
+                    case .none:
+                        break
+                    }
                     self.isInitialLoading$.accept(false)
                 }
-                
-                let parameters = PlaceParameters(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeName: nil, prefix: self.character$.value, sort:nil)
-                let response = await self.placeUsecase?.getPlaces(parameters:parameters);
-                
-                switch(response){
-                case.success(let response):
-                    self.places$.accept(response.data)
-                    self.pagination.update(total: response.total)
-                case .failure(let error):
-                    self.error$.accept(error)
-                    print(error.description)
-                case .none:
-                    print("none")
-                }
-                
-            }
-            
-        }).disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
         
         input.bottomReached$
-            .debounce(.milliseconds(100), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(100), scheduler: MainScheduler.asyncInstance)
             .subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
                 
                 if self.isFetchingNext$.value || !self.pagination.hasMore { return }
                 self.isFetchingNext$.accept(true)
                 
-                Task{
-                    defer {
+                Task {
+                    if !self.pagination.advanceIfPossible() {
                         self.isFetchingNext$.accept(false)
+                        return
                     }
-                    
-                    guard self.pagination.advanceIfPossible() else { return }
-                    
-                    let parameters = PlaceParameters(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeName: nil, prefix: self.character$.value, sort:nil)
-                    
-                    let response = await self.placeUsecase?.getPlaces(parameters:parameters)
-                    switch(response){
-                    case.success(let response):
+                    let parameters = PlaceParameters(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeName: nil, prefix: self.character$.value, sort: nil)
+                    let response = await self.placeUsecase?.getPlaces(parameters: parameters)
+                    switch response {
+                    case .success(let r):
                         let current = self.places$.value
-                        self.places$.accept(current + response.data)
-                        self.pagination.update(total: response.total)
-                        
-                    case .failure(let error):
-                        self.error$.accept(error)
+                        self.places$.accept(current + r.data)
+                        self.pagination.update(total: r.total)
+                    case .failure(let e):
+                        self.error$.accept(e)
                     case .none:
-                        print("none")
+                        break
                     }
+                    self.isFetchingNext$.accept(false)
                 }
             })
             .disposed(by: disposeBag)
@@ -133,42 +124,41 @@ final class PlacesByCharacterBottomSheetViewModel:PlacesByCharacterBottomSheetVi
         }).disposed(by: disposeBag)
         
 
-        input.refetchButtonTapped$.subscribe(onNext:{
-            [weak self] in
-            guard let self = self else { return }
-            
-            self.pagination.reset();
-            self.places$.accept([])
-            self.isInitialLoading$.accept(true)
-            self.error$.accept(nil)
-            
-            Task{
-                defer {
+        input.refetchButtonTapped$
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+                // Reset synchronously
+                self.pagination.reset()
+                self.places$.accept([])
+                self.isInitialLoading$.accept(true)
+                self.error$.accept(nil)
+
+                Task {
+                    let parameters = PlaceParameters(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeName: nil, prefix: self.character$.value, sort: nil)
+                    let response = await self.placeUsecase?.getPlaces(parameters: parameters)
+                    switch response {
+                    case .success(let r):
+                        self.places$.accept(r.data)
+                        self.pagination.update(total: r.total)
+                        self.error$.accept(nil)
+                    case .failure(let e):
+                        self.error$.accept(e)
+                    case .none:
+                        break
+                    }
                     self.isInitialLoading$.accept(false)
                 }
-                let parameters = PlaceParameters(limit: self.pagination.pageSize, page: self.pagination.page, placeTypeName: nil, prefix: self.character$.value, sort:nil)
-                
-                
-                let response = await self.placeUsecase?.getPlaces(parameters:parameters);
-                
-                switch(response){
-                case.success(let response):
-                    self.places$.accept(response.data)
-                    self.pagination.update(total: response.total)
-                    self.error$.accept(nil)
-                case .failure(let error):
-                    self.error$.accept(error)
-                    print(error.description)
-                case .none:
-                    print("none")
-                }
-            }
-            
-        }).disposed(by:disposeBag)
+            })
+            .disposed(by: disposeBag)
         
-        input.closeButtonTapped$.subscribe(onNext: {[weak self] in
-            self?.navigator?.dismiss(animated: true)
-        }).disposed(by: disposeBag)
+        input.closeButtonTapped$
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+                Task { @MainActor in
+                    self.navigator?.dismiss(animated: true)
+                }
+            })
+            .disposed(by: disposeBag)
         
         
         
@@ -199,3 +189,4 @@ final class PlacesByCharacterBottomSheetViewModel:PlacesByCharacterBottomSheetVi
     
     
 }
+

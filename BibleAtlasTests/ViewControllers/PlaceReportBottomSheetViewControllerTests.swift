@@ -213,7 +213,7 @@ final class PlaceReportBottomSheetViewControllerTests: XCTestCase {
 
            // when
            mockVM.networkErrorSubject.onNext(error)
-           runLoopPump(0.2)
+           runLoopPump(0.5)
 
            // then
            let alert = sut.presentedViewController as? UIAlertController

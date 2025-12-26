@@ -11,6 +11,7 @@ import GoogleSignIn
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    private var deepLinkHandler: DeepLinkHandling?
     private var container: DIContainer!
     private var bootstrapper: AppBootstrapper!
 
@@ -32,7 +33,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.rootViewController = root
         window.makeKeyAndVisible()
         self.window = window
-       
+        
+        // Wire DeepLink handler after DI is ready
+        let parser = DefaultDeepLinkParser()
+        let mapper = DefaultDeepLinkToBottomSheetMapper()
+        let navigator = container.bottomSheetCoordinator
+        self.deepLinkHandler = DeepLinkHandler(parser: parser, mapper: mapper, navigator: navigator)
+        
+        // Handle any pending URL contexts on cold start
+        if let urlContext = connectionOptions.urlContexts.first {
+            deepLinkHandler?.handle(url: urlContext.url)
+        }
+        
+        // Handle any user activities on cold start (e.g., universal links)
+        if let activity = connectionOptions.userActivities.first {
+            deepLinkHandler?.handle(userActivity: activity)
+        }
     }
     
     func scene(_ scene: UIScene,
@@ -40,8 +56,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         guard let url = URLContexts.first?.url else { return }
         GIDSignIn.sharedInstance.handle(url)
+        deepLinkHandler?.handle(url: url)
     }
     
+    
+    func scene(_ scene: UIScene,
+               continue userActivity: NSUserActivity) {
+        deepLinkHandler?.handle(userActivity: userActivity)
+    }
+    
+    
+
 
     func sceneDidDisconnect(_ scene: UIScene) {
     }

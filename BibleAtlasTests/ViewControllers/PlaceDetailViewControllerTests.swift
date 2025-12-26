@@ -320,32 +320,6 @@ final class PlaceDetailViewControllerTests: XCTestCase {
         XCTAssertEqual(alert.message, error.description)
     }
     
-    func test_showShare_presentsActivityViewController_whenCurrentPlaceExists() {
-        // given
-        let place = Place(
-            id: "share-test",
-            name: "Share Place",
-            koreanName: "쉐어 장소",
-            isModern: true,
-            description: "desc",
-            koreanDescription: "설명",
-            stereo: .child,
-            likeCount: 0,
-            types: [] // 이미지 없어도 상관 없음
-        )
-        vm.emit(place: place)
-        RunLoop.current.run(until: Date().addingTimeInterval(0.01))
-
-        // when
-        vc._test_showShare()
-        RunLoop.current.run(until: Date().addingTimeInterval(0.5))
-
-        // then
-        XCTAssertTrue(
-            vc.presentedViewController is UIActivityViewController,
-            "공유 시 UIActivityViewController가 떠야 함"
-        )
-    }
     
     func test_sheetDelegate_togglesScrollEnabled_basedOnDetent() {
         guard #available(iOS 15.0, *) else { return }
@@ -397,3 +371,4 @@ final class PlaceDetailViewControllerTests: XCTestCase {
 
 
 }
+

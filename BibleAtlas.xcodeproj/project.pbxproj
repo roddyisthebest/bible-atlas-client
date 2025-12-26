@@ -227,6 +227,9 @@
 		EC77CE4E2DD5B3480030DEF5 /* PlacesByTypeBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE4D2DD5B3480030DEF5 /* PlacesByTypeBottomSheetViewModel.swift */; };
 		EC77CE502DD5C86A0030DEF5 /* PlacesByCharacterBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE4F2DD5C86A0030DEF5 /* PlacesByCharacterBottomSheetViewController.swift */; };
 		EC77CE522DD5C8950030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77CE512DD5C8950030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift */; };
+		EC7F47472EFD12B3000B5F80 /* DeepLinkToBottomSheetMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F47462EFD12B0000B5F80 /* DeepLinkToBottomSheetMapperTests.swift */; };
+		EC7F474F2EFE71E1000B5F80 /* DeepLinkParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F474E2EFE71E0000B5F80 /* DeepLinkParserTests.swift */; };
+		EC7F47532EFE72F0000B5F80 /* DeepLinkHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F47522EFE72EF000B5F80 /* DeepLinkHandlerTests.swift */; };
 		EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF92D75923C00AEC01B /* DiffCode.swift */; };
 		EC940E9B2DEF25E300406944 /* ToggleCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940E9A2DEF25E300406944 /* ToggleCircleButton.swift */; };
 		EC940E9D2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940E9C2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift */; };
@@ -302,6 +305,10 @@
 		ECD972842E4487CA00D94767 /* HomeContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972832E4487CA00D94767 /* HomeContentViewModelTests.swift */; };
 		ECD972892E47371900D94767 /* SearchReadyViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD972882E47371900D94767 /* SearchReadyViewModelTests.swift */; };
 		ECE2170C2EF97C1400249F1F /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE2170B2EF97C1000249F1F /* AppVersion.swift */; };
+		ECE2170F2EFBE2B600249F1F /* DeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE2170E2EFBE2B000249F1F /* DeepLink.swift */; };
+		ECE217112EFBE3AD00249F1F /* DeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE217102EFBE3AD00249F1F /* DeepLinkParser.swift */; };
+		ECE217132EFBE3C400249F1F /* DeepLinkToBottomSheetMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE217122EFBE3C400249F1F /* DeepLinkToBottomSheetMapper.swift */; };
+		ECE217152EFBE3D300249F1F /* DeepLinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE217142EFBE3D300249F1F /* DeepLinkHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -551,6 +558,9 @@
 		EC77CE4D2DD5B3480030DEF5 /* PlacesByTypeBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesByTypeBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		EC77CE4F2DD5C86A0030DEF5 /* PlacesByCharacterBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesByCharacterBottomSheetViewController.swift; sourceTree = "<group>"; };
 		EC77CE512DD5C8950030DEF5 /* PlacesByCharacterBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesByCharacterBottomSheetViewModel.swift; sourceTree = "<group>"; };
+		EC7F47462EFD12B0000B5F80 /* DeepLinkToBottomSheetMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkToBottomSheetMapperTests.swift; sourceTree = "<group>"; };
+		EC7F474E2EFE71E0000B5F80 /* DeepLinkParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkParserTests.swift; sourceTree = "<group>"; };
+		EC7F47522EFE72EF000B5F80 /* DeepLinkHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkHandlerTests.swift; sourceTree = "<group>"; };
 		EC8ABAF92D75923C00AEC01B /* DiffCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffCode.swift; sourceTree = "<group>"; };
 		EC940E9A2DEF25E300406944 /* ToggleCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleCircleButton.swift; sourceTree = "<group>"; };
 		EC940E9C2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleVerseDetailBottomSheetViewController.swift; sourceTree = "<group>"; };
@@ -630,6 +640,11 @@
 		ECD972832E4487CA00D94767 /* HomeContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewModelTests.swift; sourceTree = "<group>"; };
 		ECD972882E47371900D94767 /* SearchReadyViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReadyViewModelTests.swift; sourceTree = "<group>"; };
 		ECE2170B2EF97C1000249F1F /* AppVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
+		ECE2170D2EFBC3C400249F1F /* BibleAtlasRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BibleAtlasRelease.entitlements; sourceTree = "<group>"; };
+		ECE2170E2EFBE2B000249F1F /* DeepLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLink.swift; sourceTree = "<group>"; };
+		ECE217102EFBE3AD00249F1F /* DeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkParser.swift; sourceTree = "<group>"; };
+		ECE217122EFBE3C400249F1F /* DeepLinkToBottomSheetMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkToBottomSheetMapper.swift; sourceTree = "<group>"; };
+		ECE217142EFBE3D300249F1F /* DeepLinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1032,6 +1047,16 @@
 			path = Tables;
 			sourceTree = "<group>";
 		};
+		EC7F47492EFE10CA000B5F80 /* DeepLink */ = {
+			isa = PBXGroup;
+			children = (
+				EC7F47522EFE72EF000B5F80 /* DeepLinkHandlerTests.swift */,
+				EC7F474E2EFE71E0000B5F80 /* DeepLinkParserTests.swift */,
+				EC7F47462EFD12B0000B5F80 /* DeepLinkToBottomSheetMapperTests.swift */,
+			);
+			path = DeepLink;
+			sourceTree = "<group>";
+		};
 		EC940EA22DF1759300406944 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -1134,6 +1159,7 @@
 		ECA94B952D5082B9005B0428 /* BibleAtlas */ = {
 			isa = PBXGroup;
 			children = (
+				ECE2170D2EFBC3C400249F1F /* BibleAtlasRelease.entitlements */,
 				EC0F01DD2E82745400D7C216 /* Utils */,
 				ECCB51D02E0AE473007E4AB7 /* BibleAtlas.entitlements */,
 				EC64B9762DE44AAB00D3C8A7 /* Core */,
@@ -1156,6 +1182,7 @@
 		ECA94BAF2D5082BA005B0428 /* BibleAtlasTests */ = {
 			isa = PBXGroup;
 			children = (
+				EC7F47492EFE10CA000B5F80 /* DeepLink */,
 				EC4767EF2EE7167E00E959DC /* Stores */,
 				EC4767842EE4425000E959DC /* Utils */,
 				EC47677A2EE4234400E959DC /* Entities */,
@@ -1226,6 +1253,7 @@
 		ECA94BD22D50946A005B0428 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				ECE217192EFBE7DB00249F1F /* DeepLink */,
 				ECA94BD42D5094F1005B0428 /* User.swift */,
 				ECA94BE02D50A739005B0428 /* AuthData.swift */,
 				EC8ABAF92D75923C00AEC01B /* DiffCode.swift */,
@@ -1266,6 +1294,7 @@
 		ECA94BF02D51AB3D005B0428 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				ECE217162EFBE5B800249F1F /* Routing */,
 				EC7058862DB3CA48002D47DF /* Extensions */,
 				ECA94C062D53464D005B0428 /* Views */,
 				ECA94BF22D51AD94005B0428 /* ViewModels */,
@@ -1410,6 +1439,24 @@
 				EC4273472EEC56A400262EC5 /* PlaceDetailViewModelMoreTests.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		ECE217162EFBE5B800249F1F /* Routing */ = {
+			isa = PBXGroup;
+			children = (
+				ECE217122EFBE3C400249F1F /* DeepLinkToBottomSheetMapper.swift */,
+				ECE217142EFBE3D300249F1F /* DeepLinkHandler.swift */,
+			);
+			path = Routing;
+			sourceTree = "<group>";
+		};
+		ECE217192EFBE7DB00249F1F /* DeepLink */ = {
+			isa = PBXGroup;
+			children = (
+				ECE2170E2EFBE2B000249F1F /* DeepLink.swift */,
+				ECE217102EFBE3AD00249F1F /* DeepLinkParser.swift */,
+			);
+			path = DeepLink;
 			sourceTree = "<group>";
 		};
 		FA9885F27C7E364B662974A9 /* Pods */ = {
@@ -1636,6 +1683,7 @@
 				ECCB51DC2E1E4B04007E4AB7 /* RecentSearchesBottomSheetViewModel.swift in Sources */,
 				EC940EA82DF7196A00406944 /* MapRepository.swift in Sources */,
 				ECCB51D42E18F4D7007E4AB7 /* PopularPlaceTableViewCell.swift in Sources */,
+				ECE217112EFBE3AD00249F1F /* DeepLinkParser.swift in Sources */,
 				ECA94BE82D50AF41005B0428 /* AuthRepository.swift in Sources */,
 				EC77CE012DC5DA8D0030DEF5 /* PlaceDetailViewController.swift in Sources */,
 				ECD9725A2E29154900D94767 /* MenuTableViewCell.swift in Sources */,
@@ -1674,6 +1722,8 @@
 				EC940EA62DF6E56500406944 /* MapApiService.swift in Sources */,
 				EC77CE4C2DD5AACA0030DEF5 /* PlacesByTypeBottomSheetViewController.swift in Sources */,
 				EC64B9952DEC595900D3C8A7 /* FooterLoadingReusableView.swift in Sources */,
+				ECE217132EFBE3C400249F1F /* DeepLinkToBottomSheetMapper.swift in Sources */,
+				ECE2170F2EFBE2B600249F1F /* DeepLink.swift in Sources */,
 				ECD972602E2BA44400D94767 /* AccountManagementBottomSheetViewController.swift in Sources */,
 				EC64B9842DE72C4E00D3C8A7 /* PlaceApiService.swift in Sources */,
 				EC1B2DEF2E96B0A90073EBE3 /* Env.swift in Sources */,
@@ -1692,6 +1742,7 @@
 				EC9A0A472E6F00B500BB580E /* HealthCheckService.swift in Sources */,
 				EC14C6442EC84F84008F90D6 /* ReportRepository.swift in Sources */,
 				EC9A0A4E2E6F10CF00BB580E /* AppEnvironment.swift in Sources */,
+				ECE217152EFBE3D300249F1F /* DeepLinkHandler.swift in Sources */,
 				EC64B96B2DDE05C900D3C8A7 /* UserUsecase.swift in Sources */,
 				EC9A0A4C2E6F106500BB580E /* DIContainer.swift in Sources */,
 				EC14C63E2EC84AE0008F90D6 /* ReportBottomSheetViewController.swift in Sources */,
@@ -1805,6 +1856,7 @@
 				EC47678C2EE4513D00E959DC /* MockMyPageBottomSheetViewModel.swift in Sources */,
 				EC4767F12EE717B700E959DC /* AppStoreTests.swift in Sources */,
 				EC4767962EE4659400E959DC /* PlaceTypeCellTests.swift in Sources */,
+				EC7F47532EFE72F0000B5F80 /* DeepLinkHandlerTests.swift in Sources */,
 				EC0F020A2E85399500D7C216 /* AlamofireSessionAdapter.swift in Sources */,
 				EC4767F72EE71CFA00E959DC /* TokenRefresherTests.swift in Sources */,
 				EC4767F52EE71CC500E959DC /* MockSession.swift in Sources */,
@@ -1877,6 +1929,7 @@
 				EC47678A2EE449A200E959DC /* RecentSearchesBottomSheetViewControllerTests.swift in Sources */,
 				EC1B2DD12E9634C30073EBE3 /* BibleBookVerseListBottomSheetViewModelTests.swift in Sources */,
 				EC4273482EEC56A400262EC5 /* PlaceDetailViewModelMoreTests.swift in Sources */,
+				EC7F474F2EFE71E1000B5F80 /* DeepLinkParserTests.swift in Sources */,
 				EC4767922EE4553600E959DC /* AccountManagementBottomSheetViewControllerTests.swift in Sources */,
 				EC4767B22EE47D1100E959DC /* MockReportUsecase.swift in Sources */,
 				EC4767A62EE474C100E959DC /* MockReportRepository.swift in Sources */,
@@ -1891,6 +1944,7 @@
 				EC4768032EE861A800E959DC /* UserUsecaseTests.swift in Sources */,
 				EC47678E2EE4517500E959DC /* MyPageBottomSheetViewControllerTests.swift in Sources */,
 				EC4767802EE4268800E959DC /* PlaceReportBottomSheetViewControllerTests.swift in Sources */,
+				EC7F47472EFD12B3000B5F80 /* DeepLinkToBottomSheetMapperTests.swift in Sources */,
 				ECC49F812E4CC3C10061B467 /* MyCollectionBottomSheetViewModelTests.swift in Sources */,
 				EC4767C42EE5794800E959DC /* MockMemoBottomSheetViewModel.swift in Sources */,
 				EC4767AE2EE4792500E959DC /* UserRepositoryTests.swift in Sources */,
@@ -2096,13 +2150,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = BibleAtlas/BibleAtlas.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_ENTITLEMENTS = BibleAtlas/BibleAtlasRelease.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = T76LKQ7QGR;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = T76LKQ7QGR;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BibleAtlas/Info.plist;
@@ -2119,7 +2171,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.seongyeon.bibleatlas.release";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -2144,9 +2195,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.seongyeon.BibleAtlasTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BibleAtlas.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/BibleAtlas";
 			};
 			name = Debug;
@@ -2165,9 +2220,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.seongyeon.BibleAtlasTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BibleAtlas.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/BibleAtlas";
 			};
 			name = Release;

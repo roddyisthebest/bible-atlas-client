@@ -53,6 +53,7 @@ final class PlaceDetailViewController: UIViewController {
     private let placeDetailViewLoaded$ = PublishRelay<Void>();
         
     private let placeId:String
+    private var currentPlace: Place?
 
     private var didFixPlaceTableHeight = false
     private var verseTableHeight = 0.0
@@ -153,10 +154,10 @@ final class PlaceDetailViewController: UIViewController {
     
     private let saveButton = ToggleCircleButton(activeIconSystemName: "bookmark.fill", inActiveIconSystemName: "bookmark")
     
-    private let shareButton = {
-        let button = CircleButton(iconSystemName: "square.and.arrow.up");
+    private lazy var shareButton: CircleButton = {
+        let button = CircleButton(iconSystemName: "square.and.arrow.up")
         button.addTarget(self, action: #selector(showShareVC), for: .touchUpInside)
-        return button;
+        return button
     }()
     
     private let closeButton = CircleButton(iconSystemName: "xmark")
@@ -863,6 +864,7 @@ final class PlaceDetailViewController: UIViewController {
             guard let self = self else { return }
             
             guard let place = place else { return }
+            self.currentPlace = place
             
             self.sheetPresentationController?.animateChanges {
                 self.sheetPresentationController?.selectedDetentIdentifier = .medium
@@ -1079,22 +1081,37 @@ final class PlaceDetailViewController: UIViewController {
     }
     
     
-    @objc private func showShareVC() {
-        guard let place = placeDetailViewModel?.currentPlace else { return }
+    private func presentShareVC(animated: Bool) {
+        guard let place = currentPlace else { return }
+        // Ensure the view is in a window hierarchy before presenting
+        guard self.viewIfLoaded?.window != nil else { return }
 
         let type = place.types.first
         let image = UIImage(named: type?.name.rawValue ?? "ground")
 
-        let shareURL = URL(string: "https://bibleatlas.app/places/\(place.id)")!
+        let shareURL = URL(string: "\(Env.shareApiURL)/place/\(place.id)?\(L10n.isEnglish ? "lang=en" : "lang=ko")")!
 
         let source = ShareItemSourceView(
             url: shareURL,
-            title: place.name,
+            title: L10n.isEnglish ? place.name: place.koreanName,
             image: image
         )
 
         let activityVC = UIActivityViewController(activityItems: [source], applicationActivities: nil)
-        present(activityVC, animated: true)
+        // iPad popover configuration to avoid runtime assertion
+        if let pop = activityVC.popoverPresentationController {
+            pop.sourceView = self.view
+            pop.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 1, height: 1)
+            pop.permittedArrowDirections = []
+        }
+
+        DispatchQueue.main.async { [weak self] in
+            self?.present(activityVC, animated: animated)
+        }
+    }
+
+    @objc private func showShareVC() {
+        presentShareVC(animated: true)
     }
     
     
@@ -1327,9 +1344,11 @@ extension PlaceDetailViewController {
 
     /// share 액션 강제 실행 (activityVC 표시)
     func _test_showShare() {
-        showShareVC()
+        presentShareVC(animated: false)
     }
     
     
 }
 #endif
+
+
