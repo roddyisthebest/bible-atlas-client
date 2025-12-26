@@ -116,7 +116,9 @@ platform :ios do
           "com.seongyeon.bibleatlas.release" => "match AppStore com.seongyeon.bibleatlas.release"
         }
       },
-      xcargs: "ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS=NO ENABLE_ON_DEMAND_RESOURCES=NO"
+      xcargs: "ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS=NO ENABLE_ON_DEMAND_RESOURCES=NO",
+      silent: false,
+      verbose: true
     )
 
     upload_to_testflight(skip_waiting_for_build_processing: true)

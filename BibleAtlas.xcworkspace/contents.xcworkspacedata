@@ -10,7 +10,4 @@
    <FileRef
       location = "group:MainViewControllerGeoJSONTests.swift">
    </FileRef>
-   <FileRef
-      location = "group:../BibleAtlas.xctestplan">
-   </FileRef>
 </Workspace>

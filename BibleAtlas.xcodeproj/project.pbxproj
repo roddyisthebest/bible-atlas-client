@@ -230,6 +230,7 @@
 		EC7F47472EFD12B3000B5F80 /* DeepLinkToBottomSheetMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F47462EFD12B0000B5F80 /* DeepLinkToBottomSheetMapperTests.swift */; };
 		EC7F474F2EFE71E1000B5F80 /* DeepLinkParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F474E2EFE71E0000B5F80 /* DeepLinkParserTests.swift */; };
 		EC7F47532EFE72F0000B5F80 /* DeepLinkHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F47522EFE72EF000B5F80 /* DeepLinkHandlerTests.swift */; };
+		EC7F47552EFEE3D1000B5F80 /* BibleAtlas.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = EC7F47542EFEE3D1000B5F80 /* BibleAtlas.xctestplan */; };
 		EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF92D75923C00AEC01B /* DiffCode.swift */; };
 		EC940E9B2DEF25E300406944 /* ToggleCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940E9A2DEF25E300406944 /* ToggleCircleButton.swift */; };
 		EC940E9D2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940E9C2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift */; };
@@ -561,6 +562,7 @@
 		EC7F47462EFD12B0000B5F80 /* DeepLinkToBottomSheetMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkToBottomSheetMapperTests.swift; sourceTree = "<group>"; };
 		EC7F474E2EFE71E0000B5F80 /* DeepLinkParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkParserTests.swift; sourceTree = "<group>"; };
 		EC7F47522EFE72EF000B5F80 /* DeepLinkHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkHandlerTests.swift; sourceTree = "<group>"; };
+		EC7F47542EFEE3D1000B5F80 /* BibleAtlas.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = BibleAtlas.xctestplan; sourceTree = "<group>"; };
 		EC8ABAF92D75923C00AEC01B /* DiffCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffCode.swift; sourceTree = "<group>"; };
 		EC940E9A2DEF25E300406944 /* ToggleCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleCircleButton.swift; sourceTree = "<group>"; };
 		EC940E9C2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleVerseDetailBottomSheetViewController.swift; sourceTree = "<group>"; };
@@ -1159,6 +1161,7 @@
 		ECA94B952D5082B9005B0428 /* BibleAtlas */ = {
 			isa = PBXGroup;
 			children = (
+				EC7F47542EFEE3D1000B5F80 /* BibleAtlas.xctestplan */,
 				ECE2170D2EFBC3C400249F1F /* BibleAtlasRelease.entitlements */,
 				EC0F01DD2E82745400D7C216 /* Utils */,
 				ECCB51D02E0AE473007E4AB7 /* BibleAtlas.entitlements */,
@@ -1564,6 +1567,7 @@
 			files = (
 				EC9A0A452E6C71BF00BB580E /* Launch Screen.storyboard in Resources */,
 				EC0F01D92E826B8E00D7C216 /* Localizable.strings in Resources */,
+				EC7F47552EFEE3D1000B5F80 /* BibleAtlas.xctestplan in Resources */,
 				EC4767532EE1814900E959DC /* GoogleService-Info.plist in Resources */,
 				ECA94BA32D5082BA005B0428 /* Assets.xcassets in Resources */,
 				EC0F01E62E827CB800D7C216 /* Localizable.stringsdict in Resources */,
@@ -2191,7 +2195,7 @@
 				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = T76LKQ7QGR;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.seongyeon.BibleAtlasTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2216,7 +2220,7 @@
 				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = T76LKQ7QGR;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.seongyeon.BibleAtlasTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
