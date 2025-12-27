@@ -4,14 +4,6 @@
 <dict>
 	<key>BASE_URL</key>
 	<string>$(INFOPLIST_KEY_API_BASE_URL)</string>
-	<key>SHARE_URL</key>
-	<string>$(INFOPLIST_KEY_SHARE_API_URL)</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>TFInternalTestingOnly</key>
-	<false/>
-	<key>CFBundleExecutable</key>
-	<string></string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -20,7 +12,25 @@
 				<string>com.googleusercontent.apps.808096669363-59hp497funuhpi1imfkvfk21pp35t0b4</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>kakao43e64de5b046e56de035e74121653bc0</string>
+			</array>
+		</dict>
 	</array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>kakaokompassauth</string>
+		<string>kakaolink</string>
+		<string>kakaoplus</string>
+	</array>
+	<key>SHARE_URL</key>
+	<string>$(INFOPLIST_KEY_SHARE_API_URL)</string>
+	<key>TFInternalTestingOnly</key>
+	<false/>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
