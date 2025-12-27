@@ -15,16 +15,30 @@ protocol AnalyticsLogging: AnyObject{
 }
 
 final class FirebaseAnalyticsLogger: AnalyticsLogging {
+  private let _logEvent: (String, [String: Any]?) -> Void
+  private let _setUserID: (String?) -> Void
+  private let _setUserProperty: (String?, String) -> Void
+
+  init(
+    logEvent: @escaping (String, [String: Any]?) -> Void = { Analytics.logEvent($0, parameters: $1) },
+    setUserID: @escaping (String?) -> Void = { Analytics.setUserID($0) },
+    setUserProperty: @escaping (String?, String) -> Void = { Analytics.setUserProperty($0, forName: $1) }
+  ) {
+    self._logEvent = logEvent
+    self._setUserID = setUserID
+    self._setUserProperty = setUserProperty
+  }
+
   func log(_ event: AnalyticsEvent) {
-    Analytics.logEvent(event.name, parameters: event.params)
+    _logEvent(event.name, event.params)
   }
 
   func setUserId(_ id: String?) {
-    Analytics.setUserID(id)
+    _setUserID(id)
   }
 
   func setUserProperty(_ value: String?, for name: String) {
-    Analytics.setUserProperty(value, forName: name)
+    _setUserProperty(value, name)
   }
 }
 
@@ -61,3 +75,4 @@ enum AnalyticsEvents {
     .init("api_error", ["endpoint": endpoint, "code": code])
   }
 }
+
