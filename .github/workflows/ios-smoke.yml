@@ -44,6 +44,9 @@ jobs:
         run: bundle exec pod install --deployment
 
       - name: Run fastlane smoke
+        env:
+          FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: "120"
+          FASTLANE_XCODEBUILD_SETTINGS_RETRIES: "6"
         run: bundle exec fastlane ios smoke
 
       - name: Upload test output
