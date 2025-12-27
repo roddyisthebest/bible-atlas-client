@@ -70,6 +70,8 @@ platform :ios do
       scheme: "BibleAtlas",
       clean: false,
       code_coverage: true,
+      result_bundle: false,
+      device: "iPhone 15 Pro",
       only_testing: [
         "BibleAtlasTests/MainViewModelTests/test_fetchGeoJsonRequired_success_shouldSetSelectedId_resetError_toggleLoading_andEmitGeoJson",
         "BibleAtlasTests/MainViewModelTests/test_fetchGeoJsonRequired_failure_shouldToggleLoading_emitError_andNotEmitGeoJson",

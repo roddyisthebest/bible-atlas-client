@@ -52,6 +52,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
     
+    // Restrict scene orientation to portrait only
+    func windowScene(_ windowScene: UIWindowScene, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
     func scene(_ scene: UIScene,
                openURLContexts URLContexts: Set<UIOpenURLContext>) {
 

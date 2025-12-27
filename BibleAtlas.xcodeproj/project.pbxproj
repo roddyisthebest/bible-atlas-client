@@ -235,6 +235,7 @@
 		EC7F47652EFFDEDA000B5F80 /* AnalyticsLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F47642EFFDED8000B5F80 /* AnalyticsLogger.swift */; };
 		EC7F47692EFFEF2C000B5F80 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC7F47682EFFEF2C000B5F80 /* GoogleService-Info.plist */; };
 		EC7F476C2EFFF8E0000B5F80 /* AnalyticsLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F476B2EFFF8DF000B5F80 /* AnalyticsLoggerTests.swift */; };
+		EC7F476E2EFFFE80000B5F80 /* MainViewControllerGeoJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F476D2EFFFE80000B5F80 /* MainViewControllerGeoJSONTests.swift */; };
 		EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF92D75923C00AEC01B /* DiffCode.swift */; };
 		EC940E9B2DEF25E300406944 /* ToggleCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940E9A2DEF25E300406944 /* ToggleCircleButton.swift */; };
 		EC940E9D2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940E9C2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift */; };
@@ -570,6 +571,7 @@
 		EC7F47682EFFEF2C000B5F80 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EC7F476A2EFFF8CF000B5F80 /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
 		EC7F476B2EFFF8DF000B5F80 /* AnalyticsLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsLoggerTests.swift; sourceTree = "<group>"; };
+		EC7F476D2EFFFE80000B5F80 /* MainViewControllerGeoJSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewControllerGeoJSONTests.swift; sourceTree = "<group>"; };
 		EC8ABAF92D75923C00AEC01B /* DiffCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffCode.swift; sourceTree = "<group>"; };
 		EC940E9A2DEF25E300406944 /* ToggleCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleCircleButton.swift; sourceTree = "<group>"; };
 		EC940E9C2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleVerseDetailBottomSheetViewController.swift; sourceTree = "<group>"; };
@@ -705,6 +707,7 @@
 				EC4767B52EE4805600E959DC /* ReportBottomSheetViewControllerTests.swift */,
 				EC4767B92EE48C4000E959DC /* PlacesByBibleBottomSheetViewControllerTests.swift */,
 				EC4767BD2EE5731D00E959DC /* PlacesByTypeBottomSheetViewControllerTests.swift */,
+				EC7F476D2EFFFE80000B5F80 /* MainViewControllerGeoJSONTests.swift */,
 				EC4767C12EE5767F00E959DC /* PopularPlacesBottomSheetViewControllerTests.swift */,
 				EC4767C52EE579BC00E959DC /* MemoBottomSheetViewControllerTests.swift */,
 				EC4767C92EE57CA200E959DC /* PlacesByCharacterBottomSheetViewControllerTests.swift */,
@@ -1837,6 +1840,7 @@
 				EC4767902EE4551700E959DC /* MockAccountManagementBottomSheetViewModel.swift in Sources */,
 				EC4767552EE3ED2000E959DC /* PlaceRepositortTests.swift in Sources */,
 				EC4767E82EE5CC0100E959DC /* PlaceTypesBottomSheetViewControllerTests.swift in Sources */,
+				EC7F476E2EFFFE80000B5F80 /* MainViewControllerGeoJSONTests.swift in Sources */,
 				EC4767B02EE47AA700E959DC /* ReportBottomSheetViewModelTests.swift in Sources */,
 				EC4767772EE4198900E959DC /* PlacesByTypeBottomSheetViewModelTests.swift in Sources */,
 				EC4767A02EE46EDC00E959DC /* SearchTableViewCellTests.swift in Sources */,
