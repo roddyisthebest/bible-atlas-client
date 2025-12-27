@@ -124,6 +124,7 @@ final class VMFactory:VMFactoryProtocol{
     
     private weak var navigator:BottomSheetNavigator?;
     private weak var appCoordinator:AppCoordinatorProtocol?
+    private weak var analytics: AnalyticsLogging?
     
     private var appStore:AppStoreProtocol?
     private var collectionStore:CollectionStoreProtocol?
@@ -131,12 +132,13 @@ final class VMFactory:VMFactoryProtocol{
     private var notificationService: RxNotificationServiceProtocol?
     private var recentSearchService: RecentSearchServiceProtocol?
     
-    init(appStore: AppStoreProtocol?, collectionStore:CollectionStoreProtocol?, usecases:UseCases? = nil, notificationService: RxNotificationServiceProtocol?, recentSearchService:RecentSearchServiceProtocol?) {
+    init(appStore: AppStoreProtocol?, collectionStore:CollectionStoreProtocol?, usecases:UseCases? = nil, notificationService: RxNotificationServiceProtocol?, recentSearchService:RecentSearchServiceProtocol?, analytics: AnalyticsLogging? = nil) {
         self.appStore = appStore
         self.collectionStore = collectionStore
         self.usecases = usecases
         self.notificationService = notificationService
         self.recentSearchService = recentSearchService
+        self.analytics = analytics
     }
     
     func makeHomeBottomSheetVM() -> HomeBottomSheetViewModelProtocol {
@@ -155,7 +157,7 @@ final class VMFactory:VMFactoryProtocol{
     }
     
     func makePlaceDetailBottomSheetVM(placeId: String) -> PlaceDetailViewModelProtocol {
-        let vm = PlaceDetailViewModel(navigator: navigator, placeId:placeId, placeUsecase: usecases?.place, appStore:appStore, collectionStore: collectionStore, notificationService: notificationService );
+        let vm = PlaceDetailViewModel(navigator: navigator, placeId:placeId, placeUsecase: usecases?.place, appStore:appStore, collectionStore: collectionStore, notificationService: notificationService, analytics: analytics);
         return vm;
     }
     

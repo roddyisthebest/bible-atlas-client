@@ -17,6 +17,7 @@ final class DIContainer {
     // Stores
     lazy var appStore = AppStore()
     lazy var collectionStore = CollectionStore()
+    
 
     // System / Services
     lazy var session = DefaultSession()
@@ -26,6 +27,7 @@ final class DIContainer {
         tokenProvider: tokenProvider,
         refreshURL: env.baseURL.appendingPathComponent("auth/refresh-token").absoluteString
     )
+    
     lazy var errorHandlerService = ErrorHandlerService(tokenProvider: tokenProvider, appStore: appStore)
     lazy var apiClient = AuthorizedApiClient(
         session: session,
@@ -36,6 +38,8 @@ final class DIContainer {
     lazy var notificationService = RxNotificationService()
     lazy var context = PersistenceController.shared.container.viewContext
     lazy var recentSearchService = RecentSearchService(context: context)
+    lazy var analytics: AnalyticsLogging = FirebaseAnalyticsLogger()
+
 
     // API Services
     lazy var authApiService = AuthApiService(apiClient: apiClient, url: env.baseURL.appendingPathComponent("auth").absoluteString)
@@ -62,6 +66,7 @@ final class DIContainer {
     // Factories & Coordinators
     lazy var vmFactory = VMFactory(appStore: appStore, collectionStore: collectionStore, usecases: usecases, notificationService: notificationService, recentSearchService: recentSearchService)
     lazy var vcFactory = VCFactory()
-    lazy var bottomSheetCoordinator = BottomSheetCoordinator(vcFactory: vcFactory, vmFactory: vmFactory, notificationService: notificationService)
+    
+    lazy var bottomSheetCoordinator = BottomSheetCoordinator(vcFactory: vcFactory, vmFactory: vmFactory, notificationService: notificationService, analytics: analytics)
 }
 

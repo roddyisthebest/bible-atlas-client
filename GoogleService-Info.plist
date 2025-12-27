@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>808096669363-59hp497funuhpi1imfkvfk21pp35t0b4.apps.googleusercontent.com</string>
+	<string>808096669363-6b7ct2a9s0k9s6ffcnlpfui2v9ti8ib1.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.808096669363-59hp497funuhpi1imfkvfk21pp35t0b4</string>
+	<string>com.googleusercontent.apps.808096669363-6b7ct2a9s0k9s6ffcnlpfui2v9ti8ib1</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCZnDchhSKTk5jAkz4F7eBWkZ1kH5itlzo</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.seongyeon.BibleAtlas</string>
+	<string>com.seongyeon.bibleatlas.release</string>
 	<key>PROJECT_ID</key>
 	<string>bible-atlas</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:808096669363:ios:9c95ef6c2d4c69b9fedac6</string>
+	<string>1:808096669363:ios:0a84dc436e76fbaafedac6</string>
 </dict>
 </plist>

@@ -44,6 +44,7 @@ final class PlaceDetailViewController: UIViewController {
 
     private let reportButtonTapped$ = PublishRelay<PlaceReportType>();
     
+    private let shareButtonTapped$ = PublishRelay<Void>();
     
     private var relations:[PlaceRelation] = [];
     
@@ -795,7 +796,7 @@ final class PlaceDetailViewController: UIViewController {
             .bind(to: moreVerseButtonTapped$)
             .disposed(by: disposeBag)
         
-        let output = placeDetailViewModel?.transform(input: PlaceDetailViewModel.Input(viewLoaded$: placeDetailViewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$, closeButtonTapped$: closeButtonTapped$, backButtonTapped$: backButtonTapped$, likeButtonTapped$: likeButtonTapped$, placeModificationButtonTapped$: placeModificationButtonTapped$.asObservable(), memoButtonTapped$: memoButtonTapped$.asObservable(), placeCellTapped$: placeCellTapped$.asObservable(), refetchButtonTapped$: refetchButtonTapped$.asObservable(), verseCellTapped$: verseCellTapped$.asObservable(), moreVerseButtonTapped$: moreVerseButtonTapped$.asObservable(), reportButtonTapped$: reportButtonTapped$.asObservable()))
+        let output = placeDetailViewModel?.transform(input: PlaceDetailViewModel.Input(viewLoaded$: placeDetailViewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$, closeButtonTapped$: closeButtonTapped$, backButtonTapped$: backButtonTapped$, likeButtonTapped$: likeButtonTapped$, placeModificationButtonTapped$: placeModificationButtonTapped$.asObservable(), memoButtonTapped$: memoButtonTapped$.asObservable(), placeCellTapped$: placeCellTapped$.asObservable(), refetchButtonTapped$: refetchButtonTapped$.asObservable(), verseCellTapped$: verseCellTapped$.asObservable(), moreVerseButtonTapped$: moreVerseButtonTapped$.asObservable(), reportButtonTapped$: reportButtonTapped$.asObservable(), shareButtonTapped$: shareButtonTapped$.asObservable()))
         
         output?.isSaving$.observe(on: MainScheduler.instance).bind{
             [weak self] isSaving in
@@ -1107,6 +1108,7 @@ final class PlaceDetailViewController: UIViewController {
 
         DispatchQueue.main.async { [weak self] in
             self?.present(activityVC, animated: animated)
+            self?.shareButtonTapped$.accept(())
         }
     }
 
