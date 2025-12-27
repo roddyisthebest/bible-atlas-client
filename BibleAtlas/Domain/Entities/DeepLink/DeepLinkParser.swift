@@ -18,10 +18,25 @@ protocol DeepLinkParser {
 final class DefaultDeepLinkParser: DeepLinkParser {
 
     func parse(url: URL) -> DeepLink? {
-        // Support both custom scheme and universal links.
-        // Adjust allowed hosts/schemes as needed.
+        // Support custom scheme (app), universal links, and Kakao custom scheme.
+        guard let scheme = url.scheme else { return nil }
+        let lowerScheme = scheme.lowercased()
+        let isKakaoScheme = lowerScheme.hasPrefix("kakao")
+
         let allowedSchemes: Set<String> = ["bibleatlas", "https", "http"]
-        guard let scheme = url.scheme, allowedSchemes.contains(scheme) else { return nil }
+        guard isKakaoScheme || allowedSchemes.contains(lowerScheme) else { return nil }
+
+        // Kakao Link: kakao{appKey}://kakaolink?placeId=...&src=...
+        if isKakaoScheme {
+            guard url.host?.lowercased() == "kakaolink" else { return nil }
+            let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+            let items = components?.queryItems ?? []
+            let placeId = items.first(where: { $0.name == "placeId" })?.value
+            if let id = placeId, !id.isEmpty {
+                return .placeDetail(id: id)
+            }
+            return nil
+        }
 
         let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
         let items = components?.queryItems ?? []

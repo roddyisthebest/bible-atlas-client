@@ -32,7 +32,7 @@ final class MainViewControllerGeoJSONTests: XCTestCase {
         vc.loadViewIfNeeded()
 
         // Spy map view to capture setVisibleMapRect
-        let spy = SpyMapView()
+        let spy = SpyMapView2()
         spy.frame = vc._test_mapView.frame
         vc._test_replaceMapView(spy)
 
@@ -142,9 +142,9 @@ final class MainViewControllerGeoJSONTests: XCTestCase {
     }
 }
 
-// MARK: - SpyMapView
+// MARK: - SpyMapView2
 
-final class SpyMapView: MKMapView {
+final class SpyMapView2: MKMapView {
     struct SetVisibleCall { let rect: MKMapRect; let padding: UIEdgeInsets; let animated: Bool }
     private(set) var setVisibleCalls: [SetVisibleCall] = []
 
