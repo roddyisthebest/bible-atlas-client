@@ -62,7 +62,8 @@ final class PlaceDetailViewModelMoreTests: XCTestCase {
             refetchButtonTapped$: .empty(),
             verseCellTapped$: .empty(),
             moreVerseButtonTapped$: .empty(),
-            reportButtonTapped$: .empty()
+            reportButtonTapped$: .empty(),
+            shareButtonTapped$: .empty()
         ))
 
         viewLoaded$.accept(())
@@ -123,7 +124,8 @@ final class PlaceDetailViewModelMoreTests: XCTestCase {
             refetchButtonTapped$: .empty(),
             verseCellTapped$: .empty(),
             moreVerseButtonTapped$: .empty(),
-            reportButtonTapped$: .empty()
+            reportButtonTapped$: .empty(),
+            shareButtonTapped$: .empty(),
         ))
 
         viewLoaded$.accept(())
@@ -173,7 +175,8 @@ final class PlaceDetailViewModelMoreTests: XCTestCase {
             refetchButtonTapped$: refetch$.asObservable(),
             verseCellTapped$: .empty(),
             moreVerseButtonTapped$: .empty(),
-            reportButtonTapped$: .empty()
+            reportButtonTapped$: .empty(),
+            shareButtonTapped$: .empty()
         ))
 
         let exp = expectation(description: "place emitted on refetch")

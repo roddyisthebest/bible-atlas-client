@@ -103,7 +103,7 @@ final class PlaceModificationBottomSheetViewControllerTests: XCTestCase {
 
         // when
         mockViewModel.interactionErrorSubject.onNext(error)
-        pump(0.1)
+        pump(0.5)
 
         // then
         guard let alert = viewController.presentedViewController as? UIAlertController else {

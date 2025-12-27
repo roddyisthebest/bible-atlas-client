@@ -74,7 +74,6 @@
 		EC4273462EEC3F7000262EC5 /* HomeContentViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4273452EEC3F6E00262EC5 /* HomeContentViewControllerTests.swift */; };
 		EC4273482EEC56A400262EC5 /* PlaceDetailViewModelMoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4273472EEC56A400262EC5 /* PlaceDetailViewModelMoreTests.swift */; };
 		EC42734D2EEC5A7700262EC5 /* SearchReadyViewControllerTests2.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC42734C2EEC5A7700262EC5 /* SearchReadyViewControllerTests2.swift */; };
-		EC4767532EE1814900E959DC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC4767522EE1814900E959DC /* GoogleService-Info.plist */; };
 		EC4767552EE3ED2000E959DC /* PlaceRepositortTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4767542EE3ED2000E959DC /* PlaceRepositortTests.swift */; };
 		EC4767572EE3ED4800E959DC /* MockAuthApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4767562EE3ED4800E959DC /* MockAuthApiService.swift */; };
 		EC4767592EE3EDE600E959DC /* MockPlaceApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4767582EE3EDE600E959DC /* MockPlaceApiService.swift */; };
@@ -231,6 +230,11 @@
 		EC7F474F2EFE71E1000B5F80 /* DeepLinkParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F474E2EFE71E0000B5F80 /* DeepLinkParserTests.swift */; };
 		EC7F47532EFE72F0000B5F80 /* DeepLinkHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F47522EFE72EF000B5F80 /* DeepLinkHandlerTests.swift */; };
 		EC7F47552EFEE3D1000B5F80 /* BibleAtlas.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = EC7F47542EFEE3D1000B5F80 /* BibleAtlas.xctestplan */; };
+		EC7F475A2EFFB9BB000B5F80 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = EC7F47592EFFB9BB000B5F80 /* FirebaseAnalytics */; };
+		EC7F475C2EFFB9BB000B5F80 /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = EC7F475B2EFFB9BB000B5F80 /* FirebaseAnalyticsCore */; };
+		EC7F47652EFFDEDA000B5F80 /* AnalyticsLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F47642EFFDED8000B5F80 /* AnalyticsLogger.swift */; };
+		EC7F47692EFFEF2C000B5F80 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC7F47682EFFEF2C000B5F80 /* GoogleService-Info.plist */; };
+		EC7F476C2EFFF8E0000B5F80 /* AnalyticsLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7F476B2EFFF8DF000B5F80 /* AnalyticsLoggerTests.swift */; };
 		EC8ABAFA2D75923C00AEC01B /* DiffCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8ABAF92D75923C00AEC01B /* DiffCode.swift */; };
 		EC940E9B2DEF25E300406944 /* ToggleCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940E9A2DEF25E300406944 /* ToggleCircleButton.swift */; };
 		EC940E9D2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC940E9C2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift */; };
@@ -406,7 +410,6 @@
 		EC4273452EEC3F6E00262EC5 /* HomeContentViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewControllerTests.swift; sourceTree = "<group>"; };
 		EC4273472EEC56A400262EC5 /* PlaceDetailViewModelMoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailViewModelMoreTests.swift; sourceTree = "<group>"; };
 		EC42734C2EEC5A7700262EC5 /* SearchReadyViewControllerTests2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReadyViewControllerTests2.swift; sourceTree = "<group>"; };
-		EC4767522EE1814900E959DC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EC4767542EE3ED2000E959DC /* PlaceRepositortTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceRepositortTests.swift; sourceTree = "<group>"; };
 		EC4767562EE3ED4800E959DC /* MockAuthApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAuthApiService.swift; sourceTree = "<group>"; };
 		EC4767582EE3EDE600E959DC /* MockPlaceApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPlaceApiService.swift; sourceTree = "<group>"; };
@@ -563,6 +566,10 @@
 		EC7F474E2EFE71E0000B5F80 /* DeepLinkParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkParserTests.swift; sourceTree = "<group>"; };
 		EC7F47522EFE72EF000B5F80 /* DeepLinkHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkHandlerTests.swift; sourceTree = "<group>"; };
 		EC7F47542EFEE3D1000B5F80 /* BibleAtlas.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = BibleAtlas.xctestplan; sourceTree = "<group>"; };
+		EC7F47642EFFDED8000B5F80 /* AnalyticsLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsLogger.swift; sourceTree = "<group>"; };
+		EC7F47682EFFEF2C000B5F80 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EC7F476A2EFFF8CF000B5F80 /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
+		EC7F476B2EFFF8DF000B5F80 /* AnalyticsLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsLoggerTests.swift; sourceTree = "<group>"; };
 		EC8ABAF92D75923C00AEC01B /* DiffCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffCode.swift; sourceTree = "<group>"; };
 		EC940E9A2DEF25E300406944 /* ToggleCircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleCircleButton.swift; sourceTree = "<group>"; };
 		EC940E9C2DF0758C00406944 /* BibleVerseDetailBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleVerseDetailBottomSheetViewController.swift; sourceTree = "<group>"; };
@@ -654,6 +661,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC7F475A2EFFB9BB000B5F80 /* FirebaseAnalytics in Frameworks */,
+				EC7F475C2EFFB9BB000B5F80 /* FirebaseAnalyticsCore in Frameworks */,
 				39B9D8CDDF5E2F1957E7A42C /* Pods_BibleAtlas.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -783,6 +792,8 @@
 		EC47675A2EE3F5EC00E959DC /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				EC7F476B2EFFF8DF000B5F80 /* AnalyticsLoggerTests.swift */,
+				EC7F476A2EFFF8CF000B5F80 /* Untitled.swift */,
 				EC42733E2EEBDEC800262EC5 /* AppInitializerTests.swift */,
 				EC47675B2EE3F60200E959DC /* KeychainTokenProviderTests.swift */,
 			);
@@ -953,6 +964,7 @@
 		EC64B9762DE44AAB00D3C8A7 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				EC7F47632EFFDEC7000B5F80 /* Infra */,
 				EC940EA22DF1759300406944 /* Extensions */,
 				EC64B9772DE44B3000D3C8A7 /* Services */,
 				EC64B9562DD8481000D3C8A7 /* Stores */,
@@ -1059,6 +1071,14 @@
 			path = DeepLink;
 			sourceTree = "<group>";
 		};
+		EC7F47632EFFDEC7000B5F80 /* Infra */ = {
+			isa = PBXGroup;
+			children = (
+				EC7F47642EFFDED8000B5F80 /* AnalyticsLogger.swift */,
+			);
+			path = Infra;
+			sourceTree = "<group>";
+		};
 		EC940EA22DF1759300406944 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -1135,7 +1155,6 @@
 		ECA94B8A2D5082B9005B0428 = {
 			isa = PBXGroup;
 			children = (
-				EC4767522EE1814900E959DC /* GoogleService-Info.plist */,
 				EC1B2DEA2E96AC980073EBE3 /* Config */,
 				EC0F01DB2E826B8E00D7C216 /* Localizable.strings */,
 				EC0F01E82E827CB800D7C216 /* Localizable.stringsdict */,
@@ -1161,6 +1180,7 @@
 		ECA94B952D5082B9005B0428 /* BibleAtlas */ = {
 			isa = PBXGroup;
 			children = (
+				EC7F47682EFFEF2C000B5F80 /* GoogleService-Info.plist */,
 				EC7F47542EFEE3D1000B5F80 /* BibleAtlas.xctestplan */,
 				ECE2170D2EFBC3C400249F1F /* BibleAtlasRelease.entitlements */,
 				EC0F01DD2E82745400D7C216 /* Utils */,
@@ -1549,6 +1569,7 @@
 			mainGroup = ECA94B8A2D5082B9005B0428;
 			packageReferences = (
 				EC77CDFA2DC5AF6F0030DEF5 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				EC7F47582EFFB9BB000B5F80 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = ECA94B942D5082B9005B0428 /* Products */;
 			projectDirPath = "";
@@ -1568,9 +1589,9 @@
 				EC9A0A452E6C71BF00BB580E /* Launch Screen.storyboard in Resources */,
 				EC0F01D92E826B8E00D7C216 /* Localizable.strings in Resources */,
 				EC7F47552EFEE3D1000B5F80 /* BibleAtlas.xctestplan in Resources */,
-				EC4767532EE1814900E959DC /* GoogleService-Info.plist in Resources */,
 				ECA94BA32D5082BA005B0428 /* Assets.xcassets in Resources */,
 				EC0F01E62E827CB800D7C216 /* Localizable.stringsdict in Resources */,
+				EC7F47692EFFEF2C000B5F80 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1697,6 +1718,7 @@
 				EC940EA42DF175AB00406944 /* NotificationName.swift in Sources */,
 				EC64B9862DE732CC00D3C8A7 /* PlaceRepository.swift in Sources */,
 				EC70587E2DB397CF002D47DF /* BottomSheetCoordinator.swift in Sources */,
+				EC7F47652EFFDEDA000B5F80 /* AnalyticsLogger.swift in Sources */,
 				EC14C6402EC84CF9008F90D6 /* ReportApiService.swift in Sources */,
 				EC64B9602DDAEDFA00D3C8A7 /* AppInitializer.swift in Sources */,
 				EC77CE3E2DD09AD30030DEF5 /* PlaceModificationBottomSheetViewModel.swift in Sources */,
@@ -1862,6 +1884,7 @@
 				EC4767962EE4659400E959DC /* PlaceTypeCellTests.swift in Sources */,
 				EC7F47532EFE72F0000B5F80 /* DeepLinkHandlerTests.swift in Sources */,
 				EC0F020A2E85399500D7C216 /* AlamofireSessionAdapter.swift in Sources */,
+				EC7F476C2EFFF8E0000B5F80 /* AnalyticsLoggerTests.swift in Sources */,
 				EC4767F72EE71CFA00E959DC /* TokenRefresherTests.swift in Sources */,
 				EC4767F52EE71CC500E959DC /* MockSession.swift in Sources */,
 				ECD972782E3F71B100D94767 /* AuthUsecaseTests.swift in Sources */,
@@ -2126,6 +2149,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BibleAtlas/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = BibleAtlas;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -2164,6 +2188,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BibleAtlas/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = BibleAtlas;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -2281,7 +2306,28 @@
 				minimumVersion = 6.9.0;
 			};
 		};
+		EC7F47582EFFB9BB000B5F80 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.7.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EC7F47592EFFB9BB000B5F80 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EC7F47582EFFB9BB000B5F80 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		EC7F475B2EFFB9BB000B5F80 /* FirebaseAnalyticsCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EC7F47582EFFB9BB000B5F80 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsCore;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		ECA94B9F2D5082B9005B0428 /* BibleAtlas.xcdatamodeld */ = {

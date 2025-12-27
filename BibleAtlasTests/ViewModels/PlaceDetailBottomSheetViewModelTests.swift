@@ -98,7 +98,8 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
             refetchButtonTapped$: .empty(),
             verseCellTapped$: .empty(),
             moreVerseButtonTapped$: .empty(),
-            reportButtonTapped$: .empty()
+            reportButtonTapped$: .empty(),
+            shareButtonTapped$: .empty(),
         ))
 
         let placeExp = expectation(description: "place set")
@@ -151,7 +152,8 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
             refetchButtonTapped$: .empty(),
             verseCellTapped$: .empty(),
             moreVerseButtonTapped$: .empty(),
-            reportButtonTapped$: .empty()
+            reportButtonTapped$: .empty(),
+            shareButtonTapped$: .empty()
         ))
 
         let errorExp = expectation(description: "error emitted")
@@ -196,7 +198,7 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
             schedular: schedular
         )
         
-        let output = vm.transform(input: PlaceDetailViewModel.Input(viewLoaded$: .empty(), saveButtonTapped$: .empty(), closeButtonTapped$: .empty(), backButtonTapped$: .empty(), likeButtonTapped$: .empty(), placeModificationButtonTapped$: .empty(), memoButtonTapped$: .empty(), placeCellTapped$: .empty(), refetchButtonTapped$: .empty(), verseCellTapped$: .empty(), moreVerseButtonTapped$: .empty(), reportButtonTapped$: .empty()))
+        let output = vm.transform(input: PlaceDetailViewModel.Input(viewLoaded$: .empty(), saveButtonTapped$: .empty(), closeButtonTapped$: .empty(), backButtonTapped$: .empty(), likeButtonTapped$: .empty(), placeModificationButtonTapped$: .empty(), memoButtonTapped$: .empty(), placeCellTapped$: .empty(), refetchButtonTapped$: .empty(), verseCellTapped$: .empty(), moreVerseButtonTapped$: .empty(), reportButtonTapped$: .empty(), shareButtonTapped$: .empty()))
         
         let placeExp = expectation(description: "place set")
         var got: Place?
@@ -250,7 +252,7 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
         )
         
         let viewLoaded$ = PublishRelay<Void>();
-        let output = vm.transform(input: PlaceDetailViewModel.Input(viewLoaded$: viewLoaded$.asObservable(), saveButtonTapped$: .empty(), closeButtonTapped$: .empty(), backButtonTapped$: .empty(), likeButtonTapped$: .empty(), placeModificationButtonTapped$: .empty(), memoButtonTapped$: .empty(), placeCellTapped$: .empty(), refetchButtonTapped$: .empty(), verseCellTapped$: .empty(), moreVerseButtonTapped$: .empty(), reportButtonTapped$: .empty()))
+        let output = vm.transform(input: PlaceDetailViewModel.Input(viewLoaded$: viewLoaded$.asObservable(), saveButtonTapped$: .empty(), closeButtonTapped$: .empty(), backButtonTapped$: .empty(), likeButtonTapped$: .empty(), placeModificationButtonTapped$: .empty(), memoButtonTapped$: .empty(), placeCellTapped$: .empty(), refetchButtonTapped$: .empty(), verseCellTapped$: .empty(), moreVerseButtonTapped$: .empty(), reportButtonTapped$: .empty(), shareButtonTapped$: .empty()))
         
         
         viewLoaded$.accept(())
@@ -306,7 +308,7 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
         
         let cellTapped$ = PublishRelay<String>();
         
-        let _ = vm.transform(input: PlaceDetailViewModel.Input(viewLoaded$: .empty(), saveButtonTapped$: .empty(), closeButtonTapped$: .empty(), backButtonTapped$: .empty(), likeButtonTapped$: .empty(), placeModificationButtonTapped$: .empty(), memoButtonTapped$: .empty(), placeCellTapped$: cellTapped$.asObservable(), refetchButtonTapped$: .empty(), verseCellTapped$: .empty(), moreVerseButtonTapped$: .empty(), reportButtonTapped$: .empty()))
+        let _ = vm.transform(input: PlaceDetailViewModel.Input(viewLoaded$: .empty(), saveButtonTapped$: .empty(), closeButtonTapped$: .empty(), backButtonTapped$: .empty(), likeButtonTapped$: .empty(), placeModificationButtonTapped$: .empty(), memoButtonTapped$: .empty(), placeCellTapped$: cellTapped$.asObservable(), refetchButtonTapped$: .empty(), verseCellTapped$: .empty(), moreVerseButtonTapped$: .empty(), reportButtonTapped$: .empty(), shareButtonTapped$: .empty()))
         
         let testPlaceId = "test"
         cellTapped$.accept(testPlaceId)
@@ -328,7 +330,7 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
         )
         let likeButtonTapped$ = PublishRelay<Void>();
         
-        let _ = vm.transform(input: PlaceDetailViewModel.Input(viewLoaded$: .empty(), saveButtonTapped$: .empty(), closeButtonTapped$: .empty(), backButtonTapped$: .empty(), likeButtonTapped$: likeButtonTapped$.asObservable(), placeModificationButtonTapped$: .empty(), memoButtonTapped$: .empty(), placeCellTapped$: .empty(), refetchButtonTapped$: .empty(), verseCellTapped$: .empty(), moreVerseButtonTapped$: .empty(), reportButtonTapped$: .empty()))
+        let _ = vm.transform(input: PlaceDetailViewModel.Input(viewLoaded$: .empty(), saveButtonTapped$: .empty(), closeButtonTapped$: .empty(), backButtonTapped$: .empty(), likeButtonTapped$: likeButtonTapped$.asObservable(), placeModificationButtonTapped$: .empty(), memoButtonTapped$: .empty(), placeCellTapped$: .empty(), refetchButtonTapped$: .empty(), verseCellTapped$: .empty(), moreVerseButtonTapped$: .empty(), reportButtonTapped$: .empty(), shareButtonTapped$: .empty()))
         
         likeButtonTapped$.accept(())
         
@@ -368,7 +370,7 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
         let viewLoaded$ = PublishRelay<Void>();
         let likeButtonTapped$ = PublishRelay<Void>();
         
-        let output = vm.transform(input: PlaceDetailViewModel.Input(viewLoaded$: viewLoaded$.asObservable(), saveButtonTapped$: .empty(), closeButtonTapped$: .empty(), backButtonTapped$: .empty(), likeButtonTapped$: likeButtonTapped$.asObservable(), placeModificationButtonTapped$: .empty(), memoButtonTapped$: .empty(), placeCellTapped$: .empty(), refetchButtonTapped$: .empty(), verseCellTapped$: .empty(), moreVerseButtonTapped$: .empty(), reportButtonTapped$: .empty()))
+        let output = vm.transform(input: PlaceDetailViewModel.Input(viewLoaded$: viewLoaded$.asObservable(), saveButtonTapped$: .empty(), closeButtonTapped$: .empty(), backButtonTapped$: .empty(), likeButtonTapped$: likeButtonTapped$.asObservable(), placeModificationButtonTapped$: .empty(), memoButtonTapped$: .empty(), placeCellTapped$: .empty(), refetchButtonTapped$: .empty(), verseCellTapped$: .empty(), moreVerseButtonTapped$: .empty(), reportButtonTapped$: .empty(), shareButtonTapped$: .empty()))
         
      
         
@@ -427,7 +429,7 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
         let viewLoaded$ = PublishRelay<Void>();
         let likeButtonTapped$ = PublishRelay<Void>();
         
-        let output = vm.transform(input: PlaceDetailViewModel.Input(viewLoaded$: viewLoaded$.asObservable(), saveButtonTapped$: .empty(), closeButtonTapped$: .empty(), backButtonTapped$: .empty(), likeButtonTapped$: likeButtonTapped$.asObservable(), placeModificationButtonTapped$: .empty(), memoButtonTapped$: .empty(), placeCellTapped$: .empty(), refetchButtonTapped$: .empty(), verseCellTapped$: .empty(), moreVerseButtonTapped$: .empty(), reportButtonTapped$: .empty()))
+        let output = vm.transform(input: PlaceDetailViewModel.Input(viewLoaded$: viewLoaded$.asObservable(), saveButtonTapped$: .empty(), closeButtonTapped$: .empty(), backButtonTapped$: .empty(), likeButtonTapped$: likeButtonTapped$.asObservable(), placeModificationButtonTapped$: .empty(), memoButtonTapped$: .empty(), placeCellTapped$: .empty(), refetchButtonTapped$: .empty(), verseCellTapped$: .empty(), moreVerseButtonTapped$: .empty(), reportButtonTapped$: .empty(), shareButtonTapped$: .empty()))
         
         
         let likingDoneExp = expectation(description: "isLiking turned back to false")
@@ -492,7 +494,8 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
             refetchButtonTapped$: .empty(),
             verseCellTapped$: .empty(), 
             moreVerseButtonTapped$: .empty(),
-            reportButtonTapped$: .empty()
+            reportButtonTapped$: .empty(),
+            shareButtonTapped$: .empty()
         ))
 
     
@@ -546,7 +549,7 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
         let viewLoaded$ = PublishRelay<Void>();
         let saveButtonTapped$ = PublishRelay<Void>();
         
-        let output = vm.transform(input: PlaceDetailViewModel.Input(viewLoaded$: viewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$.asObservable(), closeButtonTapped$: .empty(), backButtonTapped$: .empty(), likeButtonTapped$: .empty(), placeModificationButtonTapped$: .empty(), memoButtonTapped$: .empty(), placeCellTapped$: .empty(), refetchButtonTapped$: .empty(), verseCellTapped$: .empty(), moreVerseButtonTapped$: .empty(), reportButtonTapped$: .empty()))
+        let output = vm.transform(input: PlaceDetailViewModel.Input(viewLoaded$: viewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$.asObservable(), closeButtonTapped$: .empty(), backButtonTapped$: .empty(), likeButtonTapped$: .empty(), placeModificationButtonTapped$: .empty(), memoButtonTapped$: .empty(), placeCellTapped$: .empty(), refetchButtonTapped$: .empty(), verseCellTapped$: .empty(), moreVerseButtonTapped$: .empty(), reportButtonTapped$: .empty(), shareButtonTapped$: .empty()))
         
         
         var got:Place?
@@ -610,7 +613,7 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
         let viewLoaded$ = PublishRelay<Void>();
         let saveButtonTapped$ = PublishRelay<Void>();
         
-        let output = vm.transform(input: PlaceDetailViewModel.Input(viewLoaded$: viewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$.asObservable(), closeButtonTapped$: .empty(), backButtonTapped$: .empty(), likeButtonTapped$: .empty(), placeModificationButtonTapped$: .empty(), memoButtonTapped$: .empty(), placeCellTapped$: .empty(), refetchButtonTapped$: .empty(), verseCellTapped$: .empty(), moreVerseButtonTapped$: .empty(), reportButtonTapped$: .empty()))
+        let output = vm.transform(input: PlaceDetailViewModel.Input(viewLoaded$: viewLoaded$.asObservable(), saveButtonTapped$: saveButtonTapped$.asObservable(), closeButtonTapped$: .empty(), backButtonTapped$: .empty(), likeButtonTapped$: .empty(), placeModificationButtonTapped$: .empty(), memoButtonTapped$: .empty(), placeCellTapped$: .empty(), refetchButtonTapped$: .empty(), verseCellTapped$: .empty(), moreVerseButtonTapped$: .empty(), reportButtonTapped$: .empty(), shareButtonTapped$: .empty()))
         
         
         var gotErr:NetworkError?
@@ -662,7 +665,7 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
             schedular: schedular
         )
         
-        let output = vm.transform(input: PlaceDetailViewModel.Input(viewLoaded$: .empty(), saveButtonTapped$: .empty(), closeButtonTapped$: .empty(), backButtonTapped$: .empty(), likeButtonTapped$: .empty(), placeModificationButtonTapped$: .empty(), memoButtonTapped$: .empty(), placeCellTapped$: .empty(), refetchButtonTapped$: .empty(), verseCellTapped$: .empty(), moreVerseButtonTapped$: .empty(), reportButtonTapped$: .empty()))
+        let output = vm.transform(input: PlaceDetailViewModel.Input(viewLoaded$: .empty(), saveButtonTapped$: .empty(), closeButtonTapped$: .empty(), backButtonTapped$: .empty(), likeButtonTapped$: .empty(), placeModificationButtonTapped$: .empty(), memoButtonTapped$: .empty(), placeCellTapped$: .empty(), refetchButtonTapped$: .empty(), verseCellTapped$: .empty(), moreVerseButtonTapped$: .empty(), reportButtonTapped$: .empty(), shareButtonTapped$: .empty()))
         
         let isLoggedInExp = expectation(description: "isLoggedIn set")
         
@@ -722,7 +725,7 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
         let viewLoaded$ = PublishRelay<Void>();
 
         
-        let output = vm.transform(input: PlaceDetailViewModel.Input(viewLoaded$: viewLoaded$.asObservable(), saveButtonTapped$: .empty(), closeButtonTapped$: .empty(), backButtonTapped$: .empty(), likeButtonTapped$: .empty(), placeModificationButtonTapped$: .empty(), memoButtonTapped$: .empty(), placeCellTapped$: .empty(), refetchButtonTapped$: .empty(), verseCellTapped$: .empty(), moreVerseButtonTapped$: .empty(), reportButtonTapped$: .empty()))
+        let output = vm.transform(input: PlaceDetailViewModel.Input(viewLoaded$: viewLoaded$.asObservable(), saveButtonTapped$: .empty(), closeButtonTapped$: .empty(), backButtonTapped$: .empty(), likeButtonTapped$: .empty(), placeModificationButtonTapped$: .empty(), memoButtonTapped$: .empty(), placeCellTapped$: .empty(), refetchButtonTapped$: .empty(), verseCellTapped$: .empty(), moreVerseButtonTapped$: .empty(), reportButtonTapped$: .empty(), shareButtonTapped$: .empty()))
         
         
         let placeSetExp = expectation(description: "place set")
@@ -761,7 +764,7 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
         let exp = expectation(description: "values received")
         exp.expectedFulfillmentCount = 2
         
-        let output = vm.transform(input: PlaceDetailViewModel.Input(viewLoaded$: .empty(), saveButtonTapped$: .empty(), closeButtonTapped$: .empty(), backButtonTapped$: .empty(), likeButtonTapped$: .empty(), placeModificationButtonTapped$: .empty(), memoButtonTapped$: .empty(), placeCellTapped$: .empty(), refetchButtonTapped$: .empty(), verseCellTapped$: .empty(), moreVerseButtonTapped$: .empty(), reportButtonTapped$: .empty()))
+        let output = vm.transform(input: PlaceDetailViewModel.Input(viewLoaded$: .empty(), saveButtonTapped$: .empty(), closeButtonTapped$: .empty(), backButtonTapped$: .empty(), likeButtonTapped$: .empty(), placeModificationButtonTapped$: .empty(), memoButtonTapped$: .empty(), placeCellTapped$: .empty(), refetchButtonTapped$: .empty(), verseCellTapped$: .empty(), moreVerseButtonTapped$: .empty(), reportButtonTapped$: .empty(), shareButtonTapped$: .empty()))
         
         output.hasPrevPlaceId$
             .skip(1)
@@ -818,7 +821,8 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
             refetchButtonTapped$: .empty(),
             verseCellTapped$: .empty(),
             moreVerseButtonTapped$: .empty(),
-            reportButtonTapped$: .empty()
+            reportButtonTapped$: .empty(),
+            shareButtonTapped$: .empty()
         ))
 
         let placeExp = expectation(description: "place set")
@@ -872,7 +876,8 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
             refetchButtonTapped$: .empty(),
             verseCellTapped$: .empty(),
             moreVerseButtonTapped$: .empty(),
-            reportButtonTapped$: .empty()
+            reportButtonTapped$: .empty(),
+            shareButtonTapped$: .empty()
         ))
 
         close$.accept(())
@@ -905,7 +910,8 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
             refetchButtonTapped$: .empty(),
             verseCellTapped$: .empty(),
             moreVerseButtonTapped$: .empty(),
-            reportButtonTapped$: .empty()
+            reportButtonTapped$: .empty(),
+            shareButtonTapped$: .empty()
         ))
 
         back$.accept(())
@@ -936,7 +942,8 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
             refetchButtonTapped$: .empty(),
             verseCellTapped$: .empty(),
             moreVerseButtonTapped$: .empty(),
-            reportButtonTapped$: .empty()
+            reportButtonTapped$: .empty(),
+            shareButtonTapped$: .empty()
         ))
 
         memo$.accept(())
@@ -970,7 +977,8 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
             refetchButtonTapped$: .empty(),
             verseCellTapped$: .empty(),
             moreVerseButtonTapped$: .empty(),
-            reportButtonTapped$: .empty()
+            reportButtonTapped$: .empty(),
+            shareButtonTapped$: .empty()
         ))
 
         memo$.accept(())
@@ -1001,7 +1009,8 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
             refetchButtonTapped$: .empty(),
             verseCellTapped$: .empty(),
             moreVerseButtonTapped$: .empty(),
-            reportButtonTapped$: .empty()
+            reportButtonTapped$: .empty(),
+            shareButtonTapped$: .empty()
         ))
 
         modify$.accept(())
@@ -1035,7 +1044,8 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
             refetchButtonTapped$: .empty(),
             verseCellTapped$: .empty(),
             moreVerseButtonTapped$: .empty(),
-            reportButtonTapped$: .empty()
+            reportButtonTapped$: .empty(),
+            shareButtonTapped$: .empty()
         ))
 
         modify$.accept(())
@@ -1066,7 +1076,8 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
             refetchButtonTapped$: .empty(),
             verseCellTapped$: verseTap$.asObservable(),
             moreVerseButtonTapped$: .empty(),
-            reportButtonTapped$: .empty()
+            reportButtonTapped$: .empty(),
+            shareButtonTapped$: .empty()
         ))
 
         verseTap$.accept((.Gen, "1.1"))
@@ -1109,7 +1120,8 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
             refetchButtonTapped$: .empty(),
             verseCellTapped$: verseTap$.asObservable(),
             moreVerseButtonTapped$: .empty(),
-            reportButtonTapped$: .empty()
+            reportButtonTapped$: .empty(),
+            shareButtonTapped$: .empty()
         ))
 
         // place 로드 후 탭
@@ -1149,7 +1161,8 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
             refetchButtonTapped$: .empty(),
             verseCellTapped$: .empty(),
             moreVerseButtonTapped$: more$.asObservable(),
-            reportButtonTapped$: .empty()
+            reportButtonTapped$: .empty(),
+            shareButtonTapped$: .empty()
         ))
 
         more$.accept(nil)
@@ -1180,7 +1193,8 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
             refetchButtonTapped$: .empty(),
             verseCellTapped$: .empty(),
             moreVerseButtonTapped$: .empty(),
-            reportButtonTapped$: report$.asObservable()
+            reportButtonTapped$: report$.asObservable(),
+            shareButtonTapped$: .empty()
         ))
 
         report$.accept(.spam)
@@ -1210,7 +1224,8 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
             refetchButtonTapped$: .empty(),
             verseCellTapped$: .empty(),
             moreVerseButtonTapped$: .empty(),
-            reportButtonTapped$: .empty()
+            reportButtonTapped$: .empty(),
+            shareButtonTapped$: .empty()
         ))
 
         let noPlaceExp = expectation(description: "no place emission")
@@ -1259,7 +1274,8 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
             refetchButtonTapped$: .empty(),
             verseCellTapped$: .empty(),
             moreVerseButtonTapped$: .empty(),
-            reportButtonTapped$: .empty()
+            reportButtonTapped$: .empty(),
+            shareButtonTapped$: .empty()
         ))
 
         var gotErr: NetworkError?
@@ -1307,7 +1323,8 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
             refetchButtonTapped$: .empty(),
             verseCellTapped$: .empty(),
             moreVerseButtonTapped$: .empty(),
-            reportButtonTapped$: .empty()
+            reportButtonTapped$: .empty(),
+            shareButtonTapped$: .empty()
         ))
 
         viewLoaded$.accept(())

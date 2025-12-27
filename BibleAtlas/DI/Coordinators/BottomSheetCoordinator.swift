@@ -30,6 +30,52 @@ enum BottomSheetType:Equatable {
     case myPage
     case accountManagement
     case report
+
+    var stringValue: String {
+        switch self {
+        case .home: return "home"
+        case .login: return "login"
+        case .myCollection(let filter):
+            return "myCollection(\(String(describing: filter)))"
+        case .placeDetail(let id):
+            return "placeDetail(\(id))"
+        case .placeDetailPrevious:
+            return "placeDetailPrevious"
+        case .memo(let id):
+            return "memo(\(id))"
+        case .placeModification(let id):
+            return "placeModification(\(id))"
+        case .placeTypes:
+            return "placeTypes"
+        case .placeCharacters:
+            return "placeCharacters"
+        case .bibles:
+            return "bibles"
+        case .placesByType(let typeName):
+            return "placesByType(\(String(describing: typeName)))"
+        case .placesByCharacter(let name):
+            return "placesByCharacter(\(name))"
+        case .placesByBible(let bibleBook):
+            return "placesByBible(\(String(describing: bibleBook)))"
+        case .placeReport(let placeId, let reportType):
+            return "placeReport(\(placeId), \(String(describing: reportType)))"
+        case .bibleVerseDetail(let bibleBook, let keyword, let placeName):
+            let place = placeName ?? "nil"
+            return "bibleVerseDetail(\(String(describing: bibleBook)), \(keyword), \(place))"
+        case .bibleBookVerseList(let placeId, let bibleBook):
+            return "bibleBookVerseList(\(placeId), \(String(describing: bibleBook)))"
+        case .recentSearches:
+            return "recentSearches"
+        case .popularPlaces:
+            return "popularPlaces"
+        case .myPage:
+            return "myPage"
+        case .accountManagement:
+            return "accountManagement"
+        case .report:
+            return "report"
+        }
+    }
 }
 
 
@@ -52,6 +98,7 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
     private weak var presenter: Presentable?
     private let vcFactory: VCFactoryProtocol;
     private let vmFactory: VMFactoryProtocol;
+    private weak var analytics:AnalyticsLogging?
     
     private let notificationService: RxNotificationServiceProtocol?;
         
@@ -70,17 +117,22 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
     private var pendingRequests: [BottomSheetType] = [.home]
     private var isReady: Bool { presenter != nil }
 
+    private func resetPendingRequests(){
+        self.pendingRequests = [.home]
+    }
+    
     private func flushPendingIfReady() {
         guard isReady, !pendingRequests.isEmpty else { return }
         let requests = pendingRequests
-        pendingRequests.removeAll()
+        resetPendingRequests()
         requests.forEach { performPresent($0) }
     }
     
-    init(vcFactory: VCFactoryProtocol, vmFactory:VMFactoryProtocol, notificationService:RxNotificationServiceProtocol) {
+    init(vcFactory: VCFactoryProtocol, vmFactory:VMFactoryProtocol, notificationService:RxNotificationServiceProtocol, analytics: AnalyticsLogging? =  nil) {
         self.vmFactory = vmFactory;
         self.vcFactory = vcFactory;
         self.notificationService = notificationService
+        self.analytics = analytics
     }
 
     func setPresenter(_ presenter: Presentable?) {
@@ -210,20 +262,24 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             let vc = vcFactory.makeHomeBottomSheetVC(homeVM: homeVM, homeContentVM: homeContentVM, searchResultVM: searchResultVM, searchReadyVM: searchReadyVM);
             
             presentFromTopVC(vc);
+            analytics?.log(AnalyticsEvents.screen("HomeBottomSheet"))
             
         case .login:
             let vm = vmFactory.makeLoginBottomSheetVM();
             let vc = vcFactory.makeLoginBottomSheetVC(vm: vm);
             presentFromTopVC(vc);
-            
+            analytics?.log(AnalyticsEvents.screen("LoginBottomSheet"))
+
         case .myCollection(let filter):
             let vm = vmFactory.makeMyCollectionBottomSheetVM(filter: filter);
             let vc = vcFactory.makeMyCollectionBottomSheetVC(vm: vm);
             presentFromTopVC(vc)
-            
+            analytics?.log(AnalyticsEvents.screen("MyCollectionSheet"))
+
         case .placeDetail(let placeId):
             presentDetail(placeId: placeId)
-            
+            analytics?.log(AnalyticsEvents.placeOpen(placeId: placeId))
+
         case .placeDetailPrevious:
             backDetail()
             
@@ -231,84 +287,101 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             let vm = vmFactory.makeMemoBottomSheetVM(placeId: placeId);
             let vc = vcFactory.makeMemoBottomSheetVC(vm: vm);
             presentFromTopVC(vc)
-            
-            
+            analytics?.log(AnalyticsEvents.screen("MemoSheet"))
+
         case .placeModification(let placeId):
             let vm = vmFactory.makePlaceModificationBottomSheerVM(placeId: placeId);
             let vc = vcFactory.makePlaceModificationBottomSheetVC(vm: vm);
-            
             presentFromTopVC(vc)
-            
+            analytics?.log(AnalyticsEvents.screen("PlaceModificationSheet"))
+
         case .placeTypes:
             let vm = vmFactory.makePlaceTypesBottomSheetVM();
             let vc = vcFactory.makePlaceTypesBottomSheetVC(vm: vm);
             presentFromTopVC(vc);
-            
+            analytics?.log(AnalyticsEvents.screen("PlaceTypesSheet"))
+
             
         case .placeCharacters:
             let vm = vmFactory.makePlaceCharactersBottomSheetVM();
             let vc = vcFactory.makePlaceCharactersBottomSheetVC(vm: vm);
             presentFromTopVC(vc)
-            
+            analytics?.log(AnalyticsEvents.screen("PlaceCharactersSheet"))
+
         case .bibles:
             let vm = vmFactory.makeBiblesBottomSheetVM();
             let vc = vcFactory.makeBiblesBottomSheetVC(vm: vm);
             presentFromTopVC(vc)
-            
+            analytics?.log(AnalyticsEvents.screen("BiblesSheet"))
+
         case .placesByType(let placeTypeName):
             let vm = vmFactory.makePlacesByTypeBottomSheetVM(placeTypeName: placeTypeName);
             let vc = vcFactory.makePlacesByTypeBottomSheetVC(vm: vm, placeTypeName: placeTypeName);
             
             presentFromTopVC(vc)
-            
+            analytics?.log(AnalyticsEvents.screen("PlacesByTypeSheet"))
+
         case .placesByCharacter(let character):
             let vm = vmFactory.makePlacesByCharacterBottomSheetVM(character: character);
             let vc = vcFactory.makePlacesByCharacterBottomSheetVC(vm: vm, character: character);
             presentFromTopVC(vc)
-            
+            analytics?.log(AnalyticsEvents.screen("PlacesByCharacterSheet"))
+
         case .placesByBible(let bibleBook):
             let vm = vmFactory.makePlacesByBibleBottomSheetVM(bible: bibleBook)
             let vc = vcFactory.makePlacesByBibleBottomSheetVC(vm: vm, bibleBook: bibleBook)
             presentFromTopVC(vc)
-            
+            analytics?.log(AnalyticsEvents.screen("PlacesByBibleSheet"))
+
         case .bibleVerseDetail(let bibleBook, let keyword, let placeName):
             let vm = vmFactory.makeBibleVerseDetailBottomSheetVM(bibleBook:bibleBook, keyword: keyword, placeName: placeName);
             let vc = vcFactory.makeBibleVerseDetailBottomSheetVC(vm: vm, keyword: keyword);
             presentFromTopVC(vc)
-            
+            analytics?.log(AnalyticsEvents.screen("BibleVerseDetailSheet"))
+
         case .recentSearches:
             let vm = vmFactory.makeRecentSearchesBottomSheetVM();
             let vc = vcFactory.makeRecentSearchesBottomSheetVC(vm: vm);
             presentFromTopVC(vc)
-            
+            analytics?.log(AnalyticsEvents.screen("RecentSearchesSheet"))
+
         case .popularPlaces:
             let vm = vmFactory.makePopularPlacesBottomSheetVM();
             let vc = vcFactory.makePopularPlacesBottomSheetVC(vm: vm);
             presentFromTopVC(vc)
-        
+            analytics?.log(AnalyticsEvents.screen("PopularPlacesSheet"))
+
         case .myPage:
             let vm = vmFactory.makeMyPageBottomSheetVM();
             let vc = vcFactory.makeMyPageBottomSheetVC(vm: vm);
             presentFromTopVC(vc)
-            
+            analytics?.log(AnalyticsEvents.screen("MyPageSheet"))
+
         case .accountManagement:
             let vm = vmFactory.makeAccountManagementBottomSheetVM();
             let vc = vcFactory.makeAccountManagementBottomSheetVC(vm: vm);
             presentFromTopVC(vc)
+            analytics?.log(AnalyticsEvents.screen("AccountManagementSheet"))
+
         case .placeReport(let placeId, let reportType):
             let vm = vmFactory.makePlaceReportBottomSheetVM(placeId: placeId, reportType: reportType)
             let vc = vcFactory.makePlaceReportBottomSheetVC(vm: vm)
             presentFromTopVC(vc)
-            
+            analytics?.log(AnalyticsEvents.screen("PlaceReportSheet"))
+
         case .bibleBookVerseList(let placeId, let bibleBook):
             let vm = vmFactory.makeBibleBookVerseListBottomSheetVM(placeId: placeId, bibleBook: bibleBook)
             let vc = vcFactory.makeBibleBookVerseListBottomSheetVC(vm: vm);
             
             presentFromTopVC(vc)
+            analytics?.log(AnalyticsEvents.screen("BibleBookVerseListSheet"))
+
         case .report:
             let vm = vmFactory.makeReportBottomSheetVM();
             let vc = vcFactory.makeReportBottomSheetVC(vm: vm);
             presentFromTopVC(vc);
+            analytics?.log(AnalyticsEvents.screen("ReportSheet"))
+
         }
     }
 

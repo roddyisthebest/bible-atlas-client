@@ -18,6 +18,7 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
     
     private let disposeBag = DisposeBag();
     private weak var navigator: BottomSheetNavigator?
+    private weak var analytics: AnalyticsLogging?
     
     private let notificationService: RxNotificationServiceProtocol?
     
@@ -257,6 +258,15 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
         }.disposed(by: disposeBag)
         
         
+        input.shareButtonTapped$.subscribe(onNext:{[weak self] in
+            
+            guard let self = self else {
+                return;
+            }
+            
+            self.analytics?.log(AnalyticsEvents.shareTap(placeId: self.placeId, channel: "PlaceDetailSheet"))
+        }).disposed(by: disposeBag)
+        
         
         
         return Output(place$: place$.asObservable(), bibles$: bibles$.asObservable(), loadError$: loadError$.asObservable(), interactionError$: interactionError$.asObservable(), isLoading$: isLoading$.asObservable(),isSaving$: isSaving$.asObservable(), isLiking$: isLiking$.asObservable(),isLoggedIn$: isLoggedIn$.asObservable(),profile$: profile$.asObservable(), hasPrevPlaceId$: hasPrevPlaceId$.asObservable())
@@ -338,13 +348,14 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
     
     
     init(navigator:BottomSheetNavigator?, placeId:String, placeUsecase:PlaceUsecaseProtocol?, appStore:AppStoreProtocol?, collectionStore:CollectionStoreProtocol?, notificationService:RxNotificationServiceProtocol?,
-         schedular:SchedulerType = MainScheduler.instance){
+         schedular:SchedulerType = MainScheduler.instance, analytics: AnalyticsLogging? = nil){
         self.navigator = navigator
         self.placeId = placeId;
         self.placeUsecase = placeUsecase
         
         self.appStore = appStore
         self.collectionStore = collectionStore
+        self.analytics = analytics
         
         self.notificationService = notificationService
         self.schedular = schedular
@@ -368,6 +379,7 @@ final class PlaceDetailViewModel:PlaceDetailViewModelProtocol{
         let verseCellTapped$:Observable<(BibleBook, String)>
         let moreVerseButtonTapped$:Observable<BibleBook?>
         let reportButtonTapped$:Observable<PlaceReportType>
+        let shareButtonTapped$:Observable<Void>
     }
     
     public struct Output{

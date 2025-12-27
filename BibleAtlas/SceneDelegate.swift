@@ -38,7 +38,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let parser = DefaultDeepLinkParser()
         let mapper = DefaultDeepLinkToBottomSheetMapper()
         let navigator = container.bottomSheetCoordinator
-        self.deepLinkHandler = DeepLinkHandler(parser: parser, mapper: mapper, navigator: navigator)
+        let analytics = container.analytics;
+        self.deepLinkHandler = DeepLinkHandler(parser: parser, mapper: mapper, navigator: navigator, analytics: analytics)
         
         // Handle any pending URL contexts on cold start
         if let urlContext = connectionOptions.urlContexts.first {
