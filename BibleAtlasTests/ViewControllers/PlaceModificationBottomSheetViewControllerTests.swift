@@ -117,7 +117,7 @@ final class PlaceModificationBottomSheetViewControllerTests: XCTestCase {
     func test_isSuccess_true_presentsSuccessAlert() {
         // when
         mockViewModel.isSuccessSubject.onNext(true)
-        pump(0.1)
+        pump(0.5)
 
         // then
         guard let alert = viewController.presentedViewController as? UIAlertController else {

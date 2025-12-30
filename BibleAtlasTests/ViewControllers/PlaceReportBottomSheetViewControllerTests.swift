@@ -52,7 +52,7 @@ final class PlaceReportBottomSheetViewControllerTests: XCTestCase {
         let rows = sut._test_tableView.numberOfRows(inSection: 0)
 
         // then: VC의 reportTypes.count = 5 (spam, falseInfo, hateSpeech, personalInfo, etc)
-        XCTAssertEqual(rows, 5)
+        XCTAssertEqual(rows, 6)
     }
 
     // MARK: - 셀 탭 → VM으로 reportType 전달
@@ -68,12 +68,12 @@ final class PlaceReportBottomSheetViewControllerTests: XCTestCase {
 
         // then
         XCTAssertEqual(mockVM.receivedReportTypes.count, 1)
-        XCTAssertEqual(mockVM.receivedReportTypes.first, .falseInfomation)
+        XCTAssertEqual(mockVM.receivedReportTypes.first, .inappropriate)
 
         // 선택 상태에 따라 셀 설정도 바뀌어야 하므로,
         // VM이 reportTypeSubject.onNext(.falseInfomation)을 inside에서 호출해주는 구조라
         // VC의 selectedReportType도 동일하게 바뀜
-        XCTAssertEqual(sut._test_selectedReportType, .falseInfomation)
+        XCTAssertEqual(sut._test_selectedReportType, .inappropriate)
     }
 
     // MARK: - reportType = .etc 일 때 reasonTextView 노출

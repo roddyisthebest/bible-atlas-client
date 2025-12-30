@@ -69,7 +69,7 @@ platform :ios do
       workspace: "BibleAtlas.xcworkspace",
       scheme: "BibleAtlas",
       clean: false,
-      code_coverage: true,
+      code_coverage: false,
       result_bundle: false,
       device: "iPhone 15 Pro",
       only_testing: [
