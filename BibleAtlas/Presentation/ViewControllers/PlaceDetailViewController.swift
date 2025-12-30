@@ -913,7 +913,7 @@ final class PlaceDetailViewController: UIViewController {
 
             if(restBiblesCount>0){
                 self?.relatedVerseMoreButton.isHidden = false;
-                self?.relatedVerseMoreButton.setTitle("\(restBiblesCount)권 더보기", for: .normal)
+                self?.relatedVerseMoreButton.setTitle(L10n.VerseListSheet.moreBooks(restBiblesCount), for: .normal)
             }else{
                 self?.relatedVerseMoreButton.isHidden = true;
             }

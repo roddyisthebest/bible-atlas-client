@@ -125,7 +125,7 @@ final class PlaceDetailViewModelMoreTests: XCTestCase {
             verseCellTapped$: .empty(),
             moreVerseButtonTapped$: .empty(),
             reportButtonTapped$: .empty(),
-            shareButtonTapped$: .empty(),
+            shareButtonTapped$: .empty()
         ))
 
         viewLoaded$.accept(())

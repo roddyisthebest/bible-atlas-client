@@ -42,8 +42,8 @@ final class PopularPlaceTableViewCellTests: XCTestCase {
         sut.setCotent(place: place)
 
         // then
-        XCTAssertEqual(sut._test_searchLabel.text, "Jerusalem")
-        XCTAssertEqual(sut._test_likeLabel.text, "42 likes")
+        XCTAssertEqual(sut._test_searchLabel.text, L10n.isEnglish ? place.name : place.koreanName)
+        XCTAssertEqual(sut._test_likeLabel.text, L10n.PlaceDetail.likes(place.likeCount))
     }
 
     // MARK: - 타입이 1개일 때 분기 커버
@@ -67,8 +67,8 @@ final class PopularPlaceTableViewCellTests: XCTestCase {
         sut.setCotent(place: place)
 
         // then
-        XCTAssertEqual(sut._test_searchLabel.text, "Jordan")
-        XCTAssertEqual(sut._test_likeLabel.text, "10 likes")
+        XCTAssertEqual(sut._test_searchLabel.text, L10n.isEnglish ? place.name : place.koreanName)
+        XCTAssertEqual(sut._test_likeLabel.text, L10n.PlaceDetail.likes(place.likeCount))
         // 이미지 에셋은 없을 수 있으니 nil 이어도 상관 없음, 크래시만 안 나면 OK
         _ = sut._test_placeIcon.image
     }
@@ -93,8 +93,8 @@ final class PopularPlaceTableViewCellTests: XCTestCase {
         sut.setCotent(place: place)
 
         // then
-        XCTAssertEqual(sut._test_searchLabel.text, "Unknown place")
-        XCTAssertEqual(sut._test_likeLabel.text, "0 likes")
+        XCTAssertEqual(sut._test_searchLabel.text, L10n.isEnglish ? place.name : place.koreanName)
+        XCTAssertEqual(sut._test_likeLabel.text, L10n.PlaceDetail.likes(place.likeCount))
         _ = sut._test_placeIcon.image
     }
 
@@ -122,8 +122,8 @@ final class PopularPlaceTableViewCellTests: XCTestCase {
         sut.setCotent(place: place)
 
         // then
-        XCTAssertEqual(sut._test_searchLabel.text, "Mixed place")
-        XCTAssertEqual(sut._test_likeLabel.text, "5 likes")
+        XCTAssertEqual(sut._test_searchLabel.text, L10n.isEnglish ? place.name : place.koreanName)
+        XCTAssertEqual(sut._test_likeLabel.text, L10n.PlaceDetail.likes(place.likeCount))
         _ = sut._test_placeIcon.image
     }
 }

@@ -99,7 +99,7 @@ final class PlaceDetailBottomSheetViewModelTests:XCTestCase{
             verseCellTapped$: .empty(),
             moreVerseButtonTapped$: .empty(),
             reportButtonTapped$: .empty(),
-            shareButtonTapped$: .empty(),
+            shareButtonTapped$: .empty()
         ))
 
         let placeExp = expectation(description: "place set")

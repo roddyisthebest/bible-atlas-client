@@ -110,9 +110,8 @@ class PopularPlaceTableViewCell: UITableViewCell {
     }
 
     func setCotent(place: Place) {
-        searchLabel.text = place.name
-        likeLabel.text = "\(place.likeCount) likes"
-        
+        searchLabel.text = L10n.isEnglish ? place.name : place.koreanName
+        likeLabel.text = L10n.PlaceDetail.likes(place.likeCount)
         let hasOneType = place.types.count == 1;
         
         if(hasOneType){

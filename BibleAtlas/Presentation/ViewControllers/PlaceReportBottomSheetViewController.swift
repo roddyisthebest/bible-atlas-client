@@ -16,8 +16,9 @@ final class PlaceReportBottomSheetViewController: UIViewController {
 
     private let reportTypes:[PlaceReportType] = [
         .spam,
-        .falseInfomation,
+        .inappropriate,
         .hateSpeech,
+        .falseInfomation,
         .personalInfomation,
         .etc
     ]
