@@ -21,7 +21,7 @@ protocol VMFactoryProtocol {
         
     func makeHomeContentVM() -> HomeContentViewModelProtocol;
     
-    func makeSearchResultVM(keyword$: Observable<String>, isSearchingMode$: Observable<Bool>, cancelButtonTapped$: Observable<Void>) -> SearchResultViewModelProtocol
+    func makeSearchResultVM(screenMode$:Observable<HomeScreenMode>,keyword$: Observable<String>) -> SearchResultViewModelProtocol
     
     func makeSearchReadyVM() -> SearchReadyViewModelProtocol
     
@@ -86,8 +86,8 @@ final class VMFactory:VMFactoryProtocol{
         return vm;
     }
     
-    func makeSearchResultVM(keyword$: Observable<String>, isSearchingMode$: Observable<Bool>, cancelButtonTapped$: Observable<Void>) -> SearchResultViewModelProtocol {
-        let vm = SearchResultViewModel(navigator: navigator, placeUsecase: usecases?.place, isSearchingMode$: isSearchingMode$, keyword$: keyword$, cancelButtonTapped$: cancelButtonTapped$, recentSearchService: recentSearchService)
+    func makeSearchResultVM(screenMode$:Observable<HomeScreenMode>, keyword$: Observable<String>,) -> SearchResultViewModelProtocol {
+        let vm = SearchResultViewModel(navigator: navigator, placeUsecase: usecases?.place, screenMode$: screenMode$, keyword$: keyword$, recentSearchService: recentSearchService)
         return vm;
     }
     

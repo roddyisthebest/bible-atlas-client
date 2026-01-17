@@ -185,6 +185,7 @@
 		EC64B9912DEC3D1A00D3C8A7 /* EmptyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9902DEC3D1A00D3C8A7 /* EmptyLabel.swift */; };
 		EC64B9932DEC3E1700D3C8A7 /* ErrorRetryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9922DEC3E1700D3C8A7 /* ErrorRetryView.swift */; };
 		EC64B9952DEC595900D3C8A7 /* FooterLoadingReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC64B9942DEC595900D3C8A7 /* FooterLoadingReusableView.swift */; };
+		EC65BBD62F1B8DBD0024035F /* signpost.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC65BBD52F1B8DB40024035F /* signpost.swift */; };
 		EC70587B2DB39629002D47DF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70587A2DB39629002D47DF /* MainViewController.swift */; };
 		EC70587E2DB397CF002D47DF /* BottomSheetCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70587D2DB397CF002D47DF /* BottomSheetCoordinator.swift */; };
 		EC7058842DB3BAE5002D47DF /* HomeBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC7058832DB3BAE5002D47DF /* HomeBottomSheetViewController.swift */; };
@@ -522,6 +523,7 @@
 		EC64B9902DEC3D1A00D3C8A7 /* EmptyLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyLabel.swift; sourceTree = "<group>"; };
 		EC64B9922DEC3E1700D3C8A7 /* ErrorRetryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorRetryView.swift; sourceTree = "<group>"; };
 		EC64B9942DEC595900D3C8A7 /* FooterLoadingReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterLoadingReusableView.swift; sourceTree = "<group>"; };
+		EC65BBD52F1B8DB40024035F /* signpost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = signpost.swift; sourceTree = "<group>"; };
 		EC70587A2DB39629002D47DF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		EC70587D2DB397CF002D47DF /* BottomSheetCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetCoordinator.swift; sourceTree = "<group>"; };
 		EC7058832DB3BAE5002D47DF /* HomeBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomSheetViewController.swift; sourceTree = "<group>"; };
@@ -726,6 +728,7 @@
 		EC0F01DD2E82745400D7C216 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				EC65BBD52F1B8DB40024035F /* signpost.swift */,
 				ECE2170B2EF97C1000249F1F /* AppVersion.swift */,
 				EC0F01DE2E82746500D7C216 /* L10n.swift */,
 				EC1B2DEE2E96B0A90073EBE3 /* Env.swift */,
@@ -1687,6 +1690,7 @@
 				EC7058A22DBCCA9D002D47DF /* PlaceTableViewCell.swift in Sources */,
 				EC77CDF62DC337FC0030DEF5 /* MyCollectionBottomSheetViewModel.swift in Sources */,
 				EC7058AB2DBFB072002D47DF /* VMFactory.swift in Sources */,
+				EC65BBD62F1B8DBD0024035F /* signpost.swift in Sources */,
 				EC64B9522DD838E300D3C8A7 /* TokenProviderProtocol.swift in Sources */,
 				EC7058A02DBCC6FE002D47DF /* MyCollectionBottomSheetViewController.swift in Sources */,
 				EC940EAC2DF71A8100406944 /* MapUsecase.swift in Sources */,

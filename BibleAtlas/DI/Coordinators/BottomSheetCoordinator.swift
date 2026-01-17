@@ -255,7 +255,8 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             let homeVM = vmFactory.makeHomeBottomSheetVM();
             
             let homeContentVM = vmFactory.makeHomeContentVM();
-            let searchResultVM = vmFactory.makeSearchResultVM(keyword$: homeVM.keyword$.asObservable(), isSearchingMode$: homeVM.isSearchingMode$.asObservable(), cancelButtonTapped$: homeVM.cancelButtonTapped$.asObservable());
+            let searchResultVM = vmFactory.makeSearchResultVM(screenMode$: homeVM.screenMode$, keyword$: homeVM.keyword$)
+
             let searchReadyVM = vmFactory.makeSearchReadyVM();
             
             
