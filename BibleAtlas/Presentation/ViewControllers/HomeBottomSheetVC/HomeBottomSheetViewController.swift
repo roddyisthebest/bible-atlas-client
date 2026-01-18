@@ -115,8 +115,7 @@ final class HomeBottomSheetViewController: UIViewController {
         setupUI()
         setupStyle()
         setupConstraints()
-        attachChildrenOnce()         // ✅ 여기서 3개 child를 한 번에 붙임
-        showChild(homeContentViewController) // ✅ 초기 화면
+        attachChildVCsIfNeeded()         // ✅ 여기서 3개 child를 한 번에 붙임
         bindViewModel()
         setupDismissTextFieldOnTap()
     }
@@ -159,38 +158,49 @@ final class HomeBottomSheetViewController: UIViewController {
         searchTextField.resignFirstResponder()
     }
 
-    // MARK: - Child VC (attach once + show/hide)
-    private func attachChildrenOnce() {
-        attachChildOnce(homeContentViewController)
-        attachChildOnce(searchReadyViewController)
-        attachChildOnce(searchResultViewController)
+    // MARK: - Child VC pre-attach + show/hide (no fade)
+    private var didAttachChildren = false
+
+    private func attachChildVCsIfNeeded() {
+        guard !didAttachChildren else { return }
+        didAttachChildren = true
+
+        let childrenToAttach: [UIViewController] = [
+            homeContentViewController,
+            searchReadyViewController,
+            searchResultViewController
+        ]
+
+        childrenToAttach.forEach { vc in
+            addChild(vc)
+            view.insertSubview(vc.view, belowSubview: headerStackView)
+            vc.view.snp.makeConstraints { make in
+                make.top.equalTo(headerStackView.snp.bottom)
+                make.leading.trailing.bottom.equalToSuperview()
+            }
+            vc.didMove(toParent: self)
+
+            vc.view.isHidden = true
+            vc.view.isUserInteractionEnabled = false
+        }
+
+        // initial
+        showChild(homeContentViewController)
     }
 
-    private func attachChildOnce(_ vc: UIViewController) {
-        addChild(vc)
-        contentContainerView.addSubview(vc.view)
-        vc.view.snp.makeConstraints { $0.edges.equalToSuperview() }
-        vc.didMove(toParent: self)
+    /// ✅ 가장 가벼운 전환: isHidden + userInteraction만 바꿈
+    private func showChild(_ target: UIViewController) {
+        // already visible -> no-op
+        if !target.view.isHidden { return }
 
-        vc.view.isHidden = true
-        vc.view.isUserInteractionEnabled = false
+        let all = [homeContentViewController, searchReadyViewController, searchResultViewController]
+        for vc in all {
+            let isTarget = (vc === target)
+            vc.view.isHidden = !isTarget
+            vc.view.isUserInteractionEnabled = isTarget
+        }
     }
 
-    private func showChild(_ vc: UIViewController) {
-        let id = spBegin("showChild")
-        defer { spEnd("showChild", id) }
-
-        guard currentChild !== vc else { return }
-
-        currentChild?.view.isHidden = true
-        currentChild?.view.isUserInteractionEnabled = false
-
-        vc.view.isHidden = false
-        vc.view.isUserInteractionEnabled = true
-        contentContainerView.bringSubviewToFront(vc.view)
-
-        currentChild = vc
-    }
 
     // MARK: - Bind
     private func bindViewModel() {
@@ -267,13 +277,13 @@ final class HomeBottomSheetViewController: UIViewController {
     private func apply(mode: HomeScreenMode) {
         switch mode {
         case .searchReady:
-            expandToLargeIfNeeded()
+            lockToLargeDetentCoalesced()
             showChild(searchReadyViewController)
             userAvatarButton.isHidden = true
             cancelButton.isHidden = false
 
         case .searching:
-            expandToLargeIfNeeded()
+            lockToLargeDetentCoalesced()
             showChild(searchResultViewController)
             userAvatarButton.isHidden = true
             cancelButton.isHidden = false
@@ -285,17 +295,26 @@ final class HomeBottomSheetViewController: UIViewController {
             restoreDetentsAndDismissKeyboard()
         }
     }
+    
+    private var pendingLockToLarge = false
 
-    private func expandToLargeIfNeeded() {
-        let id = spBegin("expandToLargeIfNeeded")
-        defer { spEnd("expandToLargeIfNeeded", id) }
+    private func lockToLargeDetentCoalesced() {
+        guard !pendingLockToLarge else { return }
+        pendingLockToLarge = true
 
-        guard let sheet = sheetPresentationController else { return }
-        guard sheet.selectedDetentIdentifier != .large else { return }
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.pendingLockToLarge = false
 
-        sheet.animateChanges {
-            sheet.detents = [.large()]
-            sheet.selectedDetentIdentifier = .large
+            guard let sheet = self.sheetPresentationController else { return }
+
+            // 이미 large + locked면 스킵
+            if sheet.detents.count == 1, sheet.selectedDetentIdentifier == .large { return }
+
+            sheet.animateChanges {
+                sheet.detents = [.large()]
+                sheet.selectedDetentIdentifier = .large
+            }
         }
     }
 
