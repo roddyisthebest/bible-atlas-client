@@ -11,8 +11,10 @@ import RxRelay
 @testable import BibleAtlas
 
 class MockVMFactory: VMFactoryProtocol {
- 
-    
+    func makeSearchResultVM(screenMode$: RxSwift.Observable<BibleAtlas.HomeScreenMode>, keyword$: RxSwift.Observable<String>) -> any BibleAtlas.SearchResultViewModelProtocol {
+        made.append("searchResultVM")
+        return MockSearchResultViewModel()
+    }
     
     func makeBibleVerseDetailBottomSheetVM(bibleBook: BibleAtlas.BibleBook, keyword: String, placeName: String?) -> BibleAtlas.BibleVerseDetailBottomSheetViewModelProtocol {
         made.append("bibleVerseDetailBottomSheetVM")
@@ -48,11 +50,6 @@ class MockVMFactory: VMFactoryProtocol {
     func makeHomeContentVM() -> HomeContentViewModelProtocol {
         made.append("homeContentVM")
         return MockHomeContentViewModel()
-    }
-
-    func makeSearchResultVM(keyword$: Observable<String>, isSearchingMode$: Observable<Bool>, cancelButtonTapped$: Observable<Void>) -> SearchResultViewModelProtocol {
-        made.append("searchResultVM")
-        return MockSearchResultViewModel()
     }
 
     func makeSearchReadyVM() -> SearchReadyViewModelProtocol {
@@ -163,26 +160,30 @@ class MockVMFactory: VMFactoryProtocol {
 // 각 프로토콜이 요구하는 속성/메서드를 "크래시 안 나게"만 채움
 
 final class StubHomeBottomSheetVM: HomeBottomSheetViewModelProtocol {
-    let isSearchingMode$ = BehaviorRelay<Bool>(value: false)
-    let keyword$ = BehaviorRelay<String>(value: "")
-    let cancelButtonTapped$ = PublishRelay<Void>()
 
-    let forceMedium$ = PublishRelay<Void>()
-    let restoreDetents$ = PublishRelay<Void>()
+    var screenMode$: Observable<HomeScreenMode> { _screenMode$.asObservable() }
+    var keyword$: Observable<String> { _keyword$.asObservable() }
+
+    private let _screenMode$ = BehaviorRelay<HomeScreenMode>(value: .home)
+    private let _keyword$ = BehaviorRelay<String>(value: "")
+
+    private let forceMedium$ = PublishRelay<Void>()
+    private let restoreDetents$ = PublishRelay<Void>()
 
     func transform(input: HomeBottomSheetViewModel.Input) -> HomeBottomSheetViewModel.Output {
-        return .init(
+        .init(
             profile$: .just(nil),
             isLoggedIn$: .just(false),
-            screenMode$: Observable.just(.home),
-            keyword$: keyword$,
-            keywordText$: keyword$.asDriver(),
-            isSearchingMode$: isSearchingMode$.asObservable(),
+            screenMode$: _screenMode$.asDriver(onErrorJustReturn: .home),
+            keywordText$: _keyword$.asDriver(onErrorJustReturn: ""),
             forceMedium$: forceMedium$.asObservable(),
             restoreDetents$: restoreDetents$.asObservable()
         )
     }
 }
+
+
+
 
 
 

@@ -52,7 +52,6 @@ final class MockSearchResultViewModel: SearchResultViewModelProtocol {
             errorToSaveRecentSearch$: errorToSaveRecentSearchRelay.asObservable(),
             isSearching$: isSearchingRelay.asObservable(),
             isFetchingNext$: isFetchingNextRelay.asObservable(),
-            isSearchingMode$: isSearchingModeRelay.asObservable(),
             debouncedKeyword$: debouncedKeywordRelay.asObservable()
         )
     }

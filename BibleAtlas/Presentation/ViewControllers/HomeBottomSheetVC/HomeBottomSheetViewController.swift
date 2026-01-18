@@ -342,3 +342,68 @@ final class HomeBottomSheetViewController: UIViewController {
 extension HomeBottomSheetViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool { true }
 }
+
+#if DEBUG
+extension HomeBottomSheetViewController {
+    // ====== 읽기 전용 상태 ======
+
+    /// 현재 child VC의 클래스명 (예: "HomeContentViewController", "SearchReadyViewController", "SearchResultViewController")
+    var _test_currentChildClassName: String? {
+        return children.first.map { String(describing: type(of: $0)) }
+    }
+
+    /// 아바타 버튼/캔슬 버튼 가시성
+    var _test_isUserAvatarHidden: Bool { userAvatarButton.isHidden }
+    var _test_isCancelHidden: Bool { cancelButton.isHidden }
+
+    /// 검색 필드 텍스트
+    var _test_searchText: String? {
+        get { searchTextField.text }
+        set { searchTextField.text = newValue }
+    }
+
+    /// 현재 시트 detent 선택값 (nil이면 시트가 없거나 선택값 없음)
+    var _test_selectedDetentIdentifier: UISheetPresentationController.Detent.Identifier? {
+        sheetPresentationController?.selectedDetentIdentifier
+    }
+
+    /// 현재 시트 detents 개수 (nil이면 시트 없음)
+    var _test_detentsCount: Int? {
+        sheetPresentationController?.detents.count
+    }
+
+    // ====== 사용자 상호작용 시뮬레이터 ======
+
+    /// Cancel 버튼 탭 시뮬레이션
+    func _test_tapCancel() {
+        cancelButton.sendActions(for: .touchUpInside)
+    }
+
+    /// 아바타 버튼 탭 시뮬레이션
+    func _test_tapAvatar() {
+        userAvatarButton.sendActions(for: .touchUpInside)
+    }
+
+    /// 검색 필드 '편집 시작' 시그널 시뮬레이션
+    /// - Rx `controlEvent(.editingDidBegin)`이 확실히 타도록 이벤트를 직접 발생시킨다.
+    func _test_beginEditing() {
+        // 먼저 first responder 설정 (UIKit 이벤트 흐름 유사)
+        _ = searchTextField.becomeFirstResponder()
+
+        // controlEvent(.editingDidBegin) 트리거
+        searchTextField.sendActions(for: .editingDidBegin)
+    }
+
+    /// 검색 필드 '편집 종료' 시그널 시뮬레이션
+    func _test_endEditing() {
+        _ = searchTextField.resignFirstResponder()
+        searchTextField.sendActions(for: .editingDidEnd)
+    }
+
+    /// 검색 텍스트 입력 시뮬레이션 (Rx 바인딩 타게 editingChanged 함께 보냄)
+    func _test_typeSearchText(_ text: String) {
+        searchTextField.text = text
+        searchTextField.sendActions(for: .editingChanged)
+    }
+}
+#endif

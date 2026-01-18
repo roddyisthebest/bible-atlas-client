@@ -61,13 +61,11 @@ final class VMFactoryTests: XCTestCase {
 
     func test_makeSearchResultVM_returnsSearchResultViewModel() {
         let keyword$ = Observable.just("test")
-        let isSearchingMode$ = Observable.just(true)
-        let cancel$ = Observable<Void>.never()
+        let screenMode$ = Observable.just(HomeScreenMode.searching)
 
         let vm = sut.makeSearchResultVM(
-            keyword$: keyword$,
-            isSearchingMode$: isSearchingMode$,
-            cancelButtonTapped$: cancel$
+            screenMode$: screenMode$,
+            keyword$: keyword$
         )
 
         XCTAssertTrue(vm is SearchResultViewModel)
