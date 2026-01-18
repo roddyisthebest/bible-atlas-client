@@ -243,7 +243,7 @@ class MyInfoViewController: UIViewController {
     
     
     private let activities = ["달리치안스", "달리치안스", "달리치안스", "달리치안스", "달리치안스"]
-    private let alerts = ["one", "two",]
+    private let alerts = ["one", "two"]
 
     
     override func viewDidLoad() {

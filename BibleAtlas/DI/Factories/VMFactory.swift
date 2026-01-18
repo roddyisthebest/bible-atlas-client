@@ -86,7 +86,7 @@ final class VMFactory:VMFactoryProtocol{
         return vm;
     }
     
-    func makeSearchResultVM(screenMode$:Observable<HomeScreenMode>, keyword$: Observable<String>,) -> SearchResultViewModelProtocol {
+    func makeSearchResultVM(screenMode$:Observable<HomeScreenMode>, keyword$: Observable<String>) -> SearchResultViewModelProtocol {
         let vm = SearchResultViewModel(navigator: navigator, placeUsecase: usecases?.place, screenMode$: screenMode$, keyword$: keyword$, recentSearchService: recentSearchService)
         return vm;
     }
