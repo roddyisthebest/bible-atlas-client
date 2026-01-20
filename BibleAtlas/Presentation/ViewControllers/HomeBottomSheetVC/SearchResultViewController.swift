@@ -156,7 +156,6 @@ class SearchResultViewController: UIViewController {
                     if(trimmed.isEmpty){
                         self?.emptyLabel.isHidden = true
                         
-                        
                     } else{
                         self?.emptyLabel.isHidden = !places.isEmpty
                         self?.places = places
