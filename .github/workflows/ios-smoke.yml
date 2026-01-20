@@ -58,7 +58,7 @@ jobs:
           FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: "120"
           FASTLANE_XCODEBUILD_SETTINGS_RETRIES: "6"
 
-        run: bundle exec fastlane ios smokeㅋ
+        run: bundle exec fastlane ios smoke
 
       - name: Upload test output
         if: always()
