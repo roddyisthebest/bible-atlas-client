@@ -39,6 +39,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pods-
 
+      # ✅ DerivedData 캐시
+      - name: Cache DerivedData
+        uses: actions/cache@v4
+        with:
+          path: build/DerivedData
+          key: ${{ runner.os }}-deriveddata-${{ hashFiles('Podfile.lock', '**/*.xcodeproj/project.pbxproj', '**/*.xcworkspace/**') }}
+          restore-keys: |
+            ${{ runner.os }}-deriveddata-
+
       # ✅ pod install 최적화: repo 업데이트 안함
       - name: Install Pods (via Bundler)
         run: bundle exec pod install --deployment
@@ -47,6 +56,7 @@ jobs:
         env:
           FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: "120"
           FASTLANE_XCODEBUILD_SETTINGS_RETRIES: "6"
+
         run: bundle exec fastlane ios smoke
 
       - name: Upload test output
