@@ -43,9 +43,8 @@ jobs:
       - name: Cache DerivedData
         uses: actions/cache@v4
         with:
-          path: |
-            DerivedData
-          key: ${{ runner.os }}-deriveddata-${{ hashFiles('**/*.xcodeproj/project.pbxproj', '**/*.xcworkspace/contents.xcworkspacedata', 'Podfile.lock', 'Gemfile.lock') }}
+          path: build/DerivedData
+          key: ${{ runner.os }}-deriveddata-${{ hashFiles('Podfile.lock', '**/*.xcodeproj/project.pbxproj', '**/*.xcworkspace/**') }}
           restore-keys: |
             ${{ runner.os }}-deriveddata-
 

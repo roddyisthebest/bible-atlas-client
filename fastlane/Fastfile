@@ -68,11 +68,11 @@ platform :ios do
     scan(
       workspace: "BibleAtlas.xcworkspace",
       scheme: "BibleAtlas",
+      derived_data_path: "build/DerivedData",
       clean: false,
       code_coverage: false,
       result_bundle: false,
       device: "iPhone 15 Pro",
-      derived_data_path: "DerivedData",
       reset_simulator: false,
       reinstall_app: false,
       prelaunch_simulator: true,
