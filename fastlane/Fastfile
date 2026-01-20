@@ -72,6 +72,12 @@ platform :ios do
       code_coverage: false,
       result_bundle: false,
       device: "iPhone 15 Pro",
+      derived_data_path: "DerivedData",
+      reset_simulator: false,
+      reinstall_app: false,
+      prelaunch_simulator: true,
+      xcargs: "COMPILER_INDEX_STORE_ENABLE=NO -parallel-testing-enabled YES -parallel-testing-worker-count 2",
+
       only_testing: [
         "BibleAtlasTests/MainViewModelTests/test_fetchGeoJsonRequired_success_shouldSetSelectedId_resetError_toggleLoading_andEmitGeoJson",
         "BibleAtlasTests/MainViewModelTests/test_fetchGeoJsonRequired_failure_shouldToggleLoading_emitError_andNotEmitGeoJson",
