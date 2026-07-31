@@ -7,8 +7,6 @@ on:
 jobs:
   smoke:
     runs-on: macos-14
-    env:
-      RUBYOPT: "-rlogger"
 
     steps:
       - name: Checkout
