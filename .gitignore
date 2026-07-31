@@ -35,3 +35,6 @@ dependencies/
 
 
 vendor/*
+
+# App secrets (do not commit)
+Config/Secrets.xcconfig
