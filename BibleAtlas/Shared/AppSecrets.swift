@@ -8,7 +8,7 @@ enum AppSecrets {
         else {
             fatalError(
                 "AGENT_API_KEY is missing. " +
-                "Copy Config/Secrets.xcconfig.template to Config/Secrets.xcconfig and fill it in."
+                "Create Config/Secrets.xcconfig with `AGENT_API_KEY = <your_key>` and rebuild."
             )
         }
         return value
