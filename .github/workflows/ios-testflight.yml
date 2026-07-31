@@ -13,6 +13,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Generate Secrets.xcconfig
+        env:
+          AGENT_API_KEY: ${{ secrets.AGENT_API_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "${AGENT_API_KEY}" ]; then
+            echo "::error::AGENT_API_KEY secret is empty or unset"
+            exit 1
+          fi
+          cat > Config/Secrets.xcconfig <<EOF
+          AGENT_API_KEY = ${AGENT_API_KEY}
+          EOF
+          echo "Wrote Config/Secrets.xcconfig ($(wc -c < Config/Secrets.xcconfig) bytes)"
+
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
