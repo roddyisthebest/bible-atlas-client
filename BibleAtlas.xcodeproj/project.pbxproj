@@ -19,6 +19,7 @@
 		583FEC9BCDA905D8154AFE4B /* ChatBotProgressLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30783F153A7786790A8A66CE /* ChatBotProgressLabel.swift */; };
 		6900E77F0659389361C748EE /* ChatBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DD7573C443CF6E619521A6 /* ChatBubble.swift */; };
 		6EA7304A35BD7CBEB6A25FE2 /* FakeAgentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975BBA7D660A5402438CECE3 /* FakeAgentRepository.swift */; };
+		6F46869890A32392137BFABA /* ChatBotBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA9F7F2AD5A76CA884D158 /* ChatBotBottomSheetViewController.swift */; };
 		7128C3A029500ECA294B1925 /* ChatBotUserBubbleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B25EB3CA9570DF5A6DA1A5 /* ChatBotUserBubbleCell.swift */; };
 		76E253A58C6F6BD6B4D0DDEC /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CB2A0967E24BC1F962E6C3 /* ChatMessage.swift */; };
 		95E2897DF4C5A752C79C7C0B /* FakeAgentUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF27EB4DB52E0D5E3D3D3BF7 /* FakeAgentUsecase.swift */; };
@@ -370,6 +371,7 @@
 		3401A8C2430DFE176460F5CD /* AgentRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AgentRepository.swift; sourceTree = "<group>"; };
 		3A65BBCBABBF2E6DB01CA1B3 /* AgentUsecaseTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AgentUsecaseTests.swift; sourceTree = "<group>"; };
 		3FBAA91F7A66AD2235B754BC /* ChatBotBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatBotBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
+		4BAA9F7F2AD5A76CA884D158 /* ChatBotBottomSheetViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatBotBottomSheetViewController.swift; sourceTree = "<group>"; };
 		4E96B6115B0DFDAAB2122F7D /* Pods-BibleAtlasUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlasUITests.debug.xcconfig"; path = "Target Support Files/Pods-BibleAtlasUITests/Pods-BibleAtlasUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		52CB2A0967E24BC1F962E6C3 /* ChatMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		62ED149E4D469D5193C3391F /* Pods-BibleAtlas.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlas.debug.xcconfig"; path = "Target Support Files/Pods-BibleAtlas/Pods-BibleAtlas.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1442,6 +1444,7 @@
 				EC1B2DCA2E8FB0F90073EBE3 /* BibleBookVerseListBottomSheetViewController.swift */,
 				EC14C63D2EC84AE0008F90D6 /* ReportBottomSheetViewController.swift */,
 				897F49DEBD45F2219E9C0FFD /* Cells */,
+				4BAA9F7F2AD5A76CA884D158 /* ChatBotBottomSheetViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1943,6 +1946,7 @@
 				7128C3A029500ECA294B1925 /* ChatBotUserBubbleCell.swift in Sources */,
 				0CDA547C8C7C1142DD28FA0D /* ChatBotErrorBubbleCell.swift in Sources */,
 				0DE5574078C1D9C57A780CCE /* ChatBotAssistantBubbleCell.swift in Sources */,
+				6F46869890A32392137BFABA /* ChatBotBottomSheetViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
