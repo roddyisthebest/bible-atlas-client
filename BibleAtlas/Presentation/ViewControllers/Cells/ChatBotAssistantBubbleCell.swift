@@ -91,7 +91,10 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        chipsStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        chipsStack.arrangedSubviews.forEach {
+            chipsStack.removeArrangedSubview($0)
+            $0.removeFromSuperview()
+        }
         chipsStack.isHidden = true
         chipsHeader.isHidden = true
         onPlaceSelected = nil
@@ -105,7 +108,10 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
         self.placeIdMap = placeIdMap
         textView.attributedText = Self.makeAttributedString(text: text, placeNames: Array(placeIdMap.keys))
 
-        chipsStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        chipsStack.arrangedSubviews.forEach {
+            chipsStack.removeArrangedSubview($0)
+            $0.removeFromSuperview()
+        }
         chipsHeader.isHidden = recommendedQuestions.isEmpty
         chipsStack.isHidden = recommendedQuestions.isEmpty
         for q in recommendedQuestions {
@@ -113,6 +119,9 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
             btn.addAction(UIAction { [weak self] _ in self?.onChipTapped?(q) }, for: .touchUpInside)
             chipsStack.addArrangedSubview(btn)
         }
+        // 자동 높이 caching 이슈 방지: 즉시 재레이아웃.
+        contentView.setNeedsLayout()
+        contentView.layoutIfNeeded()
     }
 
     // MARK: - Helpers
