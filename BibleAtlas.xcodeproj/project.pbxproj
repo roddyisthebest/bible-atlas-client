@@ -26,6 +26,7 @@
 		A3DD6E1BE03E38AE7E6C3926 /* FakeAgentStreamClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B462063BA786994FF8FEEB2 /* FakeAgentStreamClient.swift */; };
 		A6A09322DD4AB29D30092AB0 /* AgentStreamEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B8B78CE9F350D6C50DA97A /* AgentStreamEvent.swift */; };
 		AD2ED1A93AB7BB9D54841FF8 /* SSELineParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C2CC4AEA6AE4C463BE21D2E /* SSELineParserTests.swift */; };
+		B3A3A445F4DFEDC09C518DDC /* ChatBotHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1A119C68A7AEA74A2E4583 /* ChatBotHeaderView.swift */; };
 		BA65090204207E98C6ADB336 /* AgentStreamRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0682619C070363E47D6A98B4 /* AgentStreamRequest.swift */; };
 		CA908D36EA1B62B1823FFC10 /* AgentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3401A8C2430DFE176460F5CD /* AgentRepository.swift */; };
 		CB78A92F339B1B5973EF58F6 /* AgentUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F21D784EEE1A61F917D91 /* AgentUsecase.swift */; };
@@ -337,6 +338,7 @@
 		ECE217112EFBE3AD00249F1F /* DeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE217102EFBE3AD00249F1F /* DeepLinkParser.swift */; };
 		ECE217132EFBE3C400249F1F /* DeepLinkToBottomSheetMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE217122EFBE3C400249F1F /* DeepLinkToBottomSheetMapper.swift */; };
 		ECE217152EFBE3D300249F1F /* DeepLinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE217142EFBE3D300249F1F /* DeepLinkHandler.swift */; };
+		F2C024CC0FF8B5B07FCC5FC6 /* ChatBotProgressBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C523180D26990B6F337E565F /* ChatBotProgressBanner.swift */; };
 		F817DD13A150D0E8814EE325 /* AgentRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3A83352969A75606B5ED59 /* AgentRepositoryProtocol.swift */; };
 		FD2176CBB7F954A933F76E53 /* AgentDonePayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6B471DE9F08302F3FF2A41 /* AgentDonePayload.swift */; };
 /* End PBXBuildFile section */
@@ -371,6 +373,7 @@
 		6B462063BA786994FF8FEEB2 /* FakeAgentStreamClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FakeAgentStreamClient.swift; sourceTree = "<group>"; };
 		70FFF3C7B001DB4C1EA6791C /* ChatBotBottomSheetViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatBotBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		81B5EBFD3CFA9C36E491E471 /* Pods_BibleAtlasUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BibleAtlasUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B1A119C68A7AEA74A2E4583 /* ChatBotHeaderView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatBotHeaderView.swift; sourceTree = "<group>"; };
 		8B6A273A700985258DC47262 /* SSELineParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SSELineParser.swift; sourceTree = "<group>"; };
 		8C2CC4AEA6AE4C463BE21D2E /* SSELineParserTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SSELineParserTests.swift; sourceTree = "<group>"; };
 		8EA6D60ADC15852CAC915A09 /* Pods_BibleAtlasTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BibleAtlasTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -380,6 +383,7 @@
 		A3FE80B4D9756824E099A857 /* ChatUsageCounter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatUsageCounter.swift; sourceTree = "<group>"; };
 		ADC275028A6E0F37DC7A90D5 /* Pods_BibleAtlas.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BibleAtlas.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B99651049227BE5701E9D126 /* Pods-BibleAtlasTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlasTests.debug.xcconfig"; path = "Target Support Files/Pods-BibleAtlasTests/Pods-BibleAtlasTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C523180D26990B6F337E565F /* ChatBotProgressBanner.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatBotProgressBanner.swift; sourceTree = "<group>"; };
 		C7DD7573C443CF6E619521A6 /* ChatBubble.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatBubble.swift; sourceTree = "<group>"; };
 		CCF5D5F9277B71DAA500A8F2 /* Pods-BibleAtlas-BibleAtlasUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlas-BibleAtlasUITests.release.xcconfig"; path = "Target Support Files/Pods-BibleAtlas-BibleAtlasUITests/Pods-BibleAtlas-BibleAtlasUITests.release.xcconfig"; sourceTree = "<group>"; };
 		E24E5008FCDE26C1C88C636D /* Pods-BibleAtlasUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlasUITests.release.xcconfig"; path = "Target Support Files/Pods-BibleAtlasUITests/Pods-BibleAtlasUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -1460,6 +1464,8 @@
 				EC70588F2DB9D8B9002D47DF /* Tables */,
 				EC70588C2DB8BDB9002D47DF /* Labels */,
 				EC7058892DB8BCA5002D47DF /* Buttons */,
+				8B1A119C68A7AEA74A2E4583 /* ChatBotHeaderView.swift */,
+				C523180D26990B6F337E565F /* ChatBotProgressBanner.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1914,6 +1920,8 @@
 				D000FE6F5FEE0B2E652A8E4E /* ChatSessionState.swift in Sources */,
 				583FEC9BCDA905D8154AFE4B /* ChatBotProgressLabel.swift in Sources */,
 				95E646015916ED02EA57411E /* ChatBotBottomSheetViewModel.swift in Sources */,
+				B3A3A445F4DFEDC09C518DDC /* ChatBotHeaderView.swift in Sources */,
+				F2C024CC0FF8B5B07FCC5FC6 /* ChatBotProgressBanner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
