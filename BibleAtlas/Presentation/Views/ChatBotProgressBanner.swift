@@ -24,16 +24,6 @@ final class ChatBotProgressBanner: UIView {
         return l
     }()
 
-    private let retryButton: UIButton = {
-        let b = UIButton(type: .system)
-        b.setTitle("재시도", for: .normal)
-        b.titleLabel?.font = .systemFont(ofSize: 13, weight: .semibold)
-        b.isHidden = true
-        return b
-    }()
-
-    var onRetry: (() -> Void)?
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .secondarySystemBackground
@@ -41,19 +31,18 @@ final class ChatBotProgressBanner: UIView {
         addSubview(stack)
         stack.addArrangedSubview(spinner)
         stack.addArrangedSubview(label)
-        stack.addArrangedSubview(retryButton)
         stack.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12))
         }
-        retryButton.addAction(UIAction { [weak self] _ in self?.onRetry?() }, for: .touchUpInside)
         isHidden = true
     }
 
     required init?(coder: NSCoder) { fatalError() }
 
+    /// 진행 배너는 로딩만 담당. 에러는 채팅 로그의 에러 버블이 처리.
     func apply(_ progress: ChatBotBottomSheetViewModel.ChatProgress) {
         switch progress {
-        case .idle:
+        case .idle, .error:
             isHidden = true
             spinner.stopAnimating()
         case .running(let text):
@@ -61,13 +50,6 @@ final class ChatBotProgressBanner: UIView {
             label.text = text
             spinner.isHidden = false
             spinner.startAnimating()
-            retryButton.isHidden = true
-        case .error(let message):
-            isHidden = false
-            label.text = message
-            spinner.stopAnimating()
-            spinner.isHidden = true
-            retryButton.isHidden = false
         }
     }
 }

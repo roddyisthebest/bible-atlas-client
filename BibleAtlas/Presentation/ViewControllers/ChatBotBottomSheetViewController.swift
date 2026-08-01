@@ -134,7 +134,6 @@ final class ChatBotBottomSheetViewController: UIViewController {
 
         headerView.onClose = { [weak self] in self?.dismiss(animated: true) }
         headerView.onInfoTapped = { [weak self] in self?.presentInfoAlert() }
-        progressBanner.onRetry = { [weak self] in self?.retryRelay.accept(()) }
 
         sendButton.addAction(UIAction { [weak self] _ in self?.triggerSend() }, for: .touchUpInside)
         textField.addAction(UIAction { [weak self] _ in self?.triggerSend() }, for: .editingDidEndOnExit)
@@ -281,6 +280,7 @@ extension ChatBotBottomSheetViewController: UITableViewDataSource {
         case .error:
             let cell = tableView.dequeueReusableCell(withIdentifier: ChatBotErrorBubbleCell.reuseID, for: indexPath) as! ChatBotErrorBubbleCell
             cell.configure(text: bubble.text)
+            cell.onRetry = { [weak self] in self?.retryRelay.accept(()) }
             return cell
         }
     }

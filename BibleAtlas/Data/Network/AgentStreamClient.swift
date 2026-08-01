@@ -7,13 +7,13 @@ protocol AgentStreamClientProtocol {
 enum AgentStreamError: Error, Equatable {
     case badStatus(code: Int, body: String?)
     case invalidResponse
-    case decoding(eventName: String, message: String)
+    case decoding(eventName: String, message: String, rawData: String)
 
     static func == (lhs: AgentStreamError, rhs: AgentStreamError) -> Bool {
         switch (lhs, rhs) {
         case let (.badStatus(a, ab), .badStatus(b, bb)): return a == b && ab == bb
         case (.invalidResponse, .invalidResponse): return true
-        case let (.decoding(an, am), .decoding(bn, bm)): return an == bn && am == bm
+        case let (.decoding(an, am, ar), .decoding(bn, bm, br)): return an == bn && am == bm && ar == br
         default: return false
         }
     }

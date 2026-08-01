@@ -43,9 +43,13 @@ final class AgentRepository: AgentRepositoryProtocol {
                 return nil
             }
         } catch {
+            #if DEBUG
+            print("[AgentRepository] decoding failed event=\(sse.name) error=\(error)\n  raw: \(sse.data)")
+            #endif
             throw AgentStreamError.decoding(
                 eventName: sse.name,
-                message: (error as NSError).localizedDescription
+                message: "\(error)",
+                rawData: sse.data
             )
         }
     }

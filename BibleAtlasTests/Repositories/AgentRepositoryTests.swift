@@ -78,7 +78,7 @@ final class AgentRepositoryTests: XCTestCase {
             _ = try await collect(sut.stream(request: .init(query: "q", summary: nil, messages: [])))
             XCTFail("expected throw")
         } catch let error as AgentStreamError {
-            if case .decoding(let name, _) = error {
+            if case .decoding(let name, _, _) = error {
                 XCTAssertEqual(name, "done")
             } else { XCTFail("expected .decoding, got \(error)") }
         } catch {
