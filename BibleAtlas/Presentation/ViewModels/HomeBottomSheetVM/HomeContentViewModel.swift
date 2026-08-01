@@ -186,7 +186,6 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
         let recentSearchCellTapped$:Observable<String>
         let moreRecentSearchesButtonTapped$:Observable<Void>
         let reportButtonTapped$:Observable<Void>
-        let chatBotButtonTapped$:Observable<Void>
     }
     
     public struct Output{
@@ -242,10 +241,6 @@ final class HomeContentViewModel: HomeContentViewModelProtocol{
         
         input.reportButtonTapped$.subscribe(onNext:{[weak self] in
             self?.navigator?.present(.report)
-        }).disposed(by: disposeBag)
-
-        input.chatBotButtonTapped$.subscribe(onNext: { [weak self] in
-            self?.navigator?.present(.chatBot)
         }).disposed(by: disposeBag)
 
         return Output(profile$: profile$.asObservable(), isLoggedIn$: isLoggedIn$.asObservable(), likePlacesCount$: likePlacesCount$.asObservable(), savePlacesCount$: savePlacesCount$.asObservable(), memoPlacesCount$: memoPlacesCount$.asObservable(), recentSearches$: recentSearches$.asObservable(), errorToFetchRecentSearches$: errorToFetchRecentSearches$.asObservable(), loading$: loading$.asObservable(), forceMedium$: forceMedium$.asObservable(), restoreDetents$: restoreDetents$.asObservable())
