@@ -19,7 +19,9 @@ final class HomeContentViewController: UIViewController {
     private let placesByCharacterButtonTapped$ = PublishRelay<Void>();
     
     private let reportButtonTapped$ = PublishRelay<Void>();
-    
+
+    private let chatBotButtonTapped$ = PublishRelay<Void>();
+
     private let placesByBibleButtonTapped$ = PublishRelay<Void>();
     
     private let recentSearchCellTapped$ = PublishRelay<String>();
@@ -192,13 +194,23 @@ final class HomeContentViewController: UIViewController {
     private let myGuidesLabel = MainLabel(text:L10n.HomeContent.myGuides)
     
     private lazy var guideButtonsStackView = {
-        let sv = UIStackView(arrangedSubviews: [explorePlacesButton, reportButton]);
+        let sv = UIStackView(arrangedSubviews: [explorePlacesButton, chatBotButton, reportButton]);
         sv.axis = .vertical;
         sv.distribution = .fill;
         sv.alignment = .fill
         sv.spacing = 8;
         return sv;
     }()
+
+    private lazy var chatBotButton = {
+        let button = GuideButton(titleText: "AI 챗봇");
+        button.addTarget(self, action: #selector(handleChatBotButtonTap), for: .touchUpInside)
+        return button;
+    }()
+
+    @objc private func handleChatBotButtonTap(){
+        chatBotButtonTapped$.accept(Void())
+    }
     
     private lazy var explorePlacesButton = {
         let button = GuideButton(titleText: L10n.HomeContent.explorePlaces)
@@ -376,7 +388,7 @@ final class HomeContentViewController: UIViewController {
         
         let moreRecentSearchesButtonTapped$ = moreRecentSearchesButton.rx.tap.asObservable();
         
-        let output = homeContentViewModel?.transform(input: HomeContentViewModel.Input(collectionButtonTapped$: collectionButtonTapped$.asObservable(), placesByTypeButtonTapped$: placesByTypeButtonTapped$.asObservable(), placesByCharacterButtonTapped$: placesByCharacterButtonTapped$.asObservable(), placesByBibleButtonTapped$: placesByBibleButtonTapped$.asObservable(), recentSearchCellTapped$: recentSearchCellTapped$.asObservable(), moreRecentSearchesButtonTapped$: moreRecentSearchesButtonTapped$, reportButtonTapped$: reportButtonTapped$.asObservable()));
+        let output = homeContentViewModel?.transform(input: HomeContentViewModel.Input(collectionButtonTapped$: collectionButtonTapped$.asObservable(), placesByTypeButtonTapped$: placesByTypeButtonTapped$.asObservable(), placesByCharacterButtonTapped$: placesByCharacterButtonTapped$.asObservable(), placesByBibleButtonTapped$: placesByBibleButtonTapped$.asObservable(), recentSearchCellTapped$: recentSearchCellTapped$.asObservable(), moreRecentSearchesButtonTapped$: moreRecentSearchesButtonTapped$, reportButtonTapped$: reportButtonTapped$.asObservable(), chatBotButtonTapped$: chatBotButtonTapped$.asObservable()));
         
 
         
