@@ -58,9 +58,13 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
         selectionStyle = .none
 
         contentView.addSubview(bubble)
-        bubble.addSubview(textView)
-        bubble.addSubview(chipsHeader)
-        bubble.addSubview(chipsStack)
+        bubble.addSubview(contentStack)
+
+        contentStack.addArrangedSubview(textView)
+        contentStack.addArrangedSubview(chipsHeader)
+        contentStack.addArrangedSubview(chipsStack)
+        // 텍스트와 추천 질문 헤더 사이만 좀 더 여백. 헤더/칩 사이는 기본 spacing (6).
+        contentStack.setCustomSpacing(12, after: textView)
 
         bubble.snp.makeConstraints {
             $0.top.equalToSuperview().offset(6)
@@ -68,22 +72,20 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
             $0.leading.equalToSuperview().offset(16)
             $0.trailing.lessThanOrEqualToSuperview().offset(-48)
         }
-        textView.snp.makeConstraints {
-            $0.top.leading.equalToSuperview().offset(14)
-            $0.trailing.equalToSuperview().offset(-14)
-        }
-        chipsHeader.snp.makeConstraints {
-            $0.top.equalTo(textView.snp.bottom).offset(12)
-            $0.leading.trailing.equalTo(textView)
-        }
-        chipsStack.snp.makeConstraints {
-            $0.top.equalTo(chipsHeader.snp.bottom).offset(6)
-            $0.leading.trailing.equalTo(textView)
-            $0.bottom.equalToSuperview().offset(-14)
+        contentStack.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(UIEdgeInsets(top: 14, left: 14, bottom: 14, right: 14))
         }
 
         textView.delegate = self
     }
+
+    private let contentStack: UIStackView = {
+        let s = UIStackView()
+        s.axis = .vertical
+        s.alignment = .fill
+        s.spacing = 6
+        return s
+    }()
 
     required init?(coder: NSCoder) { fatalError() }
 
