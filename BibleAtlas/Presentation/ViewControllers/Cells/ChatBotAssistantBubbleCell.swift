@@ -116,14 +116,26 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
     // MARK: - Helpers
 
     private static func makeAttributedString(text: String, placeNames: [String]) -> NSAttributedString {
+        // 1. **볼드** 파싱: 텍스트에서 ** 를 벗기고 볼드 적용할 range 를 얻는다.
+        let (stripped, boldRanges) = parseBold(text)
+
+        // 2. 기본 스타일
         let paragraph = NSMutableParagraphStyle()
         paragraph.lineSpacing = 3
-        let m = NSMutableAttributedString(string: text, attributes: [
+        let m = NSMutableAttributedString(string: stripped, attributes: [
             .font: UIFont.rounded(ofSize: 15, weight: .regular),
             .foregroundColor: UIColor.label,
             .paragraphStyle: paragraph,
         ])
-        let ns = text as NSString
+
+        // 3. 볼드 range 에 bold weight 적용
+        let boldFont = UIFont.rounded(ofSize: 15, weight: .bold)
+        for range in boldRanges {
+            m.addAttribute(.font, value: boldFont, range: range)
+        }
+
+        // 4. 장소명 링크 (place name lookup 은 볼드 벗긴 뒤 텍스트 기준)
+        let ns = stripped as NSString
         for name in placeNames where !name.isEmpty {
             var searchRange = NSRange(location: 0, length: ns.length)
             while true {
@@ -139,6 +151,38 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
             }
         }
         return m
+    }
+
+    /// `**text**` 패턴을 찾아 `**` 를 벗긴 최종 문자열과 각 볼드 부분의 NSRange 를 반환.
+    /// 비-greedy 매칭 (`.+?`). 매칭 실패 시 원본 그대로 반환.
+    private static func parseBold(_ text: String) -> (stripped: String, ranges: [NSRange]) {
+        guard let regex = try? NSRegularExpression(pattern: "\\*\\*(.+?)\\*\\*", options: [.dotMatchesLineSeparators]) else {
+            return (text, [])
+        }
+        let ns = text as NSString
+        let matches = regex.matches(in: text, range: NSRange(location: 0, length: ns.length))
+        if matches.isEmpty { return (text, []) }
+
+        let output = NSMutableString()
+        var boldRanges: [NSRange] = []
+        var cursor = 0
+
+        for match in matches {
+            let fullRange = match.range
+            let innerRange = match.range(at: 1)
+            if fullRange.location > cursor {
+                output.append(ns.substring(with: NSRange(location: cursor, length: fullRange.location - cursor)))
+            }
+            let boldStart = output.length
+            let content = ns.substring(with: innerRange)
+            output.append(content)
+            boldRanges.append(NSRange(location: boldStart, length: (content as NSString).length))
+            cursor = fullRange.location + fullRange.length
+        }
+        if cursor < ns.length {
+            output.append(ns.substring(with: NSRange(location: cursor, length: ns.length - cursor)))
+        }
+        return (output as String, boldRanges)
     }
 
     private static func makeChipButton(title: String) -> UIButton {
