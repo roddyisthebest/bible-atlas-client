@@ -113,6 +113,17 @@ final class ChatBotBottomSheetViewController: UIViewController {
             name: .sheetCommand,
             object: nil
         )
+        // 키보드가 완전히 올라온 뒤 마지막 메시지가 입력창 바로 위에 오도록 재스크롤.
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleKeyboardDidShow),
+            name: UIResponder.keyboardDidShowNotification,
+            object: nil
+        )
+    }
+
+    @objc private func handleKeyboardDidShow() {
+        scrollToBottom()
     }
 
     @objc private func handleSheetCommand(_ note: Notification) {
