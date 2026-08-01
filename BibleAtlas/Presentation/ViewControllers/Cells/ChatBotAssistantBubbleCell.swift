@@ -41,6 +41,15 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
         return s
     }()
 
+    /// [DEBUG] 서버가 place_id_map 을 제대로 내려주는지 눈으로 확인용. 배포 전 제거.
+    private let debugPlaceMapLabel: UILabel = {
+        let l = UILabel()
+        l.font = .monospacedSystemFont(ofSize: 10, weight: .regular)
+        l.textColor = .systemPink
+        l.numberOfLines = 0
+        return l
+    }()
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .clear
@@ -48,6 +57,7 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
 
         contentView.addSubview(bubble)
         bubble.addSubview(textView)
+        bubble.addSubview(debugPlaceMapLabel)
         bubble.addSubview(chipsStack)
 
         bubble.snp.makeConstraints {
@@ -60,8 +70,12 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
             $0.top.leading.equalToSuperview().offset(12)
             $0.trailing.equalToSuperview().offset(-12)
         }
+        debugPlaceMapLabel.snp.makeConstraints {
+            $0.top.equalTo(textView.snp.bottom).offset(6)
+            $0.leading.trailing.equalTo(textView)
+        }
         chipsStack.snp.makeConstraints {
-            $0.top.equalTo(textView.snp.bottom).offset(8)
+            $0.top.equalTo(debugPlaceMapLabel.snp.bottom).offset(8)
             $0.leading.trailing.equalTo(textView)
             $0.bottom.equalToSuperview().offset(-12)
         }
@@ -85,6 +99,14 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
                    recommendedQuestions: [String]) {
         self.placeIdMap = placeIdMap
         textView.attributedText = Self.makeAttributedString(text: text, placeNames: Array(placeIdMap.keys))
+
+        // [DEBUG] place_id_map 표시 (배포 전 제거)
+        if placeIdMap.isEmpty {
+            debugPlaceMapLabel.text = "[debug] place_id_map: (empty)"
+        } else {
+            let dump = placeIdMap.map { "\($0.key)=\($0.value)" }.sorted().joined(separator: ", ")
+            debugPlaceMapLabel.text = "[debug] place_id_map: \(dump)"
+        }
 
         chipsStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
         chipsStack.isHidden = recommendedQuestions.isEmpty
