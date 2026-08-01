@@ -140,7 +140,20 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
                 let stream = try self.usecase.stream(request: request)
                 for try await event in stream {
                     if Task.isCancelled { return }
+                    #if DEBUG
+                    let t = Date().timeIntervalSince1970
+                    switch event {
+                    case .node(let n): print("[Chat] \(t) node=\(n)")
+                    case .done: print("[Chat] \(t) done")
+                    case .failure(let m): print("[Chat] \(t) failure=\(m)")
+                    }
+                    #endif
                     await MainActor.run { self.handle(event) }
+                    // 서버가 node + done 을 붙여 보내면 UI 가 node 라벨을 그릴 시간이 없음.
+                    // node 처리 후 최소 400ms 는 보이도록 대기.
+                    if case .node = event {
+                        try? await Task.sleep(nanoseconds: 400_000_000)
+                    }
                 }
             } catch AgentUsecaseError.limitExceeded {
                 await MainActor.run { self.limitAlertRelay.accept(()) }
