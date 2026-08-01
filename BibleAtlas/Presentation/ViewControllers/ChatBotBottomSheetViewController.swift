@@ -29,22 +29,31 @@ final class ChatBotBottomSheetViewController: UIViewController {
     }()
     private let progressBanner = ChatBotProgressBanner()
     private let emptyStateView = ChatBotEmptyStateView()
-    private let inputContainer = UIView()
+    private let inputContainer: UIView = {
+        let v = UIView()
+        v.backgroundColor = .secondarySystemBackground
+        v.layer.cornerRadius = 22
+        v.layer.borderWidth = 0.5
+        v.layer.borderColor = UIColor.separator.cgColor
+        return v
+    }()
     private let textField: UITextField = {
         let tf = UITextField()
-        tf.borderStyle = .roundedRect
+        tf.borderStyle = .none
         tf.placeholder = "성경 속 지역이 궁금하다면?"
         tf.returnKeyType = .send
         tf.font = .systemFont(ofSize: 15)
+        tf.textColor = .label
+        tf.tintColor = .systemBlue
         return tf
     }()
     private let sendButton: UIButton = {
         var config = UIButton.Configuration.filled()
-        config.image = UIImage(systemName: "arrow.up", withConfiguration: UIImage.SymbolConfiguration(pointSize: 16, weight: .bold))
+        config.image = UIImage(systemName: "arrow.up", withConfiguration: UIImage.SymbolConfiguration(pointSize: 14, weight: .bold))
         config.baseBackgroundColor = .systemBlue
         config.baseForegroundColor = .white
         config.cornerStyle = .capsule
-        config.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
+        config.contentInsets = .init(top: 8, leading: 8, bottom: 8, trailing: 8)
         let b = UIButton(configuration: config)
         b.accessibilityLabel = "보내기"
         return b
@@ -107,19 +116,20 @@ final class ChatBotBottomSheetViewController: UIViewController {
             $0.height.greaterThanOrEqualTo(0)
         }
         inputContainer.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(view.keyboardLayoutGuide.snp.top)
-            $0.height.equalTo(56)
+            $0.leading.equalToSuperview().offset(16)
+            $0.trailing.equalToSuperview().offset(-16)
+            $0.bottom.equalTo(view.keyboardLayoutGuide.snp.top).offset(-8)
+            $0.height.equalTo(44)
         }
         textField.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(16)
-            $0.top.bottom.equalToSuperview().inset(8)
-            $0.trailing.equalTo(sendButton.snp.leading).offset(-8)
+            $0.leading.equalToSuperview().offset(18)
+            $0.top.bottom.equalToSuperview()
+            $0.trailing.equalTo(sendButton.snp.leading).offset(-6)
         }
         sendButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-16)
+            $0.trailing.equalToSuperview().offset(-6)
             $0.centerY.equalToSuperview()
-            $0.size.equalTo(40)
+            $0.size.equalTo(32)
         }
 
         headerView.onClose = { [weak self] in self?.dismiss(animated: true) }
@@ -128,6 +138,13 @@ final class ChatBotBottomSheetViewController: UIViewController {
 
         sendButton.addAction(UIAction { [weak self] _ in self?.triggerSend() }, for: .touchUpInside)
         textField.addAction(UIAction { [weak self] _ in self?.triggerSend() }, for: .editingDidEndOnExit)
+        textField.addAction(UIAction { [weak self] _ in self?.updateSendButtonAppearance() }, for: .editingChanged)
+        updateSendButtonAppearance()
+    }
+
+    private func updateSendButtonAppearance() {
+        let hasText = !(textField.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        sendButton.alpha = hasText ? 1.0 : 0.35
     }
 
     private func triggerSend() {
@@ -140,6 +157,7 @@ final class ChatBotBottomSheetViewController: UIViewController {
         }
         sendRelay.accept(text)
         textField.text = ""
+        updateSendButtonAppearance()
     }
 
     private func presentInfoAlert() {
@@ -148,8 +166,9 @@ final class ChatBotBottomSheetViewController: UIViewController {
 
         ✅ 이용 팁
         • 질문은 한 번에 하나씩 나눠서 해주세요.
-        • 여러 가지를 한 번에 물으면 답변 품질이 떨어질 수 있어요.
-        • 성경 속 지역/장소에 관한 질문에 가장 잘 답해요.
+        • 성경 속 지역/장소·여정 질문에 가장 강해요.
+        • 지역명을 정확히 몰라도 키워드만 있으면 지역 설명과 현재 추정 위치까지 알려드려요.
+        • 성경 내용에 관한 일반 질문도 답변 가능하지만, 지역·여정 질문에서 가장 잘 작동해요.
 
         사용해 주셔서 감사합니다!
         """
@@ -209,6 +228,7 @@ final class ChatBotBottomSheetViewController: UIViewController {
             .emit(onNext: { [weak self] text in
                 self?.textField.text = text
                 self?.textField.becomeFirstResponder()
+                self?.updateSendButtonAppearance()
             })
             .disposed(by: disposeBag)
 

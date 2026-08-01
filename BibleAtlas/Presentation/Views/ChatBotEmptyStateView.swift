@@ -44,10 +44,11 @@ final class ChatBotEmptyStateView: UIView {
         title.textColor = .label
 
         let tip1 = makeTipLabel("• 질문은 한 번에 하나씩 나눠서 해주세요.")
-        let tip2 = makeTipLabel("• 여러 가지를 한 번에 물으면 답변 품질이 떨어질 수 있어요.")
-        let tip3 = makeTipLabel("• 성경 속 지역/장소에 관한 질문에 가장 잘 답해요.")
+        let tip2 = makeTipLabel("• 성경 속 지역/장소·여정 질문에 가장 강해요.")
+        let tip3 = makeTipLabel("• 지역명을 정확히 몰라도 키워드만 있으면 지역 설명과 현재 추정 위치까지 알려드려요.")
+        let tip4 = makeTipLabel("• 성경 내용에 관한 일반 질문도 답변 가능하지만, 지역·여정 질문에서 가장 잘 작동해요.")
 
-        let stack = UIStackView(arrangedSubviews: [title, tip1, tip2, tip3])
+        let stack = UIStackView(arrangedSubviews: [title, tip1, tip2, tip3, tip4])
         stack.axis = .vertical
         stack.spacing = 6
         stack.alignment = .leading
