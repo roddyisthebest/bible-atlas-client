@@ -61,6 +61,8 @@ final class ChatBotBottomSheetViewController: UIViewController {
 
     private var bubbles: [ChatBubble] = []
     private let disposeBag = DisposeBag()
+    /// 다른 시트가 detail 을 열 때 원래 detents 로 복구하기 위해 저장.
+    private var myDetents: [UISheetPresentationController.Detent] = []
 
     // MARK: - Init
 
@@ -80,7 +82,46 @@ final class ChatBotBottomSheetViewController: UIViewController {
         setupUI()
         setupTable()
         bindViewModel()
+        subscribeSheetCommand()
         viewDidLoadRelay.accept(())
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // 다른 VC 들과 동일하게, 초기 detents 를 기억해두고 나중에 복구용.
+        if myDetents.isEmpty {
+            myDetents = sheetPresentationController?.detents ?? []
+        }
+    }
+
+    private func subscribeSheetCommand() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleSheetCommand(_:)),
+            name: .sheetCommand,
+            object: nil
+        )
+    }
+
+    @objc private func handleSheetCommand(_ note: Notification) {
+        guard let command = note.object as? SheetCommand else { return }
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self, let presentation = self.sheetPresentationController else { return }
+            presentation.animateChanges {
+                switch command {
+                case .forceMedium:
+                    presentation.detents = [.medium()]
+                    presentation.largestUndimmedDetentIdentifier = .medium
+                    presentation.selectedDetentIdentifier = .medium
+                case .restoreDetents:
+                    presentation.detents = self.myDetents
+                }
+            }
+        }
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
     // MARK: - UI setup
@@ -233,7 +274,12 @@ final class ChatBotBottomSheetViewController: UIViewController {
 
         output.routeToPlaceDetail
             .emit(onNext: { [weak self] placeId in
-                self?.navigator?.present(.placeDetail(placeId))
+                guard let self = self else { return }
+                // 챗봇 시트를 먼저 닫아 뒤에 챗봇이 안 보이도록 하고, 그 뒤에 PlaceDetail 을 base VC 위에 present.
+                let navigator = self.navigator
+                self.dismiss(animated: true) {
+                    navigator?.present(.placeDetail(placeId))
+                }
             })
             .disposed(by: disposeBag)
 
