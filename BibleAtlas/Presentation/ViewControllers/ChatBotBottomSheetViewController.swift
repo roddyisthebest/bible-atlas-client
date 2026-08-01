@@ -28,18 +28,25 @@ final class ChatBotBottomSheetViewController: UIViewController {
         return tv
     }()
     private let progressBanner = ChatBotProgressBanner()
+    private let emptyStateView = ChatBotEmptyStateView()
     private let inputContainer = UIView()
     private let textField: UITextField = {
         let tf = UITextField()
         tf.borderStyle = .roundedRect
-        tf.placeholder = "무엇이든 물어보세요"
+        tf.placeholder = "성경 속 지역이 궁금하다면?"
         tf.returnKeyType = .send
+        tf.font = .systemFont(ofSize: 15)
         return tf
     }()
     private let sendButton: UIButton = {
-        let b = UIButton(type: .system)
-        b.setTitle("보내기", for: .normal)
-        b.titleLabel?.font = .systemFont(ofSize: 15, weight: .semibold)
+        var config = UIButton.Configuration.filled()
+        config.image = UIImage(systemName: "arrow.up", withConfiguration: UIImage.SymbolConfiguration(pointSize: 16, weight: .bold))
+        config.baseBackgroundColor = .systemBlue
+        config.baseForegroundColor = .white
+        config.cornerStyle = .capsule
+        config.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
+        let b = UIButton(configuration: config)
+        b.accessibilityLabel = "보내기"
         return b
     }()
 
@@ -72,13 +79,14 @@ final class ChatBotBottomSheetViewController: UIViewController {
     private func setupUI() {
         view.addSubview(headerView)
         view.addSubview(tableView)
+        view.addSubview(emptyStateView)
         view.addSubview(progressBanner)
         view.addSubview(inputContainer)
         inputContainer.addSubview(textField)
         inputContainer.addSubview(sendButton)
 
         headerView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(15)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(52)
         }
@@ -86,6 +94,11 @@ final class ChatBotBottomSheetViewController: UIViewController {
             $0.top.equalTo(headerView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(progressBanner.snp.top).offset(-4)
+        }
+        emptyStateView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(24)
+            $0.trailing.equalToSuperview().offset(-24)
+            $0.centerY.equalTo(tableView)
         }
         progressBanner.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(16)
@@ -106,7 +119,7 @@ final class ChatBotBottomSheetViewController: UIViewController {
         sendButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(-16)
             $0.centerY.equalToSuperview()
-            $0.width.equalTo(60)
+            $0.size.equalTo(40)
         }
 
         headerView.onClose = { [weak self] in self?.dismiss(animated: true) }
@@ -119,17 +132,28 @@ final class ChatBotBottomSheetViewController: UIViewController {
 
     private func triggerSend() {
         let text = textField.text ?? ""
-        guard !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
+        guard !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            let alert = UIAlertController(title: nil, message: "메시지를 입력해 주세요.", preferredStyle: .alert)
+            alert.addAction(.init(title: "확인", style: .default))
+            present(alert, animated: true)
+            return
+        }
         sendRelay.accept(text)
         textField.text = ""
     }
 
     private func presentInfoAlert() {
-        let alert = UIAlertController(
-            title: "안내",
-            message: "아직 베타 버전이라 사용 횟수를 100회로 제한하고 있어요.\n사용해 주셔서 감사해요!",
-            preferredStyle: .alert
-        )
+        let message = """
+        아직 베타 버전이라 사용 횟수를 100회로 제한하고 있어요.
+
+        ✅ 이용 팁
+        • 질문은 한 번에 하나씩 나눠서 해주세요.
+        • 여러 가지를 한 번에 물으면 답변 품질이 떨어질 수 있어요.
+        • 성경 속 지역/장소에 관한 질문에 가장 잘 답해요.
+
+        사용해 주셔서 감사합니다!
+        """
+        let alert = UIAlertController(title: "AI 챗봇 안내", message: message, preferredStyle: .alert)
         alert.addAction(.init(title: "확인", style: .default))
         present(alert, animated: true)
     }
@@ -158,6 +182,7 @@ final class ChatBotBottomSheetViewController: UIViewController {
                 guard let self = self else { return }
                 self.bubbles = bubbles
                 self.tableView.reloadData()
+                self.emptyStateView.isHidden = !bubbles.isEmpty
                 self.scrollToBottom()
             })
             .disposed(by: disposeBag)
