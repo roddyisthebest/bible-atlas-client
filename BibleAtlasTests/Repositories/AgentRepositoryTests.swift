@@ -86,6 +86,25 @@ final class AgentRepositoryTests: XCTestCase {
         }
     }
 
+    func test_stream_handlesMultipleJsonPayloadsInSingleEvent() async throws {
+        // Server sometimes packs a node update + done payload as two data: lines in a single "done" event.
+        // Our parser joins them with \n. We should recover by using the last valid JSON as the payload.
+        let nodeJson = #"{"node":"non_bible_reject","update":{"answer":"x","recommended_questions":[]}}"#
+        let doneJson = #"{"answer":"final answer","place_id_map":{},"recommended_questions":["q1"],"summary":null,"messages":[]}"#
+        let joined = nodeJson + "\n" + doneJson
+        let fake = FakeAgentStreamClient()
+        fake.behavior = .events([SSEEvent(name: "done", data: joined)])
+        let sut = AgentRepository(client: fake)
+
+        let events = try await collect(sut.stream(request: .init(query: "q", summary: nil, messages: [])))
+
+        XCTAssertEqual(events.count, 1)
+        if case .done(let payload) = events[0] {
+            XCTAssertEqual(payload.answer, "final answer")
+            XCTAssertEqual(payload.recommendedQuestions, ["q1"])
+        } else { XCTFail("expected .done") }
+    }
+
     func test_stream_propagatesClientError() async {
         struct BoomError: Error {}
         let fake = FakeAgentStreamClient()
