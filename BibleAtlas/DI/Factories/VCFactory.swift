@@ -51,7 +51,9 @@ protocol VCFactoryProtocol:AnyObject {
     func makeBibleBookVerseListBottomSheetVC(vm:BibleBookVerseListBottomSheetViewModelProtocol) -> UIViewController
     
     func makeReportBottomSheetVC(vm:ReportBottomSheetViewModelProtocol) -> UIViewController
-    
+
+    func makeChatBotBottomSheetVC(vm: ChatBotBottomSheetViewModelProtocol, navigator: BottomSheetNavigator) -> UIViewController
+
     func setupVC(type: BottomSheetType, sheet: UIViewController) -> Void
 }
 
@@ -204,6 +206,10 @@ final class VCFactory:VCFactoryProtocol {
     func makeReportBottomSheetVC(vm: ReportBottomSheetViewModelProtocol) -> UIViewController{
         let vc = ReportBottomSheetViewController(reportBottomSheetViewModel: vm);
         return vc
+    }
+
+    func makeChatBotBottomSheetVC(vm: ChatBotBottomSheetViewModelProtocol, navigator: BottomSheetNavigator) -> UIViewController {
+        return ChatBotBottomSheetViewController(viewModel: vm, navigator: navigator)
     }
 
     func setupVC(type: BottomSheetType, sheet: UIViewController) {
