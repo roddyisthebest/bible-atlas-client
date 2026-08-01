@@ -101,7 +101,9 @@ final class ChatBotBottomSheetViewModelTests: XCTestCase {
     }
 
     func test_inputEnabled_falseWhenRemainingZero() {
+        // VM captures remainingCount at init, so we need a fresh SUT with usecase already at 0.
         usecase._remainingCount = 0
+        sut = ChatBotBottomSheetViewModel(usecase: usecase)
         let input = makeInput()
         let out = sut.transform(input: input)
 
