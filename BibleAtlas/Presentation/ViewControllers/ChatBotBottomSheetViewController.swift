@@ -250,6 +250,38 @@ final class ChatBotBottomSheetViewController: UIViewController {
             .disposed(by: disposeBag)
     }
 
+    /// 장소 링크 탭 처리. ids 1개면 바로 이동, 여러 개면 action sheet 로 선택.
+    /// 옵션 라벨: 순차 번호 + id 접두사에 따른 시대 태그 (a=고대, m=현대 추정)
+    private func handlePlaceSelection(name: String, ids: [String]) {
+        if ids.count == 1 {
+            placeSelectedRelay.accept(ids[0])
+            return
+        }
+        let alert = UIAlertController(title: name, message: "어느 지역을 보시겠어요?", preferredStyle: .actionSheet)
+        for (index, id) in ids.enumerated() {
+            let title = "\(name)\(index + 1) \(Self.eraTag(forPlaceId: id))"
+            alert.addAction(.init(title: title, style: .default) { [weak self] _ in
+                self?.placeSelectedRelay.accept(id)
+            })
+        }
+        alert.addAction(.init(title: "취소", style: .cancel))
+        // iPad 대응 (source view)
+        if let popover = alert.popoverPresentationController {
+            popover.sourceView = view
+            popover.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 0, height: 0)
+            popover.permittedArrowDirections = []
+        }
+        present(alert, animated: true)
+    }
+
+    private static func eraTag(forPlaceId id: String) -> String {
+        switch id.first?.lowercased() {
+        case "a": return "(고대)"
+        case "m": return "(현대 추정)"
+        default:  return ""
+        }
+    }
+
     private func scrollToBottom() {
         guard !bubbles.isEmpty else { return }
         let last = IndexPath(row: bubbles.count - 1, section: 0)
@@ -274,7 +306,9 @@ extension ChatBotBottomSheetViewController: UITableViewDataSource {
         case .assistant(let placeIdMap, let questions):
             let cell = tableView.dequeueReusableCell(withIdentifier: ChatBotAssistantBubbleCell.reuseID, for: indexPath) as! ChatBotAssistantBubbleCell
             cell.configure(text: bubble.text, placeIdMap: placeIdMap, recommendedQuestions: questions)
-            cell.onPlaceIdSelected = { [weak self] placeId in self?.placeSelectedRelay.accept(placeId) }
+            cell.onPlaceSelected = { [weak self] name, ids in
+                self?.handlePlaceSelection(name: name, ids: ids)
+            }
             cell.onChipTapped = { [weak self] text in self?.chipRelay.accept(text) }
             return cell
         case .error:

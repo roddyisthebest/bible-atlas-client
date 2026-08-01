@@ -4,10 +4,12 @@ import SnapKit
 final class ChatBotAssistantBubbleCell: UITableViewCell {
     static let reuseID = "ChatBotAssistantBubbleCell"
 
-    var onPlaceIdSelected: ((String) -> Void)?
+    /// (displayName, ids) — ids 개수에 따라 VC 가 바로 라우트하거나 선택 alert 를 띄운다.
+    var onPlaceSelected: ((_ name: String, _ ids: [String]) -> Void)?
     var onChipTapped: ((String) -> Void)?
 
-    private var placeIdMap: [String: [String]] = [:]
+    /// 서버가 준 map 을 접미 숫자 제거 기준으로 병합한 결과. UI/lookup 모두 이걸 사용.
+    private var normalizedPlaceIdMap: [String: [String]] = [:]
 
     private let bubble: UIView = {
         let v = UIView()
@@ -30,6 +32,15 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
             .underlineStyle: NSUnderlineStyle.single.rawValue,
         ]
         return tv
+    }()
+
+    private let chipsHeader: UILabel = {
+        let l = UILabel()
+        l.text = "💡 이런 질문은 어떠세요?"
+        l.font = .systemFont(ofSize: 12, weight: .semibold)
+        l.textColor = .secondaryLabel
+        l.isHidden = true
+        return l
     }()
 
     private let chipsStack: UIStackView = {
@@ -58,6 +69,7 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
         contentView.addSubview(bubble)
         bubble.addSubview(textView)
         bubble.addSubview(debugPlaceMapLabel)
+        bubble.addSubview(chipsHeader)
         bubble.addSubview(chipsStack)
 
         bubble.snp.makeConstraints {
@@ -74,8 +86,12 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
             $0.top.equalTo(textView.snp.bottom).offset(6)
             $0.leading.trailing.equalTo(textView)
         }
+        chipsHeader.snp.makeConstraints {
+            $0.top.equalTo(debugPlaceMapLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalTo(textView)
+        }
         chipsStack.snp.makeConstraints {
-            $0.top.equalTo(debugPlaceMapLabel.snp.bottom).offset(8)
+            $0.top.equalTo(chipsHeader.snp.bottom).offset(6)
             $0.leading.trailing.equalTo(textView)
             $0.bottom.equalToSuperview().offset(-12)
         }
@@ -89,32 +105,61 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
         super.prepareForReuse()
         chipsStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
         chipsStack.isHidden = true
-        onPlaceIdSelected = nil
+        chipsHeader.isHidden = true
+        onPlaceSelected = nil
         onChipTapped = nil
-        placeIdMap = [:]
+        normalizedPlaceIdMap = [:]
     }
 
     func configure(text: String,
                    placeIdMap: [String: [String]],
                    recommendedQuestions: [String]) {
-        self.placeIdMap = placeIdMap
-        textView.attributedText = Self.makeAttributedString(text: text, placeNames: Array(placeIdMap.keys))
+        // 접미 숫자 (예: "안디옥1", "안디옥 2") 를 벗겨 base name 으로 병합. 텍스트도 base 로 치환.
+        let (normalizedMap, normalizedText) = Self.normalize(placeIdMap: placeIdMap, in: text)
+        self.normalizedPlaceIdMap = normalizedMap
+        textView.attributedText = Self.makeAttributedString(text: normalizedText, placeNames: Array(normalizedMap.keys))
 
-        // [DEBUG] place_id_map 표시 (배포 전 제거)
-        if placeIdMap.isEmpty {
-            debugPlaceMapLabel.text = "[debug] place_id_map: (empty)"
-        } else {
-            let dump = placeIdMap.map { "\($0.key)=\($0.value)" }.sorted().joined(separator: ", ")
-            debugPlaceMapLabel.text = "[debug] place_id_map: \(dump)"
-        }
+        // [DEBUG] raw + merged 둘 다 표시 (배포 전 제거)
+        let rawDump = placeIdMap.isEmpty ? "(empty)" : placeIdMap.map { "\($0.key)=\($0.value)" }.sorted().joined(separator: ", ")
+        let normDump = normalizedMap.isEmpty ? "(empty)" : normalizedMap.map { "\($0.key)=\($0.value)" }.sorted().joined(separator: ", ")
+        debugPlaceMapLabel.text = "[debug] raw: \(rawDump)\n[debug] merged: \(normDump)"
 
         chipsStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        chipsHeader.isHidden = recommendedQuestions.isEmpty
         chipsStack.isHidden = recommendedQuestions.isEmpty
         for q in recommendedQuestions {
             let btn = Self.makeChipButton(title: q)
             btn.addAction(UIAction { [weak self] _ in self?.onChipTapped?(q) }, for: .touchUpInside)
             chipsStack.addArrangedSubview(btn)
         }
+    }
+
+    // MARK: - Normalization
+
+    /// 서버가 "안디옥1", "안디옥 2" 처럼 접미 숫자로 구분해 보내는 항목을
+    /// base name ("안디옥") 으로 병합. 답변 텍스트의 등장도 base name 으로 치환.
+    /// IDs 는 원래 순서 유지 + 중복 제거.
+    static func normalize(placeIdMap: [String: [String]], in text: String) -> (map: [String: [String]], text: String) {
+        var merged: [String: [String]] = [:]
+        var textOut = text
+
+        // 긴 이름부터 치환해야 부분 매칭 문제 없음 ("안디옥12" 를 "안디옥1" 이 잘못 잡는 것 방지)
+        let entries = placeIdMap.sorted { $0.key.count > $1.key.count }
+        for (name, ids) in entries {
+            let base = stripTrailingNumber(from: name)
+            if merged[base] == nil { merged[base] = [] }
+            for id in ids where !(merged[base]?.contains(id) ?? false) {
+                merged[base]?.append(id)
+            }
+            if name != base {
+                textOut = textOut.replacingOccurrences(of: name, with: base)
+            }
+        }
+        return (merged, textOut)
+    }
+
+    static func stripTrailingNumber(from name: String) -> String {
+        return name.replacingOccurrences(of: "\\s*\\d+$", with: "", options: .regularExpression)
     }
 
     // MARK: - Helpers
@@ -163,10 +208,10 @@ extension ChatBotAssistantBubbleCell: UITextViewDelegate {
                   interaction: UITextItemInteraction) -> Bool {
         guard URL.scheme == "bibleatlas-place",
               let name = URL.host?.removingPercentEncoding,
-              let firstId = placeIdMap[name]?.first else {
+              let ids = normalizedPlaceIdMap[name], !ids.isEmpty else {
             return false
         }
-        onPlaceIdSelected?(firstId)
+        onPlaceSelected?(name, ids)
         return false
     }
 }
