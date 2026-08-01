@@ -109,6 +109,28 @@ final class AgentRepositoryTests: XCTestCase {
         } else { XCTFail("expected .done second") }
     }
 
+    func test_stream_mapsToolEvent_startAndDone() async throws {
+        let fake = FakeAgentStreamClient()
+        fake.behavior = .events([
+            SSEEvent(name: "tool", data: #"{"id":"call_1","name":"journey_route_search","phase":"start"}"#),
+            SSEEvent(name: "tool", data: #"{"id":"call_1","name":"journey_route_search","phase":"done"}"#),
+            SSEEvent(name: "done", data: #"{"answer":"ok","place_id_map":{},"recommended_questions":[],"summary":null,"messages":[]}"#),
+        ])
+        let sut = AgentRepository(client: fake)
+        let events = try await collect(sut.stream(request: .init(query: "q", summary: nil, messages: [])))
+
+        XCTAssertEqual(events.count, 3)
+        if case .tool(let id, let name, let phase) = events[0] {
+            XCTAssertEqual(id, "call_1")
+            XCTAssertEqual(name, "journey_route_search")
+            XCTAssertEqual(phase, .start)
+        } else { XCTFail("expected .tool start") }
+        if case .tool(_, _, let phase) = events[1] {
+            XCTAssertEqual(phase, .done)
+        } else { XCTFail("expected .tool done") }
+        if case .done = events[2] {} else { XCTFail("expected .done") }
+    }
+
     func test_stream_propagatesClientError() async {
         struct BoomError: Error {}
         let fake = FakeAgentStreamClient()

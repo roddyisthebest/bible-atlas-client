@@ -52,6 +52,10 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
     private var lastQuery: String?
     private var currentTask: Task<Void, Never>?
     private var pendingBubbleId: UUID?
+    /// 동시 실행 중인 tool 추적. key: call id, value: tool name. 최근에 시작된 도구를 진행 라벨로 노출.
+    private var activeTools: [String: String] = [:]
+    /// activeTools 에 들어간 순서 유지 (뒤에 있는 것이 최근). removeValue 로는 순서 알 수 없어 별도 관리.
+    private var activeToolOrder: [String] = []
 
     private let disposeBag = DisposeBag()
 
@@ -125,6 +129,8 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
         guard !trimmed.isEmpty else { return }
 
         lastQuery = trimmed
+        activeTools.removeAll()
+        activeToolOrder.removeAll()
         appendBubble(.init(kind: .user, text: trimmed))
         let initialLabel = L10n.ChatBot.pendingInitial
         addPendingBubble(label: initialLabel)
@@ -147,6 +153,7 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
                     let t = Date().timeIntervalSince1970
                     switch event {
                     case .node(let n): print("[Chat] \(t) node=\(n)")
+                    case .tool(let id, let n, let p): print("[Chat] \(t) tool=\(n) phase=\(p.rawValue) id=\(id)")
                     case .done: print("[Chat] \(t) done")
                     case .failure(let m): print("[Chat] \(t) failure=\(m)")
                     }
@@ -170,11 +177,36 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
     private func handle(_ event: AgentStreamEvent) {
         switch event {
         case .node(let name):
+            // tool 이벤트가 진행 중이면 tool 라벨이 더 세밀하므로 node 로 덮어쓰지 않음.
+            guard activeTools.isEmpty else { return }
             let label = ChatBotProgressLabel.label(forNode: name)
             updatePendingBubble(label: label)
             progressRelay.accept(.running(label: label))
+        case .tool(let id, let name, let phase):
+            switch phase {
+            case .start:
+                if activeTools[id] == nil { activeToolOrder.append(id) }
+                activeTools[id] = name
+                let label = ChatBotProgressLabel.label(forTool: name)
+                updatePendingBubble(label: label)
+                progressRelay.accept(.running(label: label))
+            case .done:
+                activeTools.removeValue(forKey: id)
+                activeToolOrder.removeAll { $0 == id }
+                if activeTools.isEmpty {
+                    let label = ChatBotProgressLabel.toolWrapup
+                    updatePendingBubble(label: label)
+                    progressRelay.accept(.running(label: label))
+                } else if let latestId = activeToolOrder.last, let latestName = activeTools[latestId] {
+                    let label = ChatBotProgressLabel.label(forTool: latestName)
+                    updatePendingBubble(label: label)
+                    progressRelay.accept(.running(label: label))
+                }
+            }
         case .done(let payload):
             removePendingBubble()
+            activeTools.removeAll()
+            activeToolOrder.removeAll()
             let bubble = ChatBubble(
                 kind: .assistant(
                     placeIdMap: payload.placeIdMap,
@@ -190,6 +222,8 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
             progressRelay.accept(.idle)
         case .failure(let message):
             removePendingBubble()
+            activeTools.removeAll()
+            activeToolOrder.removeAll()
             appendBubble(.init(kind: .error(message), text: message))
             progressRelay.accept(.error(message: message))
         }

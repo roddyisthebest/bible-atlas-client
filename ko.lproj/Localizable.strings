@@ -292,6 +292,15 @@
 "ChatBot.Progress.Rewrite" = "답변을 보완하는 중…";
 "ChatBot.Progress.Format" = "답변을 정리하는 중…";
 "ChatBot.Progress.Default" = "처리 중…";
+"ChatBot.Tool.AncientKeywordSearch" = "지명 후보 뽑는 중…";
+"ChatBot.Tool.SearchAncientPlaces" = "고대 지명 조회 중…";
+"ChatBot.Tool.SearchModernPlaces" = "현대 지명 조회 중…";
+"ChatBot.Tool.SearchAncientWithModern" = "고대·현대 매칭 중…";
+"ChatBot.Tool.SearchModernWithAncient" = "현대·고대 매칭 중…";
+"ChatBot.Tool.JourneyRouteSearch" = "여정 경로 찾는 중…";
+"ChatBot.Tool.JourneyDescriptionSearch" = "여정 배경 정리 중…";
+"ChatBot.Tool.Default" = "도구 실행 중…";
+"ChatBot.Tool.Wrapup" = "답변 정리 중…";
 "ChatBot.Error.Network" = "네트워크 에러 (코드 %d)";
 "ChatBot.Error.InvalidResponse" = "서버 응답 형식이 이상해요";
 "ChatBot.Error.Decoding" = "응답을 이해할 수 없어요";

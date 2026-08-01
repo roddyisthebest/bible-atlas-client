@@ -29,6 +29,12 @@ final class AgentRepository: AgentRepositoryProtocol {
         }
     }
 
+    private struct ToolDto: Decodable {
+        let id: String
+        let name: String
+        let phase: ToolPhase
+    }
+
     /// 하나의 SSE 이벤트가 여러 JSON payload 를 담고 있을 수 있음 (서버가 여러 data: 라인을 사용).
     /// 각 라인을 개별 이벤트로 해석해서 순서대로 반환한다.
     /// - 정상 케이스 (라인 하나): sse.name 기준으로 매핑.
@@ -83,6 +89,9 @@ final class AgentRepository: AgentRepositoryProtocol {
         case "node":
             struct Dto: Decodable { let node: String }
             return .node(name: try decoder.decode(Dto.self, from: data).node)
+        case "tool":
+            let dto = try decoder.decode(ToolDto.self, from: data)
+            return .tool(id: dto.id, name: dto.name, phase: dto.phase)
         case "done":
             return .done(try decoder.decode(AgentDonePayload.self, from: data))
         case "error":
@@ -93,10 +102,13 @@ final class AgentRepository: AgentRepositoryProtocol {
         }
     }
 
-    /// JSON 형태를 보고 이벤트 종류 추론. 우선순위: done → node → error.
+    /// JSON 형태를 보고 이벤트 종류 추론. 우선순위: done → tool → node → error.
     private func inferEvent(from data: Data) -> AgentStreamEvent? {
         if let payload = try? decoder.decode(AgentDonePayload.self, from: data) {
             return .done(payload)
+        }
+        if let dto = try? decoder.decode(ToolDto.self, from: data) {
+            return .tool(id: dto.id, name: dto.name, phase: dto.phase)
         }
         struct NodeDto: Decodable { let node: String }
         if let dto = try? decoder.decode(NodeDto.self, from: data) {

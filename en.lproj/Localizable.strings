@@ -302,6 +302,15 @@
 "ChatBot.Progress.Rewrite" = "Refining the answer…";
 "ChatBot.Progress.Format" = "Formatting the answer…";
 "ChatBot.Progress.Default" = "Processing…";
+"ChatBot.Tool.AncientKeywordSearch" = "Extracting place candidates…";
+"ChatBot.Tool.SearchAncientPlaces" = "Looking up ancient places…";
+"ChatBot.Tool.SearchModernPlaces" = "Looking up modern places…";
+"ChatBot.Tool.SearchAncientWithModern" = "Matching ancient with modern…";
+"ChatBot.Tool.SearchModernWithAncient" = "Matching modern with ancient…";
+"ChatBot.Tool.JourneyRouteSearch" = "Finding journey route…";
+"ChatBot.Tool.JourneyDescriptionSearch" = "Compiling journey background…";
+"ChatBot.Tool.Default" = "Running tool…";
+"ChatBot.Tool.Wrapup" = "Wrapping up…";
 "ChatBot.Error.Network" = "Network error (code %d)";
 "ChatBot.Error.InvalidResponse" = "Unexpected response format";
 "ChatBot.Error.Decoding" = "Couldn't parse the response";

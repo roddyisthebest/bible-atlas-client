@@ -705,6 +705,28 @@ enum L10n {
             static var `default`: String { defaultKey.localized }
         }
 
+        enum Tool {
+            static let ancientKeywordSearchKey = "ChatBot.Tool.AncientKeywordSearch"
+            static let searchAncientPlacesKey = "ChatBot.Tool.SearchAncientPlaces"
+            static let searchModernPlacesKey = "ChatBot.Tool.SearchModernPlaces"
+            static let searchAncientWithModernKey = "ChatBot.Tool.SearchAncientWithModern"
+            static let searchModernWithAncientKey = "ChatBot.Tool.SearchModernWithAncient"
+            static let journeyRouteSearchKey = "ChatBot.Tool.JourneyRouteSearch"
+            static let journeyDescriptionSearchKey = "ChatBot.Tool.JourneyDescriptionSearch"
+            static let defaultKey = "ChatBot.Tool.Default"
+            static let wrapupKey = "ChatBot.Tool.Wrapup"
+
+            static var ancientKeywordSearch: String { ancientKeywordSearchKey.localized }
+            static var searchAncientPlaces: String { searchAncientPlacesKey.localized }
+            static var searchModernPlaces: String { searchModernPlacesKey.localized }
+            static var searchAncientWithModern: String { searchAncientWithModernKey.localized }
+            static var searchModernWithAncient: String { searchModernWithAncientKey.localized }
+            static var journeyRouteSearch: String { journeyRouteSearchKey.localized }
+            static var journeyDescriptionSearch: String { journeyDescriptionSearchKey.localized }
+            static var `default`: String { defaultKey.localized }
+            static var wrapup: String { wrapupKey.localized }
+        }
+
         enum Error {
             static let networkKey = "ChatBot.Error.Network"
             static let invalidResponseKey = "ChatBot.Error.InvalidResponse"
