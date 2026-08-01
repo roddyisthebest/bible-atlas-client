@@ -80,9 +80,22 @@ final class ChatBotBottomSheetViewController: UIViewController {
         view.backgroundColor = .systemBackground
         setupUI()
         setupTable()
+        setupKeyboardDismiss()
         bindViewModel()
         subscribeSheetCommand()
         viewDidLoadRelay.accept(())
+    }
+
+    private func setupKeyboardDismiss() {
+        // 채팅 로그 아무데나 탭하면 키보드 내려가게. 셀 안의 버튼/링크는 정상 동작.
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        tap.delegate = self
+        view.addGestureRecognizer(tap)
+    }
+
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -171,6 +184,8 @@ final class ChatBotBottomSheetViewController: UIViewController {
         sendButton.addAction(UIAction { [weak self] _ in self?.triggerSend() }, for: .touchUpInside)
         textField.addAction(UIAction { [weak self] _ in self?.triggerSend() }, for: .editingDidEndOnExit)
         textField.addAction(UIAction { [weak self] _ in self?.updateSendButtonAppearance() }, for: .editingChanged)
+        // 텍스트필드 포커스 시 채팅 마지막 메시지가 보이도록 자동 스크롤.
+        textField.addAction(UIAction { [weak self] _ in self?.scrollToBottom() }, for: .editingDidBegin)
         updateSendButtonAppearance()
     }
 
@@ -325,6 +340,19 @@ final class ChatBotBottomSheetViewController: UIViewController {
         DispatchQueue.main.async { [weak self] in
             self?.tableView.scrollToRow(at: last, at: .bottom, animated: true)
         }
+    }
+}
+
+extension ChatBotBottomSheetViewController: UIGestureRecognizerDelegate {
+    /// 셀 안의 버튼(칩·재시도)이나 UITextView 링크 탭은 gesture 로 가로채면 안 됨.
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldReceive touch: UITouch) -> Bool {
+        var view: UIView? = touch.view
+        while let v = view {
+            if v is UIControl || v is UITextView { return false }
+            view = v.superview
+        }
+        return true
     }
 }
 
