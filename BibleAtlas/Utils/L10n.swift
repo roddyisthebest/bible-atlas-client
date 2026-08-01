@@ -661,6 +661,8 @@ enum L10n {
         static let retryKey = "ChatBot.Retry"
         // Pending initial
         static let pendingInitialKey = "ChatBot.PendingInitial"
+        // Scroll to bottom button (accessibility)
+        static let scrollToBottomKey = "ChatBot.ScrollToBottom"
 
         static var entryTitle: String { entryTitleKey.localized }
         static var entrySubtitle: String { entrySubtitleKey.localized }
@@ -688,6 +690,7 @@ enum L10n {
         static var recommendedHeader: String { recommendedHeaderKey.localized }
         static var retry: String { retryKey.localized }
         static var pendingInitial: String { pendingInitialKey.localized }
+        static var scrollToBottom: String { scrollToBottomKey.localized }
 
         enum Progress {
             static let placeAgentKey = "ChatBot.Progress.PlaceAgent"

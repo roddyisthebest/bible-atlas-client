@@ -311,6 +311,7 @@
 "ChatBot.Tool.JourneyDescriptionSearch" = "Compiling journey background…";
 "ChatBot.Tool.Default" = "Running tool…";
 "ChatBot.Tool.Wrapup" = "Wrapping up…";
+"ChatBot.ScrollToBottom" = "Scroll to bottom";
 "ChatBot.Error.Network" = "Network error (code %d)";
 "ChatBot.Error.InvalidResponse" = "Unexpected response format";
 "ChatBot.Error.Decoding" = "Couldn't parse the response";

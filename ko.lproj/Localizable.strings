@@ -301,6 +301,7 @@
 "ChatBot.Tool.JourneyDescriptionSearch" = "여정 배경 정리 중…";
 "ChatBot.Tool.Default" = "도구 실행 중…";
 "ChatBot.Tool.Wrapup" = "답변 정리 중…";
+"ChatBot.ScrollToBottom" = "맨 아래로";
 "ChatBot.Error.Network" = "네트워크 에러 (코드 %d)";
 "ChatBot.Error.InvalidResponse" = "서버 응답 형식이 이상해요";
 "ChatBot.Error.Decoding" = "응답을 이해할 수 없어요";

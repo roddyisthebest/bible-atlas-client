@@ -28,6 +28,28 @@ final class ChatBotBottomSheetViewController: UIViewController {
         return tv
     }()
     private let emptyStateView = ChatBotEmptyStateView()
+    private lazy var scrollToBottomButton: UIButton = {
+        var config = UIButton.Configuration.filled()
+        config.image = UIImage(systemName: "chevron.down", withConfiguration: UIImage.SymbolConfiguration(pointSize: 13, weight: .semibold))
+        config.baseBackgroundColor = .systemBackground
+        config.baseForegroundColor = .label
+        config.cornerStyle = .capsule
+        config.contentInsets = .init(top: 9, leading: 9, bottom: 9, trailing: 9)
+        let b = UIButton(configuration: config)
+        b.layer.borderColor = UIColor.separator.cgColor
+        b.layer.borderWidth = 0.5
+        b.layer.shadowColor = UIColor.black.cgColor
+        b.layer.shadowOpacity = 0.15
+        b.layer.shadowOffset = .init(width: 0, height: 2)
+        b.layer.shadowRadius = 4
+        b.isHidden = true
+        b.alpha = 0
+        b.accessibilityLabel = L10n.ChatBot.scrollToBottom
+        b.addAction(UIAction { [weak self] _ in
+            self?.scrollToBottom()
+        }, for: .touchUpInside)
+        return b
+    }()
     private let inputContainer: UIView = {
         let v = UIView()
         v.backgroundColor = .secondarySystemBackground
@@ -153,6 +175,7 @@ final class ChatBotBottomSheetViewController: UIViewController {
         view.addSubview(headerView)
         view.addSubview(tableView)
         view.addSubview(emptyStateView)
+        view.addSubview(scrollToBottomButton)
         view.addSubview(inputContainer)
         inputContainer.addSubview(textField)
         inputContainer.addSubview(sendButton)
@@ -171,6 +194,11 @@ final class ChatBotBottomSheetViewController: UIViewController {
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview().offset(-24)
             $0.centerY.equalTo(tableView)
+        }
+        scrollToBottomButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalTo(inputContainer.snp.top).offset(-10)
+            $0.size.equalTo(34)
         }
         inputContainer.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(16)
@@ -230,9 +258,32 @@ final class ChatBotBottomSheetViewController: UIViewController {
         tableView.register(ChatBotPendingBubbleCell.self, forCellReuseIdentifier: ChatBotPendingBubbleCell.reuseID)
         tableView.register(ChatBotErrorBubbleCell.self, forCellReuseIdentifier: ChatBotErrorBubbleCell.reuseID)
         tableView.dataSource = self
+        tableView.delegate = self
         // 마지막 메시지가 입력창에 붙지 않도록 하단 여유분. 스크롤해서 조금 더 내릴 수도 있음.
         tableView.contentInset.bottom = 40
         tableView.verticalScrollIndicatorInsets.bottom = 40
+    }
+
+    private func isTableAtBottom() -> Bool {
+        let sv = tableView
+        let dy = sv.contentSize.height - (sv.contentOffset.y + sv.bounds.height - sv.adjustedContentInset.bottom)
+        return dy < 60   // 40pt inset + 20pt tolerance
+    }
+
+    private func setScrollToBottomButtonVisible(_ visible: Bool) {
+        // 상태 변화가 없으면 애니메이션 skip.
+        if visible {
+            guard scrollToBottomButton.isHidden || scrollToBottomButton.alpha < 1 else { return }
+            scrollToBottomButton.isHidden = false
+            UIView.animate(withDuration: 0.2) { self.scrollToBottomButton.alpha = 1 }
+        } else {
+            guard scrollToBottomButton.alpha > 0 else { return }
+            UIView.animate(withDuration: 0.2, animations: {
+                self.scrollToBottomButton.alpha = 0
+            }, completion: { _ in
+                if self.scrollToBottomButton.alpha == 0 { self.scrollToBottomButton.isHidden = true }
+            })
+        }
     }
 
     // MARK: - Binding
@@ -356,6 +407,12 @@ extension ChatBotBottomSheetViewController: UIGestureRecognizerDelegate {
             view = v.superview
         }
         return true
+    }
+}
+
+extension ChatBotBottomSheetViewController: UITableViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        setScrollToBottomButtonVisible(!isTableAtBottom())
     }
 }
 
