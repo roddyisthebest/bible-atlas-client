@@ -219,6 +219,9 @@ final class ChatBotBottomSheetViewController: UIViewController {
         tableView.register(ChatBotPendingBubbleCell.self, forCellReuseIdentifier: ChatBotPendingBubbleCell.reuseID)
         tableView.register(ChatBotErrorBubbleCell.self, forCellReuseIdentifier: ChatBotErrorBubbleCell.reuseID)
         tableView.dataSource = self
+        // 마지막 메시지가 입력창에 붙지 않도록 하단 여유분. 스크롤해서 조금 더 내릴 수도 있음.
+        tableView.contentInset.bottom = 40
+        tableView.verticalScrollIndicatorInsets.bottom = 40
     }
 
     // MARK: - Binding
