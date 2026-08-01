@@ -14,6 +14,7 @@ struct UseCases {
     let place: PlaceUsecaseProtocol
     let map: MapUsecaseProtocol
     let report: ReportUsecaseProtocol
+    let agent: AgentUsecaseProtocol
 }
 
 protocol VMFactoryProtocol {
@@ -64,9 +65,11 @@ protocol VMFactoryProtocol {
     
     
     func makeMainVM() -> MainViewModelProtocol
-        
+
     func makeReportBottomSheetVM() -> ReportBottomSheetViewModelProtocol
-    
+
+    func makeChatBotBottomSheetVM() -> ChatBotBottomSheetViewModelProtocol
+
     func configure(navigator:BottomSheetNavigator, appCoordinator:AppCoordinatorProtocol)
 }
 
@@ -74,6 +77,13 @@ final class VMFactory:VMFactoryProtocol{
     func makeReportBottomSheetVM() -> ReportBottomSheetViewModelProtocol {
         let vm = ReportBottomSheetViewModel(navigator: navigator, reportUsecase: usecases?.report)
         return vm
+    }
+
+    func makeChatBotBottomSheetVM() -> ChatBotBottomSheetViewModelProtocol {
+        guard let agentUsecase = usecases?.agent else {
+            fatalError("UseCases.agent is required to build ChatBotBottomSheetViewModel")
+        }
+        return ChatBotBottomSheetViewModel(usecase: agentUsecase)
     }
     
     func makeRecentSearchesBottomSheetVM() -> RecentSearchesBottomSheetViewModelProtocol {
