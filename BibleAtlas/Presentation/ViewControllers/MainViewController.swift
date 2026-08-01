@@ -27,8 +27,6 @@ final class MainViewController: UIViewController, Presentable  {
     
     private let placeAnnotationTapped$ = PublishRelay<String>();
 
-    private let chatBotButtonTapped$ = PublishRelay<Void>();
-
     private let isPainting$ = BehaviorRelay<Bool>(value: false);
 
     private let delta = 0.25
@@ -38,27 +36,9 @@ final class MainViewController: UIViewController, Presentable  {
         return mv;
     }()
 
-    private lazy var chatBotButton: UIButton = {
-        let b = UIButton(type: .system)
-        b.setTitle("🤖", for: .normal)
-        b.titleLabel?.font = .systemFont(ofSize: 28)
-        b.backgroundColor = .systemBackground
-        b.layer.cornerRadius = 28
-        b.layer.shadowColor = UIColor.black.cgColor
-        b.layer.shadowOpacity = 0.2
-        b.layer.shadowOffset = CGSize(width: 0, height: 2)
-        b.layer.shadowRadius = 4
-        b.accessibilityLabel = "AI 챗봇"
-        b.addAction(UIAction { [weak self] _ in
-            self?.chatBotButtonTapped$.accept(())
-        }, for: .touchUpInside)
-        return b
-    }()
-
     private func setupUI(){
         view.addSubview(mapView);
         view.addSubview(loadingView)
-        view.addSubview(chatBotButton)
     }
 
     private func setupConstaints(){
@@ -71,11 +51,6 @@ final class MainViewController: UIViewController, Presentable  {
             make.top.equalToSuperview().offset(view.bounds.height * 0.25)
         }
 
-        chatBotButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().offset(-16)
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(16)
-            make.size.equalTo(56)
-        }
     }
     
             
@@ -111,7 +86,7 @@ final class MainViewController: UIViewController, Presentable  {
     }
     
     private func bindViewModel(){
-        let output = mainViewModel?.transform(input: MainViewModel.Input(viewLoaded$: viewLoaded$.asObservable(), placeAnnotationTapped$: placeAnnotationTapped$.asObservable(), chatBotButtonTapped$: chatBotButtonTapped$.asObservable()))
+        let output = mainViewModel?.transform(input: MainViewModel.Input(viewLoaded$: viewLoaded$.asObservable(), placeAnnotationTapped$: placeAnnotationTapped$.asObservable()))
         
         output?.placesWithRepresentativePoint$
             .observe(on: MainScheduler.instance)

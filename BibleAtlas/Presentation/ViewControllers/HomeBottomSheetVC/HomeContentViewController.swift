@@ -20,6 +20,8 @@ final class HomeContentViewController: UIViewController {
     
     private let reportButtonTapped$ = PublishRelay<Void>();
 
+    private let chatBotButtonTapped$ = PublishRelay<Void>();
+
     private let placesByBibleButtonTapped$ = PublishRelay<Void>();
     
     private let recentSearchCellTapped$ = PublishRelay<String>();
@@ -45,11 +47,74 @@ final class HomeContentViewController: UIViewController {
     
     private lazy var contentView = {
         let v = UIView()
+        v.addSubview(chatBotBanner)
         v.addSubview(collectionStackView);
         v.addSubview(recentStackView);
         v.addSubview(myGuidesStackView)
         v.addSubview(smallButtonsStackView)
         return v
+    }()
+
+    private lazy var chatBotBanner: UIControl = {
+        let container = UIControl()
+        container.backgroundColor = .systemBlue.withAlphaComponent(0.08)
+        container.layer.cornerRadius = 14
+        container.layer.borderWidth = 1
+        container.layer.borderColor = UIColor.systemBlue.withAlphaComponent(0.25).cgColor
+        container.isAccessibilityElement = true
+        container.accessibilityLabel = "AI 챗봇 열기"
+        container.accessibilityTraits = .button
+
+        let icon = UIImageView(image: UIImage(systemName: "bubble.left.and.text.bubble.right.fill"))
+        icon.tintColor = .systemBlue
+        icon.contentMode = .scaleAspectFit
+
+        let titleLabel = UILabel()
+        titleLabel.text = "AI 챗봇"
+        titleLabel.font = .systemFont(ofSize: 15, weight: .semibold)
+        titleLabel.textColor = .label
+
+        let subtitleLabel = UILabel()
+        subtitleLabel.text = "성경에 대해 무엇이든 물어보세요"
+        subtitleLabel.font = .systemFont(ofSize: 12)
+        subtitleLabel.textColor = .secondaryLabel
+
+        let textStack = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
+        textStack.axis = .vertical
+        textStack.spacing = 2
+        textStack.isUserInteractionEnabled = false
+
+        let chevron = UIImageView(image: UIImage(systemName: "chevron.right"))
+        chevron.tintColor = .systemBlue
+        chevron.contentMode = .scaleAspectFit
+
+        container.addSubview(icon)
+        container.addSubview(textStack)
+        container.addSubview(chevron)
+
+        icon.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(16)
+            $0.centerY.equalToSuperview()
+            $0.size.equalTo(24)
+        }
+        textStack.snp.makeConstraints {
+            $0.leading.equalTo(icon.snp.trailing).offset(12)
+            $0.top.equalToSuperview().offset(14)
+            $0.bottom.equalToSuperview().offset(-14)
+        }
+        chevron.snp.makeConstraints {
+            $0.trailing.equalToSuperview().offset(-16)
+            $0.centerY.equalToSuperview()
+            $0.width.equalTo(8)
+            $0.height.equalTo(14)
+            $0.leading.greaterThanOrEqualTo(textStack.snp.trailing).offset(8)
+        }
+
+        container.addAction(UIAction { [weak self] _ in
+            self?.chatBotButtonTapped$.accept(())
+        }, for: .touchUpInside)
+
+        return container
     }()
     
     private lazy var collectionStackView = {
@@ -319,8 +384,14 @@ final class HomeContentViewController: UIViewController {
         }
         
         
+        chatBotBanner.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(20);
+            make.leading.equalToSuperview().offset(20);
+            make.trailing.equalToSuperview().offset(-20);
+        }
+
         collectionStackView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(30);
+            make.top.equalTo(chatBotBanner.snp.bottom).offset(24);
             make.leading.equalToSuperview().offset(20);
             make.trailing.equalToSuperview().offset(-20);
         }
@@ -376,7 +447,7 @@ final class HomeContentViewController: UIViewController {
         
         let moreRecentSearchesButtonTapped$ = moreRecentSearchesButton.rx.tap.asObservable();
         
-        let output = homeContentViewModel?.transform(input: HomeContentViewModel.Input(collectionButtonTapped$: collectionButtonTapped$.asObservable(), placesByTypeButtonTapped$: placesByTypeButtonTapped$.asObservable(), placesByCharacterButtonTapped$: placesByCharacterButtonTapped$.asObservable(), placesByBibleButtonTapped$: placesByBibleButtonTapped$.asObservable(), recentSearchCellTapped$: recentSearchCellTapped$.asObservable(), moreRecentSearchesButtonTapped$: moreRecentSearchesButtonTapped$, reportButtonTapped$: reportButtonTapped$.asObservable()));
+        let output = homeContentViewModel?.transform(input: HomeContentViewModel.Input(collectionButtonTapped$: collectionButtonTapped$.asObservable(), placesByTypeButtonTapped$: placesByTypeButtonTapped$.asObservable(), placesByCharacterButtonTapped$: placesByCharacterButtonTapped$.asObservable(), placesByBibleButtonTapped$: placesByBibleButtonTapped$.asObservable(), recentSearchCellTapped$: recentSearchCellTapped$.asObservable(), moreRecentSearchesButtonTapped$: moreRecentSearchesButtonTapped$, reportButtonTapped$: reportButtonTapped$.asObservable(), chatBotButtonTapped$: chatBotButtonTapped$.asObservable()));
         
 
         

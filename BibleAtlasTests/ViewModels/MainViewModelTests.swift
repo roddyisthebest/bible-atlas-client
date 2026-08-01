@@ -47,7 +47,7 @@ final class MainViewModelTests: XCTestCase {
         
         let viewLoaded$ = PublishRelay<Void>();
         
-        let output = vm.transform(input: MainViewModel.Input(viewLoaded$:viewLoaded$.asObservable(), placeAnnotationTapped$: .empty(, chatBotButtonTapped$: .empty())))
+        let output = vm.transform(input: MainViewModel.Input(viewLoaded$:viewLoaded$.asObservable(), placeAnnotationTapped$: .empty()))
         
         var histories:[Bool] = []
         
@@ -88,7 +88,7 @@ final class MainViewModelTests: XCTestCase {
         let vm = MainViewModel(bottomSheetCoordinator: navigator, mapUseCase: mapUsecase, placeUsecase: placeUsecase, notificationService: notificationService)
         
         
-        let output = vm.transform(input: MainViewModel.Input(viewLoaded$: .empty(), placeAnnotationTapped$: .empty(, chatBotButtonTapped$: .empty())))
+        let output = vm.transform(input: MainViewModel.Input(viewLoaded$: .empty(), placeAnnotationTapped$: .empty()))
 
     
         notificationService.post(.fetchGeoJsonRequired, object:"test-placeId")
@@ -115,7 +115,7 @@ final class MainViewModelTests: XCTestCase {
         let vm = MainViewModel(bottomSheetCoordinator: navigator, mapUseCase: mapUsecase, placeUsecase: placeUsecase, notificationService: notificationService)
         
         
-        let output = vm.transform(input: MainViewModel.Input(viewLoaded$: .empty(), placeAnnotationTapped$: .empty(, chatBotButtonTapped$: .empty())))
+        let output = vm.transform(input: MainViewModel.Input(viewLoaded$: .empty(), placeAnnotationTapped$: .empty()))
 
         var gotLoadingHistories:[Bool] = []
 
@@ -166,7 +166,7 @@ final class MainViewModelTests: XCTestCase {
         let vm = MainViewModel(bottomSheetCoordinator: navigator, mapUseCase: mapUsecase, placeUsecase: placeUsecase, notificationService: notificationService)
         
         let placeAnnotationTapped$ = PublishRelay<String>();
-        let _ = vm.transform(input: MainViewModel.Input(viewLoaded$: .empty(), placeAnnotationTapped$: placeAnnotationTapped$.asObservable(, chatBotButtonTapped$: .empty())))
+        let _ = vm.transform(input: MainViewModel.Input(viewLoaded$: .empty(), placeAnnotationTapped$: placeAnnotationTapped$.asObservable()))
         
         let placeId = "test-placeId"
         let anotherPlaceId = "test-placeId2"
@@ -183,7 +183,7 @@ final class MainViewModelTests: XCTestCase {
         let vm = MainViewModel(bottomSheetCoordinator: navigator, mapUseCase: mapUsecase, placeUsecase: placeUsecase, notificationService: notificationService)
         
         let placeAnnotationTapped$ = PublishRelay<String>();
-        let _ = vm.transform(input: MainViewModel.Input(viewLoaded$: .empty(), placeAnnotationTapped$: placeAnnotationTapped$.asObservable(, chatBotButtonTapped$: .empty())))
+        let _ = vm.transform(input: MainViewModel.Input(viewLoaded$: .empty(), placeAnnotationTapped$: placeAnnotationTapped$.asObservable()))
         
         let placeId = "test-placeId"
 

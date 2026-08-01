@@ -175,6 +175,7 @@ final class HomeContentViewModelTests: XCTestCase {
             recentSearchCellTapped$: .empty(),
             moreRecentSearchesButtonTapped$: .empty(),
             reportButtonTapped$: .empty(),
+            chatBotButtonTapped$: .empty(),
             chatBotButtonTapped$: .empty()
         ))
 
@@ -245,6 +246,7 @@ final class HomeContentViewModelTests: XCTestCase {
             recentSearchCellTapped$: .empty(),
             moreRecentSearchesButtonTapped$: .empty(),
             reportButtonTapped$: .empty(),
+            chatBotButtonTapped$: .empty(),
             chatBotButtonTapped$: .empty()
         )
         
@@ -299,6 +301,7 @@ final class HomeContentViewModelTests: XCTestCase {
             recentSearchCellTapped$: .empty(),
             moreRecentSearchesButtonTapped$: .empty(), 
             reportButtonTapped$: .empty(),
+            chatBotButtonTapped$: .empty(),
             chatBotButtonTapped$: .empty()
         ))
         
@@ -338,6 +341,7 @@ final class HomeContentViewModelTests: XCTestCase {
             recentSearchCellTapped$: .empty(),
             moreRecentSearchesButtonTapped$: .empty(), 
             reportButtonTapped$: .empty(),
+            chatBotButtonTapped$: .empty(),
             chatBotButtonTapped$: .empty()
         ))
 

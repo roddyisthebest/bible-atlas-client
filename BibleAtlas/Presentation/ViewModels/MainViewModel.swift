@@ -61,10 +61,6 @@ final class MainViewModel: MainViewModelProtocol {
 
         }).disposed(by: disposeBag)
 
-        input.chatBotButtonTapped$.subscribe(onNext: { [weak self] in
-            self?.navigator?.present(.chatBot)
-        }).disposed(by: disposeBag)
-
         return Output(error$: error$.asObservable(), isLoading$: isLoading$.asObservable(), geoJsonRender$: geoJsonRender$.asObservable(), resetMapView$: resetMapView$.asObservable(), selectedPlaceId$: selectedPlaceId$.asObservable(), placesWithRepresentativePoint$: placesWithRepresentativePoint$.asObservable())
     }
 
@@ -149,7 +145,6 @@ final class MainViewModel: MainViewModelProtocol {
     public struct Input {
         let viewLoaded$:Observable<Void>
         let placeAnnotationTapped$:Observable<String>
-        let chatBotButtonTapped$:Observable<Void>
     }
     
     public struct Output{
