@@ -53,14 +53,14 @@ final class MainViewModel: MainViewModelProtocol {
         
         input.placeAnnotationTapped$.subscribe(onNext:{
             [weak self] placeId in
-            
+
             let selectedPlaceId = self?.selectedPlaceId$.value;
             if(selectedPlaceId != placeId){
                 self?.navigator?.present(.placeDetail(placeId))
             }
 
         }).disposed(by: disposeBag)
-        
+
         return Output(error$: error$.asObservable(), isLoading$: isLoading$.asObservable(), geoJsonRender$: geoJsonRender$.asObservable(), resetMapView$: resetMapView$.asObservable(), selectedPlaceId$: selectedPlaceId$.asObservable(), placesWithRepresentativePoint$: placesWithRepresentativePoint$.asObservable())
     }
 

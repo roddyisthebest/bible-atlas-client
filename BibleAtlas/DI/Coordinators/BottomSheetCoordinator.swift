@@ -30,6 +30,7 @@ enum BottomSheetType:Equatable {
     case myPage
     case accountManagement
     case report
+    case chatBot
 
     var stringValue: String {
         switch self {
@@ -74,6 +75,8 @@ enum BottomSheetType:Equatable {
             return "accountManagement"
         case .report:
             return "report"
+        case .chatBot:
+            return "chatBot"
         }
     }
 }
@@ -382,6 +385,12 @@ final class BottomSheetCoordinator: BottomSheetNavigator {
             let vc = vcFactory.makeReportBottomSheetVC(vm: vm);
             presentFromTopVC(vc);
             analytics?.log(AnalyticsEvents.screen("ReportSheet"))
+
+        case .chatBot:
+            let vm = vmFactory.makeChatBotBottomSheetVM()
+            let vc = vcFactory.makeChatBotBottomSheetVC(vm: vm, navigator: self)
+            presentFromTopVC(vc)
+            analytics?.log(AnalyticsEvents.screen("ChatBotSheet"))
 
         }
     }

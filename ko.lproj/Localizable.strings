@@ -258,3 +258,51 @@
 
 // Login
 "Login.InValidFormat" = "아이디와 비밀번호를 모두 입력해주세요.";
+
+// ChatBot
+"ChatBot.EntryTitle" = "AI 챗봇";
+"ChatBot.EntrySubtitle" = "성경에 대해 무엇이든 물어보세요";
+"ChatBot.HeaderTitle" = "AI 챗봇 (%d/%d)";
+"ChatBot.Greeting" = "무엇이 궁금하신가요?";
+"ChatBot.GreetingSubtitle" = "성경 속 지역과 여정에 대해 물어보세요.\n아래 입력창에 질문을 입력하면 시작돼요.";
+"ChatBot.TipsTitle" = "✅ 이용 팁";
+"ChatBot.Tip1" = "• 질문은 한 번에 하나씩 나눠서 해주세요.";
+"ChatBot.Tip2" = "• 성경 속 지역/장소·여정 질문에 가장 강해요.";
+"ChatBot.Tip3" = "• 지역명을 정확히 몰라도 키워드만 있으면 지역 설명과 현재 추정 위치까지 알려드려요.";
+"ChatBot.Tip4" = "• 성경 내용에 관한 일반 질문도 답변 가능하지만, 지역·여정 질문에서 가장 잘 작동해요.";
+"ChatBot.Placeholder" = "성경 속 지역이 궁금하다면?";
+"ChatBot.PlaceholderReachedLimit" = "베타 사용 한도에 도달했어요";
+"ChatBot.Send" = "보내기";
+"ChatBot.EmptyMessageAlert" = "메시지를 입력해 주세요.";
+"ChatBot.InfoAlertTitle" = "AI 챗봇 안내";
+"ChatBot.InfoAlertMessage" = "아직 베타 버전이라 사용 횟수를 100회로 제한하고 있어요.\n\n✅ 이용 팁\n• 질문은 한 번에 하나씩 나눠서 해주세요.\n• 성경 속 지역/장소·여정 질문에 가장 강해요.\n• 지역명을 정확히 몰라도 키워드만 있으면 지역 설명과 현재 추정 위치까지 알려드려요.\n• 성경 내용에 관한 일반 질문도 답변 가능하지만, 지역·여정 질문에서 가장 잘 작동해요.\n\n사용해 주셔서 감사합니다!";
+"ChatBot.LimitAlertTitle" = "안내";
+"ChatBot.LimitAlertMessage" = "베타 사용 한도(%d회)에 도달했어요.";
+"ChatBot.OK" = "확인";
+"ChatBot.Cancel" = "취소";
+"ChatBot.PickerMessage" = "어느 지역을 보시겠어요?";
+"ChatBot.EraAncient" = "(고대)";
+"ChatBot.EraModern" = "(현대 추정)";
+"ChatBot.RecommendedHeader" = "💡 이런 질문은 어떠세요?";
+"ChatBot.Retry" = "재시도";
+"ChatBot.PendingInitial" = "잠시만요, 생각하고 있어요…";
+"ChatBot.Progress.PlaceAgent" = "성경 지명·여정을 찾는 중…";
+"ChatBot.Progress.BibleGeneral" = "성경 내용을 정리하는 중…";
+"ChatBot.Progress.NonBibleReject" = "질문을 확인하는 중…";
+"ChatBot.Progress.Rewrite" = "답변을 보완하는 중…";
+"ChatBot.Progress.Format" = "답변을 정리하는 중…";
+"ChatBot.Progress.Default" = "처리 중…";
+"ChatBot.Tool.AncientKeywordSearch" = "지명 후보 뽑는 중…";
+"ChatBot.Tool.SearchAncientPlaces" = "고대 지명 조회 중…";
+"ChatBot.Tool.SearchModernPlaces" = "현대 지명 조회 중…";
+"ChatBot.Tool.SearchAncientWithModern" = "고대·현대 매칭 중…";
+"ChatBot.Tool.SearchModernWithAncient" = "현대·고대 매칭 중…";
+"ChatBot.Tool.JourneyRouteSearch" = "여정 경로 찾는 중…";
+"ChatBot.Tool.JourneyDescriptionSearch" = "여정 배경 정리 중…";
+"ChatBot.Tool.Default" = "도구 실행 중…";
+"ChatBot.Tool.Wrapup" = "답변 정리 중…";
+"ChatBot.ScrollToBottom" = "맨 아래로";
+"ChatBot.Error.Network" = "네트워크 에러 (코드 %d)";
+"ChatBot.Error.InvalidResponse" = "서버 응답 형식이 이상해요";
+"ChatBot.Error.Decoding" = "응답을 이해할 수 없어요";
+"ChatBot.Error.ConnectionLost" = "연결이 끊어졌어요";

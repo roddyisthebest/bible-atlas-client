@@ -177,4 +177,9 @@ final class MockVCFactory: VCFactoryProtocol {
             record("makeReportBottomSheetViewController")
             return FakeSheetVC("report")
         }
+
+        func makeChatBotBottomSheetVC(vm: ChatBotBottomSheetViewModelProtocol, navigator: BottomSheetNavigator) -> UIViewController {
+            record("makeChatBotBottomSheetViewController")
+            return FakeSheetVC("chatBot")
+        }
 }

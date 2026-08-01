@@ -31,6 +31,11 @@ class MockVMFactory: VMFactoryProtocol {
         return MockReportBottomSheetViewModel()
 
     }
+
+    func makeChatBotBottomSheetVM() -> ChatBotBottomSheetViewModelProtocol {
+        made.append("chatBotBottomSheetVM")
+        return ChatBotBottomSheetViewModel(usecase: FakeAgentUsecase())
+    }
     
     func makeBibleBookVerseListBottomSheetVM(placeId: String, bibleBook: BibleAtlas.BibleBook?) -> BibleAtlas.BibleBookVerseListBottomSheetViewModelProtocol {
         made.append("bibleBookVerseListBottomSheetVM")

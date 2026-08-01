@@ -17,6 +17,7 @@ final class DIContainer {
     // Stores
     lazy var appStore = AppStore()
     lazy var collectionStore = CollectionStore()
+    lazy var chatUsageCounter = ChatUsageCounter()
     
 
     // System / Services
@@ -54,6 +55,16 @@ final class DIContainer {
     lazy var placeRepository = PlaceRepository(placeApiService: placeApiService)
     lazy var mapRepository = MapRepository(mapApiService: mapApiService)
     lazy var reportRepository = ReportRepository(reportApiService: reportApiService)
+    lazy var agentStreamClient: AgentStreamClientProtocol = {
+        guard let url = URL(string: AppSecrets.agentApiUrl) else {
+            fatalError("Invalid AGENT_API_URL: \(AppSecrets.agentApiUrl)")
+        }
+        return AgentStreamClient(
+            baseURL: url,
+            apiKeyProvider: { AppSecrets.agentApiKey }
+        )
+    }()
+    lazy var agentRepository: AgentRepositoryProtocol = AgentRepository(client: agentStreamClient)
 
     // Usecases
     lazy var authUsecase = AuthUsecase(repository: authRepository, tokenProvider: tokenProvider)
@@ -61,7 +72,11 @@ final class DIContainer {
     lazy var placeUsecase = PlaceUsecase(repository: placeRepository)
     lazy var mapUsecase = MapUsecase(repository: mapRepository)
     lazy var reportUsecase = ReportUsecase(repository: reportRepository)
-    lazy var usecases = UseCases(auth: authUsecase, user: userUsecase, place: placeUsecase, map: mapUsecase, report: reportUsecase)
+    lazy var agentUsecase: AgentUsecaseProtocol = AgentUsecase(
+        repository: agentRepository,
+        counter: chatUsageCounter
+    )
+    lazy var usecases = UseCases(auth: authUsecase, user: userUsecase, place: placeUsecase, map: mapUsecase, report: reportUsecase, agent: agentUsecase)
 
     // Factories & Coordinators
     lazy var vmFactory = VMFactory(appStore: appStore, collectionStore: collectionStore, usecases: usecases, notificationService: notificationService, recentSearchService: recentSearchService)

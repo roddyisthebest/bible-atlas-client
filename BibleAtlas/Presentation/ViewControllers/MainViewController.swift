@@ -26,7 +26,7 @@ final class MainViewController: UIViewController, Presentable  {
     private var selectedPlaceId:String? = nil;
     
     private let placeAnnotationTapped$ = PublishRelay<String>();
-    
+
     private let isPainting$ = BehaviorRelay<Bool>(value: false);
 
     private let delta = 0.25
@@ -35,17 +35,17 @@ final class MainViewController: UIViewController, Presentable  {
         let mv = MKMapView();
         return mv;
     }()
-    
+
     private func setupUI(){
         view.addSubview(mapView);
         view.addSubview(loadingView)
     }
-    
+
     private func setupConstaints(){
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview();
         }
-        
+
         loadingView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(view.bounds.height * 0.25)

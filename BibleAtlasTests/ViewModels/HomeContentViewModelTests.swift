@@ -174,7 +174,8 @@ final class HomeContentViewModelTests: XCTestCase {
             placesByBibleButtonTapped$: .empty(),
             recentSearchCellTapped$: .empty(),
             moreRecentSearchesButtonTapped$: .empty(),
-            reportButtonTapped$: .empty()
+            reportButtonTapped$: .empty(),
+            chatBotButtonTapped$: .empty()
         ))
 
         let loggedInExpectation = expectation(description: "isLoggedIn updated")
@@ -243,7 +244,8 @@ final class HomeContentViewModelTests: XCTestCase {
             placesByBibleButtonTapped$: .empty(),
             recentSearchCellTapped$: .empty(),
             moreRecentSearchesButtonTapped$: .empty(),
-            reportButtonTapped$: .empty()
+            reportButtonTapped$: .empty(),
+            chatBotButtonTapped$: .empty()
         )
         
         let _ = viewModel.transform(input: input)
@@ -296,7 +298,8 @@ final class HomeContentViewModelTests: XCTestCase {
             placesByBibleButtonTapped$: .empty(),
             recentSearchCellTapped$: .empty(),
             moreRecentSearchesButtonTapped$: .empty(), 
-            reportButtonTapped$: .empty()
+            reportButtonTapped$: .empty(),
+            chatBotButtonTapped$: .empty()
         ))
         
         let likeCount = try output.likePlacesCount$.toBlocking().first()
@@ -334,7 +337,8 @@ final class HomeContentViewModelTests: XCTestCase {
             placesByBibleButtonTapped$: .empty(),
             recentSearchCellTapped$: .empty(),
             moreRecentSearchesButtonTapped$: .empty(), 
-            reportButtonTapped$: .empty()
+            reportButtonTapped$: .empty(),
+            chatBotButtonTapped$: .empty()
         ))
 
 
