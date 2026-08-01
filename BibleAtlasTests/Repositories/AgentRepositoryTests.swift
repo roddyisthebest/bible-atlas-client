@@ -88,7 +88,8 @@ final class AgentRepositoryTests: XCTestCase {
 
     func test_stream_handlesMultipleJsonPayloadsInSingleEvent() async throws {
         // Server sometimes packs a node update + done payload as two data: lines in a single "done" event.
-        // Our parser joins them with \n. We should recover by using the last valid JSON as the payload.
+        // Our parser joins them with \n. Each line should be treated as its own event so the UI still
+        // gets a progress update before the final done.
         let nodeJson = #"{"node":"non_bible_reject","update":{"answer":"x","recommended_questions":[]}}"#
         let doneJson = #"{"answer":"final answer","place_id_map":{},"recommended_questions":["q1"],"summary":null,"messages":[]}"#
         let joined = nodeJson + "\n" + doneJson
@@ -98,11 +99,14 @@ final class AgentRepositoryTests: XCTestCase {
 
         let events = try await collect(sut.stream(request: .init(query: "q", summary: nil, messages: [])))
 
-        XCTAssertEqual(events.count, 1)
-        if case .done(let payload) = events[0] {
+        XCTAssertEqual(events.count, 2)
+        if case .node(let name) = events[0] {
+            XCTAssertEqual(name, "non_bible_reject")
+        } else { XCTFail("expected .node first") }
+        if case .done(let payload) = events[1] {
             XCTAssertEqual(payload.answer, "final answer")
             XCTAssertEqual(payload.recommendedQuestions, ["q1"])
-        } else { XCTFail("expected .done") }
+        } else { XCTFail("expected .done second") }
     }
 
     func test_stream_propagatesClientError() async {

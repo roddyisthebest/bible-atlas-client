@@ -12,11 +12,13 @@ final class AgentRepository: AgentRepositoryProtocol {
         AsyncThrowingStream { continuation in
             let task = Task {
                 do {
-                    for try await sse in client.stream(request: request) {
-                        guard let mapped = try mapEvent(sse) else { continue }
-                        continuation.yield(mapped)
-                        if case .done = mapped { break }
-                        if case .failure = mapped { break }
+                    outer: for try await sse in client.stream(request: request) {
+                        let mapped = try mapEvents(sse)
+                        for event in mapped {
+                            continuation.yield(event)
+                            if case .done = event { break outer }
+                            if case .failure = event { break outer }
+                        }
                     }
                     continuation.finish()
                 } catch {
@@ -27,40 +29,53 @@ final class AgentRepository: AgentRepositoryProtocol {
         }
     }
 
-    private func mapEvent(_ sse: SSEEvent) throws -> AgentStreamEvent? {
-        // 서버가 여러 JSON payload 를 하나의 event 안에 여러 data: 라인으로 보낼 때
-        // SSE 스펙대로 \n 조인되면 하나의 큰 문자열이 되지만 유효 JSON 은 아닌 상태가 됨.
-        // 방어: 전체 문자열 우선 시도 → 실패 시 마지막 non-empty 라인만 재시도.
-        let candidates: [String] = {
-            let joined = sse.data
-            let lines = joined
-                .split(separator: "\n", omittingEmptySubsequences: true)
-                .map(String.init)
-            if lines.count <= 1 { return [joined] }
-            return [joined, lines.last ?? joined]
-        }()
+    /// 하나의 SSE 이벤트가 여러 JSON payload 를 담고 있을 수 있음 (서버가 여러 data: 라인을 사용).
+    /// 각 라인을 개별 이벤트로 해석해서 순서대로 반환한다.
+    /// - 정상 케이스 (라인 하나): sse.name 기준으로 매핑.
+    /// - 다중 라인: 각 JSON 의 형태로 event 종류를 추론 (node/done/error).
+    private func mapEvents(_ sse: SSEEvent) throws -> [AgentStreamEvent] {
+        let lines = sse.data
+            .split(separator: "\n", omittingEmptySubsequences: true)
+            .map(String.init)
 
-        var lastError: Error?
-        for candidate in candidates {
-            guard let data = candidate.data(using: .utf8) else { continue }
+        if lines.count <= 1 {
+            guard let data = sse.data.data(using: .utf8) else { return [] }
             do {
-                return try decodeEvent(name: sse.name, data: data)
+                if let event = try decodeEvent(name: sse.name, data: data) {
+                    return [event]
+                }
+                return []
             } catch {
-                lastError = error
+                #if DEBUG
+                print("[AgentRepository] decoding failed event=\(sse.name) error=\(error)\n  raw: \(sse.data)")
+                #endif
+                throw AgentStreamError.decoding(
+                    eventName: sse.name,
+                    message: "\(error)",
+                    rawData: sse.data
+                )
             }
         }
 
-        if let error = lastError {
+        // 다중 라인: JSON shape 로 type 추론. 알 수 없는 라인은 조용히 무시.
+        var out: [AgentStreamEvent] = []
+        for line in lines {
+            guard let data = line.data(using: .utf8) else { continue }
+            if let inferred = inferEvent(from: data) {
+                out.append(inferred)
+            }
+        }
+        if out.isEmpty {
             #if DEBUG
-            print("[AgentRepository] decoding failed event=\(sse.name) error=\(error)\n  raw: \(sse.data)")
+            print("[AgentRepository] multi-line event yielded no recognizable payload. raw: \(sse.data)")
             #endif
             throw AgentStreamError.decoding(
                 eventName: sse.name,
-                message: "\(error)",
+                message: "no recognizable JSON payload in multi-line event",
                 rawData: sse.data
             )
         }
-        return nil
+        return out
     }
 
     private func decodeEvent(name: String, data: Data) throws -> AgentStreamEvent? {
@@ -76,5 +91,21 @@ final class AgentRepository: AgentRepositoryProtocol {
         default:
             return nil
         }
+    }
+
+    /// JSON 형태를 보고 이벤트 종류 추론. 우선순위: done → node → error.
+    private func inferEvent(from data: Data) -> AgentStreamEvent? {
+        if let payload = try? decoder.decode(AgentDonePayload.self, from: data) {
+            return .done(payload)
+        }
+        struct NodeDto: Decodable { let node: String }
+        if let dto = try? decoder.decode(NodeDto.self, from: data) {
+            return .node(name: dto.node)
+        }
+        struct ErrorDto: Decodable { let detail: String }
+        if let dto = try? decoder.decode(ErrorDto.self, from: data) {
+            return .failure(message: dto.detail)
+        }
+        return nil
     }
 }
