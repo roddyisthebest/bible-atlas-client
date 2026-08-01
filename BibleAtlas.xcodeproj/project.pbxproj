@@ -8,9 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		296CB238BA49943CA6B4BDF2 /* Pods_BibleAtlasTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EA6D60ADC15852CAC915A09 /* Pods_BibleAtlasTests.framework */; };
+		2FCF45ACA8AC62C6000843AB /* ChatUsageCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FE80B4D9756824E099A857 /* ChatUsageCounter.swift */; };
 		39B9D8CDDF5E2F1957E7A42C /* Pods_BibleAtlas.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC275028A6E0F37DC7A90D5 /* Pods_BibleAtlas.framework */; };
 		76E253A58C6F6BD6B4D0DDEC /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CB2A0967E24BC1F962E6C3 /* ChatMessage.swift */; };
 		97A59DCC0455A6678051B36F /* AppSecrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2887DB0DD1A6537765F563 /* AppSecrets.swift */; };
+		A30584A55F21FF78F3589ABB /* ChatUsageCounterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F2167DF0678277CD84DE9A /* ChatUsageCounterTests.swift */; };
 		A6A09322DD4AB29D30092AB0 /* AgentStreamEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B8B78CE9F350D6C50DA97A /* AgentStreamEvent.swift */; };
 		BA65090204207E98C6ADB336 /* AgentStreamRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0682619C070363E47D6A98B4 /* AgentStreamRequest.swift */; };
 		CB78A92F339B1B5973EF58F6 /* AgentUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F21D784EEE1A61F917D91 /* AgentUsecase.swift */; };
@@ -350,6 +352,7 @@
 		8EA6D60ADC15852CAC915A09 /* Pods_BibleAtlasTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BibleAtlasTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F8F21D784EEE1A61F917D91 /* AgentUsecase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AgentUsecase.swift; sourceTree = "<group>"; };
 		93688677BD7F15874DB994F0 /* Pods-BibleAtlas.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlas.release.xcconfig"; path = "Target Support Files/Pods-BibleAtlas/Pods-BibleAtlas.release.xcconfig"; sourceTree = "<group>"; };
+		A3FE80B4D9756824E099A857 /* ChatUsageCounter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatUsageCounter.swift; sourceTree = "<group>"; };
 		ADC275028A6E0F37DC7A90D5 /* Pods_BibleAtlas.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BibleAtlas.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B99651049227BE5701E9D126 /* Pods-BibleAtlasTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlasTests.debug.xcconfig"; path = "Target Support Files/Pods-BibleAtlasTests/Pods-BibleAtlasTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CCF5D5F9277B71DAA500A8F2 /* Pods-BibleAtlas-BibleAtlasUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlas-BibleAtlasUITests.release.xcconfig"; path = "Target Support Files/Pods-BibleAtlas-BibleAtlasUITests/Pods-BibleAtlas-BibleAtlasUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -671,6 +674,7 @@
 		ECE217102EFBE3AD00249F1F /* DeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkParser.swift; sourceTree = "<group>"; };
 		ECE217122EFBE3C400249F1F /* DeepLinkToBottomSheetMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkToBottomSheetMapper.swift; sourceTree = "<group>"; };
 		ECE217142EFBE3D300249F1F /* DeepLinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkHandler.swift; sourceTree = "<group>"; };
+		F8F2167DF0678277CD84DE9A /* ChatUsageCounterTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatUsageCounterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -886,6 +890,7 @@
 			isa = PBXGroup;
 			children = (
 				EC4767F02EE717B700E959DC /* AppStoreTests.swift */,
+				F8F2167DF0678277CD84DE9A /* ChatUsageCounterTests.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -895,6 +900,7 @@
 			children = (
 				EC64B9572DD8482C00D3C8A7 /* AppStore.swift */,
 				ECD972742E3E086100D94767 /* CollectionStore.swift */,
+				A3FE80B4D9756824E099A857 /* ChatUsageCounter.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -1858,6 +1864,7 @@
 				A6A09322DD4AB29D30092AB0 /* AgentStreamEvent.swift in Sources */,
 				F817DD13A150D0E8814EE325 /* AgentRepositoryProtocol.swift in Sources */,
 				CB78A92F339B1B5973EF58F6 /* AgentUsecase.swift in Sources */,
+				2FCF45ACA8AC62C6000843AB /* ChatUsageCounter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2015,6 +2022,7 @@
 				EC0F01B62E7CEFBC00D7C216 /* MainViewControllerTests.swift in Sources */,
 				EC1B2DD32E964A360073EBE3 /* MockBibleBookVerseListBottomSheetViewModel.swift in Sources */,
 				EC4767EC2EE6F39C00E959DC /* MockAuthorizedApiClient.swift in Sources */,
+				A30584A55F21FF78F3589ABB /* ChatUsageCounterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
