@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1900597CC531E6A7DDD49196 /* AgentRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC42B765DBC7A4451F17147F /* AgentRepositoryTests.swift */; };
 		198E0DAF3AB0BBF17038B336 /* SSELineParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6A273A700985258DC47262 /* SSELineParser.swift */; };
 		296CB238BA49943CA6B4BDF2 /* Pods_BibleAtlasTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EA6D60ADC15852CAC915A09 /* Pods_BibleAtlasTests.framework */; };
 		2FCF45ACA8AC62C6000843AB /* ChatUsageCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FE80B4D9756824E099A857 /* ChatUsageCounter.swift */; };
@@ -15,9 +16,11 @@
 		76E253A58C6F6BD6B4D0DDEC /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CB2A0967E24BC1F962E6C3 /* ChatMessage.swift */; };
 		97A59DCC0455A6678051B36F /* AppSecrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2887DB0DD1A6537765F563 /* AppSecrets.swift */; };
 		A30584A55F21FF78F3589ABB /* ChatUsageCounterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F2167DF0678277CD84DE9A /* ChatUsageCounterTests.swift */; };
+		A3DD6E1BE03E38AE7E6C3926 /* FakeAgentStreamClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B462063BA786994FF8FEEB2 /* FakeAgentStreamClient.swift */; };
 		A6A09322DD4AB29D30092AB0 /* AgentStreamEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B8B78CE9F350D6C50DA97A /* AgentStreamEvent.swift */; };
 		AD2ED1A93AB7BB9D54841FF8 /* SSELineParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C2CC4AEA6AE4C463BE21D2E /* SSELineParserTests.swift */; };
 		BA65090204207E98C6ADB336 /* AgentStreamRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0682619C070363E47D6A98B4 /* AgentStreamRequest.swift */; };
+		CA908D36EA1B62B1823FFC10 /* AgentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3401A8C2430DFE176460F5CD /* AgentRepository.swift */; };
 		CB78A92F339B1B5973EF58F6 /* AgentUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F21D784EEE1A61F917D91 /* AgentUsecase.swift */; };
 		EC0F01AF2E7B9AE600D7C216 /* MyPageBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01AE2E7B9AE600D7C216 /* MyPageBottomSheetViewModelTests.swift */; };
 		EC0F01B12E7C261B00D7C216 /* AccountManagementBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01B02E7C261B00D7C216 /* AccountManagementBottomSheetViewModelTests.swift */; };
@@ -349,9 +352,11 @@
 		21CCD02993F38A3746EDE812 /* Pods-BibleAtlasTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlasTests.release.xcconfig"; path = "Target Support Files/Pods-BibleAtlasTests/Pods-BibleAtlasTests.release.xcconfig"; sourceTree = "<group>"; };
 		27427E9961F5FEBDD710F748 /* Pods-BibleAtlas-BibleAtlasUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlas-BibleAtlasUITests.debug.xcconfig"; path = "Target Support Files/Pods-BibleAtlas-BibleAtlasUITests/Pods-BibleAtlas-BibleAtlasUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		33B8B78CE9F350D6C50DA97A /* AgentStreamEvent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AgentStreamEvent.swift; sourceTree = "<group>"; };
+		3401A8C2430DFE176460F5CD /* AgentRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AgentRepository.swift; sourceTree = "<group>"; };
 		4E96B6115B0DFDAAB2122F7D /* Pods-BibleAtlasUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlasUITests.debug.xcconfig"; path = "Target Support Files/Pods-BibleAtlasUITests/Pods-BibleAtlasUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		52CB2A0967E24BC1F962E6C3 /* ChatMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		62ED149E4D469D5193C3391F /* Pods-BibleAtlas.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlas.debug.xcconfig"; path = "Target Support Files/Pods-BibleAtlas/Pods-BibleAtlas.debug.xcconfig"; sourceTree = "<group>"; };
+		6B462063BA786994FF8FEEB2 /* FakeAgentStreamClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FakeAgentStreamClient.swift; sourceTree = "<group>"; };
 		81B5EBFD3CFA9C36E491E471 /* Pods_BibleAtlasUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BibleAtlasUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B6A273A700985258DC47262 /* SSELineParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SSELineParser.swift; sourceTree = "<group>"; };
 		8C2CC4AEA6AE4C463BE21D2E /* SSELineParserTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SSELineParserTests.swift; sourceTree = "<group>"; };
@@ -434,6 +439,7 @@
 		EC4273452EEC3F6E00262EC5 /* HomeContentViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeContentViewControllerTests.swift; sourceTree = "<group>"; };
 		EC4273472EEC56A400262EC5 /* PlaceDetailViewModelMoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailViewModelMoreTests.swift; sourceTree = "<group>"; };
 		EC42734C2EEC5A7700262EC5 /* SearchReadyViewControllerTests2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReadyViewControllerTests2.swift; sourceTree = "<group>"; };
+		EC42B765DBC7A4451F17147F /* AgentRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AgentRepositoryTests.swift; sourceTree = "<group>"; };
 		EC4767542EE3ED2000E959DC /* PlaceRepositortTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceRepositortTests.swift; sourceTree = "<group>"; };
 		EC4767562EE3ED4800E959DC /* MockAuthApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAuthApiService.swift; sourceTree = "<group>"; };
 		EC4767582EE3EDE600E959DC /* MockPlaceApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPlaceApiService.swift; sourceTree = "<group>"; };
@@ -1175,6 +1181,7 @@
 				EC4767F42EE71CC500E959DC /* MockSession.swift */,
 				EC4768002EE8617900E959DC /* MockUserRepository.swift */,
 				EC2ABB502EE9357E00C75B13 /* MockAuthUsecase.swift */,
+				6B462063BA786994FF8FEEB2 /* FakeAgentStreamClient.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -1337,6 +1344,7 @@
 				EC64B9852DE732CC00D3C8A7 /* PlaceRepository.swift */,
 				EC940EA72DF7196A00406944 /* MapRepository.swift */,
 				EC14C6432EC84F84008F90D6 /* ReportRepository.swift */,
+				3401A8C2430DFE176460F5CD /* AgentRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -1468,6 +1476,7 @@
 				EC4767702EE414E500E959DC /* MapRepositoryTests.swift */,
 				EC4767A12EE4721800E959DC /* ReportRepositoryTests.swift */,
 				EC4767AD2EE4792500E959DC /* UserRepositoryTests.swift */,
+				EC42B765DBC7A4451F17147F /* AgentRepositoryTests.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -1876,6 +1885,7 @@
 				2FCF45ACA8AC62C6000843AB /* ChatUsageCounter.swift in Sources */,
 				198E0DAF3AB0BBF17038B336 /* SSELineParser.swift in Sources */,
 				38F8D1A7DD0EF97FB2EA6882 /* AgentStreamClient.swift in Sources */,
+				CA908D36EA1B62B1823FFC10 /* AgentRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2035,6 +2045,8 @@
 				EC4767EC2EE6F39C00E959DC /* MockAuthorizedApiClient.swift in Sources */,
 				A30584A55F21FF78F3589ABB /* ChatUsageCounterTests.swift in Sources */,
 				AD2ED1A93AB7BB9D54841FF8 /* SSELineParserTests.swift in Sources */,
+				1900597CC531E6A7DDD49196 /* AgentRepositoryTests.swift in Sources */,
+				A3DD6E1BE03E38AE7E6C3926 /* FakeAgentStreamClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
