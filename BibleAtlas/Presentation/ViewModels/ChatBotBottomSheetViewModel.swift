@@ -149,10 +149,10 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
                     }
                     #endif
                     await MainActor.run { self.handle(event) }
-                    // 서버가 node + done 을 붙여 보내면 UI 가 node 라벨을 그릴 시간이 없음.
-                    // node 처리 후 최소 400ms 는 보이도록 대기.
+                    // node 라벨은 최소 700ms 는 보이도록 대기 (사람 눈으로 읽을 시간).
+                    // 다음 이벤트가 sleep 중 도착해도 stream 이 buffering 하므로 손실 없음.
                     if case .node = event {
-                        try? await Task.sleep(nanoseconds: 400_000_000)
+                        try? await Task.sleep(nanoseconds: 700_000_000)
                     }
                 }
             } catch AgentUsecaseError.limitExceeded {
