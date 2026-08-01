@@ -274,12 +274,9 @@ final class ChatBotBottomSheetViewController: UIViewController {
 
         output.routeToPlaceDetail
             .emit(onNext: { [weak self] placeId in
-                guard let self = self else { return }
-                // 챗봇 시트를 먼저 닫아 뒤에 챗봇이 안 보이도록 하고, 그 뒤에 PlaceDetail 을 base VC 위에 present.
-                let navigator = self.navigator
-                self.dismiss(animated: true) {
-                    navigator?.present(.placeDetail(placeId))
-                }
+                // Coordinator 가 자동으로 .forceMedium 을 post 해서 챗봇 시트가 medium 으로 접힘.
+                // dismiss 하지 않음 — 뒤로가기 시 원래 detent 로 복구되어 대화 유지.
+                self?.navigator?.present(.placeDetail(placeId))
             })
             .disposed(by: disposeBag)
 
