@@ -36,7 +36,7 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
 
     private let chipsHeader: UILabel = {
         let l = UILabel()
-        l.text = "💡 이런 질문은 어떠세요?"
+        l.text = L10n.ChatBot.recommendedHeader
         l.font = .rounded(ofSize: 12, weight: .semibold)
         l.textColor = .secondaryLabel
         l.isHidden = true

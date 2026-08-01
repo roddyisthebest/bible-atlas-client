@@ -269,3 +269,41 @@
 // Login
 "Login.InValidFormat" = "Please enter your ID and password.";
 
+// ChatBot
+"ChatBot.EntryTitle" = "AI Chatbot";
+"ChatBot.EntrySubtitle" = "Ask anything about the Bible";
+"ChatBot.HeaderTitle" = "AI Chatbot (%d/%d)";
+"ChatBot.Greeting" = "What are you curious about?";
+"ChatBot.GreetingSubtitle" = "Ask about biblical places and journeys.\nType a question below to get started.";
+"ChatBot.TipsTitle" = "✅ Tips";
+"ChatBot.Tip1" = "• Ask one question at a time.";
+"ChatBot.Tip2" = "• Works best for questions about biblical places and journeys.";
+"ChatBot.Tip3" = "• Even if you only know keywords, it can describe the region and estimate its modern location.";
+"ChatBot.Tip4" = "• General Bible questions also work, but place/journey questions get the best answers.";
+"ChatBot.Placeholder" = "Curious about a biblical place?";
+"ChatBot.PlaceholderReachedLimit" = "You've reached the beta usage limit";
+"ChatBot.Send" = "Send";
+"ChatBot.EmptyMessageAlert" = "Please enter a message.";
+"ChatBot.InfoAlertTitle" = "About the AI Chatbot";
+"ChatBot.InfoAlertMessage" = "This is a beta version, so usage is limited to 100 turns.\n\n✅ Tips\n• Ask one question at a time.\n• Works best for questions about biblical places and journeys.\n• Even if you only know keywords, it can describe the region and estimate its modern location.\n• General Bible questions also work, but place/journey questions get the best answers.\n\nThank you for using it!";
+"ChatBot.LimitAlertTitle" = "Notice";
+"ChatBot.LimitAlertMessage" = "You've reached the beta usage limit (%d turns).";
+"ChatBot.OK" = "OK";
+"ChatBot.Cancel" = "Cancel";
+"ChatBot.PickerMessage" = "Which location would you like to see?";
+"ChatBot.EraAncient" = "(Ancient)";
+"ChatBot.EraModern" = "(Modern est.)";
+"ChatBot.RecommendedHeader" = "💡 You might want to ask";
+"ChatBot.Retry" = "Retry";
+"ChatBot.PendingInitial" = "Just a moment, thinking…";
+"ChatBot.Progress.PlaceAgent" = "Looking up biblical places…";
+"ChatBot.Progress.BibleGeneral" = "Compiling biblical content…";
+"ChatBot.Progress.NonBibleReject" = "Reviewing your question…";
+"ChatBot.Progress.Rewrite" = "Refining the answer…";
+"ChatBot.Progress.Format" = "Formatting the answer…";
+"ChatBot.Progress.Default" = "Processing…";
+"ChatBot.Error.Network" = "Network error (code %d)";
+"ChatBot.Error.InvalidResponse" = "Unexpected response format";
+"ChatBot.Error.Decoding" = "Couldn't parse the response";
+"ChatBot.Error.ConnectionLost" = "Connection lost";
+

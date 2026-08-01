@@ -65,6 +65,6 @@ final class ChatBotHeaderView: UIView {
     }
 
     func setRemaining(_ remaining: Int) {
-        titleLabel.text = "AI 챗봇 (\(remaining)/\(AgentUsecase.limit))"
+        titleLabel.text = L10n.ChatBot.headerTitle(remaining, AgentUsecase.limit)
     }
 }

@@ -62,7 +62,7 @@ final class HomeContentViewController: UIViewController {
         container.layer.borderWidth = 1
         container.layer.borderColor = UIColor.systemBlue.withAlphaComponent(0.25).cgColor
         container.isAccessibilityElement = true
-        container.accessibilityLabel = "AI 챗봇 열기"
+        container.accessibilityLabel = L10n.ChatBot.entryTitle
         container.accessibilityTraits = .button
 
         let icon = UIImageView(image: UIImage(systemName: "bubble.left.and.text.bubble.right.fill"))
@@ -70,12 +70,12 @@ final class HomeContentViewController: UIViewController {
         icon.contentMode = .scaleAspectFit
 
         let titleLabel = UILabel()
-        titleLabel.text = "AI 챗봇"
+        titleLabel.text = L10n.ChatBot.entryTitle
         titleLabel.font = .systemFont(ofSize: 15, weight: .semibold)
         titleLabel.textColor = .label
 
         let subtitleLabel = UILabel()
-        subtitleLabel.text = "성경에 대해 무엇이든 물어보세요"
+        subtitleLabel.text = L10n.ChatBot.entrySubtitle
         subtitleLabel.font = .systemFont(ofSize: 12)
         subtitleLabel.textColor = .secondaryLabel
 

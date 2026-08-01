@@ -622,6 +622,101 @@ enum L10n {
         static let invalidFormatKey = "Login.InValidFormat"
         static var invalidFormat: String { invalidFormatKey.localized }
     }
+
+    enum ChatBot {
+        // Entry banner (home content)
+        static let entryTitleKey = "ChatBot.EntryTitle"
+        static let entrySubtitleKey = "ChatBot.EntrySubtitle"
+        // Header
+        static let headerTitleKey = "ChatBot.HeaderTitle"
+        // Empty state
+        static let greetingKey = "ChatBot.Greeting"
+        static let greetingSubtitleKey = "ChatBot.GreetingSubtitle"
+        static let tipsTitleKey = "ChatBot.TipsTitle"
+        static let tip1Key = "ChatBot.Tip1"
+        static let tip2Key = "ChatBot.Tip2"
+        static let tip3Key = "ChatBot.Tip3"
+        static let tip4Key = "ChatBot.Tip4"
+        // Input
+        static let placeholderKey = "ChatBot.Placeholder"
+        static let placeholderReachedLimitKey = "ChatBot.PlaceholderReachedLimit"
+        static let sendKey = "ChatBot.Send"
+        static let emptyMessageAlertKey = "ChatBot.EmptyMessageAlert"
+        // Info alert
+        static let infoAlertTitleKey = "ChatBot.InfoAlertTitle"
+        static let infoAlertMessageKey = "ChatBot.InfoAlertMessage"
+        // Limit alert
+        static let limitAlertTitleKey = "ChatBot.LimitAlertTitle"
+        static let limitAlertMessageKey = "ChatBot.LimitAlertMessage"
+        // Common
+        static let okKey = "ChatBot.OK"
+        static let cancelKey = "ChatBot.Cancel"
+        // Place picker
+        static let pickerMessageKey = "ChatBot.PickerMessage"
+        static let eraAncientKey = "ChatBot.EraAncient"
+        static let eraModernKey = "ChatBot.EraModern"
+        // Chips header
+        static let recommendedHeaderKey = "ChatBot.RecommendedHeader"
+        // Retry
+        static let retryKey = "ChatBot.Retry"
+        // Pending initial
+        static let pendingInitialKey = "ChatBot.PendingInitial"
+
+        static var entryTitle: String { entryTitleKey.localized }
+        static var entrySubtitle: String { entrySubtitleKey.localized }
+        static func headerTitle(_ remaining: Int, _ limit: Int) -> String { headerTitleKey.localized(remaining, limit) }
+        static var greeting: String { greetingKey.localized }
+        static var greetingSubtitle: String { greetingSubtitleKey.localized }
+        static var tipsTitle: String { tipsTitleKey.localized }
+        static var tip1: String { tip1Key.localized }
+        static var tip2: String { tip2Key.localized }
+        static var tip3: String { tip3Key.localized }
+        static var tip4: String { tip4Key.localized }
+        static var placeholder: String { placeholderKey.localized }
+        static var placeholderReachedLimit: String { placeholderReachedLimitKey.localized }
+        static var send: String { sendKey.localized }
+        static var emptyMessageAlert: String { emptyMessageAlertKey.localized }
+        static var infoAlertTitle: String { infoAlertTitleKey.localized }
+        static var infoAlertMessage: String { infoAlertMessageKey.localized }
+        static var limitAlertTitle: String { limitAlertTitleKey.localized }
+        static func limitAlertMessage(_ limit: Int) -> String { limitAlertMessageKey.localized(limit) }
+        static var ok: String { okKey.localized }
+        static var cancel: String { cancelKey.localized }
+        static var pickerMessage: String { pickerMessageKey.localized }
+        static var eraAncient: String { eraAncientKey.localized }
+        static var eraModern: String { eraModernKey.localized }
+        static var recommendedHeader: String { recommendedHeaderKey.localized }
+        static var retry: String { retryKey.localized }
+        static var pendingInitial: String { pendingInitialKey.localized }
+
+        enum Progress {
+            static let placeAgentKey = "ChatBot.Progress.PlaceAgent"
+            static let bibleGeneralKey = "ChatBot.Progress.BibleGeneral"
+            static let nonBibleRejectKey = "ChatBot.Progress.NonBibleReject"
+            static let rewriteKey = "ChatBot.Progress.Rewrite"
+            static let formatKey = "ChatBot.Progress.Format"
+            static let defaultKey = "ChatBot.Progress.Default"
+
+            static var placeAgent: String { placeAgentKey.localized }
+            static var bibleGeneral: String { bibleGeneralKey.localized }
+            static var nonBibleReject: String { nonBibleRejectKey.localized }
+            static var rewrite: String { rewriteKey.localized }
+            static var format: String { formatKey.localized }
+            static var `default`: String { defaultKey.localized }
+        }
+
+        enum Error {
+            static let networkKey = "ChatBot.Error.Network"
+            static let invalidResponseKey = "ChatBot.Error.InvalidResponse"
+            static let decodingKey = "ChatBot.Error.Decoding"
+            static let connectionLostKey = "ChatBot.Error.ConnectionLost"
+
+            static func network(_ code: Int) -> String { networkKey.localized(code) }
+            static var invalidResponse: String { invalidResponseKey.localized }
+            static var decoding: String { decodingKey.localized }
+            static var connectionLost: String { connectionLostKey.localized }
+        }
+    }
 }
 
 

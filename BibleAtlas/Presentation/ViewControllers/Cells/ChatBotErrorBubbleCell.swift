@@ -38,7 +38,7 @@ final class ChatBotErrorBubbleCell: UITableViewCell {
         config.baseForegroundColor = .systemOrange
         config.cornerStyle = .capsule
         config.contentInsets = .init(top: 4, leading: 10, bottom: 4, trailing: 12)
-        config.attributedTitle = AttributedString("재시도", attributes: AttributeContainer([
+        config.attributedTitle = AttributedString(L10n.ChatBot.retry, attributes: AttributeContainer([
             .font: UIFont.rounded(ofSize: 12, weight: .semibold),
         ]))
         let b = UIButton(configuration: config)

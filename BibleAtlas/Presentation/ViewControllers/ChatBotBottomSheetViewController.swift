@@ -39,7 +39,7 @@ final class ChatBotBottomSheetViewController: UIViewController {
     private let textField: UITextField = {
         let tf = UITextField()
         tf.borderStyle = .none
-        tf.placeholder = "성경 속 지역이 궁금하다면?"
+        tf.placeholder = L10n.ChatBot.placeholder
         tf.returnKeyType = .send
         tf.font = .rounded(ofSize: 15, weight: .regular)
         tf.textColor = .label
@@ -54,7 +54,7 @@ final class ChatBotBottomSheetViewController: UIViewController {
         config.cornerStyle = .capsule
         config.contentInsets = .init(top: 8, leading: 8, bottom: 8, trailing: 8)
         let b = UIButton(configuration: config)
-        b.accessibilityLabel = "보내기"
+        b.accessibilityLabel = L10n.ChatBot.send
         return b
     }()
 
@@ -197,8 +197,8 @@ final class ChatBotBottomSheetViewController: UIViewController {
     private func triggerSend() {
         let text = textField.text ?? ""
         guard !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            let alert = UIAlertController(title: nil, message: "메시지를 입력해 주세요.", preferredStyle: .alert)
-            alert.addAction(.init(title: "확인", style: .default))
+            let alert = UIAlertController(title: nil, message: L10n.ChatBot.emptyMessageAlert, preferredStyle: .alert)
+            alert.addAction(.init(title: L10n.ChatBot.ok, style: .default))
             present(alert, animated: true)
             return
         }
@@ -208,19 +208,8 @@ final class ChatBotBottomSheetViewController: UIViewController {
     }
 
     private func presentInfoAlert() {
-        let message = """
-        아직 베타 버전이라 사용 횟수를 100회로 제한하고 있어요.
-
-        ✅ 이용 팁
-        • 질문은 한 번에 하나씩 나눠서 해주세요.
-        • 성경 속 지역/장소·여정 질문에 가장 강해요.
-        • 지역명을 정확히 몰라도 키워드만 있으면 지역 설명과 현재 추정 위치까지 알려드려요.
-        • 성경 내용에 관한 일반 질문도 답변 가능하지만, 지역·여정 질문에서 가장 잘 작동해요.
-
-        사용해 주셔서 감사합니다!
-        """
-        let alert = UIAlertController(title: "AI 챗봇 안내", message: message, preferredStyle: .alert)
-        alert.addAction(.init(title: "확인", style: .default))
+        let alert = UIAlertController(title: L10n.ChatBot.infoAlertTitle, message: L10n.ChatBot.infoAlertMessage, preferredStyle: .alert)
+        alert.addAction(.init(title: L10n.ChatBot.ok, style: .default))
         present(alert, animated: true)
     }
 
@@ -262,7 +251,7 @@ final class ChatBotBottomSheetViewController: UIViewController {
         output.remainingCount
             .drive(onNext: { [weak self] r in
                 self?.headerView.setRemaining(r)
-                if r == 0 { self?.textField.placeholder = "베타 사용 한도에 도달했어요" }
+                if r == 0 { self?.textField.placeholder = L10n.ChatBot.placeholderReachedLimit }
             })
             .disposed(by: disposeBag)
 
@@ -292,11 +281,11 @@ final class ChatBotBottomSheetViewController: UIViewController {
         output.showLimitAlert
             .emit(onNext: { [weak self] in
                 let alert = UIAlertController(
-                    title: "안내",
-                    message: "베타 사용 한도(100회)에 도달했어요.",
+                    title: L10n.ChatBot.limitAlertTitle,
+                    message: L10n.ChatBot.limitAlertMessage(AgentUsecase.limit),
                     preferredStyle: .alert
                 )
-                alert.addAction(.init(title: "확인", style: .default))
+                alert.addAction(.init(title: L10n.ChatBot.ok, style: .default))
                 self?.present(alert, animated: true)
             })
             .disposed(by: disposeBag)
@@ -309,14 +298,14 @@ final class ChatBotBottomSheetViewController: UIViewController {
             placeSelectedRelay.accept(ids[0])
             return
         }
-        let alert = UIAlertController(title: name, message: "어느 지역을 보시겠어요?", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: name, message: L10n.ChatBot.pickerMessage, preferredStyle: .actionSheet)
         for (index, id) in ids.enumerated() {
             let title = "\(name)\(index + 1) \(Self.eraTag(forPlaceId: id))"
             alert.addAction(.init(title: title, style: .default) { [weak self] _ in
                 self?.placeSelectedRelay.accept(id)
             })
         }
-        alert.addAction(.init(title: "취소", style: .cancel))
+        alert.addAction(.init(title: L10n.ChatBot.cancel, style: .cancel))
         // iPad 대응 (source view)
         if let popover = alert.popoverPresentationController {
             popover.sourceView = view
@@ -328,8 +317,8 @@ final class ChatBotBottomSheetViewController: UIViewController {
 
     private static func eraTag(forPlaceId id: String) -> String {
         switch id.first?.lowercased() {
-        case "a": return "(고대)"
-        case "m": return "(현대 추정)"
+        case "a": return L10n.ChatBot.eraAncient
+        case "m": return L10n.ChatBot.eraModern
         default:  return ""
         }
     }

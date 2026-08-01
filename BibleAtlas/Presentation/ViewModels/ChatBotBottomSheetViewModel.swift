@@ -126,8 +126,9 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
 
         lastQuery = trimmed
         appendBubble(.init(kind: .user, text: trimmed))
-        addPendingBubble(label: "요청 준비 중…")
-        progressRelay.accept(.running(label: "요청 준비 중…"))
+        let initialLabel = L10n.ChatBot.pendingInitial
+        addPendingBubble(label: initialLabel)
+        progressRelay.accept(.running(label: initialLabel))
 
         let request = AgentStreamRequest(
             query: trimmed,
@@ -236,13 +237,13 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
         if let streamError = error as? AgentStreamError {
             switch streamError {
             case .badStatus(let code, _):
-                return "네트워크 에러 (코드 \(code))"
+                return L10n.ChatBot.Error.network(code)
             case .invalidResponse:
-                return "서버 응답 형식이 이상해요"
+                return L10n.ChatBot.Error.invalidResponse
             case .decoding:
-                return "응답을 이해할 수 없어요"
+                return L10n.ChatBot.Error.decoding
             }
         }
-        return "연결이 끊어졌어요"
+        return L10n.ChatBot.Error.connectionLost
     }
 }
