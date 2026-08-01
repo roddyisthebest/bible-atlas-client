@@ -27,7 +27,6 @@ final class ChatBotBottomSheetViewController: UIViewController {
         tv.rowHeight = UITableView.automaticDimension
         return tv
     }()
-    private let progressBanner = ChatBotProgressBanner()
     private let emptyStateView = ChatBotEmptyStateView()
     private let inputContainer: UIView = {
         let v = UIView()
@@ -130,7 +129,6 @@ final class ChatBotBottomSheetViewController: UIViewController {
         view.addSubview(headerView)
         view.addSubview(tableView)
         view.addSubview(emptyStateView)
-        view.addSubview(progressBanner)
         view.addSubview(inputContainer)
         inputContainer.addSubview(textField)
         inputContainer.addSubview(sendButton)
@@ -143,18 +141,12 @@ final class ChatBotBottomSheetViewController: UIViewController {
         tableView.snp.makeConstraints {
             $0.top.equalTo(headerView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(progressBanner.snp.top).offset(-4)
+            $0.bottom.equalTo(inputContainer.snp.top).offset(-4)
         }
         emptyStateView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview().offset(-24)
             $0.centerY.equalTo(tableView)
-        }
-        progressBanner.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(16)
-            $0.trailing.equalToSuperview().offset(-16)
-            $0.bottom.equalTo(inputContainer.snp.top).offset(-4)
-            $0.height.greaterThanOrEqualTo(0)
         }
         inputContainer.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(16)
@@ -220,6 +212,7 @@ final class ChatBotBottomSheetViewController: UIViewController {
     private func setupTable() {
         tableView.register(ChatBotUserBubbleCell.self, forCellReuseIdentifier: ChatBotUserBubbleCell.reuseID)
         tableView.register(ChatBotAssistantBubbleCell.self, forCellReuseIdentifier: ChatBotAssistantBubbleCell.reuseID)
+        tableView.register(ChatBotPendingBubbleCell.self, forCellReuseIdentifier: ChatBotPendingBubbleCell.reuseID)
         tableView.register(ChatBotErrorBubbleCell.self, forCellReuseIdentifier: ChatBotErrorBubbleCell.reuseID)
         tableView.dataSource = self
     }
@@ -246,8 +239,9 @@ final class ChatBotBottomSheetViewController: UIViewController {
             })
             .disposed(by: disposeBag)
 
+        // progress 는 pending 버블로 대체. 여기서는 별도 UI 갱신 없음.
         output.progress
-            .drive(onNext: { [weak self] p in self?.progressBanner.apply(p) })
+            .drive()
             .disposed(by: disposeBag)
 
         output.remainingCount
@@ -353,6 +347,10 @@ extension ChatBotBottomSheetViewController: UITableViewDataSource {
                 self?.handlePlaceSelection(name: name, ids: ids)
             }
             cell.onChipTapped = { [weak self] text in self?.chipRelay.accept(text) }
+            return cell
+        case .pending(let label):
+            let cell = tableView.dequeueReusableCell(withIdentifier: ChatBotPendingBubbleCell.reuseID, for: indexPath) as! ChatBotPendingBubbleCell
+            cell.configure(label: label)
             return cell
         case .error:
             let cell = tableView.dequeueReusableCell(withIdentifier: ChatBotErrorBubbleCell.reuseID, for: indexPath) as! ChatBotErrorBubbleCell

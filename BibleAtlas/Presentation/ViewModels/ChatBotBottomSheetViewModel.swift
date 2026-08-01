@@ -51,6 +51,7 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
     private var session = ChatSessionState()
     private var lastQuery: String?
     private var currentTask: Task<Void, Never>?
+    private var pendingBubbleId: UUID?
 
     private let disposeBag = DisposeBag()
 
@@ -125,6 +126,7 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
 
         lastQuery = trimmed
         appendBubble(.init(kind: .user, text: trimmed))
+        addPendingBubble(label: "요청 준비 중…")
         progressRelay.accept(.running(label: "요청 준비 중…"))
 
         let request = AgentStreamRequest(
@@ -167,8 +169,11 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
     private func handle(_ event: AgentStreamEvent) {
         switch event {
         case .node(let name):
-            progressRelay.accept(.running(label: ChatBotProgressLabel.label(forNode: name)))
+            let label = ChatBotProgressLabel.label(forNode: name)
+            updatePendingBubble(label: label)
+            progressRelay.accept(.running(label: label))
         case .done(let payload):
+            removePendingBubble()
             let bubble = ChatBubble(
                 kind: .assistant(
                     placeIdMap: payload.placeIdMap,
@@ -183,6 +188,7 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
             remainingRelay.accept(usecase.remainingCount)
             progressRelay.accept(.idle)
         case .failure(let message):
+            removePendingBubble()
             appendBubble(.init(kind: .error(message), text: message))
             progressRelay.accept(.error(message: message))
         }
@@ -190,12 +196,40 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
 
     private func handleThrown(_ error: Error) {
         let message = Self.userFacingMessage(for: error)
+        removePendingBubble()
         appendBubble(.init(kind: .error(message), text: message))
         progressRelay.accept(.error(message: message))
     }
 
     private func appendBubble(_ b: ChatBubble) {
         bubblesRelay.accept(bubblesRelay.value + [b])
+    }
+
+    private func addPendingBubble(label: String) {
+        let id = UUID()
+        pendingBubbleId = id
+        appendBubble(.init(id: id, kind: .pending(label: label), text: label))
+    }
+
+    private func updatePendingBubble(label: String) {
+        guard let id = pendingBubbleId else {
+            addPendingBubble(label: label)
+            return
+        }
+        var current = bubblesRelay.value
+        guard let idx = current.firstIndex(where: { $0.id == id }) else { return }
+        current[idx] = ChatBubble(id: id, kind: .pending(label: label), text: label)
+        bubblesRelay.accept(current)
+    }
+
+    private func removePendingBubble() {
+        guard let id = pendingBubbleId else { return }
+        var current = bubblesRelay.value
+        if let idx = current.firstIndex(where: { $0.id == id }) {
+            current.remove(at: idx)
+            bubblesRelay.accept(current)
+        }
+        pendingBubbleId = nil
     }
 
     static func userFacingMessage(for error: Error) -> String {

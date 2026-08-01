@@ -13,6 +13,7 @@
 		198E0DAF3AB0BBF17038B336 /* SSELineParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6A273A700985258DC47262 /* SSELineParser.swift */; };
 		286F69990F1E3B1D6AEC7506 /* ChatBotBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBAA91F7A66AD2235B754BC /* ChatBotBottomSheetViewModelTests.swift */; };
 		296CB238BA49943CA6B4BDF2 /* Pods_BibleAtlasTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EA6D60ADC15852CAC915A09 /* Pods_BibleAtlasTests.framework */; };
+		2A976336D7EB42F2DD76D171 /* ChatBotPendingBubbleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B15FA6467492B37EBBCA37F /* ChatBotPendingBubbleCell.swift */; };
 		2FCF45ACA8AC62C6000843AB /* ChatUsageCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FE80B4D9756824E099A857 /* ChatUsageCounter.swift */; };
 		38F8D1A7DD0EF97FB2EA6882 /* AgentStreamClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C66280D833B0F8D48447BF /* AgentStreamClient.swift */; };
 		39B9D8CDDF5E2F1957E7A42C /* Pods_BibleAtlas.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC275028A6E0F37DC7A90D5 /* Pods_BibleAtlas.framework */; };
@@ -372,6 +373,7 @@
 		33B8B78CE9F350D6C50DA97A /* AgentStreamEvent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AgentStreamEvent.swift; sourceTree = "<group>"; };
 		3401A8C2430DFE176460F5CD /* AgentRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AgentRepository.swift; sourceTree = "<group>"; };
 		3A65BBCBABBF2E6DB01CA1B3 /* AgentUsecaseTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AgentUsecaseTests.swift; sourceTree = "<group>"; };
+		3B15FA6467492B37EBBCA37F /* ChatBotPendingBubbleCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatBotPendingBubbleCell.swift; sourceTree = "<group>"; };
 		3FBAA91F7A66AD2235B754BC /* ChatBotBottomSheetViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatBotBottomSheetViewModelTests.swift; sourceTree = "<group>"; };
 		44E84BE11375EFF79F356A16 /* ChatBotEmptyStateView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatBotEmptyStateView.swift; sourceTree = "<group>"; };
 		4BAA9F7F2AD5A76CA884D158 /* ChatBotBottomSheetViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatBotBottomSheetViewController.swift; sourceTree = "<group>"; };
@@ -759,6 +761,7 @@
 				84B25EB3CA9570DF5A6DA1A5 /* ChatBotUserBubbleCell.swift */,
 				2681C3EC4FB281BBBB53A751 /* ChatBotErrorBubbleCell.swift */,
 				E2E0EEE57B61D2B66C4D8A62 /* ChatBotAssistantBubbleCell.swift */,
+				3B15FA6467492B37EBBCA37F /* ChatBotPendingBubbleCell.swift */,
 			);
 			name = Cells;
 			path = Cells;
@@ -1955,6 +1958,7 @@
 				6F46869890A32392137BFABA /* ChatBotBottomSheetViewController.swift in Sources */,
 				3CEADB8BE08A45658A88065F /* ChatBotEmptyStateView.swift in Sources */,
 				C048A3BF2CF56A426AFFC800 /* UIFont+Rounded.swift in Sources */,
+				2A976336D7EB42F2DD76D171 /* ChatBotPendingBubbleCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

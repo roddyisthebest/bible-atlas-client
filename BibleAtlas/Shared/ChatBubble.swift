@@ -3,6 +3,7 @@ import Foundation
 enum ChatBubbleKind: Hashable {
     case user
     case assistant(placeIdMap: [String: [String]], recommendedQuestions: [String])
+    case pending(label: String)
     case error(String)
 }
 
