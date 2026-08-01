@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		198E0DAF3AB0BBF17038B336 /* SSELineParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6A273A700985258DC47262 /* SSELineParser.swift */; };
 		296CB238BA49943CA6B4BDF2 /* Pods_BibleAtlasTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EA6D60ADC15852CAC915A09 /* Pods_BibleAtlasTests.framework */; };
 		2FCF45ACA8AC62C6000843AB /* ChatUsageCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FE80B4D9756824E099A857 /* ChatUsageCounter.swift */; };
 		39B9D8CDDF5E2F1957E7A42C /* Pods_BibleAtlas.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC275028A6E0F37DC7A90D5 /* Pods_BibleAtlas.framework */; };
@@ -14,6 +15,7 @@
 		97A59DCC0455A6678051B36F /* AppSecrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2887DB0DD1A6537765F563 /* AppSecrets.swift */; };
 		A30584A55F21FF78F3589ABB /* ChatUsageCounterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F2167DF0678277CD84DE9A /* ChatUsageCounterTests.swift */; };
 		A6A09322DD4AB29D30092AB0 /* AgentStreamEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B8B78CE9F350D6C50DA97A /* AgentStreamEvent.swift */; };
+		AD2ED1A93AB7BB9D54841FF8 /* SSELineParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C2CC4AEA6AE4C463BE21D2E /* SSELineParserTests.swift */; };
 		BA65090204207E98C6ADB336 /* AgentStreamRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0682619C070363E47D6A98B4 /* AgentStreamRequest.swift */; };
 		CB78A92F339B1B5973EF58F6 /* AgentUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F21D784EEE1A61F917D91 /* AgentUsecase.swift */; };
 		EC0F01AF2E7B9AE600D7C216 /* MyPageBottomSheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0F01AE2E7B9AE600D7C216 /* MyPageBottomSheetViewModelTests.swift */; };
@@ -349,6 +351,8 @@
 		52CB2A0967E24BC1F962E6C3 /* ChatMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		62ED149E4D469D5193C3391F /* Pods-BibleAtlas.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlas.debug.xcconfig"; path = "Target Support Files/Pods-BibleAtlas/Pods-BibleAtlas.debug.xcconfig"; sourceTree = "<group>"; };
 		81B5EBFD3CFA9C36E491E471 /* Pods_BibleAtlasUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BibleAtlasUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B6A273A700985258DC47262 /* SSELineParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SSELineParser.swift; sourceTree = "<group>"; };
+		8C2CC4AEA6AE4C463BE21D2E /* SSELineParserTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SSELineParserTests.swift; sourceTree = "<group>"; };
 		8EA6D60ADC15852CAC915A09 /* Pods_BibleAtlasTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BibleAtlasTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F8F21D784EEE1A61F917D91 /* AgentUsecase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AgentUsecase.swift; sourceTree = "<group>"; };
 		93688677BD7F15874DB994F0 /* Pods-BibleAtlas.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlas.release.xcconfig"; path = "Target Support Files/Pods-BibleAtlas/Pods-BibleAtlas.release.xcconfig"; sourceTree = "<group>"; };
@@ -776,6 +780,7 @@
 			isa = PBXGroup;
 			children = (
 				EC0F02052E85362300D7C216 /* AuthorizedApiClientTests.swift */,
+				8C2CC4AEA6AE4C463BE21D2E /* SSELineParserTests.swift */,
 			);
 			path = Clients;
 			sourceTree = "<group>";
@@ -1268,6 +1273,7 @@
 			children = (
 				ECA94BCB2D508D1E005B0428 /* DefaultSession.swift */,
 				ECA94BD62D50977A005B0428 /* AuthorizedApiClient.swift */,
+				8B6A273A700985258DC47262 /* SSELineParser.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1865,6 +1871,7 @@
 				F817DD13A150D0E8814EE325 /* AgentRepositoryProtocol.swift in Sources */,
 				CB78A92F339B1B5973EF58F6 /* AgentUsecase.swift in Sources */,
 				2FCF45ACA8AC62C6000843AB /* ChatUsageCounter.swift in Sources */,
+				198E0DAF3AB0BBF17038B336 /* SSELineParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2023,6 +2030,7 @@
 				EC1B2DD32E964A360073EBE3 /* MockBibleBookVerseListBottomSheetViewModel.swift in Sources */,
 				EC4767EC2EE6F39C00E959DC /* MockAuthorizedApiClient.swift in Sources */,
 				A30584A55F21FF78F3589ABB /* ChatUsageCounterTests.swift in Sources */,
+				AD2ED1A93AB7BB9D54841FF8 /* SSELineParserTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
