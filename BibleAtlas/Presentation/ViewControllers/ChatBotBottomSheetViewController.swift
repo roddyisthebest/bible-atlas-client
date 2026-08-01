@@ -78,7 +78,7 @@ final class ChatBotBottomSheetViewController: UIViewController {
         inputContainer.addSubview(sendButton)
 
         headerView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(52)
         }
