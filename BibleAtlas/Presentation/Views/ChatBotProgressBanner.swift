@@ -19,7 +19,7 @@ final class ChatBotProgressBanner: UIView {
 
     private let label: UILabel = {
         let l = UILabel()
-        l.font = .systemFont(ofSize: 13)
+        l.font = .rounded(ofSize: 13, weight: .regular)
         l.textColor = .secondaryLabel
         return l
     }()

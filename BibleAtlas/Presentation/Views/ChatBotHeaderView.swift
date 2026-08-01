@@ -8,7 +8,7 @@ final class ChatBotHeaderView: UIView {
 
     private let titleLabel: UILabel = {
         let l = UILabel()
-        l.font = .systemFont(ofSize: 16, weight: .semibold)
+        l.font = .rounded(ofSize: 16, weight: .semibold)
         l.textAlignment = .center
         return l
     }()

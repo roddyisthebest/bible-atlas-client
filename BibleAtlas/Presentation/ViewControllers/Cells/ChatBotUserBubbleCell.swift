@@ -7,13 +7,13 @@ final class ChatBotUserBubbleCell: UITableViewCell {
     private let bubble: UIView = {
         let v = UIView()
         v.backgroundColor = .systemBlue
-        v.layer.cornerRadius = 16
+        v.layer.cornerRadius = 18
         return v
     }()
 
     private let label: UILabel = {
         let l = UILabel()
-        l.font = .systemFont(ofSize: 15)
+        l.font = .rounded(ofSize: 15, weight: .regular)
         l.textColor = .white
         l.numberOfLines = 0
         return l
@@ -29,10 +29,10 @@ final class ChatBotUserBubbleCell: UITableViewCell {
             $0.top.equalToSuperview().offset(6)
             $0.bottom.equalToSuperview().offset(-6)
             $0.trailing.equalToSuperview().offset(-16)
-            $0.leading.greaterThanOrEqualToSuperview().offset(64)
+            $0.leading.greaterThanOrEqualToSuperview().offset(48)
         }
         label.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12))
+            $0.edges.equalToSuperview().inset(UIEdgeInsets(top: 10, left: 14, bottom: 10, right: 14))
         }
     }
 

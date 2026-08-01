@@ -33,6 +33,7 @@
 		AD2ED1A93AB7BB9D54841FF8 /* SSELineParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C2CC4AEA6AE4C463BE21D2E /* SSELineParserTests.swift */; };
 		B3A3A445F4DFEDC09C518DDC /* ChatBotHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1A119C68A7AEA74A2E4583 /* ChatBotHeaderView.swift */; };
 		BA65090204207E98C6ADB336 /* AgentStreamRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0682619C070363E47D6A98B4 /* AgentStreamRequest.swift */; };
+		C048A3BF2CF56A426AFFC800 /* UIFont+Rounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EF51D5109B4728E1B05E11 /* UIFont+Rounded.swift */; };
 		CA908D36EA1B62B1823FFC10 /* AgentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3401A8C2430DFE176460F5CD /* AgentRepository.swift */; };
 		CB78A92F339B1B5973EF58F6 /* AgentUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F21D784EEE1A61F917D91 /* AgentUsecase.swift */; };
 		D000FE6F5FEE0B2E652A8E4E /* ChatSessionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2E8A0820C4D823F294EDD5 /* ChatSessionState.swift */; };
@@ -382,6 +383,7 @@
 		70FFF3C7B001DB4C1EA6791C /* ChatBotBottomSheetViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatBotBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		81B5EBFD3CFA9C36E491E471 /* Pods_BibleAtlasUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BibleAtlasUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84B25EB3CA9570DF5A6DA1A5 /* ChatBotUserBubbleCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatBotUserBubbleCell.swift; sourceTree = "<group>"; };
+		88EF51D5109B4728E1B05E11 /* UIFont+Rounded.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UIFont+Rounded.swift"; sourceTree = "<group>"; };
 		8B1A119C68A7AEA74A2E4583 /* ChatBotHeaderView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatBotHeaderView.swift; sourceTree = "<group>"; };
 		8B6A273A700985258DC47262 /* SSELineParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SSELineParser.swift; sourceTree = "<group>"; };
 		8C2CC4AEA6AE4C463BE21D2E /* SSELineParserTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SSELineParserTests.swift; sourceTree = "<group>"; };
@@ -1168,6 +1170,7 @@
 			isa = PBXGroup;
 			children = (
 				EC940EA32DF175AB00406944 /* NotificationName.swift */,
+				88EF51D5109B4728E1B05E11 /* UIFont+Rounded.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1951,6 +1954,7 @@
 				0DE5574078C1D9C57A780CCE /* ChatBotAssistantBubbleCell.swift in Sources */,
 				6F46869890A32392137BFABA /* ChatBotBottomSheetViewController.swift in Sources */,
 				3CEADB8BE08A45658A88065F /* ChatBotEmptyStateView.swift in Sources */,
+				C048A3BF2CF56A426AFFC800 /* UIFont+Rounded.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

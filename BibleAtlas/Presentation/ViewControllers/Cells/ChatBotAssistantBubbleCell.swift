@@ -14,7 +14,7 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
     private let bubble: UIView = {
         let v = UIView()
         v.backgroundColor = .secondarySystemBackground
-        v.layer.cornerRadius = 16
+        v.layer.cornerRadius = 18
         return v
     }()
 
@@ -25,11 +25,11 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
         tv.backgroundColor = .clear
         tv.textContainerInset = .zero
         tv.textContainer.lineFragmentPadding = 0
-        tv.font = .systemFont(ofSize: 15)
+        tv.font = .rounded(ofSize: 15, weight: .regular)
         tv.textColor = .label
         tv.linkTextAttributes = [
             .foregroundColor: UIColor.systemBlue,
-            .underlineStyle: NSUnderlineStyle.single.rawValue,
+            .font: UIFont.rounded(ofSize: 15, weight: .semibold),
         ]
         return tv
     }()
@@ -37,7 +37,7 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
     private let chipsHeader: UILabel = {
         let l = UILabel()
         l.text = "💡 이런 질문은 어떠세요?"
-        l.font = .systemFont(ofSize: 12, weight: .semibold)
+        l.font = .rounded(ofSize: 12, weight: .semibold)
         l.textColor = .secondaryLabel
         l.isHidden = true
         return l
@@ -52,15 +52,6 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
         return s
     }()
 
-    /// [DEBUG] 서버가 place_id_map 을 제대로 내려주는지 눈으로 확인용. 배포 전 제거.
-    private let debugPlaceMapLabel: UILabel = {
-        let l = UILabel()
-        l.font = .monospacedSystemFont(ofSize: 10, weight: .regular)
-        l.textColor = .systemPink
-        l.numberOfLines = 0
-        return l
-    }()
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .clear
@@ -68,7 +59,6 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
 
         contentView.addSubview(bubble)
         bubble.addSubview(textView)
-        bubble.addSubview(debugPlaceMapLabel)
         bubble.addSubview(chipsHeader)
         bubble.addSubview(chipsStack)
 
@@ -76,24 +66,20 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
             $0.top.equalToSuperview().offset(6)
             $0.bottom.equalToSuperview().offset(-6)
             $0.leading.equalToSuperview().offset(16)
-            $0.trailing.lessThanOrEqualToSuperview().offset(-64)
+            $0.trailing.lessThanOrEqualToSuperview().offset(-48)
         }
         textView.snp.makeConstraints {
-            $0.top.leading.equalToSuperview().offset(12)
-            $0.trailing.equalToSuperview().offset(-12)
-        }
-        debugPlaceMapLabel.snp.makeConstraints {
-            $0.top.equalTo(textView.snp.bottom).offset(6)
-            $0.leading.trailing.equalTo(textView)
+            $0.top.leading.equalToSuperview().offset(14)
+            $0.trailing.equalToSuperview().offset(-14)
         }
         chipsHeader.snp.makeConstraints {
-            $0.top.equalTo(debugPlaceMapLabel.snp.bottom).offset(10)
+            $0.top.equalTo(textView.snp.bottom).offset(12)
             $0.leading.trailing.equalTo(textView)
         }
         chipsStack.snp.makeConstraints {
             $0.top.equalTo(chipsHeader.snp.bottom).offset(6)
             $0.leading.trailing.equalTo(textView)
-            $0.bottom.equalToSuperview().offset(-12)
+            $0.bottom.equalToSuperview().offset(-14)
         }
 
         textView.delegate = self
@@ -117,10 +103,6 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
         self.placeIdMap = placeIdMap
         textView.attributedText = Self.makeAttributedString(text: text, placeNames: Array(placeIdMap.keys))
 
-        // [DEBUG] place_id_map 표시 (배포 전 제거)
-        let dump = placeIdMap.isEmpty ? "(empty)" : placeIdMap.map { "\($0.key): \($0.value)" }.sorted().joined(separator: "\n  ")
-        debugPlaceMapLabel.text = "[debug] place_id_map:\n  \(dump)"
-
         chipsStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
         chipsHeader.isHidden = recommendedQuestions.isEmpty
         chipsStack.isHidden = recommendedQuestions.isEmpty
@@ -134,9 +116,12 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
     // MARK: - Helpers
 
     private static func makeAttributedString(text: String, placeNames: [String]) -> NSAttributedString {
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.lineSpacing = 3
         let m = NSMutableAttributedString(string: text, attributes: [
-            .font: UIFont.systemFont(ofSize: 15),
+            .font: UIFont.rounded(ofSize: 15, weight: .regular),
             .foregroundColor: UIColor.label,
+            .paragraphStyle: paragraph,
         ])
         let ns = text as NSString
         for name in placeNames where !name.isEmpty {
@@ -158,12 +143,14 @@ final class ChatBotAssistantBubbleCell: UITableViewCell {
 
     private static func makeChipButton(title: String) -> UIButton {
         var config = UIButton.Configuration.tinted()
-        config.title = title
         config.baseForegroundColor = .systemBlue
-        config.background.strokeColor = .systemBlue.withAlphaComponent(0.3)
+        config.background.strokeColor = .systemBlue.withAlphaComponent(0.25)
         config.background.strokeWidth = 1
         config.cornerStyle = .capsule
         config.contentInsets = .init(top: 6, leading: 12, bottom: 6, trailing: 12)
+        config.attributedTitle = AttributedString(title, attributes: AttributeContainer([
+            .font: UIFont.rounded(ofSize: 13, weight: .medium),
+        ]))
         let b = UIButton(configuration: config)
         b.titleLabel?.numberOfLines = 0
         return b

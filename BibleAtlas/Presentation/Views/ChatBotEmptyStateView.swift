@@ -17,7 +17,7 @@ final class ChatBotEmptyStateView: UIView {
     private let greetingLabel: UILabel = {
         let l = UILabel()
         l.text = "무엇이 궁금하신가요?"
-        l.font = .systemFont(ofSize: 18, weight: .semibold)
+        l.font = .rounded(ofSize: 18, weight: .semibold)
         l.textColor = .label
         l.textAlignment = .center
         return l
@@ -26,7 +26,7 @@ final class ChatBotEmptyStateView: UIView {
     private let subtitleLabel: UILabel = {
         let l = UILabel()
         l.text = "성경 속 지역과 여정에 대해 물어보세요.\n아래 입력창에 질문을 입력하면 시작돼요."
-        l.font = .systemFont(ofSize: 13)
+        l.font = .rounded(ofSize: 13, weight: .regular)
         l.textColor = .secondaryLabel
         l.textAlignment = .center
         l.numberOfLines = 0
@@ -40,7 +40,7 @@ final class ChatBotEmptyStateView: UIView {
 
         let title = UILabel()
         title.text = "✅ 이용 팁"
-        title.font = .systemFont(ofSize: 13, weight: .semibold)
+        title.font = .rounded(ofSize: 13, weight: .semibold)
         title.textColor = .label
 
         let tip1 = makeTipLabel("• 질문은 한 번에 하나씩 나눠서 해주세요.")
@@ -94,7 +94,7 @@ final class ChatBotEmptyStateView: UIView {
     private func makeTipLabel(_ text: String) -> UILabel {
         let l = UILabel()
         l.text = text
-        l.font = .systemFont(ofSize: 12)
+        l.font = .rounded(ofSize: 12, weight: .regular)
         l.textColor = .secondaryLabel
         l.numberOfLines = 0
         return l

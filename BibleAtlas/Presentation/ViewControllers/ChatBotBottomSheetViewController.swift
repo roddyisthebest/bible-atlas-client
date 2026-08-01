@@ -42,7 +42,7 @@ final class ChatBotBottomSheetViewController: UIViewController {
         tf.borderStyle = .none
         tf.placeholder = "성경 속 지역이 궁금하다면?"
         tf.returnKeyType = .send
-        tf.font = .systemFont(ofSize: 15)
+        tf.font = .rounded(ofSize: 15, weight: .regular)
         tf.textColor = .label
         tf.tintColor = .systemBlue
         return tf

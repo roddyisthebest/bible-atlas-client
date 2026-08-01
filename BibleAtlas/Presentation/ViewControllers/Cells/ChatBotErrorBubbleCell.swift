@@ -24,7 +24,7 @@ final class ChatBotErrorBubbleCell: UITableViewCell {
 
     private let label: UILabel = {
         let l = UILabel()
-        l.font = .systemFont(ofSize: 13)
+        l.font = .rounded(ofSize: 13, weight: .regular)
         l.textColor = .label
         l.numberOfLines = 0
         return l
@@ -32,14 +32,15 @@ final class ChatBotErrorBubbleCell: UITableViewCell {
 
     private lazy var retryButton: UIButton = {
         var config = UIButton.Configuration.tinted()
-        config.title = "재시도"
         config.image = UIImage(systemName: "arrow.clockwise")
         config.imagePlacement = .leading
         config.imagePadding = 4
         config.baseForegroundColor = .systemOrange
         config.cornerStyle = .capsule
         config.contentInsets = .init(top: 4, leading: 10, bottom: 4, trailing: 12)
-        config.attributedTitle = AttributedString("재시도", attributes: AttributeContainer([.font: UIFont.systemFont(ofSize: 12, weight: .semibold)]))
+        config.attributedTitle = AttributedString("재시도", attributes: AttributeContainer([
+            .font: UIFont.rounded(ofSize: 12, weight: .semibold),
+        ]))
         let b = UIButton(configuration: config)
         b.addAction(UIAction { [weak self] _ in self?.onRetry?() }, for: .touchUpInside)
         return b
