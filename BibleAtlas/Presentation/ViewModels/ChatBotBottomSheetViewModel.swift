@@ -130,7 +130,8 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
 
         input.viewDidLoad
             .subscribe(onNext: { [weak self] in
-                self?.bubblesChangeRelay.accept(.initial)
+                guard let self = self else { return }
+                self.bubblesChangeRelay.accept(.initial(bubbles: self.currentBubbles))
             })
             .disposed(by: disposeBag)
 
@@ -174,7 +175,7 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
 
         isLoadingMore = false
         isLoadingMoreRelay.accept(false)
-        emitBubbles(change: .prepended(count: page.bubbles.count))
+        emitBubbles { .prepended(bubbles: $0, count: page.bubbles.count) }
     }
 
     // MARK: - Send / stream
@@ -194,7 +195,7 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
         let userBubble = ChatBubble(kind: .user, text: trimmed)
         persistedBubbles.append(userBubble)
         historyStore.appendBubble(userBubble)
-        emitBubbles(change: .appended)
+        emitBubbles { .appended(bubbles: $0) }
 
         let initialLabel = L10n.ChatBot.pendingInitial
         addPendingBubble(label: initialLabel)
@@ -286,7 +287,7 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
             usecase.recordUsage()
             remainingRelay.accept(usecase.remainingCount)
             progressRelay.accept(.idle)
-            emitBubbles(change: .appended)
+            emitBubbles { .appended(bubbles: $0) }
         case .failure(let message):
             removePendingBubble()
             activeTools.removeAll()
@@ -295,7 +296,7 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
             persistedBubbles.append(errorBubble)
             historyStore.appendBubble(errorBubble)
             progressRelay.accept(.error(message: message))
-            emitBubbles(change: .appended)
+            emitBubbles { .appended(bubbles: $0) }
         }
     }
 
@@ -306,22 +307,30 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
         persistedBubbles.append(errorBubble)
         historyStore.appendBubble(errorBubble)
         progressRelay.accept(.error(message: message))
-        emitBubbles(change: .appended)
+        emitBubbles { .appended(bubbles: $0) }
     }
 
     private let bubblesChangeRelay = PublishRelay<BubblesChange>()
 
-    private func emitBubbles(change: BubblesChange) {
-        let all = persistedBubbles + (pendingBubble.map { [$0] } ?? [])
+    /// 현재 화면에 표시되어야 할 전체 배열 (persisted + pending).
+    private var currentBubbles: [ChatBubble] {
+        persistedBubbles + (pendingBubble.map { [$0] } ?? [])
+    }
+
+    /// makeChange 로 새 배열을 담은 BubblesChange 를 생성해 emit.
+    /// bubblesRelay 는 관찰용 상태(예: isEmpty 체크)로만 소비되고,
+    /// datasource 동기화는 반드시 bubblesChange 소비자 쪽에서 처리해야 함.
+    private func emitBubbles(_ makeChange: ([ChatBubble]) -> BubblesChange) {
+        let all = currentBubbles
         bubblesRelay.accept(all)
-        bubblesChangeRelay.accept(change)
+        bubblesChangeRelay.accept(makeChange(all))
     }
 
     private func addPendingBubble(label: String) {
         let bubble = ChatBubble(kind: .pending(label: label), text: label)
         pendingBubbleId = bubble.id
         pendingBubble = bubble
-        emitBubbles(change: .appended)
+        emitBubbles { .appended(bubbles: $0) }
     }
 
     private func updatePendingBubble(label: String) {
@@ -330,13 +339,13 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
             return
         }
         pendingBubble = ChatBubble(id: pendingBubbleId!, kind: .pending(label: label), text: label)
-        emitBubbles(change: .appended)
+        emitBubbles { .appended(bubbles: $0) }
     }
 
     private func removePendingBubble() {
         pendingBubble = nil
         pendingBubbleId = nil
-        emitBubbles(change: .appended)
+        emitBubbles { .appended(bubbles: $0) }
     }
 
     static func userFacingMessage(for error: Error) -> String {

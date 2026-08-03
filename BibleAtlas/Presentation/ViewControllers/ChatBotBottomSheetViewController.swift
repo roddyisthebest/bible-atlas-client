@@ -366,12 +366,11 @@ final class ChatBotBottomSheetViewController: UIViewController {
             })
             .disposed(by: disposeBag)
 
-        // 데이터 갱신은 여기서만 수행하고, 스크롤 정책은 bubblesChange 로 분리.
+        // datasource(self.bubbles) 갱신은 반드시 bubblesChange 핸들러 안에서만 처리.
+        // output.bubbles 는 관찰용(빈 상태 판단)으로만 소비.
         output.bubbles
             .drive(onNext: { [weak self] bubbles in
-                guard let self = self else { return }
-                self.bubbles = bubbles
-                self.emptyStateView.isHidden = !bubbles.isEmpty
+                self?.emptyStateView.isHidden = !bubbles.isEmpty
             })
             .disposed(by: disposeBag)
 
@@ -379,23 +378,62 @@ final class ChatBotBottomSheetViewController: UIViewController {
             .emit(onNext: { [weak self] change in
                 guard let self = self else { return }
                 switch change {
-                case .initial, .appended:
+                case .initial(let bubbles):
+                    self.bubbles = bubbles
+                    self.tableView.reloadData()
+                    // automatic dimension cell 높이가 확정되어야 정확히 최하단으로 이동함
+                    self.tableView.layoutIfNeeded()
+                    self.scrollToBottom(animated: false)
+
+                case .appended(let bubbles):
+                    // 새/변경 버블 위치가 다양(맨 뒤 append, pending 라벨 갱신, pending 제거 등)이라
+                    // reloadData 가 가장 안전. tableView.backgroundColor = .mainBkg 라 흰 flash 없음.
+                    self.bubbles = bubbles
                     self.tableView.reloadData()
                     self.scrollToBottom()
-                case .prepended(let count):
-                    guard count > 0 else {
+
+                case .prepended(let bubbles, let count):
+                    // Sanity check: performBatchUpdates 계약 위반 방지.
+                    // datasource(현 self.bubbles) 카운트 + inserted 가 새 배열 카운트와 정확히 일치해야 함.
+                    let oldCount = self.bubbles.count
+                    guard count > 0, bubbles.count == oldCount + count else {
+                        // 예상치 못한 상태 — 안전한 fallback (reloadData)
+                        self.bubbles = bubbles
                         self.tableView.reloadData()
                         return
                     }
-                    let before = self.tableView.contentSize.height
-                    self.tableView.reloadData()
-                    self.tableView.layoutIfNeeded()
-                    let after = self.tableView.contentSize.height
-                    let delta = after - before
-                    self.tableView.setContentOffset(
-                        CGPoint(x: 0, y: self.tableView.contentOffset.y + delta),
-                        animated: false
-                    )
+
+                    // Anchor 저장: reload 전 첫 visible cell 의 화면상 y (실제 렌더 frame 사용)
+                    let anchor: IndexPath
+                    let anchorScreenY: CGFloat
+                    if let firstVisibleCell = self.tableView.visibleCells.first,
+                       let ip = self.tableView.indexPath(for: firstVisibleCell) {
+                        anchor = ip
+                        anchorScreenY = firstVisibleCell.frame.origin.y - self.tableView.contentOffset.y
+                    } else {
+                        anchor = IndexPath(row: 0, section: 0)
+                        anchorScreenY = 0
+                    }
+
+                    UIView.performWithoutAnimation {
+                        // 핵심: performBatchUpdates 계약 준수
+                        //   - block 진입 전: self.bubbles = OLD → datasource OLD count
+                        //   - block 안: self.bubbles = NEW + insertRows(count)
+                        //   - block 종료 시: datasource NEW count = OLD + count ✓
+                        self.tableView.performBatchUpdates {
+                            self.bubbles = bubbles
+                            let paths = (0..<count).map { IndexPath(row: $0, section: 0) }
+                            self.tableView.insertRows(at: paths, with: .none)
+                        }
+
+                        // 앵커 미세 보정: prepend 후 같은 셀 (row+count) 이 원래 화면 y 에 오도록.
+                        let newAnchor = IndexPath(row: anchor.row + count, section: 0)
+                        self.tableView.layoutIfNeeded()
+                        let newRect = self.tableView.rectForRow(at: newAnchor)
+                        let currentScreenY = newRect.origin.y - self.tableView.contentOffset.y
+                        let diff = currentScreenY - anchorScreenY
+                        self.tableView.contentOffset.y += diff
+                    }
                 }
             })
             .disposed(by: disposeBag)
@@ -482,11 +520,12 @@ final class ChatBotBottomSheetViewController: UIViewController {
         }
     }
 
-    private func scrollToBottom() {
+    private func scrollToBottom(animated: Bool = true) {
         guard !bubbles.isEmpty else { return }
         let last = IndexPath(row: bubbles.count - 1, section: 0)
         DispatchQueue.main.async { [weak self] in
-            self?.tableView.scrollToRow(at: last, at: .bottom, animated: true)
+            guard let self = self, !self.bubbles.isEmpty else { return }
+            self.tableView.scrollToRow(at: last, at: .bottom, animated: animated)
         }
     }
 }
@@ -507,6 +546,8 @@ extension ChatBotBottomSheetViewController: UIGestureRecognizerDelegate {
 extension ChatBotBottomSheetViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         setScrollToBottomButtonVisible(!isTableAtBottom())
+        // 프로그래밍적 스크롤(초기 진입 시 최하단 이동 애니메이션 등)에는 반응 X — 사용자 드래그일 때만.
+        guard scrollView.isDragging || scrollView.isDecelerating else { return }
         if scrollView.contentOffset.y < 100 {
             loadMoreRelay.accept(())
         }

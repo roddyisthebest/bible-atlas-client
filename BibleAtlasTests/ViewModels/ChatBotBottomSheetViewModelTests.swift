@@ -298,7 +298,9 @@ final class ChatBotBottomSheetViewModelTests: XCTestCase {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { exp1.fulfill() }
         wait(for: [exp1], timeout: 1.0)
 
-        XCTAssertTrue(changes.contains(.initial))
+        XCTAssertTrue(changes.contains(where: {
+            if case .initial = $0 { return true } else { return false }
+        }))
 
         usecase.events = [doneEvent(answer: "a")]
         input.sendTapped.accept("q")
@@ -307,7 +309,9 @@ final class ChatBotBottomSheetViewModelTests: XCTestCase {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { exp2.fulfill() }
         wait(for: [exp2], timeout: 2.0)
 
-        XCTAssertTrue(changes.contains(.appended))
+        XCTAssertTrue(changes.contains(where: {
+            if case .appended = $0 { return true } else { return false }
+        }))
     }
 
     // MARK: - pending is not persisted
@@ -390,7 +394,7 @@ final class ChatBotBottomSheetViewModelTests: XCTestCase {
         input.loadMoreTriggered.accept(())
 
         XCTAssertTrue(changes.contains(where: {
-            if case .prepended(let c) = $0 { return c == 5 } else { return false }
+            if case .prepended(_, let c) = $0 { return c == 5 } else { return false }
         }))
     }
 
