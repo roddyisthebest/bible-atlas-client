@@ -673,6 +673,7 @@
 		ECA94B962D5082B9005B0428 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ECA94B982D5082B9005B0428 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		ECA94BA02D5082B9005B0428 /* BibleAtlas.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BibleAtlas.xcdatamodel; sourceTree = "<group>"; };
+		ECA94BA22D5082B9005B0428 /* BibleAtlas 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "BibleAtlas 2.xcdatamodel"; sourceTree = "<group>"; };
 		ECA94BA22D5082BA005B0428 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ECA94BA72D5082BA005B0428 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ECA94BAC2D5082BA005B0428 /* BibleAtlasTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BibleAtlasTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2483,9 +2484,10 @@
 		ECA94B9F2D5082B9005B0428 /* BibleAtlas.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				ECA94BA22D5082B9005B0428 /* BibleAtlas 2.xcdatamodel */,
 				ECA94BA02D5082B9005B0428 /* BibleAtlas.xcdatamodel */,
 			);
-			currentVersion = ECA94BA02D5082B9005B0428 /* BibleAtlas.xcdatamodel */;
+			currentVersion = ECA94BA22D5082B9005B0428 /* BibleAtlas 2.xcdatamodel */;
 			path = BibleAtlas.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
