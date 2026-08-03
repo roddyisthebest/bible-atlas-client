@@ -34,6 +34,7 @@
 		97A59DCC0455A6678051B36F /* AppSecrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2887DB0DD1A6537765F563 /* AppSecrets.swift */; };
 		9A5C7E604834B258D68140E7 /* AgentUsecaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A65BBCBABBF2E6DB01CA1B3 /* AgentUsecaseTests.swift */; };
 		A30584A55F21FF78F3589ABB /* ChatUsageCounterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F2167DF0678277CD84DE9A /* ChatUsageCounterTests.swift */; };
+		B1E7D2A94F63C0851D9E4A72 /* CoreDataChatHistoryStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E7D2A94F63C0851D9E4A73 /* CoreDataChatHistoryStoreTests.swift */; };
 		A3DD6E1BE03E38AE7E6C3926 /* FakeAgentStreamClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B462063BA786994FF8FEEB2 /* FakeAgentStreamClient.swift */; };
 		A6A09322DD4AB29D30092AB0 /* AgentStreamEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B8B78CE9F350D6C50DA97A /* AgentStreamEvent.swift */; };
 		AD2ED1A93AB7BB9D54841FF8 /* SSELineParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C2CC4AEA6AE4C463BE21D2E /* SSELineParserTests.swift */; };
@@ -730,6 +731,7 @@
 		ECE217122EFBE3C400249F1F /* DeepLinkToBottomSheetMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkToBottomSheetMapper.swift; sourceTree = "<group>"; };
 		ECE217142EFBE3D300249F1F /* DeepLinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkHandler.swift; sourceTree = "<group>"; };
 		F8F2167DF0678277CD84DE9A /* ChatUsageCounterTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatUsageCounterTests.swift; sourceTree = "<group>"; };
+		B1E7D2A94F63C0851D9E4A73 /* CoreDataChatHistoryStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataChatHistoryStoreTests.swift; sourceTree = "<group>"; };
 		FF27EB4DB52E0D5E3D3D3BF7 /* FakeAgentUsecase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FakeAgentUsecase.swift; sourceTree = "<group>"; };
 		4E8B1A2F7C6D3095BE58FA23 /* MockChatHistoryStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MockChatHistoryStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -949,6 +951,7 @@
 			children = (
 				EC4767F02EE717B700E959DC /* AppStoreTests.swift */,
 				F8F2167DF0678277CD84DE9A /* ChatUsageCounterTests.swift */,
+				B1E7D2A94F63C0851D9E4A73 /* CoreDataChatHistoryStoreTests.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -2136,6 +2139,7 @@
 				EC1B2DD32E964A360073EBE3 /* MockBibleBookVerseListBottomSheetViewModel.swift in Sources */,
 				EC4767EC2EE6F39C00E959DC /* MockAuthorizedApiClient.swift in Sources */,
 				A30584A55F21FF78F3589ABB /* ChatUsageCounterTests.swift in Sources */,
+				B1E7D2A94F63C0851D9E4A72 /* CoreDataChatHistoryStoreTests.swift in Sources */,
 				AD2ED1A93AB7BB9D54841FF8 /* SSELineParserTests.swift in Sources */,
 				1900597CC531E6A7DDD49196 /* AgentRepositoryTests.swift in Sources */,
 				A3DD6E1BE03E38AE7E6C3926 /* FakeAgentStreamClient.swift in Sources */,
