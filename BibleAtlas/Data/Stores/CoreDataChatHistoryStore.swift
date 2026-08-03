@@ -38,13 +38,13 @@ final class CoreDataChatHistoryStore: ChatHistoryStoreProtocol {
         let session = sessionEntity() ?? ChatSessionEntity(context: context)
         session.summary = summary
 
-        // messages: delete all + insert
-        let req: NSFetchRequest<NSFetchRequestResult> = ChatMessageEntity.fetchRequest()
-        let deleteReq = NSBatchDeleteRequest(fetchRequest: req)
+        // messages: fetch + context.delete + insert
+        // (NSBatchDeleteRequest는 context를 우회해 stale object를 남기므로 회피)
+        let req: NSFetchRequest<ChatMessageEntity> = ChatMessageEntity.fetchRequest()
         do {
-            try context.execute(deleteReq)
+            try context.fetch(req).forEach { context.delete($0) }
         } catch {
-            os_log("delete messages failed: %{public}@", log: log, type: .error, "\(error)")
+            os_log("fetch messages for delete failed: %{public}@", log: log, type: .error, "\(error)")
         }
         for (idx, msg) in messages.enumerated() {
             let entity = ChatMessageEntity(context: context)
@@ -80,6 +80,9 @@ final class CoreDataChatHistoryStore: ChatHistoryStoreProtocol {
     }
 
     func appendBubble(_ bubble: ChatBubble) {
+        // pending 은 저장 안 함 (entity 생성 전 조기 반환 — rollback은 무관한 in-flight 변경까지 지우므로 회피)
+        if case .pending = bubble.kind { return }
+
         let entity = ChatBubbleEntity(context: context)
         entity.id = bubble.id
         entity.text = bubble.text
@@ -94,22 +97,19 @@ final class CoreDataChatHistoryStore: ChatHistoryStoreProtocol {
         case .error:
             entity.kindRaw = "error"
         case .pending:
-            // pending 은 저장 안 함
-            context.rollback()
-            return
+            return   // 위 조기 반환으로 unreachable
         }
         saveContext(op: "appendBubble")
     }
 
     func clear() {
-        for name in ["ChatBubbleEntity", "ChatMessageEntity", "ChatSessionEntity"] {
-            let req = NSFetchRequest<NSFetchRequestResult>(entityName: name)
-            let del = NSBatchDeleteRequest(fetchRequest: req)
-            do {
-                try context.execute(del)
-            } catch {
-                os_log("clear %{public}@ failed: %{public}@", log: log, type: .error, name, "\(error)")
-            }
+        // fetch + context.delete 로 context in-memory 상태와 동기화 유지
+        do {
+            try context.fetch(ChatBubbleEntity.fetchRequest()).forEach { context.delete($0) }
+            try context.fetch(ChatMessageEntity.fetchRequest()).forEach { context.delete($0) }
+            try context.fetch(ChatSessionEntity.fetchRequest()).forEach { context.delete($0) }
+        } catch {
+            os_log("clear failed: %{public}@", log: log, type: .error, "\(error)")
         }
         saveContext(op: "clear")
     }
