@@ -8,17 +8,20 @@ final class ChatBotBottomSheetViewModelTests: XCTestCase {
     private var usecase: FakeAgentUsecase!
     private var sut: ChatBotBottomSheetViewModel!
     private var bag: DisposeBag!
+    private var historyStore: MockChatHistoryStore!
 
     override func setUp() {
         super.setUp()
         usecase = FakeAgentUsecase()
-        sut = ChatBotBottomSheetViewModel(usecase: usecase)
+        historyStore = MockChatHistoryStore()
+        sut = ChatBotBottomSheetViewModel(usecase: usecase, historyStore: historyStore)
         bag = DisposeBag()
     }
 
     override func tearDown() {
         bag = nil
         sut = nil
+        historyStore = nil
         usecase = nil
         super.tearDown()
     }
@@ -103,7 +106,7 @@ final class ChatBotBottomSheetViewModelTests: XCTestCase {
     func test_inputEnabled_falseWhenRemainingZero() {
         // VM captures remainingCount at init, so we need a fresh SUT with usecase already at 0.
         usecase._remainingCount = 0
-        sut = ChatBotBottomSheetViewModel(usecase: usecase)
+        sut = ChatBotBottomSheetViewModel(usecase: usecase, historyStore: historyStore)
         let input = makeInput()
         let out = sut.transform(input: input)
 
@@ -201,5 +204,28 @@ final class ChatBotBottomSheetViewModelTests: XCTestCase {
 
         XCTAssertEqual(usecase.streamCallCount, 2)
         XCTAssertEqual(usecase.receivedRequests.last?.query, "first-query")
+    }
+
+    // MARK: - initial snapshot
+
+    func test_init_loadsSnapshotFromStore_andEmitsBubbles() {
+        let freshStore = MockChatHistoryStore()
+        let bubble = ChatBubble(kind: .user, text: "이전 질문")
+        freshStore.storedBubbles = [bubble]
+        freshStore.storedSummary = "prior summary"
+        freshStore.storedMessages = [.init(role: .user, content: "이전 질문")]
+
+        sut = ChatBotBottomSheetViewModel(usecase: usecase, historyStore: freshStore)
+        let input = makeInput()
+        let out = sut.transform(input: input)
+
+        var latest: [ChatBubble] = []
+        out.bubbles.drive(onNext: { latest = $0 }).disposed(by: bag)
+
+        XCTAssertEqual(latest.count, 1)
+        XCTAssertEqual(latest.first?.text, "이전 질문")
+        XCTAssertEqual(freshStore.loadBubblesCalls.count, 1)
+        XCTAssertNil(freshStore.loadBubblesCalls[0].beforeOrder)
+        XCTAssertEqual(freshStore.loadBubblesCalls[0].limit, 20)
     }
 }

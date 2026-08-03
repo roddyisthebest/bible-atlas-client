@@ -38,17 +38,18 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
     // MARK: - Deps
 
     private let usecase: AgentUsecaseProtocol
+    private let historyStore: ChatHistoryStoreProtocol
 
     // MARK: - State
 
-    private let bubblesRelay = BehaviorRelay<[ChatBubble]>(value: [])
+    private let bubblesRelay: BehaviorRelay<[ChatBubble]>
     private let progressRelay = BehaviorRelay<ChatProgress>(value: .idle)
     private let remainingRelay: BehaviorRelay<Int>
     private let fillInputRelay = PublishRelay<String>()
     private let routeRelay = PublishRelay<String>()
     private let limitAlertRelay = PublishRelay<Void>()
 
-    private var session = ChatSessionState()
+    private var session: ChatSessionState
     private var lastQuery: String?
     private var currentTask: Task<Void, Never>?
     private var pendingBubbleId: UUID?
@@ -57,12 +58,26 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
     /// activeTools 에 들어간 순서 유지 (뒤에 있는 것이 최근). removeValue 로는 순서 알 수 없어 별도 관리.
     private var activeToolOrder: [String] = []
 
+    // 페이지네이션 상태 (Task 8에서 활용)
+    private var persistedBubbles: [ChatBubble] = []
+    private var pendingBubble: ChatBubble?
+
     private let disposeBag = DisposeBag()
+
+    private static let pageSize = 20
 
     // MARK: - Init
 
-    init(usecase: AgentUsecaseProtocol) {
+    init(usecase: AgentUsecaseProtocol, historyStore: ChatHistoryStoreProtocol) {
         self.usecase = usecase
+        self.historyStore = historyStore
+        let firstPage = historyStore.loadBubbles(beforeOrder: nil, limit: Self.pageSize)
+        self.persistedBubbles = firstPage.bubbles
+        self.session = ChatSessionState(
+            summary: historyStore.loadSummary(),
+            messages: historyStore.loadMessages()
+        )
+        self.bubblesRelay = BehaviorRelay<[ChatBubble]>(value: firstPage.bubbles)
         self.remainingRelay = BehaviorRelay<Int>(value: usecase.remainingCount)
     }
 

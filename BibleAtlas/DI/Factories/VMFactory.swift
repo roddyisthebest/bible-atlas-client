@@ -83,7 +83,10 @@ final class VMFactory:VMFactoryProtocol{
         guard let agentUsecase = usecases?.agent else {
             fatalError("UseCases.agent is required to build ChatBotBottomSheetViewModel")
         }
-        return ChatBotBottomSheetViewModel(usecase: agentUsecase)
+        guard let store = chatHistoryStore else {
+            fatalError("chatHistoryStore is required to build ChatBotBottomSheetViewModel")
+        }
+        return ChatBotBottomSheetViewModel(usecase: agentUsecase, historyStore: store)
     }
     
     func makeRecentSearchesBottomSheetVM() -> RecentSearchesBottomSheetViewModelProtocol {
@@ -141,13 +144,15 @@ final class VMFactory:VMFactoryProtocol{
     private var usecases:UseCases?
     private var notificationService: RxNotificationServiceProtocol?
     private var recentSearchService: RecentSearchServiceProtocol?
-    
-    init(appStore: AppStoreProtocol?, collectionStore:CollectionStoreProtocol?, usecases:UseCases? = nil, notificationService: RxNotificationServiceProtocol?, recentSearchService:RecentSearchServiceProtocol?, analytics: AnalyticsLogging? = nil) {
+    private var chatHistoryStore: ChatHistoryStoreProtocol?
+
+    init(appStore: AppStoreProtocol?, collectionStore:CollectionStoreProtocol?, usecases:UseCases? = nil, notificationService: RxNotificationServiceProtocol?, recentSearchService:RecentSearchServiceProtocol?, chatHistoryStore: ChatHistoryStoreProtocol? = nil, analytics: AnalyticsLogging? = nil) {
         self.appStore = appStore
         self.collectionStore = collectionStore
         self.usecases = usecases
         self.notificationService = notificationService
         self.recentSearchService = recentSearchService
+        self.chatHistoryStore = chatHistoryStore
         self.analytics = analytics
     }
     
