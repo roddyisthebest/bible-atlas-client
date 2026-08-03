@@ -266,6 +266,27 @@ final class ChatBotBottomSheetViewModelTests: XCTestCase {
         })
     }
 
+    // MARK: - pending is not persisted
+
+    func test_pending_isNotPersisted() {
+        // mid-way throw로 pending 진입 후 error로 전환되는 상황
+        usecase.streamThrowsMidway = AgentStreamError.badStatus(code: 500, body: nil)
+        let input = makeInput()
+        _ = sut.transform(input: input)
+
+        input.sendTapped.accept("q")
+
+        let exp = expectation(description: "wait")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { exp.fulfill() }
+        wait(for: [exp], timeout: 2.0)
+
+        // pending kind 는 저장 X.
+        XCTAssertFalse(historyStore.storedBubbles.contains { bubble in
+            if case .pending = bubble.kind { return true } else { return false }
+        })
+        XCTAssertEqual(historyStore.storedBubbles.count, 2) // user + error
+    }
+
     // MARK: - initial snapshot
 
     func test_init_loadsSnapshotFromStore_andEmitsBubbles() {
