@@ -15,11 +15,59 @@ final class ChatBotBottomSheetViewController: UIViewController {
     private let chipRelay = PublishRelay<String>()
     private let placeSelectedRelay = PublishRelay<String>()
     private let retryRelay = PublishRelay<Void>()
+    private let loadMoreRelay = PublishRelay<Void>()
+    private let topLoadingIndicator: UIActivityIndicatorView = {
+        let v = UIActivityIndicatorView(style: .medium)
+        v.hidesWhenStopped = true
+        v.color = .secondaryLabel
+        return v
+    }()
+    private lazy var topLoadingHeader: UIView = {
+        let v = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 44))
+        v.backgroundColor = .mainBkg
+        v.addSubview(topLoadingIndicator)
+        topLoadingIndicator.snp.makeConstraints { $0.center.equalToSuperview() }
+        return v
+    }()
 
     // UI
-    private let headerView = ChatBotHeaderView()
+    private let headerLabel = HeaderLabel(text: L10n.ChatBot.headerTitle(AgentUsecase.limit, AgentUsecase.limit))
+    private let closeButton = CircleButton(iconSystemName: "xmark")
+    private let infoButton: UIButton = {
+        let b = UIButton(type: .system)
+        b.setImage(UIImage(systemName: "questionmark.circle"), for: .normal)
+        b.tintColor = .mainText
+        return b
+    }()
+    private lazy var headerStackView: UIStackView = {
+        // Spacer pushes closeButton to the right while keeping headerLabel + infoButton hugged together.
+        let spacer = UIView()
+        spacer.setContentHuggingPriority(.init(1), for: .horizontal)
+        spacer.setContentCompressionResistancePriority(.init(1), for: .horizontal)
+        headerLabel.setContentHuggingPriority(.required, for: .horizontal)
+        infoButton.setContentHuggingPriority(.required, for: .horizontal)
+
+        let sv = UIStackView(arrangedSubviews: [headerLabel, infoButton, spacer, closeButton])
+        sv.axis = .horizontal
+        sv.alignment = .center
+        sv.spacing = 6
+        return sv
+    }()
+    /// 헤더 영역을 불투명하게 덮어 아래(emptyState 등)로부터 내용이 비쳐 보이지 않게 함.
+    private let headerContainer: UIView = {
+        let v = UIView()
+        v.backgroundColor = .mainBkg
+        return v
+    }()
+    /// 인풋 영역(라운드 모서리 밖 좌우 여백, safeArea 아래 포함)을 불투명하게 덮음.
+    private let bottomContainer: UIView = {
+        let v = UIView()
+        v.backgroundColor = .mainBkg
+        return v
+    }()
     private let tableView: UITableView = {
         let tv = UITableView(frame: .zero, style: .plain)
+        tv.backgroundColor = .mainBkg    // reload 순간 흰 배경 노출 방지
         tv.separatorStyle = .none
         tv.keyboardDismissMode = .interactive
         tv.allowsSelection = false
@@ -99,7 +147,7 @@ final class ChatBotBottomSheetViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .mainBkg
         setupUI()
         setupTable()
         setupKeyboardDismiss()
@@ -172,23 +220,30 @@ final class ChatBotBottomSheetViewController: UIViewController {
     // MARK: - UI setup
 
     private func setupUI() {
-        view.addSubview(headerView)
         view.addSubview(tableView)
         view.addSubview(emptyStateView)
         view.addSubview(scrollToBottomButton)
-        view.addSubview(inputContainer)
+        // bottomContainer가 inputContainer를 감싸고, header와 함께 z-order 최상단에 위치해 emptyState를 가림.
+        view.addSubview(bottomContainer)
+        bottomContainer.addSubview(inputContainer)
         inputContainer.addSubview(textField)
         inputContainer.addSubview(sendButton)
+        view.addSubview(headerContainer)
+        headerContainer.addSubview(headerStackView)
 
-        headerView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(15)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(52)
+        headerContainer.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(headerStackView).offset(12)
+        }
+        headerStackView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
         }
         tableView.snp.makeConstraints {
-            $0.top.equalTo(headerView.snp.bottom)
+            $0.top.equalTo(headerContainer.snp.bottom)
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(inputContainer.snp.top).offset(-4)
+            $0.bottom.equalTo(bottomContainer.snp.top)
         }
         emptyStateView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(24)
@@ -197,8 +252,13 @@ final class ChatBotBottomSheetViewController: UIViewController {
         }
         scrollToBottomButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(inputContainer.snp.top).offset(-10)
+            $0.bottom.equalTo(bottomContainer.snp.top).offset(-6)
             $0.size.equalTo(34)
+        }
+        bottomContainer.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(inputContainer).offset(-10)
+            $0.bottom.equalToSuperview()
         }
         inputContainer.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(16)
@@ -217,8 +277,8 @@ final class ChatBotBottomSheetViewController: UIViewController {
             $0.size.equalTo(32)
         }
 
-        headerView.onClose = { [weak self] in self?.dismiss(animated: true) }
-        headerView.onInfoTapped = { [weak self] in self?.presentInfoAlert() }
+        closeButton.addAction(UIAction { [weak self] _ in self?.dismiss(animated: true) }, for: .touchUpInside)
+        infoButton.addAction(UIAction { [weak self] _ in self?.presentInfoAlert() }, for: .touchUpInside)
 
         sendButton.addAction(UIAction { [weak self] _ in self?.triggerSend() }, for: .touchUpInside)
         textField.addAction(UIAction { [weak self] _ in self?.triggerSend() }, for: .editingDidEndOnExit)
@@ -257,6 +317,7 @@ final class ChatBotBottomSheetViewController: UIViewController {
         tableView.register(ChatBotAssistantBubbleCell.self, forCellReuseIdentifier: ChatBotAssistantBubbleCell.reuseID)
         tableView.register(ChatBotPendingBubbleCell.self, forCellReuseIdentifier: ChatBotPendingBubbleCell.reuseID)
         tableView.register(ChatBotErrorBubbleCell.self, forCellReuseIdentifier: ChatBotErrorBubbleCell.reuseID)
+        tableView.tableHeaderView = topLoadingHeader
         tableView.dataSource = self
         tableView.delegate = self
         // 마지막 메시지가 입력창에 붙지 않도록 하단 여유분. 스크롤해서 조금 더 내릴 수도 있음.
@@ -294,17 +355,86 @@ final class ChatBotBottomSheetViewController: UIViewController {
             sendTapped: sendRelay,
             chipTapped: chipRelay,
             placeSelected: placeSelectedRelay,
-            retryTapped: retryRelay
+            retryTapped: retryRelay,
+            loadMoreTriggered: loadMoreRelay
         )
         let output = viewModel.transform(input: input)
 
+        output.isLoadingMore
+            .drive(onNext: { [weak self] loading in
+                loading ? self?.topLoadingIndicator.startAnimating() : self?.topLoadingIndicator.stopAnimating()
+            })
+            .disposed(by: disposeBag)
+
+        // datasource(self.bubbles) 갱신은 반드시 bubblesChange 핸들러 안에서만 처리.
+        // output.bubbles 는 관찰용(빈 상태 판단)으로만 소비.
         output.bubbles
             .drive(onNext: { [weak self] bubbles in
+                self?.emptyStateView.isHidden = !bubbles.isEmpty
+            })
+            .disposed(by: disposeBag)
+
+        output.bubblesChange
+            .emit(onNext: { [weak self] change in
                 guard let self = self else { return }
-                self.bubbles = bubbles
-                self.tableView.reloadData()
-                self.emptyStateView.isHidden = !bubbles.isEmpty
-                self.scrollToBottom()
+                switch change {
+                case .initial(let bubbles):
+                    self.bubbles = bubbles
+                    self.tableView.reloadData()
+                    // automatic dimension cell 높이가 확정되어야 정확히 최하단으로 이동함
+                    self.tableView.layoutIfNeeded()
+                    self.scrollToBottom(animated: false)
+
+                case .appended(let bubbles):
+                    // 새/변경 버블 위치가 다양(맨 뒤 append, pending 라벨 갱신, pending 제거 등)이라
+                    // reloadData 가 가장 안전. tableView.backgroundColor = .mainBkg 라 흰 flash 없음.
+                    self.bubbles = bubbles
+                    self.tableView.reloadData()
+                    self.scrollToBottom()
+
+                case .prepended(let bubbles, let count):
+                    // Sanity check: performBatchUpdates 계약 위반 방지.
+                    // datasource(현 self.bubbles) 카운트 + inserted 가 새 배열 카운트와 정확히 일치해야 함.
+                    let oldCount = self.bubbles.count
+                    guard count > 0, bubbles.count == oldCount + count else {
+                        // 예상치 못한 상태 — 안전한 fallback (reloadData)
+                        self.bubbles = bubbles
+                        self.tableView.reloadData()
+                        return
+                    }
+
+                    // Anchor 저장: reload 전 첫 visible cell 의 화면상 y (실제 렌더 frame 사용)
+                    let anchor: IndexPath
+                    let anchorScreenY: CGFloat
+                    if let firstVisibleCell = self.tableView.visibleCells.first,
+                       let ip = self.tableView.indexPath(for: firstVisibleCell) {
+                        anchor = ip
+                        anchorScreenY = firstVisibleCell.frame.origin.y - self.tableView.contentOffset.y
+                    } else {
+                        anchor = IndexPath(row: 0, section: 0)
+                        anchorScreenY = 0
+                    }
+
+                    UIView.performWithoutAnimation {
+                        // 핵심: performBatchUpdates 계약 준수
+                        //   - block 진입 전: self.bubbles = OLD → datasource OLD count
+                        //   - block 안: self.bubbles = NEW + insertRows(count)
+                        //   - block 종료 시: datasource NEW count = OLD + count ✓
+                        self.tableView.performBatchUpdates {
+                            self.bubbles = bubbles
+                            let paths = (0..<count).map { IndexPath(row: $0, section: 0) }
+                            self.tableView.insertRows(at: paths, with: .none)
+                        }
+
+                        // 앵커 미세 보정: prepend 후 같은 셀 (row+count) 이 원래 화면 y 에 오도록.
+                        let newAnchor = IndexPath(row: anchor.row + count, section: 0)
+                        self.tableView.layoutIfNeeded()
+                        let newRect = self.tableView.rectForRow(at: newAnchor)
+                        let currentScreenY = newRect.origin.y - self.tableView.contentOffset.y
+                        let diff = currentScreenY - anchorScreenY
+                        self.tableView.contentOffset.y += diff
+                    }
+                }
             })
             .disposed(by: disposeBag)
 
@@ -315,7 +445,7 @@ final class ChatBotBottomSheetViewController: UIViewController {
 
         output.remainingCount
             .drive(onNext: { [weak self] r in
-                self?.headerView.setRemaining(r)
+                self?.headerLabel.text = L10n.ChatBot.headerTitle(r, AgentUsecase.limit)
                 if r == 0 { self?.textField.placeholder = L10n.ChatBot.placeholderReachedLimit }
             })
             .disposed(by: disposeBag)
@@ -339,6 +469,7 @@ final class ChatBotBottomSheetViewController: UIViewController {
             .emit(onNext: { [weak self] placeId in
                 // Coordinator 가 자동으로 .forceMedium 을 post 해서 챗봇 시트가 medium 으로 접힘.
                 // dismiss 하지 않음 — 뒤로가기 시 원래 detent 로 복구되어 대화 유지.
+                self?.view.endEditing(true)
                 self?.navigator?.present(.placeDetail(placeId))
             })
             .disposed(by: disposeBag)
@@ -359,6 +490,7 @@ final class ChatBotBottomSheetViewController: UIViewController {
     /// 장소 링크 탭 처리. ids 1개면 바로 이동, 여러 개면 action sheet 로 선택.
     /// 옵션 라벨: 순차 번호 + id 접두사에 따른 시대 태그 (a=고대, m=현대 추정)
     private func handlePlaceSelection(name: String, ids: [String]) {
+        view.endEditing(true)
         if ids.count == 1 {
             placeSelectedRelay.accept(ids[0])
             return
@@ -388,11 +520,12 @@ final class ChatBotBottomSheetViewController: UIViewController {
         }
     }
 
-    private func scrollToBottom() {
+    private func scrollToBottom(animated: Bool = true) {
         guard !bubbles.isEmpty else { return }
         let last = IndexPath(row: bubbles.count - 1, section: 0)
         DispatchQueue.main.async { [weak self] in
-            self?.tableView.scrollToRow(at: last, at: .bottom, animated: true)
+            guard let self = self, !self.bubbles.isEmpty else { return }
+            self.tableView.scrollToRow(at: last, at: .bottom, animated: animated)
         }
     }
 }
@@ -413,6 +546,11 @@ extension ChatBotBottomSheetViewController: UIGestureRecognizerDelegate {
 extension ChatBotBottomSheetViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         setScrollToBottomButtonVisible(!isTableAtBottom())
+        // 프로그래밍적 스크롤(초기 진입 시 최하단 이동 애니메이션 등)에는 반응 X — 사용자 드래그일 때만.
+        guard scrollView.isDragging || scrollView.isDecelerating else { return }
+        if scrollView.contentOffset.y < 100 {
+            loadMoreRelay.accept(())
+        }
     }
 }
 

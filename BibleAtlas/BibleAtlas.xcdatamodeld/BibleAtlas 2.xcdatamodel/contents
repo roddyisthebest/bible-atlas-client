@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23C71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="2">
+    <entity name="RecentSearchEntity" representedClassName="RecentSearchEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="koreanName" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ChatSessionEntity" representedClassName="ChatSessionEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="summary" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ChatBubbleEntity" representedClassName="ChatBubbleEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="kindRaw" optional="NO" attributeType="String" defaultValueString="user"/>
+        <attribute name="text" optional="NO" attributeType="String" defaultValueString=""/>
+        <attribute name="placeIdMapJson" optional="YES" attributeType="String"/>
+        <attribute name="recommendedQuestionsJson" optional="YES" attributeType="String"/>
+        <attribute name="order" optional="NO" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="ChatMessageEntity" representedClassName="ChatMessageEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="roleRaw" optional="NO" attributeType="String" defaultValueString="user"/>
+        <attribute name="content" optional="NO" attributeType="String" defaultValueString=""/>
+        <attribute name="order" optional="NO" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+</model>

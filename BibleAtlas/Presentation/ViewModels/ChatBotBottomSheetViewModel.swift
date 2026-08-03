@@ -17,6 +17,7 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
         let chipTapped: PublishRelay<String>
         let placeSelected: PublishRelay<String>      // 이미 해결된 placeId
         let retryTapped: PublishRelay<Void>
+        let loadMoreTriggered: PublishRelay<Void>
     }
 
     struct Output {
@@ -27,6 +28,8 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
         let fillInputText: Signal<String>
         let routeToPlaceDetail: Signal<String>
         let showLimitAlert: Signal<Void>
+        let isLoadingMore: Driver<Bool>       // Task 8에서 실제 갱신
+        let bubblesChange: Signal<BubblesChange>
     }
 
     enum ChatProgress: Equatable {
@@ -38,17 +41,19 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
     // MARK: - Deps
 
     private let usecase: AgentUsecaseProtocol
+    private let historyStore: ChatHistoryStoreProtocol
 
     // MARK: - State
 
-    private let bubblesRelay = BehaviorRelay<[ChatBubble]>(value: [])
+    private let bubblesRelay: BehaviorRelay<[ChatBubble]>
     private let progressRelay = BehaviorRelay<ChatProgress>(value: .idle)
     private let remainingRelay: BehaviorRelay<Int>
     private let fillInputRelay = PublishRelay<String>()
     private let routeRelay = PublishRelay<String>()
     private let limitAlertRelay = PublishRelay<Void>()
+    private let isLoadingMoreRelay = BehaviorRelay<Bool>(value: false)
 
-    private var session = ChatSessionState()
+    private var session: ChatSessionState
     private var lastQuery: String?
     private var currentTask: Task<Void, Never>?
     private var pendingBubbleId: UUID?
@@ -57,12 +62,31 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
     /// activeTools 에 들어간 순서 유지 (뒤에 있는 것이 최근). removeValue 로는 순서 알 수 없어 별도 관리.
     private var activeToolOrder: [String] = []
 
+    // 페이지네이션 상태 (Task 8에서 활용)
+    private var persistedBubbles: [ChatBubble] = []
+    private var pendingBubble: ChatBubble?
+    private var oldestLoadedOrder: Int64?     // 다음 페이지 커서
+    private var hasMoreOlder: Bool = false
+    private var isLoadingMore: Bool = false
+
     private let disposeBag = DisposeBag()
+
+    private static let pageSize = 20
 
     // MARK: - Init
 
-    init(usecase: AgentUsecaseProtocol) {
+    init(usecase: AgentUsecaseProtocol, historyStore: ChatHistoryStoreProtocol) {
         self.usecase = usecase
+        self.historyStore = historyStore
+        let firstPage = historyStore.loadBubbles(beforeOrder: nil, limit: Self.pageSize)
+        self.persistedBubbles = firstPage.bubbles
+        self.hasMoreOlder = firstPage.hasMore
+        self.oldestLoadedOrder = firstPage.nextCursor
+        self.session = ChatSessionState(
+            summary: historyStore.loadSummary(),
+            messages: historyStore.loadMessages()
+        )
+        self.bubblesRelay = BehaviorRelay<[ChatBubble]>(value: firstPage.bubbles)
         self.remainingRelay = BehaviorRelay<Int>(value: usecase.remainingCount)
     }
 
@@ -81,7 +105,13 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
 
         input.chipTapped
             .subscribe(onNext: { [weak self] text in
-                self?.fillInputRelay.accept(text)
+                guard let self = self else { return }
+                // 사용 한도 소진 시엔 텍스트 채우기 대신 limit alert 로 즉시 안내.
+                guard self.usecase.remainingCount > 0 else {
+                    self.limitAlertRelay.accept(())
+                    return
+                }
+                self.fillInputRelay.accept(text)
             })
             .disposed(by: disposeBag)
 
@@ -96,6 +126,17 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
                 guard let last = self?.lastQuery else { return }
                 self?.performSend(query: last)
             })
+            .disposed(by: disposeBag)
+
+        input.viewDidLoad
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+                self.bubblesChangeRelay.accept(.initial(bubbles: self.currentBubbles))
+            })
+            .disposed(by: disposeBag)
+
+        input.loadMoreTriggered
+            .subscribe(onNext: { [weak self] in self?.performLoadMore() })
             .disposed(by: disposeBag)
 
         let inputEnabled = Driver.combineLatest(
@@ -114,8 +155,27 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
             inputEnabled: inputEnabled,
             fillInputText: fillInputRelay.asSignal(),
             routeToPlaceDetail: routeRelay.asSignal(),
-            showLimitAlert: limitAlertRelay.asSignal()
+            showLimitAlert: limitAlertRelay.asSignal(),
+            isLoadingMore: isLoadingMoreRelay.asDriver(),
+            bubblesChange: bubblesChangeRelay.asSignal()
         )
+    }
+
+    // MARK: - Pagination
+
+    private func performLoadMore() {
+        guard hasMoreOlder, !isLoadingMore, let cursor = oldestLoadedOrder else { return }
+        isLoadingMore = true
+        isLoadingMoreRelay.accept(true)
+
+        let page = historyStore.loadBubbles(beforeOrder: cursor, limit: Self.pageSize)
+        persistedBubbles = page.bubbles + persistedBubbles
+        hasMoreOlder = page.hasMore
+        oldestLoadedOrder = page.nextCursor
+
+        isLoadingMore = false
+        isLoadingMoreRelay.accept(false)
+        emitBubbles { .prepended(bubbles: $0, count: page.bubbles.count) }
     }
 
     // MARK: - Send / stream
@@ -131,7 +191,12 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
         lastQuery = trimmed
         activeTools.removeAll()
         activeToolOrder.removeAll()
-        appendBubble(.init(kind: .user, text: trimmed))
+
+        let userBubble = ChatBubble(kind: .user, text: trimmed)
+        persistedBubbles.append(userBubble)
+        historyStore.appendBubble(userBubble)
+        emitBubbles { .appended(bubbles: $0) }
+
         let initialLabel = L10n.ChatBot.pendingInitial
         addPendingBubble(label: initialLabel)
         progressRelay.accept(.running(label: initialLabel))
@@ -214,57 +279,73 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
                 ),
                 text: payload.answer
             )
-            appendBubble(bubble)
+            persistedBubbles.append(bubble)
+            historyStore.appendBubble(bubble)
             session.summary = payload.summary
             session.messages = payload.messages
+            historyStore.updateContext(summary: payload.summary, messages: payload.messages)
             usecase.recordUsage()
             remainingRelay.accept(usecase.remainingCount)
             progressRelay.accept(.idle)
+            emitBubbles { .appended(bubbles: $0) }
         case .failure(let message):
             removePendingBubble()
             activeTools.removeAll()
             activeToolOrder.removeAll()
-            appendBubble(.init(kind: .error(message), text: message))
+            let errorBubble = ChatBubble(kind: .error(message), text: message)
+            persistedBubbles.append(errorBubble)
+            historyStore.appendBubble(errorBubble)
             progressRelay.accept(.error(message: message))
+            emitBubbles { .appended(bubbles: $0) }
         }
     }
 
     private func handleThrown(_ error: Error) {
         let message = Self.userFacingMessage(for: error)
         removePendingBubble()
-        appendBubble(.init(kind: .error(message), text: message))
+        let errorBubble = ChatBubble(kind: .error(message), text: message)
+        persistedBubbles.append(errorBubble)
+        historyStore.appendBubble(errorBubble)
         progressRelay.accept(.error(message: message))
+        emitBubbles { .appended(bubbles: $0) }
     }
 
-    private func appendBubble(_ b: ChatBubble) {
-        bubblesRelay.accept(bubblesRelay.value + [b])
+    private let bubblesChangeRelay = PublishRelay<BubblesChange>()
+
+    /// 현재 화면에 표시되어야 할 전체 배열 (persisted + pending).
+    private var currentBubbles: [ChatBubble] {
+        persistedBubbles + (pendingBubble.map { [$0] } ?? [])
+    }
+
+    /// makeChange 로 새 배열을 담은 BubblesChange 를 생성해 emit.
+    /// bubblesRelay 는 관찰용 상태(예: isEmpty 체크)로만 소비되고,
+    /// datasource 동기화는 반드시 bubblesChange 소비자 쪽에서 처리해야 함.
+    private func emitBubbles(_ makeChange: ([ChatBubble]) -> BubblesChange) {
+        let all = currentBubbles
+        bubblesRelay.accept(all)
+        bubblesChangeRelay.accept(makeChange(all))
     }
 
     private func addPendingBubble(label: String) {
-        let id = UUID()
-        pendingBubbleId = id
-        appendBubble(.init(id: id, kind: .pending(label: label), text: label))
+        let bubble = ChatBubble(kind: .pending(label: label), text: label)
+        pendingBubbleId = bubble.id
+        pendingBubble = bubble
+        emitBubbles { .appended(bubbles: $0) }
     }
 
     private func updatePendingBubble(label: String) {
-        guard let id = pendingBubbleId else {
+        guard pendingBubbleId != nil else {
             addPendingBubble(label: label)
             return
         }
-        var current = bubblesRelay.value
-        guard let idx = current.firstIndex(where: { $0.id == id }) else { return }
-        current[idx] = ChatBubble(id: id, kind: .pending(label: label), text: label)
-        bubblesRelay.accept(current)
+        pendingBubble = ChatBubble(id: pendingBubbleId!, kind: .pending(label: label), text: label)
+        emitBubbles { .appended(bubbles: $0) }
     }
 
     private func removePendingBubble() {
-        guard let id = pendingBubbleId else { return }
-        var current = bubblesRelay.value
-        if let idx = current.firstIndex(where: { $0.id == id }) {
-            current.remove(at: idx)
-            bubblesRelay.accept(current)
-        }
+        pendingBubble = nil
         pendingBubbleId = nil
+        emitBubbles { .appended(bubbles: $0) }
     }
 
     static func userFacingMessage(for error: Error) -> String {

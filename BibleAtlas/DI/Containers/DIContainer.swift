@@ -39,6 +39,7 @@ final class DIContainer {
     lazy var notificationService = RxNotificationService()
     lazy var context = PersistenceController.shared.container.viewContext
     lazy var recentSearchService = RecentSearchService(context: context)
+    lazy var chatHistoryStore: ChatHistoryStoreProtocol = CoreDataChatHistoryStore(context: context)
     lazy var analytics: AnalyticsLogging = FirebaseAnalyticsLogger()
 
 
@@ -79,7 +80,7 @@ final class DIContainer {
     lazy var usecases = UseCases(auth: authUsecase, user: userUsecase, place: placeUsecase, map: mapUsecase, report: reportUsecase, agent: agentUsecase)
 
     // Factories & Coordinators
-    lazy var vmFactory = VMFactory(appStore: appStore, collectionStore: collectionStore, usecases: usecases, notificationService: notificationService, recentSearchService: recentSearchService)
+    lazy var vmFactory = VMFactory(appStore: appStore, collectionStore: collectionStore, usecases: usecases, notificationService: notificationService, recentSearchService: recentSearchService, chatHistoryStore: chatHistoryStore)
     lazy var vcFactory = VCFactory()
     
     lazy var bottomSheetCoordinator = BottomSheetCoordinator(vcFactory: vcFactory, vmFactory: vmFactory, notificationService: notificationService, analytics: analytics)

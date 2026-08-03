@@ -15,6 +15,10 @@ final class PersistenceController {
 
     private init() {
         container = NSPersistentContainer(name: "BibleAtlas") // .xcdatamodeld 이름
+        if let description = container.persistentStoreDescriptions.first {
+            description.shouldMigrateStoreAutomatically = true
+            description.shouldInferMappingModelAutomatically = true
+        }
         container.loadPersistentStores { (desc, error) in
             if let error = error {
                 fatalError("❌ CoreData 초기화 실패: \(error)")
