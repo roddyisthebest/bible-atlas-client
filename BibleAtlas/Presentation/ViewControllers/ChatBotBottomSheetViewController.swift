@@ -24,6 +24,7 @@ final class ChatBotBottomSheetViewController: UIViewController {
     }()
     private lazy var topLoadingHeader: UIView = {
         let v = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 44))
+        v.backgroundColor = .mainBkg
         v.addSubview(topLoadingIndicator)
         topLoadingIndicator.snp.makeConstraints { $0.center.equalToSuperview() }
         return v
@@ -66,6 +67,7 @@ final class ChatBotBottomSheetViewController: UIViewController {
     }()
     private let tableView: UITableView = {
         let tv = UITableView(frame: .zero, style: .plain)
+        tv.backgroundColor = .mainBkg    // reload 순간 흰 배경 노출 방지
         tv.separatorStyle = .none
         tv.keyboardDismissMode = .interactive
         tv.allowsSelection = false
