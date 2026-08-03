@@ -31,7 +31,8 @@ final class ChatBotBottomSheetViewModelTests: XCTestCase {
               sendTapped: .init(),
               chipTapped: .init(),
               placeSelected: .init(),
-              retryTapped: .init())
+              retryTapped: .init(),
+              loadMoreTriggered: .init())
     }
 
     private func doneEvent(answer: String = "hi",
@@ -335,5 +336,78 @@ final class ChatBotBottomSheetViewModelTests: XCTestCase {
         XCTAssertEqual(freshStore.loadBubblesCalls.count, 1)
         XCTAssertNil(freshStore.loadBubblesCalls[0].beforeOrder)
         XCTAssertEqual(freshStore.loadBubblesCalls[0].limit, 20)
+    }
+
+    // MARK: - loadMore
+
+    func test_loadMoreTriggered_fetchesOlderPage_andPrepends() {
+        historyStore.storedBubbles = (0..<25).map { i in
+            ChatBubble(kind: .user, text: "b\(i)")
+        }
+        sut = ChatBotBottomSheetViewModel(usecase: usecase, historyStore: historyStore)
+        let input = makeInput()
+        let out = sut.transform(input: input)
+
+        var latest: [ChatBubble] = []
+        out.bubbles.drive(onNext: { latest = $0 }).disposed(by: bag)
+
+        XCTAssertEqual(latest.count, 20)
+        XCTAssertEqual(latest.first?.text, "b5")
+        XCTAssertEqual(latest.last?.text, "b24")
+
+        input.loadMoreTriggered.accept(())
+
+        XCTAssertEqual(latest.count, 25)
+        XCTAssertEqual(latest.first?.text, "b0")
+        XCTAssertEqual(latest.last?.text, "b24")
+    }
+
+    func test_loadMore_emitsPrependedChange() {
+        historyStore.storedBubbles = (0..<25).map { i in ChatBubble(kind: .user, text: "b\(i)") }
+        sut = ChatBotBottomSheetViewModel(usecase: usecase, historyStore: historyStore)
+        let input = makeInput()
+        let out = sut.transform(input: input)
+
+        var changes: [BubblesChange] = []
+        out.bubblesChange.emit(onNext: { changes.append($0) }).disposed(by: bag)
+
+        input.loadMoreTriggered.accept(())
+
+        XCTAssertTrue(changes.contains(where: {
+            if case .prepended(let c) = $0 { return c == 5 } else { return false }
+        }))
+    }
+
+    func test_loadMore_noMore_isNoOp() {
+        historyStore.storedBubbles = (0..<10).map { i in ChatBubble(kind: .user, text: "b\(i)") }
+        sut = ChatBotBottomSheetViewModel(usecase: usecase, historyStore: historyStore)
+        let input = makeInput()
+        let out = sut.transform(input: input)
+
+        var latest: [ChatBubble] = []
+        out.bubbles.drive(onNext: { latest = $0 }).disposed(by: bag)
+
+        let beforeCalls = historyStore.loadBubblesCalls.count
+        input.loadMoreTriggered.accept(())
+        input.loadMoreTriggered.accept(())
+        input.loadMoreTriggered.accept(())
+
+        XCTAssertEqual(latest.count, 10)
+        XCTAssertEqual(historyStore.loadBubblesCalls.count, beforeCalls)
+    }
+
+    func test_loadMore_emitsIsLoadingMore() {
+        historyStore.storedBubbles = (0..<25).map { i in ChatBubble(kind: .user, text: "b\(i)") }
+        sut = ChatBotBottomSheetViewModel(usecase: usecase, historyStore: historyStore)
+        let input = makeInput()
+        let out = sut.transform(input: input)
+
+        var flags: [Bool] = []
+        out.isLoadingMore.drive(onNext: { flags.append($0) }).disposed(by: bag)
+
+        input.loadMoreTriggered.accept(())
+
+        XCTAssertTrue(flags.contains(true))
+        XCTAssertEqual(flags.last, false)
     }
 }

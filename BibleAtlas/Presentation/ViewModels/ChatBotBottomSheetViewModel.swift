@@ -17,6 +17,7 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
         let chipTapped: PublishRelay<String>
         let placeSelected: PublishRelay<String>      // 이미 해결된 placeId
         let retryTapped: PublishRelay<Void>
+        let loadMoreTriggered: PublishRelay<Void>
     }
 
     struct Output {
@@ -64,6 +65,9 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
     // 페이지네이션 상태 (Task 8에서 활용)
     private var persistedBubbles: [ChatBubble] = []
     private var pendingBubble: ChatBubble?
+    private var oldestLoadedOrder: Int64?     // 다음 페이지 커서
+    private var hasMoreOlder: Bool = false
+    private var isLoadingMore: Bool = false
 
     private let disposeBag = DisposeBag()
 
@@ -76,6 +80,8 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
         self.historyStore = historyStore
         let firstPage = historyStore.loadBubbles(beforeOrder: nil, limit: Self.pageSize)
         self.persistedBubbles = firstPage.bubbles
+        self.hasMoreOlder = firstPage.hasMore
+        self.oldestLoadedOrder = firstPage.nextCursor
         self.session = ChatSessionState(
             summary: historyStore.loadSummary(),
             messages: historyStore.loadMessages()
@@ -122,6 +128,10 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
             })
             .disposed(by: disposeBag)
 
+        input.loadMoreTriggered
+            .subscribe(onNext: { [weak self] in self?.performLoadMore() })
+            .disposed(by: disposeBag)
+
         let inputEnabled = Driver.combineLatest(
             remainingRelay.asDriver(),
             progressRelay.asDriver()
@@ -142,6 +152,23 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
             isLoadingMore: isLoadingMoreRelay.asDriver(),
             bubblesChange: bubblesChangeRelay.asSignal()
         )
+    }
+
+    // MARK: - Pagination
+
+    private func performLoadMore() {
+        guard hasMoreOlder, !isLoadingMore, let cursor = oldestLoadedOrder else { return }
+        isLoadingMore = true
+        isLoadingMoreRelay.accept(true)
+
+        let page = historyStore.loadBubbles(beforeOrder: cursor, limit: Self.pageSize)
+        persistedBubbles = page.bubbles + persistedBubbles
+        hasMoreOlder = page.hasMore
+        oldestLoadedOrder = page.nextCursor
+
+        isLoadingMore = false
+        isLoadingMoreRelay.accept(false)
+        emitBubbles(change: .prepended(count: page.bubbles.count))
     }
 
     // MARK: - Send / stream
