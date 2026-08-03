@@ -206,6 +206,66 @@ final class ChatBotBottomSheetViewModelTests: XCTestCase {
         XCTAssertEqual(usecase.receivedRequests.last?.query, "first-query")
     }
 
+    // MARK: - persistence writes
+
+    func test_send_persistsUserBubbleImmediately() {
+        usecase.events = [doneEvent(answer: "ok")]
+        let input = makeInput()
+        _ = sut.transform(input: input)
+
+        input.sendTapped.accept("hello")
+
+        let exp = expectation(description: "wait stream")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { exp.fulfill() }
+        wait(for: [exp], timeout: 2.0)
+
+        // user bubble + assistant bubble 저장됨 (pending 제외)
+        XCTAssertGreaterThanOrEqual(historyStore.appendBubbleCallCount, 2)
+        XCTAssertEqual(historyStore.storedBubbles.first?.text, "hello")
+        if case .user = historyStore.storedBubbles.first?.kind {} else {
+            XCTFail("first stored bubble should be user")
+        }
+    }
+
+    func test_done_persistsAssistantBubbleAndContext() {
+        usecase.events = [doneEvent(
+            answer: "네 답변",
+            summary: "s1",
+            messages: [.init(role: .user, content: "q"), .init(role: .assistant, content: "네 답변")]
+        )]
+        let input = makeInput()
+        _ = sut.transform(input: input)
+        input.sendTapped.accept("q")
+
+        let exp = expectation(description: "wait")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { exp.fulfill() }
+        wait(for: [exp], timeout: 2.0)
+
+        XCTAssertEqual(historyStore.updateContextCallCount, 1)
+        XCTAssertEqual(historyStore.lastUpdateContext?.summary, "s1")
+        XCTAssertEqual(historyStore.lastUpdateContext?.messages.count, 2)
+        // 저장된 assistant bubble
+        XCTAssertTrue(historyStore.storedBubbles.contains { bubble in
+            if case .assistant = bubble.kind { return bubble.text == "네 답변" } else { return false }
+        })
+    }
+
+    func test_serverFailure_persistsErrorBubble() {
+        usecase.events = [.failure(message: "서버 실패")]
+        let input = makeInput()
+        _ = sut.transform(input: input)
+
+        input.sendTapped.accept("q")
+
+        let exp = expectation(description: "wait")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { exp.fulfill() }
+        wait(for: [exp], timeout: 2.0)
+
+        XCTAssertTrue(historyStore.storedBubbles.contains { bubble in
+            if case .error(let m) = bubble.kind { return m == "서버 실패" } else { return false }
+        })
+    }
+
     // MARK: - initial snapshot
 
     func test_init_loadsSnapshotFromStore_andEmitsBubbles() {

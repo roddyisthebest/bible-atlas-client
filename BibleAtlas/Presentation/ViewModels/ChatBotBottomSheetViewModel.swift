@@ -146,7 +146,12 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
         lastQuery = trimmed
         activeTools.removeAll()
         activeToolOrder.removeAll()
-        appendBubble(.init(kind: .user, text: trimmed))
+
+        let userBubble = ChatBubble(kind: .user, text: trimmed)
+        persistedBubbles.append(userBubble)
+        historyStore.appendBubble(userBubble)
+        emitBubbles(change: .appended)
+
         let initialLabel = L10n.ChatBot.pendingInitial
         addPendingBubble(label: initialLabel)
         progressRelay.accept(.running(label: initialLabel))
@@ -229,57 +234,65 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
                 ),
                 text: payload.answer
             )
-            appendBubble(bubble)
+            persistedBubbles.append(bubble)
+            historyStore.appendBubble(bubble)
             session.summary = payload.summary
             session.messages = payload.messages
+            historyStore.updateContext(summary: payload.summary, messages: payload.messages)
             usecase.recordUsage()
             remainingRelay.accept(usecase.remainingCount)
             progressRelay.accept(.idle)
+            emitBubbles(change: .appended)
         case .failure(let message):
             removePendingBubble()
             activeTools.removeAll()
             activeToolOrder.removeAll()
-            appendBubble(.init(kind: .error(message), text: message))
+            let errorBubble = ChatBubble(kind: .error(message), text: message)
+            persistedBubbles.append(errorBubble)
+            historyStore.appendBubble(errorBubble)
             progressRelay.accept(.error(message: message))
+            emitBubbles(change: .appended)
         }
     }
 
     private func handleThrown(_ error: Error) {
         let message = Self.userFacingMessage(for: error)
         removePendingBubble()
-        appendBubble(.init(kind: .error(message), text: message))
+        let errorBubble = ChatBubble(kind: .error(message), text: message)
+        persistedBubbles.append(errorBubble)
+        historyStore.appendBubble(errorBubble)
         progressRelay.accept(.error(message: message))
+        emitBubbles(change: .appended)
     }
 
-    private func appendBubble(_ b: ChatBubble) {
-        bubblesRelay.accept(bubblesRelay.value + [b])
+    private let bubblesChangeRelay = PublishRelay<BubblesChange>()
+
+    private func emitBubbles(change: BubblesChange) {
+        let all = persistedBubbles + (pendingBubble.map { [$0] } ?? [])
+        bubblesRelay.accept(all)
+        bubblesChangeRelay.accept(change)
     }
 
     private func addPendingBubble(label: String) {
-        let id = UUID()
-        pendingBubbleId = id
-        appendBubble(.init(id: id, kind: .pending(label: label), text: label))
+        let bubble = ChatBubble(kind: .pending(label: label), text: label)
+        pendingBubbleId = bubble.id
+        pendingBubble = bubble
+        emitBubbles(change: .appended)
     }
 
     private func updatePendingBubble(label: String) {
-        guard let id = pendingBubbleId else {
+        guard pendingBubbleId != nil else {
             addPendingBubble(label: label)
             return
         }
-        var current = bubblesRelay.value
-        guard let idx = current.firstIndex(where: { $0.id == id }) else { return }
-        current[idx] = ChatBubble(id: id, kind: .pending(label: label), text: label)
-        bubblesRelay.accept(current)
+        pendingBubble = ChatBubble(id: pendingBubbleId!, kind: .pending(label: label), text: label)
+        emitBubbles(change: .appended)
     }
 
     private func removePendingBubble() {
-        guard let id = pendingBubbleId else { return }
-        var current = bubblesRelay.value
-        if let idx = current.firstIndex(where: { $0.id == id }) {
-            current.remove(at: idx)
-            bubblesRelay.accept(current)
-        }
+        pendingBubble = nil
         pendingBubbleId = nil
+        emitBubbles(change: .appended)
     }
 
     static func userFacingMessage(for error: Error) -> String {
