@@ -28,6 +28,7 @@
 		7128C3A029500ECA294B1925 /* ChatBotUserBubbleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B25EB3CA9570DF5A6DA1A5 /* ChatBotUserBubbleCell.swift */; };
 		76E253A58C6F6BD6B4D0DDEC /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CB2A0967E24BC1F962E6C3 /* ChatMessage.swift */; };
 		95E2897DF4C5A752C79C7C0B /* FakeAgentUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF27EB4DB52E0D5E3D3D3BF7 /* FakeAgentUsecase.swift */; };
+		7C9A3F5D8E2B4610AC91DE47 /* MockChatHistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E8B1A2F7C6D3095BE58FA23 /* MockChatHistoryStore.swift */; };
 		95E646015916ED02EA57411E /* ChatBotBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70FFF3C7B001DB4C1EA6791C /* ChatBotBottomSheetViewModel.swift */; };
 		97A59DCC0455A6678051B36F /* AppSecrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2887DB0DD1A6537765F563 /* AppSecrets.swift */; };
 		9A5C7E604834B258D68140E7 /* AgentUsecaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A65BBCBABBF2E6DB01CA1B3 /* AgentUsecaseTests.swift */; };
@@ -727,6 +728,7 @@
 		ECE217142EFBE3D300249F1F /* DeepLinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkHandler.swift; sourceTree = "<group>"; };
 		F8F2167DF0678277CD84DE9A /* ChatUsageCounterTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatUsageCounterTests.swift; sourceTree = "<group>"; };
 		FF27EB4DB52E0D5E3D3D3BF7 /* FakeAgentUsecase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FakeAgentUsecase.swift; sourceTree = "<group>"; };
+		4E8B1A2F7C6D3095BE58FA23 /* MockChatHistoryStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MockChatHistoryStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1238,6 +1240,7 @@
 				6B462063BA786994FF8FEEB2 /* FakeAgentStreamClient.swift */,
 				975BBA7D660A5402438CECE3 /* FakeAgentRepository.swift */,
 				FF27EB4DB52E0D5E3D3D3BF7 /* FakeAgentUsecase.swift */,
+				4E8B1A2F7C6D3095BE58FA23 /* MockChatHistoryStore.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -2126,6 +2129,7 @@
 				6EA7304A35BD7CBEB6A25FE2 /* FakeAgentRepository.swift in Sources */,
 				9A5C7E604834B258D68140E7 /* AgentUsecaseTests.swift in Sources */,
 				95E2897DF4C5A752C79C7C0B /* FakeAgentUsecase.swift in Sources */,
+				7C9A3F5D8E2B4610AC91DE47 /* MockChatHistoryStore.swift in Sources */,
 				286F69990F1E3B1D6AEC7506 /* ChatBotBottomSheetViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
