@@ -364,13 +364,37 @@ final class ChatBotBottomSheetViewController: UIViewController {
             })
             .disposed(by: disposeBag)
 
+        // 데이터 갱신은 여기서만 수행하고, 스크롤 정책은 bubblesChange 로 분리.
         output.bubbles
             .drive(onNext: { [weak self] bubbles in
                 guard let self = self else { return }
                 self.bubbles = bubbles
-                self.tableView.reloadData()
                 self.emptyStateView.isHidden = !bubbles.isEmpty
-                self.scrollToBottom()
+            })
+            .disposed(by: disposeBag)
+
+        output.bubblesChange
+            .emit(onNext: { [weak self] change in
+                guard let self = self else { return }
+                switch change {
+                case .initial, .appended:
+                    self.tableView.reloadData()
+                    self.scrollToBottom()
+                case .prepended(let count):
+                    guard count > 0 else {
+                        self.tableView.reloadData()
+                        return
+                    }
+                    let before = self.tableView.contentSize.height
+                    self.tableView.reloadData()
+                    self.tableView.layoutIfNeeded()
+                    let after = self.tableView.contentSize.height
+                    let delta = after - before
+                    self.tableView.setContentOffset(
+                        CGPoint(x: 0, y: self.tableView.contentOffset.y + delta),
+                        animated: false
+                    )
+                }
             })
             .disposed(by: disposeBag)
 
