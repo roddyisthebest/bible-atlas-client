@@ -27,6 +27,8 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
         let fillInputText: Signal<String>
         let routeToPlaceDetail: Signal<String>
         let showLimitAlert: Signal<Void>
+        let isLoadingMore: Driver<Bool>       // Task 8에서 실제 갱신
+        let bubblesChange: Signal<BubblesChange>
     }
 
     enum ChatProgress: Equatable {
@@ -48,6 +50,7 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
     private let fillInputRelay = PublishRelay<String>()
     private let routeRelay = PublishRelay<String>()
     private let limitAlertRelay = PublishRelay<Void>()
+    private let isLoadingMoreRelay = BehaviorRelay<Bool>(value: false)
 
     private var session: ChatSessionState
     private var lastQuery: String?
@@ -113,6 +116,12 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
             })
             .disposed(by: disposeBag)
 
+        input.viewDidLoad
+            .subscribe(onNext: { [weak self] in
+                self?.bubblesChangeRelay.accept(.initial)
+            })
+            .disposed(by: disposeBag)
+
         let inputEnabled = Driver.combineLatest(
             remainingRelay.asDriver(),
             progressRelay.asDriver()
@@ -129,7 +138,9 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
             inputEnabled: inputEnabled,
             fillInputText: fillInputRelay.asSignal(),
             routeToPlaceDetail: routeRelay.asSignal(),
-            showLimitAlert: limitAlertRelay.asSignal()
+            showLimitAlert: limitAlertRelay.asSignal(),
+            isLoadingMore: isLoadingMoreRelay.asDriver(),
+            bubblesChange: bubblesChangeRelay.asSignal()
         )
     }
 

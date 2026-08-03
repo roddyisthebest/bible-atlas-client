@@ -266,6 +266,33 @@ final class ChatBotBottomSheetViewModelTests: XCTestCase {
         })
     }
 
+    // MARK: - bubblesChange signal
+
+    func test_bubblesChange_emitsInitialAndAppended() {
+        let input = makeInput()
+        let out = sut.transform(input: input)
+
+        var changes: [BubblesChange] = []
+        out.bubblesChange.emit(onNext: { changes.append($0) }).disposed(by: bag)
+
+        input.viewDidLoad.accept(())
+
+        let exp1 = expectation(description: "initial")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { exp1.fulfill() }
+        wait(for: [exp1], timeout: 1.0)
+
+        XCTAssertTrue(changes.contains(.initial))
+
+        usecase.events = [doneEvent(answer: "a")]
+        input.sendTapped.accept("q")
+
+        let exp2 = expectation(description: "append")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { exp2.fulfill() }
+        wait(for: [exp2], timeout: 2.0)
+
+        XCTAssertTrue(changes.contains(.appended))
+    }
+
     // MARK: - pending is not persisted
 
     func test_pending_isNotPersisted() {
