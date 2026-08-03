@@ -349,6 +349,7 @@
 		ECE217152EFBE3D300249F1F /* DeepLinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE217142EFBE3D300249F1F /* DeepLinkHandler.swift */; };
 		F2C024CC0FF8B5B07FCC5FC6 /* ChatBotProgressBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C523180D26990B6F337E565F /* ChatBotProgressBanner.swift */; };
 		F817DD13A150D0E8814EE325 /* AgentRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3A83352969A75606B5ED59 /* AgentRepositoryProtocol.swift */; };
+		A1B2C3D4E5F60718293A4B5C /* ChatHistoryStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E5F60718293A4B5C6D7E8F /* ChatHistoryStoreProtocol.swift */; };
 		FD2176CBB7F954A933F76E53 /* AgentDonePayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6B471DE9F08302F3FF2A41 /* AgentDonePayload.swift */; };
 /* End PBXBuildFile section */
 
@@ -366,6 +367,7 @@
 		00C66280D833B0F8D48447BF /* AgentStreamClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AgentStreamClient.swift; sourceTree = "<group>"; };
 		0682619C070363E47D6A98B4 /* AgentStreamRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AgentStreamRequest.swift; sourceTree = "<group>"; };
 		0C3A83352969A75606B5ED59 /* AgentRepositoryProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AgentRepositoryProtocol.swift; sourceTree = "<group>"; };
+		D4E5F60718293A4B5C6D7E8F /* ChatHistoryStoreProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatHistoryStoreProtocol.swift; sourceTree = "<group>"; };
 		12AF1850DD1F93A948CF133A /* Secrets.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		1E6B471DE9F08302F3FF2A41 /* AgentDonePayload.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AgentDonePayload.swift; sourceTree = "<group>"; };
 		21CCD02993F38A3746EDE812 /* Pods-BibleAtlasTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BibleAtlasTests.release.xcconfig"; path = "Target Support Files/Pods-BibleAtlasTests/Pods-BibleAtlasTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -1014,6 +1016,7 @@
 				EC940EA92DF7198C00406944 /* MapRepositoryProtocol.swift */,
 				EC14C6452EC84FEA008F90D6 /* ReportRepositoryProtocol.swift */,
 				0C3A83352969A75606B5ED59 /* AgentRepositoryProtocol.swift */,
+				D4E5F60718293A4B5C6D7E8F /* ChatHistoryStoreProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1938,6 +1941,7 @@
 				FD2176CBB7F954A933F76E53 /* AgentDonePayload.swift in Sources */,
 				A6A09322DD4AB29D30092AB0 /* AgentStreamEvent.swift in Sources */,
 				F817DD13A150D0E8814EE325 /* AgentRepositoryProtocol.swift in Sources */,
+				A1B2C3D4E5F60718293A4B5C /* ChatHistoryStoreProtocol.swift in Sources */,
 				CB78A92F339B1B5973EF58F6 /* AgentUsecase.swift in Sources */,
 				2FCF45ACA8AC62C6000843AB /* ChatUsageCounter.swift in Sources */,
 				198E0DAF3AB0BBF17038B336 /* SSELineParser.swift in Sources */,
