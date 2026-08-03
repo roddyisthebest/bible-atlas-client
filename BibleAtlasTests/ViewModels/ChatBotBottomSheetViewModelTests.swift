@@ -171,6 +171,22 @@ final class ChatBotBottomSheetViewModelTests: XCTestCase {
         XCTAssertEqual(filled, "추천 질문 1")
     }
 
+    func test_chipTapped_emitsLimitAlert_whenRemainingIsZero_andDoesNotFillInput() {
+        usecase._remainingCount = 0
+        let input = makeInput()
+        let out = sut.transform(input: input)
+
+        var filled: String?
+        var alerted = false
+        out.fillInputText.emit(onNext: { filled = $0 }).disposed(by: bag)
+        out.showLimitAlert.emit(onNext: { alerted = true }).disposed(by: bag)
+
+        input.chipTapped.accept("추천 질문")
+
+        XCTAssertTrue(alerted)
+        XCTAssertNil(filled)
+    }
+
     // MARK: - place tap
 
     func test_placeSelected_emitsRouteToPlaceDetail() {

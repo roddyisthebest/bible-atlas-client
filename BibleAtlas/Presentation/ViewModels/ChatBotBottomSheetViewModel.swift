@@ -105,7 +105,13 @@ final class ChatBotBottomSheetViewModel: ChatBotBottomSheetViewModelProtocol {
 
         input.chipTapped
             .subscribe(onNext: { [weak self] text in
-                self?.fillInputRelay.accept(text)
+                guard let self = self else { return }
+                // 사용 한도 소진 시엔 텍스트 채우기 대신 limit alert 로 즉시 안내.
+                guard self.usecase.remainingCount > 0 else {
+                    self.limitAlertRelay.accept(())
+                    return
+                }
+                self.fillInputRelay.accept(text)
             })
             .disposed(by: disposeBag)
 
